@@ -49,7 +49,7 @@ public class FormCheckIn extends javax.swing.JPanel {
        
 
         inittable();
-//        loaddulieu1();
+        loaddulieu1();
     }
     
     private void inittable() {
