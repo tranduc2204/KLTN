@@ -5,9 +5,13 @@
         <group>
             <file>file:/D:/KLTN_TranDuc/TranDuc_2021010131/src/model/ModelRentv2.java</file>
             <file>file:/D:/KLTN_TranDuc/TranDuc_2021010131/src/form/FormRent.java</file>
-            <file>file:/D:/KLTN_TranDuc/TranDuc_2021010131/src/model/ModelRoom.java</file>
+            <file>file:/D:/KLTN_TranDuc/TranDuc_2021010131/src/form/FormQLCustomers.java</file>
+            <file>file:/D:/KLTN_TranDuc/TranDuc_2021010131/src/model/ModelCheckIn.java</file>
+            <file>file:/D:/KLTN_TranDuc/TranDuc_2021010131/src/model/ModelPhong.java</file>
             <file>file:/D:/KLTN_TranDuc/TranDuc_2021010131/src/model/ModelRent.java</file>
-            <file>file:/D:/KLTN_TranDuc/TranDuc_2021010131/src/model/ModelRoomv2.java</file>
+            <file>file:/D:/KLTN_TranDuc/TranDuc_2021010131/src/form/FormCheckIn.java</file>
+            <file>file:/D:/KLTN_TranDuc/TranDuc_2021010131/src/model/ModelCheckInv2.java</file>
+            <file>file:/D:/KLTN_TranDuc/TranDuc_2021010131/src/form/FormQLRoom.java</file>
         </group>
     </open-files>
 </project-private>
