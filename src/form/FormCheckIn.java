@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package form;
+package form; 
 
 import connect.Connect;
 import java.sql.Connection;
@@ -49,7 +49,7 @@ public class FormCheckIn extends javax.swing.JPanel {
        
 
         inittable();
-        loaddulieu1();
+//        loaddulieu1();
     }
     
     private void inittable() {
