@@ -97,6 +97,7 @@ public class Menu extends javax.swing.JPanel {
                 "Customers Management", "Bills Management","Staffs Management","Services Management","Rooms Management",
                 "Supplies Management","Room Supplies Management", "Service Bill Management"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/8.png")), "Rent"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/8.png")), "Check in"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/9.png")), "Check out"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/10.png")), "Statistic", "Statistic 001", "Statistic 002"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/11.png")), "Service"));
