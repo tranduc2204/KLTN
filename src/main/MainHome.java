@@ -12,6 +12,7 @@ import event.EventShowPopupMenu;
 import form.FormBackupRestore;
 import form.FormBill;
 import form.FormChart;
+import form.FormCheckIn;
 import form.FormHome;
 import form.FormLogin;
 import form.FormQLAccount;
@@ -133,6 +134,8 @@ public class MainHome extends javax.swing.JFrame {
             }else if (menuIndex ==4 && quyen.equals("Admin")){
 
                 main.showForm(new FormRent(username, password, DisplayName,quyen));
+            }else if (menuIndex ==5 && quyen.equals("Admin")){
+                main.showForm(new FormCheckIn(username, password, DisplayName,quyen));
             }else if (menuIndex ==8 && quyen.equals("Admin")){
                 Runtime rt = Runtime.getRuntime();
             try {
