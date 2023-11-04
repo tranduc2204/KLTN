@@ -65,7 +65,7 @@ public class ModelRent {
 
     }
     public boolean update(ModelRentv2 rt) throws Exception {
-        String sql = "update PhieuDatPhong set NgayDatPhong =?,MaPhong=?,MaKH=? ,MaNV=? where MaPhieuDatPhong = ?";
+        String sql = "update PhieuDatPhong set NgayDatPhong =? , MaPhong=? , MaKH=? , MaNV=? where MaPhieuDatPhong = ? ";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -77,9 +77,40 @@ public class ModelRent {
         pstmt.setString(4, rt.getMaNV());
 
         return pstmt.executeUpdate() > 0;
-
-        
-        
-        
+  
     }
+    
+    public boolean deletecomeroot(ModelRentv2 rt) throws Exception {
+       
+        String sql = "update PhieuDatPhong set isvisible = '0' where MaPhieuDatPhong = ? ";
+        
+
+        conn = cn.getConnection();
+        conn.setAutoCommit(false); // Tắt chế độ tự động commit
+
+        try {
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, rt.getMaPhieuDatPhong());
+
+            int rowsAffected = pstmt.executeUpdate(); // Số dòng bị ảnh hưởng bởi lệnh sql
+
+            if (rowsAffected > 0) {
+                conn.commit(); // Commit thay đổi nếu cả hai lệnh thành công
+                System.out.println("ok");
+                return true;
+                
+            } else {
+                conn.rollback(); // Rollback nếu có lỗi
+                System.out.println("no");
+                return false;
+            }
+        } catch (Exception e) {
+            conn.rollback(); // Rollback nếu có lỗi
+            throw e;
+        } finally {
+            conn.setAutoCommit(true); // Bật chế độ tự động commit trở lại
+        }
+    }
+    
 }
