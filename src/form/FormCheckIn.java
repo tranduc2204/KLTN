@@ -6,16 +6,23 @@
 package form; 
 
 import connect.Connect;
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.ModelCheckIn;
 import model.ModelCheckInv2;
+import model.ModelCustomers;
 import model.ModelRent;
 import model.ModelRentv2;
+import model.ModelRoom;
 
 /**
  *
@@ -151,7 +158,7 @@ public class FormCheckIn extends javax.swing.JPanel {
         jLabel14 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         txtTenPhong = new javax.swing.JTextField();
-        txtMaphieudatphong = new javax.swing.JTextField();
+        txtMaphieuthuephong = new javax.swing.JTextField();
         btnEdit = new swing.Button();
         btnAdd = new swing.Button();
         bthDelete = new swing.Button();
@@ -287,7 +294,7 @@ public class FormCheckIn extends javax.swing.JPanel {
                             .addComponent(jLabel15))
                         .addGap(18, 18, 18)
                         .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtMaphieudatphong, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                            .addComponent(txtMaphieuthuephong, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
                             .addComponent(txtTenKH, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cmbmaphieudatphong, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cmbmakh, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -296,9 +303,9 @@ public class FormCheckIn extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(19, 19, 19)
                         .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4)))
+                        .addGap(18, 18, 18)))
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(roundPanel5Layout.createSequentialGroup()
                         .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -337,7 +344,7 @@ public class FormCheckIn extends javax.swing.JPanel {
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jLabel14)
-                    .addComponent(txtMaphieudatphong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMaphieuthuephong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbmaphon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -366,12 +373,13 @@ public class FormCheckIn extends javax.swing.JPanel {
                         .addComponent(jLabel21))
                     .addComponent(jDateChooserngaythuephong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         TBRent.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -497,126 +505,124 @@ public class FormCheckIn extends javax.swing.JPanel {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-//        Date selectedDate = jDateChooserngaydatphong.getDate();
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(selectedDate);
-//
-//        int year = calendar.get(Calendar.YEAR);
-//        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-//        int day = calendar.get(Calendar.DAY_OF_MONTH);
-//        String ngaysinh = year + "-" + month + "-" + day;
-//
-//        StringBuilder sb = new StringBuilder();
-//        if (txtMaphieudatphong.getText().equals("")) {
-//            sb.append("Mã phiếu đặt phòng không được để trống");
-//            txtMaphieudatphong.setBackground(Color.red);
-//
-//        } else {
-//            txtMaphieudatphong.setBackground(Color.white);
-//        }
-//        if (sb.length() > 0) {
-//            JOptionPane.showMessageDialog(this, sb);
-//        }
-//        String MaKH = cmbmaphieudatphong.getSelectedItem().toString();
-//        String MaNV = cmbmakh.getSelectedItem().toString();
-//        String MaPhong = cmbmaphon.getSelectedItem().toString();
-//        try {
-//            ModelRentv2 nv = new ModelRentv2();
-//            nv.setMaPhieuDatPhong(txtMaphieudatphong.getText());
-//            nv.setNgayDatPhong(ngaysinh);
-//            nv.setMaPhong(MaPhong);
-//            nv.setMaKH(MaKH);
-//            nv.setMaNV(MaNV);
-//
-//            ModelRent ql1 = new ModelRent();
-//            ql1.update(nv);
-//
-//            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-//            loaddulieu1();
-//        } catch (Exception e) {
-//            //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-//            JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
-//            e.printStackTrace();
-//        }
+        Date selectedDate = jDateChooserngaythuephong.getDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDate);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String ngaythue = year + "-" + month + "-" + day;
+
+        StringBuilder sb = new StringBuilder();
+        if (txtMaphieuthuephong.getText().equals("")) {
+            sb.append("Mã phiếu thuê phòng không được để trống");
+            txtMaphieuthuephong.setBackground(Color.red);
+
+        } else {
+            txtMaphieuthuephong.setBackground(Color.white);
+        }
+        if (sb.length() > 0) {
+            JOptionPane.showMessageDialog(this, sb);
+        }
+        String Madatphong = cmbmaphieudatphong.getSelectedItem().toString();
+        
+        try {
+            ModelCheckInv2 ci = new ModelCheckInv2();
+            ci.setMaPhieuThuePhong(txtMaphieuthuephong.getText());
+            ci.setNgayThuePhong(ngaythue);
+            ci.setMaPhieuDatPhong(Madatphong);
+            
+
+            ModelCheckIn ql1 = new ModelCheckIn();
+            ql1.update(ci);
+
+            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+            loaddulieu1();
+        } catch (Exception e) {
+            //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Mã phiếu thuê phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
+            e.printStackTrace();
+        }
 
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
 
-//        Date selectedDate = jDateChooserngaydatphong.getDate();
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(selectedDate);
-//
-//        int year = calendar.get(Calendar.YEAR);
-//        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-//        int day = calendar.get(Calendar.DAY_OF_MONTH);
-//        String ngaysinh = year + "-" + month + "-" + day;
-//
-//        StringBuilder sb = new StringBuilder();
-//        if (txtMaphieudatphong.getText().equals("")) {
-//            sb.append("Mã phiếu đặt phòng không được để trống");
-//            txtMaphieudatphong.setBackground(Color.red);
-//
-//        } else {
-//            txtMaphieudatphong.setBackground(Color.white);
-//        }
-//        if (sb.length() > 0) {
-//            JOptionPane.showMessageDialog(this, sb);
-//        }
-//        String MaKH = cmbmaphieudatphong.getSelectedItem().toString();
-//        String MaNV = cmbmakh.getSelectedItem().toString();
-//        String MaPhong = cmbmaphon.getSelectedItem().toString();
-//        try {
-//            ModelRentv2 nv = new ModelRentv2();
-//            nv.setMaPhieuDatPhong(txtMaphieudatphong.getText());
-//            nv.setNgayDatPhong(ngaysinh);
-//            nv.setMaPhong(MaPhong);
-//            nv.setMaKH(MaKH);
-//            nv.setMaNV(MaNV);
-//
-//            ModelRent ql1 = new ModelRent();
-//            ql1.insert(nv);
-//
-//            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-//            loaddulieu1();
-//        } catch (Exception e) {
-//            //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-//            JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
-//            e.printStackTrace();
-//        }
+        Date selectedDate = jDateChooserngaythuephong.getDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDate);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String ngaythue = year + "-" + month + "-" + day;
+
+        StringBuilder sb = new StringBuilder();
+        if (txtMaphieuthuephong.getText().equals("")) {
+            sb.append("Mã phiếu thuê phòng không được để trống");
+            txtMaphieuthuephong.setBackground(Color.red);
+
+        } else {
+            txtMaphieuthuephong.setBackground(Color.white);
+        }
+        if (sb.length() > 0) {
+            JOptionPane.showMessageDialog(this, sb);
+        }
+        
+        
+        String Madatphong = cmbmaphieudatphong.getSelectedItem().toString();
+        
+        try {
+            ModelCheckInv2 ci = new ModelCheckInv2();
+            ci.setMaPhieuThuePhong(txtMaphieuthuephong.getText());
+            ci.setNgayThuePhong(ngaythue);
+            ci.setMaPhieuDatPhong(Madatphong);
+            
+
+            ModelCheckIn ql1 = new ModelCheckIn();
+            ql1.insert(ci);
+
+            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+            loaddulieu1();
+        } catch (Exception e) {
+            //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Mã phiếu thuê phòng này đã tồn tại, nếu muốn thêm với mã phiếu thuê phòng này vui lòng xóa phiếu đặt phòng trong db");
+            e.printStackTrace();
+        }
 
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void bthDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bthDeleteActionPerformed
         // TODO add your handling code here:
 
-//        StringBuilder sb = new StringBuilder();
-//        if (txtMaphieudatphong.getText().equals("")) {
-//            sb.append("Mã phiếu đặt phòng không được để trống");
-//            txtMaphieudatphong.setBackground(Color.red);
-//
-//        } else {
-//            txtMaphieudatphong.setBackground(Color.white);
-//        }
-//        if (sb.length() > 0) {
-//            JOptionPane.showMessageDialog(this, sb);
-//        }
-//
-//        try {
-//            ModelRentv2 nv = new ModelRentv2();
-//            nv.setMaPhieuDatPhong(txtMaphieudatphong.getText());
-//
-//            ModelRent ql1 = new ModelRent();
-//            ql1.deletecomeroot(nv);
-//
-//            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-//            loaddulieu1();
-//        } catch (Exception e) {
-//            //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-//            JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
-//            e.printStackTrace();
-//        }
+        StringBuilder sb = new StringBuilder();
+        if (txtMaphieuthuephong.getText().equals("")) {
+            sb.append("Mã phiếu thuê phòng không được để trống");
+            txtMaphieuthuephong.setBackground(Color.red);
+
+        } else {
+            txtMaphieuthuephong.setBackground(Color.white);
+        }
+        if (sb.length() > 0) {
+            JOptionPane.showMessageDialog(this, sb);
+        }
+
+        try {
+            ModelCheckInv2 ci = new ModelCheckInv2();
+            ci.setMaPhieuThuePhong(txtMaphieuthuephong.getText());
+
+            ModelCheckIn ql1 = new ModelCheckIn();
+            ql1.deletecomeroot(ci);
+
+            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+            loaddulieu1();
+        } catch (Exception e) {
+            //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
+            e.printStackTrace();
+        }
 
     }//GEN-LAST:event_bthDeleteActionPerformed
 
@@ -627,64 +633,72 @@ public class FormCheckIn extends javax.swing.JPanel {
 
     private void cmbmaphieudatphongItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmaphieudatphongItemStateChanged
         // TODO add your handling code here:
-//        String Makh = cmbmaphieudatphong.getSelectedItem().toString();
-//        try {
-//            ModelCustomers ql = new ModelCustomers();
-//
-//            model.ModelCustomersv2 ttp = ql.findByID(Makh);
-//            if (ttp != null) {
-//                txtTENkh.setText(ttp.getTenKH());
-//
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Không tim thấy mã khách hàng");
-//            }
-//
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-//            e.printStackTrace();
-//        }
+        String Mapdp = cmbmaphieudatphong.getSelectedItem().toString();
+        try {
+            ModelRent ql = new ModelRent();
+
+            model.ModelRentv2 ttp = ql.findByID(Mapdp);
+            if (ttp != null) {
+ 
+                String ngaydatphong = ttp.getNgayDatPhong();
+
+                try {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
+                    Date selectedDatee = dateFormat.parse(ngaydatphong); // Phân tích chuỗi thành đối tượng Date
+                    jDateChooserngaydatphong.setDate(selectedDatee); // Đặt giá trị ngày cho JDateChooser
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tim thấy mã khách hàng");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_cmbmaphieudatphongItemStateChanged
 
     private void cmbmakhItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmakhItemStateChanged
         // TODO add your handling code here:
-//        String Manv = cmbmakh.getSelectedItem().toString();
-//        try {
-//            ModelStaff ql = new ModelStaff();
-//
-//            model.ModelStaffv2 ttp = ql.findByID(Manv);
-//            if (ttp != null) {
-//                txtTenKH.setText(ttp.getTenNV());
-//
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Không tim thấy mã nhân viên");
-//            }
-//
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-//            e.printStackTrace();
-//        }
+        String Makh = cmbmakh.getSelectedItem().toString();
+        try {
+            ModelCustomers ql = new ModelCustomers();
+
+            model.ModelCustomersv2 ttp = ql.findByID(Makh);
+            if (ttp != null) {
+                txtTenKH.setText(ttp.getTenKH());
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tim thấy mã khách hàng");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_cmbmakhItemStateChanged
 
     private void cmbmaphonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmaphonItemStateChanged
         // TODO add your handling code here:
-//        String MaPhong = cmbmaphon.getSelectedItem().toString();
-//        try {
-//            ModelRoom ql = new ModelRoom();
-//
-//            model.ModelRoomv2 ttp = ql.findByID(MaPhong);
-//            if (ttp != null) {
-//                txtTenPhong.setText(ttp.getTenPhong());
-//                txtGiaPhong.setText(ttp.getFormattedDonGia());
-//                txtloaiphong.setText(ttp.getTenLoaiPhong());
-//
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Không tim thấy mã phòng");
-//            }
-//
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-//            e.printStackTrace();
-//        }
+        String MaPhong = cmbmaphon.getSelectedItem().toString();
+        try {
+            ModelRoom ql = new ModelRoom();
+
+            model.ModelRoomv2 ttp = ql.findByID(MaPhong);
+            if (ttp != null) {
+                txtTenPhong.setText(ttp.getTenPhong());
+                txtGiaPhong.setText(ttp.getFormattedDonGia());
+                txtloaiphong.setText(ttp.getTenLoaiPhong());
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tim thấy mã phòng");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_cmbmaphonItemStateChanged
 
     private void TBRentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TBRentMouseClicked
@@ -778,7 +792,7 @@ public class FormCheckIn extends javax.swing.JPanel {
     private javax.swing.JRadioButton rbsearchngaydat;
     private swing.RoundPanel roundPanel5;
     private javax.swing.JTextField txtGiaPhong;
-    private javax.swing.JTextField txtMaphieudatphong;
+    private javax.swing.JTextField txtMaphieuthuephong;
     private javax.swing.JTextField txtSEARCHMAKH;
     private javax.swing.JTextField txtTenKH;
     private javax.swing.JTextField txtTenPhong;

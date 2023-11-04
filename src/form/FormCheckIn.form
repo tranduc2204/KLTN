@@ -83,7 +83,7 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="txtMaphieudatphong" alignment="1" pref="249" max="32767" attributes="0"/>
+                              <Component id="txtMaphieuthuephong" alignment="1" pref="249" max="32767" attributes="0"/>
                               <Component id="txtTenKH" alignment="0" max="32767" attributes="0"/>
                               <Component id="cmbmaphieudatphong" alignment="0" max="32767" attributes="0"/>
                               <Component id="cmbmakh" alignment="0" max="32767" attributes="0"/>
@@ -94,9 +94,9 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnAdd" min="-2" pref="103" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                           <Component id="btnEdit" min="-2" pref="103" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -151,7 +151,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtMaphieudatphong" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtMaphieuthuephong" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cmbmaphon" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
@@ -187,13 +187,15 @@
                       <Component id="jDateChooserngaythuephong" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnAdd" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
-                      <Component id="btnEdit" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
-                      <Component id="bthDelete" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
-                      <Component id="btnRefresh" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnEdit" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
+                          <Component id="bthDelete" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
+                          <Component id="btnRefresh" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="btnAdd" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -245,7 +247,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtTenPhong">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtMaphieudatphong">
+        <Component class="javax.swing.JTextField" name="txtMaphieuthuephong">
         </Component>
         <Component class="swing.Button" name="btnEdit">
           <Properties>

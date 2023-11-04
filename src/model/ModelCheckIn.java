@@ -49,4 +49,85 @@ public class ModelCheckIn {
         }
         return list;
     }
+    
+    public ModelCheckInv2 findByID(String Maphieuthuephong) throws Exception {
+        String sql = "select * from PhieuThuePhong where MaPhieuThuePhong =?";
+
+        conn = cn.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+
+        pstmt.setString(1, Maphieuthuephong);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            ModelCheckInv2 tp = new ModelCheckInv2();
+            tp.setMaPhieuThuePhong(rs.getString("MaPhieuThuePhong"));
+            tp.setNgayThuePhong(rs.getString("NgayThuePhong"));
+            tp.setMaPhieuDatPhong(rs.getString("MaPhieuDatPhong"));
+
+            return tp;
+        }
+        return null;
+    }
+    
+    public boolean insert(ModelCheckInv2 rt) throws Exception {
+        String sql = "insert into PhieuThuePhong (MaPhieuThuePhong, NgayThuePhong, MaPhieuDatPhong) values (?,?,?)";
+
+        conn = cn.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        
+        pstmt.setString(1, rt.getMaPhieuThuePhong());
+        pstmt.setString(2, rt.getNgayThuePhong());
+        pstmt.setString(3, rt.getMaPhieuDatPhong());
+
+        return pstmt.executeUpdate() > 0;
+
+    }
+    public boolean update(ModelCheckInv2 rt) throws Exception {
+        String sql = "update PhieuThuePhong set NgayThuePhong =? , MaPhieuDatPhong=? where MaPhieuThuePhong = ? ";
+
+        conn = cn.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+
+        
+        pstmt.setString(1, rt.getNgayThuePhong());
+        pstmt.setString(2, rt.getMaPhieuDatPhong());
+        pstmt.setString(3, rt.getMaPhieuThuePhong());
+
+        return pstmt.executeUpdate() > 0;
+  
+    }
+    
+    public boolean deletecomeroot(ModelCheckInv2 rt) throws Exception {
+       
+        String sql = "update PhieuThuePhong set isvisible = '0' where MaPhieuThuePhong = ? ";
+        
+
+        conn = cn.getConnection();
+        conn.setAutoCommit(false); // Tắt chế độ tự động commit
+
+        try {
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, rt.getMaPhieuThuePhong());
+
+            int rowsAffected = pstmt.executeUpdate(); // Số dòng bị ảnh hưởng bởi lệnh sql
+
+            if (rowsAffected > 0) {
+                conn.commit(); // Commit thay đổi nếu cả hai lệnh thành công
+                System.out.println("ok");
+                return true;
+                
+            } else {
+                conn.rollback(); // Rollback nếu có lỗi
+                System.out.println("no");
+                return false;
+            }
+        } catch (Exception e) {
+            conn.rollback(); // Rollback nếu có lỗi
+            throw e;
+        } finally {
+            conn.setAutoCommit(true); // Bật chế độ tự động commit trở lại
+        }
+    }
 }

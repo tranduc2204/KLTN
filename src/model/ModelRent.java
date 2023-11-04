@@ -48,6 +48,27 @@ public class ModelRent {
         return list;
     }
     
+    public ModelRentv2 findByID(String MaPhieuDatPhong) throws Exception {
+        String sql = "select * from PhieuDatPhong where MaPhieuDatPhong =?";
+
+        conn = cn.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+
+        pstmt.setString(1, MaPhieuDatPhong);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            ModelRentv2 tp = new ModelRentv2();
+            tp.setMaPhieuDatPhong(rs.getString("MaPhieuDatPhong"));
+            tp.setNgayDatPhong(rs.getString("NgayDatPhong"));
+            tp.setMaPhong(rs.getString("MaPhong"));
+            tp.setMaKH(rs.getString("MaKH"));
+            tp.setMaNV(rs.getString("MaNV"));
+            return tp;
+        }
+        return null;
+    }
+    
     public boolean insert(ModelRentv2 rt) throws Exception {
         String sql = "insert into PhieuDatPhong (MaPhieuDatPhong, NgayDatPhong,MaPhong,MaKH,MaNV) values (?,?,?,?,?)";
 
