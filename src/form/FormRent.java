@@ -6,10 +6,16 @@
 package form;
 
 import connect.Connect;
+import java.awt.Color;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.ModelBillOfService;
@@ -18,7 +24,9 @@ import model.ModelCustomers;
 import model.ModelRent;
 import model.ModelRentv2;
 import model.ModelRoom;
+import model.ModelRoomv2;
 import model.ModelStaff;
+import model.ModelStaffv2;
 
 /**
  *
@@ -61,7 +69,7 @@ public class FormRent extends javax.swing.JPanel {
         TBRent.setModel(tbmodel);
     }
     
-     public void loaddulieu1() {
+    public void loaddulieu1() {
         try {
             ModelRent ql = new ModelRent();
             ArrayList<ModelRentv2> list = ql.findALL();
@@ -150,6 +158,7 @@ public class FormRent extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         roundPanel5 = new swing.RoundPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -190,7 +199,7 @@ public class FormRent extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
 
         roundPanel5.setBackground(new java.awt.Color(77, 79, 45));
-        roundPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin thuê phòng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
+        roundPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin đặt phòng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -309,7 +318,7 @@ public class FormRent extends javax.swing.JPanel {
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(roundPanel5Layout.createSequentialGroup()
                         .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(31, 31, 31)
                         .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(roundPanel5Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
@@ -368,12 +377,13 @@ public class FormRent extends javax.swing.JPanel {
                     .addComponent(txtTenNV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17)
                     .addComponent(txtGiaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         panelBorder2.setBackground(new java.awt.Color(77, 79, 45));
@@ -381,11 +391,13 @@ public class FormRent extends javax.swing.JPanel {
         panelBorder2.setForeground(new java.awt.Color(255, 255, 255));
 
         rbMAKH1.setBackground(new java.awt.Color(77, 79, 45));
+        buttonGroup1.add(rbMAKH1);
         rbMAKH1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rbMAKH1.setForeground(new java.awt.Color(255, 255, 255));
         rbMAKH1.setText("Mã khách hàng:");
 
         rbNGAYSINH1.setBackground(new java.awt.Color(77, 79, 45));
+        buttonGroup1.add(rbNGAYSINH1);
         rbNGAYSINH1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rbNGAYSINH1.setForeground(new java.awt.Color(255, 255, 255));
         rbNGAYSINH1.setText("Ngày sinh:");
@@ -480,7 +492,7 @@ public class FormRent extends javax.swing.JPanel {
         jScrollPane1.setViewportView(TBRent);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel8.setText("Thông tin thuê phòng:");
+        jLabel8.setText("Thông tin đặt phòng:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -512,7 +524,7 @@ public class FormRent extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -530,16 +542,134 @@ public class FormRent extends javax.swing.JPanel {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-       
+        Date selectedDate = jDateChooserngaydatphong.getDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDate);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String ngaysinh = year + "-" + month + "-" + day;
+
+
+        StringBuilder sb = new StringBuilder();
+        if (txtMaphieudatphong.getText().equals("")) {
+            sb.append("Mã phiếu đặt phòng không được để trống");
+            txtMaphieudatphong.setBackground(Color.red);
+
+        } else {
+            txtMaphieudatphong.setBackground(Color.white);
+        }
+        if (sb.length() > 0) {
+            JOptionPane.showMessageDialog(this, sb);
+        }
+        String MaKH = cmbmakh.getSelectedItem().toString();
+        String MaNV = cmbmanv.getSelectedItem().toString();
+        String MaPhong = cmbmaphon.getSelectedItem().toString();
+        try {
+            ModelRentv2 nv = new ModelRentv2();
+            nv.setMaPhieuDatPhong(txtMaphieudatphong.getText());
+            nv.setNgayDatPhong(ngaysinh);
+            nv.setMaPhong(MaPhong);
+            nv.setMaKH(MaKH);
+            nv.setMaNV(MaNV);
+          
+            ModelRent ql1 = new ModelRent();
+            ql1.update(nv);
+
+            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+            loaddulieu1();
+        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+             JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
+            e.printStackTrace();
+        }
+        
+        
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
         
+        Date selectedDate = jDateChooserngaydatphong.getDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDate);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String ngaysinh = year + "-" + month + "-" + day;
+
+
+        StringBuilder sb = new StringBuilder();
+        if (txtMaphieudatphong.getText().equals("")) {
+            sb.append("Mã phiếu đặt phòng không được để trống");
+            txtMaphieudatphong.setBackground(Color.red);
+
+        } else {
+            txtMaphieudatphong.setBackground(Color.white);
+        }
+        if (sb.length() > 0) {
+            JOptionPane.showMessageDialog(this, sb);
+        }
+        String MaKH = cmbmakh.getSelectedItem().toString();
+        String MaNV = cmbmanv.getSelectedItem().toString();
+        String MaPhong = cmbmaphon.getSelectedItem().toString();
+        try {
+            ModelRentv2 nv = new ModelRentv2();
+            nv.setMaPhieuDatPhong(txtMaphieudatphong.getText());
+            nv.setNgayDatPhong(ngaysinh);
+            nv.setMaPhong(MaPhong);
+            nv.setMaKH(MaKH);
+            nv.setMaNV(MaNV);
+          
+            ModelRent ql1 = new ModelRent();
+            ql1.insert(nv);
+
+            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+            loaddulieu1();
+        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+             JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
+            e.printStackTrace();
+        }
+        
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void bthDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bthDeleteActionPerformed
         // TODO add your handling code here:
+      
+
+
+        StringBuilder sb = new StringBuilder();
+        if (txtMaphieudatphong.getText().equals("")) {
+            sb.append("Mã phiếu đặt phòng không được để trống");
+            txtMaphieudatphong.setBackground(Color.red);
+
+        } else {
+            txtMaphieudatphong.setBackground(Color.white);
+        }
+        if (sb.length() > 0) {
+            JOptionPane.showMessageDialog(this, sb);
+        }
+       
+        try {
+            ModelRentv2 nv = new ModelRentv2();
+            nv.setMaPhieuDatPhong(txtMaphieudatphong.getText());
+           
+          
+            ModelRent ql1 = new ModelRent();
+            ql1.deletecomeroot(nv);
+
+            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+            loaddulieu1();
+        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+             JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
+            e.printStackTrace();
+        }
+        
+        
     }//GEN-LAST:event_bthDeleteActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
@@ -612,7 +742,7 @@ public class FormRent extends javax.swing.JPanel {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
-
+        
         
     }//GEN-LAST:event_btnSearchActionPerformed
 
@@ -623,16 +753,66 @@ public class FormRent extends javax.swing.JPanel {
 
     private void TBRentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TBRentMouseClicked
         // TODO add your handling code here:
-        
+        int row = TBRent.getSelectedRow();
+
+        if (row >= 0) {
+            txtMaphieudatphong.setText(TBRent.getValueAt(row, 0).toString());
+            
+            String makh = TBRent.getValueAt(row, 1).toString();
+            System.out.println("" + makh);
+            cmbmakh.setSelectedItem(makh);
+            
+            txtTENkh.setText(TBRent.getValueAt(row, 2).toString());
+            
+            String manv = TBRent.getValueAt(row, 3).toString();
+            System.out.println("" + manv);
+            cmbmanv.setSelectedItem(manv);
+            
+            txtTenNV.setText(TBRent.getValueAt(row, 4).toString());
+            
+            String maphong = TBRent.getValueAt(row, 5).toString();
+            System.out.println("" + maphong);
+            cmbmaphon.setSelectedItem(maphong);
+            
+            txtTenPhong.setText(TBRent.getValueAt(row, 6).toString());
+            txtloaiphong.setText(TBRent.getValueAt(row, 7).toString());
+            
+            String ngaydatphong = TBRent.getValueAt(row, 8).toString();
+            
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
+                Date selectedDate = dateFormat.parse(ngaydatphong); // Phân tích chuỗi thành đối tượng Date
+                jDateChooserngaydatphong.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            
+            ModelRentv2 ms =new ModelRentv2();
+            BigDecimal x = (BigDecimal) TBRent.getValueAt(row, 9);
+
+            ms.setGia(x);
+
+            String formattedDonGia = ms.getFormattedGia();
+            System.out.println(formattedDonGia);
+            txtGiaPhong.setText(formattedDonGia);
+
+        }
 
     }//GEN-LAST:event_TBRentMouseClicked
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
+        FormaddKH l = new FormaddKH(username, password, DisplayName,quyen);
+        l.setVisible(true);
+        l.setLocationRelativeTo(null);
     }//GEN-LAST:event_button1ActionPerformed
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         // TODO add your handling code here:
+        FormcheckRoom l = new FormcheckRoom(username, password, DisplayName,quyen);
+        l.setVisible(true);
+        l.setLocationRelativeTo(null);
+        
     }//GEN-LAST:event_button2ActionPerformed
 
 
@@ -646,6 +826,7 @@ public class FormRent extends javax.swing.JPanel {
     private swing.Button btnView;
     private swing.Button button1;
     private swing.Button button2;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cmbmakh;
     private javax.swing.JComboBox<String> cmbmanv;
     private javax.swing.JComboBox<String> cmbmaphon;
