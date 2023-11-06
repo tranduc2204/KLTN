@@ -7,6 +7,7 @@ package form;
 
 import connect.Connect;
 import java.awt.Color;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -50,9 +51,9 @@ public class FormCheckIn extends javax.swing.JPanel {
         this.DisplayName = DisplayName;
         this.quyen = quyen;
         
-        initCombobox_makh();
+        
         initCombobox_maphieudatphong();
-        initCombobox_maphong();
+  
        
 
         inittable();
@@ -65,7 +66,7 @@ public class FormCheckIn extends javax.swing.JPanel {
         TBRent.setModel(tbmodel);
     }
     
-     public void loaddulieu1() {
+    public void loaddulieu1() {
         try {
             ModelCheckIn ql = new ModelCheckIn();
             ArrayList<ModelCheckInv2> list = ql.findALL();
@@ -83,45 +84,8 @@ public class FormCheckIn extends javax.swing.JPanel {
 
     }
      
-    private void initCombobox_makh() {
-        try {
-            conn = cn.getConnection();
-            String sql = "Select MaKH from KHACHHANG where isvisible = '1' ";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery();
-            cmbmakh.removeAllItems();
-            cmbmakh.removeAllItems();
-            while (rs.next()) {
-                cmbmakh.addItem(rs.getString("MaKH"));
-            }
-            rs.close();
-            pstmt.close();
-            conn.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-            e.printStackTrace();
-        }
-    }
+   
     
-    private void initCombobox_maphong() {
-        try {
-            conn = cn.getConnection();
-            String sql = "Select maphong from Phong where isvisible = '1' ";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery();
-            cmbmaphon.removeAllItems();
-            cmbmaphon.removeAllItems();
-            while (rs.next()) {
-                cmbmaphon.addItem(rs.getString("maphong"));
-            }
-            rs.close();
-            pstmt.close();
-            conn.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-            e.printStackTrace();
-        }
-    }
     
     private void initCombobox_maphieudatphong() {
         try {
@@ -172,11 +136,11 @@ public class FormCheckIn extends javax.swing.JPanel {
         jDateChooserngaydatphong = new com.toedter.calendar.JDateChooser();
         jLabel20 = new javax.swing.JLabel();
         cmbmaphieudatphong = new javax.swing.JComboBox<>();
-        cmbmakh = new javax.swing.JComboBox<>();
-        cmbmaphon = new javax.swing.JComboBox<>();
         txtloaiphong = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         jDateChooserngaythuephong = new com.toedter.calendar.JDateChooser();
+        txtMaKH = new javax.swing.JTextField();
+        txtMaPhong = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         TBRent = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
@@ -208,6 +172,8 @@ public class FormCheckIn extends javax.swing.JPanel {
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Tên phòng:");
 
+        txtTenPhong.setEnabled(false);
+
         btnEdit.setText("Sửa");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -236,6 +202,8 @@ public class FormCheckIn extends javax.swing.JPanel {
             }
         });
 
+        txtGiaPhong.setEnabled(false);
+
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("Giá phòng:");
@@ -248,9 +216,13 @@ public class FormCheckIn extends javax.swing.JPanel {
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("Tên khách hàng:");
 
+        txtTenKH.setEnabled(false);
+
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Ngày đặt phòng:");
+
+        jDateChooserngaydatphong.setEnabled(false);
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
@@ -262,21 +234,15 @@ public class FormCheckIn extends javax.swing.JPanel {
             }
         });
 
-        cmbmakh.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbmakhItemStateChanged(evt);
-            }
-        });
-
-        cmbmaphon.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbmaphonItemStateChanged(evt);
-            }
-        });
+        txtloaiphong.setEnabled(false);
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setText("Ngày thuê phòng:");
+
+        txtMaKH.setEnabled(false);
+
+        txtMaPhong.setEnabled(false);
 
         javax.swing.GroupLayout roundPanel5Layout = new javax.swing.GroupLayout(roundPanel5);
         roundPanel5.setLayout(roundPanel5Layout);
@@ -297,8 +263,8 @@ public class FormCheckIn extends javax.swing.JPanel {
                             .addComponent(txtMaphieuthuephong, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
                             .addComponent(txtTenKH, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cmbmaphieudatphong, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbmakh, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jDateChooserngaydatphong, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jDateChooserngaydatphong, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtMaKH))
                         .addGap(53, 53, 53))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createSequentialGroup()
                         .addContainerGap()
@@ -320,9 +286,9 @@ public class FormCheckIn extends javax.swing.JPanel {
                                         .addComponent(jLabel14)
                                         .addComponent(jLabel16))
                                     .addGap(70, 70, 70)
-                                    .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtTenPhong)
-                                        .addComponent(cmbmaphon, 0, 281, Short.MAX_VALUE)))
+                                    .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(txtTenPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtMaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createSequentialGroup()
                                     .addComponent(jLabel21)
                                     .addGap(18, 18, 18)
@@ -345,7 +311,7 @@ public class FormCheckIn extends javax.swing.JPanel {
                     .addComponent(jLabel10)
                     .addComponent(jLabel14)
                     .addComponent(txtMaphieuthuephong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbmaphon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
@@ -362,9 +328,9 @@ public class FormCheckIn extends javax.swing.JPanel {
                 .addGap(25, 25, 25)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
-                    .addComponent(cmbmakh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17)
-                    .addComponent(txtGiaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtGiaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -631,6 +597,61 @@ public class FormCheckIn extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnRefreshActionPerformed
 
+    private void TBRentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TBRentMouseClicked
+        // TODO add your handling code here:
+        int row = TBRent.getSelectedRow();
+
+        if (row >= 0) {
+            txtMaphieuthuephong.setText(TBRent.getValueAt(row, 0).toString());
+
+            String maphieudatphong = TBRent.getValueAt(row, 1).toString();
+            System.out.println("" + maphieudatphong);
+            cmbmaphieudatphong.setSelectedItem(maphieudatphong);
+
+            txtMaKH.setText(TBRent.getValueAt(row, 3).toString());
+            
+
+            txtTenKH.setText(TBRent.getValueAt(row, 4).toString());
+            txtMaPhong.setText(TBRent.getValueAt(row, 5).toString());
+            txtTenPhong.setText(TBRent.getValueAt(row, 6).toString());
+            txtloaiphong.setText(TBRent.getValueAt(row, 7).toString());
+        
+            
+            ModelCheckInv2 ms =new ModelCheckInv2();
+            BigDecimal x = (BigDecimal) TBRent.getValueAt(row, 8);
+
+            ms.setGia(x);
+
+            String formattedDonGia = ms.getFormattedGia();
+            System.out.println(formattedDonGia);
+            txtGiaPhong.setText(formattedDonGia);
+            
+            
+            String ngaythuephong = TBRent.getValueAt(row, 9).toString();
+
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
+                Date selectedDate = dateFormat.parse(ngaythuephong); // Phân tích chuỗi thành đối tượng Date
+                jDateChooserngaythuephong.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+           
+
+        }
+    }//GEN-LAST:event_TBRentMouseClicked
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_btnViewActionPerformed
+
     private void cmbmaphieudatphongItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmaphieudatphongItemStateChanged
         // TODO add your handling code here:
         String Mapdp = cmbmaphieudatphong.getSelectedItem().toString();
@@ -639,7 +660,7 @@ public class FormCheckIn extends javax.swing.JPanel {
 
             model.ModelRentv2 ttp = ql.findByID(Mapdp);
             if (ttp != null) {
- 
+
                 String ngaydatphong = ttp.getNgayDatPhong();
 
                 try {
@@ -659,106 +680,6 @@ public class FormCheckIn extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cmbmaphieudatphongItemStateChanged
 
-    private void cmbmakhItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmakhItemStateChanged
-        // TODO add your handling code here:
-        String Makh = cmbmakh.getSelectedItem().toString();
-        try {
-            ModelCustomers ql = new ModelCustomers();
-
-            model.ModelCustomersv2 ttp = ql.findByID(Makh);
-            if (ttp != null) {
-                txtTenKH.setText(ttp.getTenKH());
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Không tim thấy mã khách hàng");
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_cmbmakhItemStateChanged
-
-    private void cmbmaphonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmaphonItemStateChanged
-        // TODO add your handling code here:
-        String MaPhong = cmbmaphon.getSelectedItem().toString();
-        try {
-            ModelRoom ql = new ModelRoom();
-
-            model.ModelRoomv2 ttp = ql.findByID(MaPhong);
-            if (ttp != null) {
-                txtTenPhong.setText(ttp.getTenPhong());
-                txtGiaPhong.setText(ttp.getFormattedDonGia());
-                txtloaiphong.setText(ttp.getTenLoaiPhong());
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Không tim thấy mã phòng");
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_cmbmaphonItemStateChanged
-
-    private void TBRentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TBRentMouseClicked
-        // TODO add your handling code here:
-//        int row = TBRent.getSelectedRow();
-//
-//        if (row >= 0) {
-//            txtMaphieudatphong.setText(TBRent.getValueAt(row, 0).toString());
-//
-//            String makh = TBRent.getValueAt(row, 1).toString();
-//            System.out.println("" + makh);
-//            cmbmaphieudatphong.setSelectedItem(makh);
-//
-//            txtTENkh.setText(TBRent.getValueAt(row, 2).toString());
-//
-//            String manv = TBRent.getValueAt(row, 3).toString();
-//            System.out.println("" + manv);
-//            cmbmakh.setSelectedItem(manv);
-//
-//            txtTenKH.setText(TBRent.getValueAt(row, 4).toString());
-//
-//            String maphong = TBRent.getValueAt(row, 5).toString();
-//            System.out.println("" + maphong);
-//            cmbmaphon.setSelectedItem(maphong);
-//
-//            txtTenPhong.setText(TBRent.getValueAt(row, 6).toString());
-//            txtloaiphong.setText(TBRent.getValueAt(row, 7).toString());
-//
-//            String ngaydatphong = TBRent.getValueAt(row, 8).toString();
-//
-//            try {
-//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
-//                Date selectedDate = dateFormat.parse(ngaydatphong); // Phân tích chuỗi thành đối tượng Date
-//                jDateChooserngaydatphong.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//
-//            ModelRentv2 ms =new ModelRentv2();
-//            BigDecimal x = (BigDecimal) TBRent.getValueAt(row, 9);
-//
-//            ms.setGia(x);
-//
-//            String formattedDonGia = ms.getFormattedGia();
-//            System.out.println(formattedDonGia);
-//            txtGiaPhong.setText(formattedDonGia);
-//
-//        }
-    }//GEN-LAST:event_TBRentMouseClicked
-
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_btnSearchActionPerformed
-
-    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_btnViewActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TBRent;
@@ -768,9 +689,7 @@ public class FormCheckIn extends javax.swing.JPanel {
     private swing.Button btnRefresh;
     private swing.Button btnSearch;
     private swing.Button btnView;
-    private javax.swing.JComboBox<String> cmbmakh;
     private javax.swing.JComboBox<String> cmbmaphieudatphong;
-    private javax.swing.JComboBox<String> cmbmaphon;
     private com.toedter.calendar.JDateChooser jDateChooserTim;
     private com.toedter.calendar.JDateChooser jDateChooserngaydatphong;
     private com.toedter.calendar.JDateChooser jDateChooserngaythuephong;
@@ -792,6 +711,8 @@ public class FormCheckIn extends javax.swing.JPanel {
     private javax.swing.JRadioButton rbsearchngaydat;
     private swing.RoundPanel roundPanel5;
     private javax.swing.JTextField txtGiaPhong;
+    private javax.swing.JTextField txtMaKH;
+    private javax.swing.JTextField txtMaPhong;
     private javax.swing.JTextField txtMaphieuthuephong;
     private javax.swing.JTextField txtSEARCHMAKH;
     private javax.swing.JTextField txtTenKH;
