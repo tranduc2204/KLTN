@@ -49,8 +49,13 @@ public class ModelRent {
     }
     
     public ModelRentv2 findByID(String MaPhieuDatPhong) throws Exception {
-        String sql = "select * from PhieuDatPhong where MaPhieuDatPhong =?";
+//        String sql = "select * from PhieuDatPhong where MaPhieuDatPhong =?";
 
+        String sql = "select MaPhieuDatPhong, kh.MaKH, TenKH, nv.MaNV, TenNV, p.MaPhong, TenPhong, lp.TenLoaiPhong, "
+                + "NgayDatPhong, Tien from PhieuDatPhong pdp join PHONG p on pdp.MaPhong = p.MaPhong "
+                + "join KHACHHANG kh on kh.MaKH =pdp.MaKH join NHANVIEN nv on pdp.MaNV = nv.MaNV "
+                + "join LOAIPHONG lp on lp.MaLoaiPhong = p.MaLoaiPhong  where MaPhieuDatPhong =? ";  
+        
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -59,11 +64,18 @@ public class ModelRent {
 
         if (rs.next()) {
             ModelRentv2 tp = new ModelRentv2();
+
             tp.setMaPhieuDatPhong(rs.getString("MaPhieuDatPhong"));
-            tp.setNgayDatPhong(rs.getString("NgayDatPhong"));
-            tp.setMaPhong(rs.getString("MaPhong"));
             tp.setMaKH(rs.getString("MaKH"));
+            tp.setTenKH(rs.getString("TenKH"));
             tp.setMaNV(rs.getString("MaNV"));
+            tp.setTenNV(rs.getString("TenNV"));
+           
+            tp.setMaPhong(rs.getString("MaPhong"));
+            tp.setTenPhong(rs.getString("TenPhong"));
+            tp.setLoaiPhong(rs.getString("TenLoaiPhong"));
+            tp.setNgayDatPhong(rs.getString("NgayDatPhong"));
+            tp.setGia(rs.getBigDecimal("Tien"));
             return tp;
         }
         return null;
@@ -133,5 +145,7 @@ public class ModelRent {
             conn.setAutoCommit(true); // Bật chế độ tự động commit trở lại
         }
     }
+    
+    
     
 }

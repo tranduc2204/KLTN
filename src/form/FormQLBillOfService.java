@@ -180,7 +180,7 @@ public class FormQLBillOfService extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         tbBiillService = new javax.swing.JTable();
 
-        roundPanel5.setBackground(new java.awt.Color(77, 79, 45));
+        roundPanel5.setBackground(new java.awt.Color(36, 87, 157));
         roundPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin hóa đơn dịch vụ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jLabel48.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N

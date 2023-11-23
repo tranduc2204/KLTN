@@ -21,6 +21,8 @@ import javax.swing.table.DefaultTableModel;
 import model.ModelCheckIn;
 import model.ModelCheckInv2;
 import model.ModelCustomers;
+import model.ModelPhong;
+import model.ModelPhongv2;
 import model.ModelRent;
 import model.ModelRentv2;
 import model.ModelRoom;
@@ -153,7 +155,7 @@ public class FormCheckIn extends javax.swing.JPanel {
         btnView = new swing.Button();
         jDateChooserTim = new com.toedter.calendar.JDateChooser();
 
-        roundPanel5.setBackground(new java.awt.Color(77, 79, 45));
+        roundPanel5.setBackground(new java.awt.Color(36, 87, 157));
         roundPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin thuê phòng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
@@ -370,16 +372,16 @@ public class FormCheckIn extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel8.setText("Thông tin thuê phòng:");
 
-        panelBorder2.setBackground(new java.awt.Color(77, 79, 45));
+        panelBorder2.setBackground(new java.awt.Color(36, 87, 157));
         panelBorder2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
         panelBorder2.setForeground(new java.awt.Color(255, 255, 255));
 
-        rbMAKH1.setBackground(new java.awt.Color(77, 79, 45));
+        rbMAKH1.setBackground(new java.awt.Color(36, 87, 157));
         rbMAKH1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rbMAKH1.setForeground(new java.awt.Color(255, 255, 255));
         rbMAKH1.setText("Mã khách hàng:");
 
-        rbsearchngaydat.setBackground(new java.awt.Color(77, 79, 45));
+        rbsearchngaydat.setBackground(new java.awt.Color(36, 87, 157));
         rbsearchngaydat.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rbsearchngaydat.setForeground(new java.awt.Color(255, 255, 255));
         rbsearchngaydat.setText("Ngày đặt phòng:");
@@ -505,6 +507,29 @@ public class FormCheckIn extends javax.swing.JPanel {
             ql1.update(ci);
 
             JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+            
+            int row = TBRent.getSelectedRow();
+            if (row >= 0) {
+                String maphong = TBRent.getValueAt(row, 5).toString();
+                
+                ModelPhongv2 p = new ModelPhongv2();
+                p.setMaPhong(maphong);
+
+                ModelPhong ql = new ModelPhong();
+                ql.updateTT2(p);
+                
+                
+                
+            }
+            ModelPhongv2 p = new ModelPhongv2();
+            p.setMaPhong(txtMaPhong.getText());
+
+            ModelPhong ql = new ModelPhong();
+            ql.updateTT3(p);
+         
+            
+            
+            
             loaddulieu1();
         } catch (Exception e) {
             //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
@@ -552,6 +577,15 @@ public class FormCheckIn extends javax.swing.JPanel {
             ql1.insert(ci);
 
             JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+            
+            
+            ModelPhongv2 p = new ModelPhongv2();
+            p.setMaPhong(txtMaPhong.getText());
+
+            ModelPhong ql = new ModelPhong();
+            ql.updateTT3(p);
+            
+            
             loaddulieu1();
         } catch (Exception e) {
             //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
@@ -584,6 +618,22 @@ public class FormCheckIn extends javax.swing.JPanel {
             ql1.deletecomeroot(ci);
 
             JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+            
+            
+            int row = TBRent.getSelectedRow();
+            if (row >= 0) {
+                String maphong = TBRent.getValueAt(row, 5).toString();
+                
+                ModelPhongv2 p = new ModelPhongv2();
+                p.setMaPhong(maphong);
+
+                ModelPhong ql = new ModelPhong();
+                ql.updateTT2(p);
+                
+  
+            }
+            
+            
             loaddulieu1();
         } catch (Exception e) {
             //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
@@ -668,9 +718,19 @@ public class FormCheckIn extends javax.swing.JPanel {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
                     Date selectedDatee = dateFormat.parse(ngaydatphong); // Phân tích chuỗi thành đối tượng Date
                     jDateChooserngaydatphong.setDate(selectedDatee); // Đặt giá trị ngày cho JDateChooser
+                 
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                
+                txtMaKH.setText(ttp.getMaKH());
+                txtTenKH.setText(ttp.getTenKH());
+                txtMaPhong.setText(ttp.getMaPhong());
+                txtTenPhong.setText(ttp.getTenPhong());
+                txtloaiphong.setText(ttp.getLoaiPhong());
+                txtGiaPhong.setText(ttp.getFormattedGia());
+               
+                
             } else {
                 JOptionPane.showMessageDialog(this, "Không tim thấy mã khách hàng");
             }

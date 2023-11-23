@@ -116,7 +116,7 @@ public class FormLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(77, 79, 45));
+        jPanel1.setBackground(new java.awt.Color(26, 48, 116));
         jPanel1.setForeground(java.awt.SystemColor.activeCaptionBorder);
 
         roundPanel1.setBackground(new java.awt.Color(255, 255, 255));

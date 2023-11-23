@@ -20,7 +20,7 @@ public class ModelCheckOut {
     Connection conn;
     
     public ArrayList<ModelCheckOutv2> findALL() throws Exception {
-        String sql = "select MaHoaDonPhong, ptp.MaPhieuThuePhong, NgayThuePhong, NgayDatPhong, TenPhong, lp.TenLoaiPhong,"
+        String sql = "select MaHoaDonPhong, ptp.MaPhieuThuePhong, NgayThuePhong, NgayDatPhong, p.MaPhong, TenPhong, lp.TenLoaiPhong,"
                 + " Tien, ((DATEDIFF(DAY, NgayDatPhong, NgayThuePhong)) *Tien) AS GiaHD,NgayLapHoaDon "
                 + "from HoaDonPhong hdp join PhieuThuePhong ptp on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong "
                 + "join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong join phong p "
@@ -35,6 +35,7 @@ public class ModelCheckOut {
             co.setMaPhieuThuePhong(rs.getString("MaPhieuThuePhong"));
             co.setNgayThuePhong(rs.getString("NgayThuePhong"));
             co.setNgayDatPhong(rs.getString("NgayDatPhong"));
+            co.setMaPhong(rs.getString("MaPhong"));
             co.setTenPhong(rs.getString("TenPhong"));
             co.setLoaiPhong(rs.getString("TenLoaiPhong"));
     
@@ -46,25 +47,7 @@ public class ModelCheckOut {
         return list;
     }
     
-    public ModelCheckOutv2 findByID(String Maphieuthuephong) throws Exception {
-        String sql = "select * from PhieuThuePhong where MaPhieuThuePhong =?";
 
-        conn = cn.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-
-        pstmt.setString(1, Maphieuthuephong);
-        ResultSet rs = pstmt.executeQuery();
-
-        if (rs.next()) {
-            ModelCheckOutv2 tp = new ModelCheckOutv2();
-            tp.setMaPhieuThuePhong(rs.getString("MaPhieuThuePhong"));
-            tp.setNgayThuePhong(rs.getString("NgayThuePhong"));
-           
-
-            return tp;
-        }
-        return null;
-    }
 //    
     public boolean insert(ModelCheckOutv2 rt) throws Exception {
         String sql = "insert into HoaDonPhong (MaHoaDonPhong, NgayLapHoaDon, MaPhieuThuePhong) values (?,?,?)";

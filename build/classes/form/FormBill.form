@@ -59,7 +59,7 @@
     <Container class="swing.RoundPanel" name="roundPanel2">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="2d" green="4f" red="4d" type="rgb"/>
+          <Color blue="9d" green="57" red="24" type="rgb"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -382,7 +382,7 @@
     <Container class="swing.PanelBorder" name="panelBorder2">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="2d" green="4f" red="4d" type="rgb"/>
+          <Color blue="9d" green="57" red="24" type="rgb"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -467,7 +467,7 @@
         <Component class="javax.swing.JRadioButton" name="rbMAHOADON">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="2d" green="4f" red="4d" type="rgb"/>
+              <Color blue="9d" green="57" red="24" type="rgb"/>
             </Property>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="buttonGroup1"/>
@@ -484,7 +484,7 @@
         <Component class="javax.swing.JRadioButton" name="rbNGAY">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="2d" green="4f" red="4d" type="rgb"/>
+              <Color blue="9d" green="57" red="24" type="rgb"/>
             </Property>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="buttonGroup1"/>

@@ -126,7 +126,7 @@ public class FormQLCustomers extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
 
-        roundPanel5.setBackground(new java.awt.Color(77, 79, 45));
+        roundPanel5.setBackground(new java.awt.Color(36, 87, 157));
         roundPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin khách hàng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
@@ -157,13 +157,13 @@ public class FormQLCustomers extends javax.swing.JPanel {
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("Giới tính:");
 
-        RBNNam.setBackground(new java.awt.Color(77, 79, 45));
+        RBNNam.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroupsex.add(RBNNam);
         RBNNam.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         RBNNam.setForeground(new java.awt.Color(255, 255, 255));
         RBNNam.setText("Nam");
 
-        RBNNNU.setBackground(new java.awt.Color(77, 79, 45));
+        RBNNNU.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroupsex.add(RBNNNU);
         RBNNNU.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         RBNNNU.setForeground(new java.awt.Color(255, 255, 255));
@@ -291,23 +291,23 @@ public class FormQLCustomers extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        panelBorder2.setBackground(new java.awt.Color(77, 79, 45));
+        panelBorder2.setBackground(new java.awt.Color(36, 87, 157));
         panelBorder2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
         panelBorder2.setForeground(new java.awt.Color(255, 255, 255));
 
-        rbMAKH1.setBackground(new java.awt.Color(77, 79, 45));
+        rbMAKH1.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroupfind.add(rbMAKH1);
         rbMAKH1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rbMAKH1.setForeground(new java.awt.Color(255, 255, 255));
         rbMAKH1.setText("Mã khách hàng:");
 
-        rbSDT1.setBackground(new java.awt.Color(77, 79, 45));
+        rbSDT1.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroupfind.add(rbSDT1);
         rbSDT1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rbSDT1.setForeground(new java.awt.Color(255, 255, 255));
         rbSDT1.setText("Số điện thoại:");
 
-        rbNGAYSINH1.setBackground(new java.awt.Color(77, 79, 45));
+        rbNGAYSINH1.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroupfind.add(rbNGAYSINH1);
         rbNGAYSINH1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rbNGAYSINH1.setForeground(new java.awt.Color(255, 255, 255));

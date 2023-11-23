@@ -123,7 +123,7 @@ public class FormQLStaff extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
 
-        roundPanel2.setBackground(new java.awt.Color(77, 79, 45));
+        roundPanel2.setBackground(new java.awt.Color(36, 87, 157));
         roundPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin nhân viên", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
         roundPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -167,13 +167,13 @@ public class FormQLStaff extends javax.swing.JPanel {
         jLabel48.setForeground(new java.awt.Color(255, 255, 255));
         jLabel48.setText("Ngày vào làm:");
 
-        RBNNam.setBackground(new java.awt.Color(77, 79, 45));
+        RBNNam.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroup1.add(RBNNam);
         RBNNam.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         RBNNam.setForeground(new java.awt.Color(255, 255, 255));
         RBNNam.setText("Nam");
 
-        RBNNNU.setBackground(new java.awt.Color(77, 79, 45));
+        RBNNNU.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroup1.add(RBNNNU);
         RBNNNU.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         RBNNNU.setForeground(new java.awt.Color(255, 255, 255));
@@ -343,7 +343,7 @@ public class FormQLStaff extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tbNHANVIEN);
 
-        panelBorder2.setBackground(new java.awt.Color(77, 79, 45));
+        panelBorder2.setBackground(new java.awt.Color(36, 87, 157));
         panelBorder2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
         panelBorder2.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -361,19 +361,19 @@ public class FormQLStaff extends javax.swing.JPanel {
             }
         });
 
-        rbMANHANVIEN.setBackground(new java.awt.Color(77, 79, 45));
+        rbMANHANVIEN.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroup2.add(rbMANHANVIEN);
         rbMANHANVIEN.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rbMANHANVIEN.setForeground(new java.awt.Color(255, 255, 255));
         rbMANHANVIEN.setText("Mã nhân viên:");
 
-        rbSDT.setBackground(new java.awt.Color(77, 79, 45));
+        rbSDT.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroup2.add(rbSDT);
         rbSDT.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rbSDT.setForeground(new java.awt.Color(255, 255, 255));
         rbSDT.setText("Số điện thoại:");
 
-        rbTENNHANVIEN.setBackground(new java.awt.Color(77, 79, 45));
+        rbTENNHANVIEN.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroup2.add(rbTENNHANVIEN);
         rbTENNHANVIEN.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rbTENNHANVIEN.setForeground(new java.awt.Color(255, 255, 255));

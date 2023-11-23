@@ -159,7 +159,7 @@ public class FormQLRoom extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
 
-        roundPanel2.setBackground(new java.awt.Color(77, 79, 45));
+        roundPanel2.setBackground(new java.awt.Color(36, 87, 157));
         roundPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin phòng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
         roundPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -319,17 +319,17 @@ public class FormQLRoom extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        panelBorder2.setBackground(new java.awt.Color(77, 79, 45));
+        panelBorder2.setBackground(new java.awt.Color(36, 87, 157));
         panelBorder2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
         panelBorder2.setForeground(new java.awt.Color(255, 255, 255));
 
-        rbMAPHONG.setBackground(new java.awt.Color(77, 79, 45));
+        rbMAPHONG.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroup1.add(rbMAPHONG);
         rbMAPHONG.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rbMAPHONG.setForeground(new java.awt.Color(255, 255, 255));
         rbMAPHONG.setText("Mã phòng:");
 
-        rbDONGIA.setBackground(new java.awt.Color(77, 79, 45));
+        rbDONGIA.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroup1.add(rbDONGIA);
         rbDONGIA.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rbDONGIA.setForeground(new java.awt.Color(255, 255, 255));

@@ -13,22 +13,10 @@ import java.text.DecimalFormat;
  * @author TeeDee
  */
 public class ModelCheckOutv2 {
-    String MaHoaDonPhong ,MaPhieuThuePhong, NgayThuePhong, NgayDatPhong, TenPhong, LoaiPhong, NgayLapHoaDon;
+    String MaHoaDonPhong ,MaPhieuThuePhong, NgayThuePhong, NgayDatPhong, MaPhong,TenPhong, LoaiPhong, NgayLapHoaDon;
     BigDecimal Gia, GiaHD;
 
     public ModelCheckOutv2() {
-    }
-
-    public ModelCheckOutv2(String MaHoaDonPhong, String MaPhieuThuePhong, String NgayThuePhong, String NgayDatPhong, String TenPhong, String LoaiPhong, String NgayLapHoaDon, BigDecimal Gia, BigDecimal GiaHD) {
-        this.MaHoaDonPhong = MaHoaDonPhong;
-        this.MaPhieuThuePhong = MaPhieuThuePhong;
-        this.NgayThuePhong = NgayThuePhong;
-        this.NgayDatPhong = NgayDatPhong;
-        this.TenPhong = TenPhong;
-        this.LoaiPhong = LoaiPhong;
-        this.NgayLapHoaDon = NgayLapHoaDon;
-        this.Gia = Gia;
-        this.GiaHD = GiaHD;
     }
 
     public String getMaHoaDonPhong() {
@@ -61,6 +49,14 @@ public class ModelCheckOutv2 {
 
     public void setNgayDatPhong(String NgayDatPhong) {
         this.NgayDatPhong = NgayDatPhong;
+    }
+
+    public String getMaPhong() {
+        return MaPhong;
+    }
+
+    public void setMaPhong(String MaPhong) {
+        this.MaPhong = MaPhong;
     }
 
     public String getTenPhong() {
@@ -102,6 +98,21 @@ public class ModelCheckOutv2 {
     public void setGiaHD(BigDecimal GiaHD) {
         this.GiaHD = GiaHD;
     }
+
+    public ModelCheckOutv2(String MaHoaDonPhong, String MaPhieuThuePhong, String NgayThuePhong, String NgayDatPhong, String MaPhong, String TenPhong, String LoaiPhong, String NgayLapHoaDon, BigDecimal Gia, BigDecimal GiaHD) {
+        this.MaHoaDonPhong = MaHoaDonPhong;
+        this.MaPhieuThuePhong = MaPhieuThuePhong;
+        this.NgayThuePhong = NgayThuePhong;
+        this.NgayDatPhong = NgayDatPhong;
+        this.MaPhong = MaPhong;
+        this.TenPhong = TenPhong;
+        this.LoaiPhong = LoaiPhong;
+        this.NgayLapHoaDon = NgayLapHoaDon;
+        this.Gia = Gia;
+        this.GiaHD = GiaHD;
+    }
+
+    
 
     
     

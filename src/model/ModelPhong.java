@@ -145,4 +145,41 @@ public class ModelPhong {
             conn.setAutoCommit(true); // Bật chế độ tự động commit trở lại
         }
     }
+    
+    
+    public boolean updateTT1(ModelPhongv2 p) throws Exception {
+        String sql = "update phong set  matinhtrangphong= 'TT1' where maphong = ?";
+
+        conn = cn.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+
+        pstmt.setString(1, p.getMaPhong());
+
+       
+        return pstmt.executeUpdate() > 0;
+    }
+    
+    public boolean updateTT2(ModelPhongv2 p) throws Exception {
+        String sql = "update phong set  matinhtrangphong= 'TT2' where maphong = ?";
+
+        conn = cn.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+
+        pstmt.setString(1, p.getMaPhong());
+
+       
+        return pstmt.executeUpdate() > 0;
+    }
+    
+    public boolean updateTT3(ModelPhongv2 p) throws Exception {
+        String sql = "update phong set  matinhtrangphong= 'TT3' where maphong = ?";
+
+        conn = cn.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+
+        pstmt.setString(1, p.getMaPhong());
+
+       
+        return pstmt.executeUpdate() > 0;
+    }
 }

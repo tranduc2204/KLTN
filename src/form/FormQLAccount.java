@@ -153,9 +153,10 @@ public class FormQLAccount extends javax.swing.JPanel {
 
         roundPanel2.setOpaque(true);
 
-        roundPanel5.setBackground(new java.awt.Color(77, 79, 45));
+        roundPanel5.setBackground(new java.awt.Color(36, 87, 157));
         roundPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin nhân viên", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
+        jLabel23.setBackground(new java.awt.Color(255, 255, 255));
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
         jLabel23.setText("Tên đăng nhập:");
@@ -281,7 +282,7 @@ public class FormQLAccount extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel8.setText("Thông tin tài khoản:");
 
-        panelBorder1.setBackground(new java.awt.Color(77, 79, 45));
+        panelBorder1.setBackground(new java.awt.Color(36, 87, 157));
         panelBorder1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
         panelBorder1.setForeground(new java.awt.Color(255, 255, 255));
 

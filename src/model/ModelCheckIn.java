@@ -51,7 +51,11 @@ public class ModelCheckIn {
     }
     
     public ModelCheckInv2 findByID(String Maphieuthuephong) throws Exception {
-        String sql = "select * from PhieuThuePhong where MaPhieuThuePhong =?";
+        String sql = "select MaPhieuThuePhong, pdp.MaPhieuDatPhong, NgayDatPhong, kh.MaKH, TenKH, p.MaPhong,"
+                + " TenPhong, TenLoaiPhong,Tien, NgayThuePhong from PhieuThuePhong ptp "
+                + "join PhieuDatPhong pdp on ptp.MaPhieuDatPhong = pdp.MaPhieuDatPhong "
+                + "join KHACHHANG kh on kh.MaKH = pdp.MaKH  join PHONG p on p.MaPhong = pdp.MaPhong  "
+                + "join LOAIPHONG lp on lp.MaLoaiPhong = p.MaLoaiPhong where MaPhieuThuePhong =?";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -60,12 +64,22 @@ public class ModelCheckIn {
         ResultSet rs = pstmt.executeQuery();
 
         if (rs.next()) {
-            ModelCheckInv2 tp = new ModelCheckInv2();
-            tp.setMaPhieuThuePhong(rs.getString("MaPhieuThuePhong"));
-            tp.setNgayThuePhong(rs.getString("NgayThuePhong"));
-            tp.setMaPhieuDatPhong(rs.getString("MaPhieuDatPhong"));
+            ModelCheckInv2 ci = new ModelCheckInv2();
+            ci.setMaPhieuThuePhong(rs.getString("MaPhieuThuePhong"));
+            ci.setMaPhieuDatPhong(rs.getString("MaPhieuDatPhong"));
+            ci.setNgayDatPhong(rs.getString("NgayDatPhong"));
+            ci.setMaKH(rs.getString("MaKH"));
+            ci.setTenKH(rs.getString("TenKH"));
+           
+           
+            ci.setMaPhong(rs.getString("MaPhong"));
+            ci.setTenPhong(rs.getString("TenPhong"));
+            ci.setLoaiPhong(rs.getString("TenLoaiPhong"));
+    
+            ci.setGia(rs.getBigDecimal("Tien"));
+            ci.setNgayThuePhong(rs.getString("NgayThuePhong"));
 
-            return tp;
+            return ci;
         }
         return null;
     }

@@ -164,7 +164,7 @@ public class FormQLSuppliesForRoom extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
 
-        roundPanel2.setBackground(new java.awt.Color(77, 79, 45));
+        roundPanel2.setBackground(new java.awt.Color(36, 87, 157));
         roundPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin vật tư", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
         roundPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -321,17 +321,17 @@ public class FormQLSuppliesForRoom extends javax.swing.JPanel {
         });
         jScrollPane3.setViewportView(tbSupplies);
 
-        panelBorder2.setBackground(new java.awt.Color(77, 79, 45));
+        panelBorder2.setBackground(new java.awt.Color(36, 87, 157));
         panelBorder2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
         panelBorder2.setForeground(new java.awt.Color(255, 255, 255));
 
-        rbmavt.setBackground(new java.awt.Color(77, 79, 45));
+        rbmavt.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroup1.add(rbmavt);
         rbmavt.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rbmavt.setForeground(new java.awt.Color(255, 255, 255));
         rbmavt.setText("Mã vật tư:");
 
-        rbmalp.setBackground(new java.awt.Color(77, 79, 45));
+        rbmalp.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroup1.add(rbmalp);
         rbmalp.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rbmalp.setForeground(new java.awt.Color(255, 255, 255));
@@ -351,7 +351,7 @@ public class FormQLSuppliesForRoom extends javax.swing.JPanel {
             }
         });
 
-        rbsl.setBackground(new java.awt.Color(77, 79, 45));
+        rbsl.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroup1.add(rbsl);
         rbsl.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rbsl.setForeground(new java.awt.Color(255, 255, 255));
