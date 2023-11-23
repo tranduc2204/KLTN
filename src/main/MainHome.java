@@ -105,7 +105,10 @@ public class MainHome extends javax.swing.JFrame {
             System.out.println("Menu Index : " + menuIndex + " SubMenu Index " + subMenuIndex);
             if (menuIndex == 0) {
                 main.showForm(new FormHome());
-            }else if (menuIndex ==1 && quyen.equals("Admin")){
+            }else if (menuIndex ==1 && quyen.equals("Root")){
+                main.showForm(new FormBackupRestore());
+            }
+            else if (menuIndex ==1 && quyen.equals("Admin")){
                 main.showForm(new FormChart());
             }else if (menuIndex ==1 && quyen.equals("root")){
                 main.showForm(new FormBackupRestore());

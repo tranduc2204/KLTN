@@ -5,6 +5,16 @@
  */
 package form;
 
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import java.sql.PreparedStatement;
+
+
 /**
  *
  * @author TeeDee
@@ -17,6 +27,9 @@ public class FormBackupRestore extends javax.swing.JPanel {
     public FormBackupRestore() {
         initComponents();
     }
+    
+    String location = null;
+    String filename;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,19 +40,265 @@ public class FormBackupRestore extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelBorder1 = new swing.PanelBorder();
+        txtBackup = new javax.swing.JTextField();
+        btnBackup = new swing.Button();
+        btnBrowse = new swing.Button();
+        jLabel22 = new javax.swing.JLabel();
+        panelBorder3 = new swing.PanelBorder();
+        txtRestore = new javax.swing.JTextField();
+        btnRestore = new swing.Button();
+        btnBrowse_Restore = new swing.Button();
+        jLabel23 = new javax.swing.JLabel();
+
+        panelBorder1.setBackground(new java.awt.Color(36, 87, 157));
+        panelBorder1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Create Database Backup:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
+        panelBorder1.setForeground(new java.awt.Color(255, 255, 255));
+
+        btnBackup.setText("Backup");
+        btnBackup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackupActionPerformed(evt);
+            }
+        });
+
+        btnBrowse.setText("Browse");
+        btnBrowse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBrowseActionPerformed(evt);
+            }
+        });
+
+        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setText("Location:");
+
+        javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
+        panelBorder1.setLayout(panelBorder1Layout);
+        panelBorder1Layout.setHorizontalGroup(
+            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
+                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelBorder1Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel22)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBrowse, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelBorder1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(56, 56, 56))
+        );
+        panelBorder1Layout.setVerticalGroup(
+            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBorder1Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBackup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBrowse, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel22))
+                .addGap(18, 18, 18)
+                .addComponent(btnBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panelBorder3.setBackground(new java.awt.Color(36, 87, 157));
+        panelBorder3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Restore Database:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
+        panelBorder3.setForeground(new java.awt.Color(255, 255, 255));
+
+        btnRestore.setText("Restore");
+        btnRestore.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRestoreActionPerformed(evt);
+            }
+        });
+
+        btnBrowse_Restore.setText("Browse");
+        btnBrowse_Restore.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBrowse_RestoreActionPerformed(evt);
+            }
+        });
+
+        jLabel23.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel23.setText("Location:");
+
+        javax.swing.GroupLayout panelBorder3Layout = new javax.swing.GroupLayout(panelBorder3);
+        panelBorder3.setLayout(panelBorder3Layout);
+        panelBorder3Layout.setHorizontalGroup(
+            panelBorder3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder3Layout.createSequentialGroup()
+                .addGroup(panelBorder3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelBorder3Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel23)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtRestore, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
+                        .addComponent(btnBrowse_Restore, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelBorder3Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRestore, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(56, 56, 56))
+        );
+        panelBorder3Layout.setVerticalGroup(
+            panelBorder3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBorder3Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(panelBorder3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtRestore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBrowse_Restore, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel23))
+                .addGap(18, 18, 18)
+                .addComponent(btnRestore, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1025, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panelBorder3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(197, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 577, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
+                .addComponent(panelBorder3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(143, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackupActionPerformed
+        // TODO add your handling code here:
+        String backupPath = txtBackup.getText();
+        if (backupPath.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please choose a backup path.");
+            return;
+        }
+        try {
+            // Kết nối đến cơ sở dữ liệu SQL Server
+//            String jdbcUrl = "jdbc:sqlserver://<server>:<port>;databaseName=<database>;user=<username>;password=<password>";
+//            Connection connection = DriverManager.getConnection(jdbcUrl);
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            Connection connection = DriverManager.getConnection(jdbcUrl);
+
+
+            // Thực hiện truy vấn backup
+            String backupQuery = "BACKUP DATABASE KLTN TO DISK = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(backupQuery)) {
+                
+                String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                
+                preparedStatement.setString(1, backupPath + "\\"+date + "_backup.bak");
+                preparedStatement.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Backup completed successfully.");
+            }
+
+            // Đóng kết nối
+            connection.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error during backup: " + ex.getMessage());
+        }
+        
+            
+        
+    }//GEN-LAST:event_btnBackupActionPerformed
+
+    private void btnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser  = new JFileChooser();
+     
+        
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            txtBackup.setText(fileChooser.getSelectedFile().getAbsolutePath());
+        }
+        
+        
+    }//GEN-LAST:event_btnBrowseActionPerformed
+
+    private void btnRestoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestoreActionPerformed
+        // TODO add your handling code here:
+        String restorePath = txtRestore.getText();
+        if (restorePath.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please choose a restore path.");
+            return;
+        }
+
+        try {
+            // Kết nối đến cơ sở dữ liệu SQL Server
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            Connection connection = DriverManager.getConnection(jdbcUrl);
+
+            // Thực hiện truy vấn restore
+            String restoreQuery = "USE master RESTORE DATABASE KLTN FROM DISK = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(restoreQuery)) {
+                preparedStatement.setString(1, restorePath);
+                preparedStatement.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Restore completed successfully.");
+            }
+
+            // Đóng kết nối
+            connection.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error during restore: " + ex.getMessage());
+        }
+        
+    }//GEN-LAST:event_btnRestoreActionPerformed
+
+    private void btnBrowse_RestoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowse_RestoreActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            txtRestore.setText(fileChooser.getSelectedFile().getAbsolutePath());
+        } else {
+            JOptionPane.showMessageDialog(null, "No file selected.");
+        }
+    }//GEN-LAST:event_btnBrowse_RestoreActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private swing.Button btnBackup;
+    private swing.Button btnBackup1;
+    private swing.Button btnBrowse;
+    private swing.Button btnBrowse1;
+    private swing.Button btnBrowse_Restore;
+    private swing.Button btnRestore;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private swing.PanelBorder panelBorder1;
+    private swing.PanelBorder panelBorder2;
+    private swing.PanelBorder panelBorder3;
+    private javax.swing.JTextField txtBackup;
+    private javax.swing.JTextField txtBackup1;
+    private javax.swing.JTextField txtRestore;
     // End of variables declaration//GEN-END:variables
 }
