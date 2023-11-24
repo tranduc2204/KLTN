@@ -24,8 +24,10 @@ import form.FormQLService;
 import form.FormQLStaff;
 import form.FormQLSupplies;
 import form.FormQLSuppliesForRoom;
+import form.FormRecycle_Bin;
 import form.FormRent;
 import form.FormSetting;
+import form.FormTrashAccount;
 
 import form.MainForm;
 import form.test;
@@ -105,14 +107,13 @@ public class MainHome extends javax.swing.JFrame {
             System.out.println("Menu Index : " + menuIndex + " SubMenu Index " + subMenuIndex);
             if (menuIndex == 0) {
                 main.showForm(new FormHome());
-            }else if (menuIndex ==1 && quyen.equals("Root")){
-                main.showForm(new FormBackupRestore());
-            }
-            else if (menuIndex ==1 && quyen.equals("Admin")){
+            }else if (menuIndex ==1 && quyen.equals("Admin")){
                 main.showForm(new FormChart());
             }else if (menuIndex ==1 && quyen.equals("root")){
                 main.showForm(new FormBackupRestore());
-            }else if (menuIndex ==3 && quyen.equals("Admin")){
+            }else if (menuIndex ==2 && quyen.equals("root")){
+                main.showForm(new FormTrashAccount());
+            }else if (menuIndex ==2 && quyen.equals("Admin")){
                 if (subMenuIndex == 0){
                     main.showForm(new FormQLAccount(username, password, DisplayName,quyen));
                 }else if (subMenuIndex == 1){
@@ -135,23 +136,23 @@ public class MainHome extends javax.swing.JFrame {
                 }
                 
 
-            }else if (menuIndex ==4 && quyen.equals("Admin")){
+            }else if (menuIndex ==3 && quyen.equals("Admin")){
 
                 main.showForm(new FormRent(username, password, DisplayName,quyen));
-            }else if (menuIndex ==5 && quyen.equals("Admin")){
+            }else if (menuIndex ==4 && quyen.equals("Admin")){
                 main.showForm(new FormCheckIn(username, password, DisplayName,quyen));
-            }else if (menuIndex ==6 && quyen.equals("Admin")){
+            }else if (menuIndex ==5 && quyen.equals("Admin")){
                 main.showForm(new FormCheckOut(username, password, DisplayName,quyen));
             }else if (menuIndex ==8 && quyen.equals("Admin")){
                 Runtime rt = Runtime.getRuntime();
-            try {
-                String filePath = "src\\form\\THNN_TranDuc.chm";  //Đường dẫn và tên file cần mở
-                rt.exec("hh.exe " + filePath);
+                try {
+                    String filePath = "src\\form\\THNN_TranDuc.chm";  //Đường dẫn và tên file cần mở
+                    rt.exec("hh.exe " + filePath);
 
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(main, "Cannot load help file!", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(main, "Cannot load help file!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
             else if (menuIndex == 9 && quyen.equals("Admin")){
                 main.showForm(new FormSetting());

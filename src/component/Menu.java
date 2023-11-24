@@ -87,12 +87,20 @@ public class Menu extends javax.swing.JPanel {
     public void initMenuItemroot() {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Dashboard"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Backup Restore"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "System Trash"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Help"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Setting"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Change Language","Vietnamese","English"));
+        addEnpty();
+
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/13.png")), "Log out"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/14.png")), "Exit"));
     }
     
     public void initMenuItem() {
+        
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Dashboard"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/2.png")), "Charts"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/3.png")), "Report", "Income", "Expense", "Profit"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/4.png")), "Admin Management", "Accounts Management",
                 "Customers Management", "Bills Management","Staffs Management","Services Management","Rooms Management",
                 "Supplies Management","Room Supplies Management", "Service Bill Management"));
