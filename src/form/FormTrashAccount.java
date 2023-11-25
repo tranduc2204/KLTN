@@ -312,7 +312,7 @@ public class FormTrashAccount extends javax.swing.JPanel {
                 int option = showDeleteConfirmationDialog(userNameToDelete);
                 if (option == JOptionPane.YES_OPTION) {
                     // Nếu người dùng đồng ý, xóa dữ liệu từ cơ sở dữ liệu
-                    deleteDataFromSQL(userNameToDelete);
+                    deleteDataCustomerFromSQL(userNameToDelete);
                     // Xóa dòng trong JTable
                     tableModel.removeRow(row);
                 }
@@ -330,7 +330,7 @@ public class FormTrashAccount extends javax.swing.JPanel {
                 int option = showUpdateConfirmationDialog(userNameToUpdate);
                 if (option == JOptionPane.YES_OPTION) {
                     // Nếu người dùng đồng ý, khôi phục dữ liệu từ cơ sở dữ liệu
-                    updateDataFromSQL(userNameToUpdate);
+                    updateDataCustomerFromSQL(userNameToUpdate);
                     // Xóa dòng trong JTable
                     tableModel.removeRow(row);
                 }
@@ -341,6 +341,67 @@ public class FormTrashAccount extends javax.swing.JPanel {
         // Thiết lập renderer và editor cho cột Action
         table.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRender());
         table.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditor(deleteEvent));
+    }
+    
+    private void deleteDataCustomerFromSQL(String MaKH) {
+        // Thực hiện xóa dữ liệu từ SQL tại đây
+        Connection connection = null;
+        try  {
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            String deleteQuery = "DELETE FROM khachhang WHERE MaKH = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, MaKH);
+
+                // Thực hiện câu lệnh DELETE
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Customer deleted successfully.");
+                } else {
+                    System.out.println("No account found with User Name: " + MaKH);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error deleting account: " + e.getMessage());
+        }
+    }
+    private void updateDataCustomerFromSQL(String MaKH) {
+        // Thực hiện xóa dữ liệu từ SQL tại đây
+        Connection connection = null;
+        try  {
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            String deleteQuery = "update khachhang set isvisible = '1' where MaKH = ? ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, MaKH);
+
+                // Thực hiện câu lệnh DELETE
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Account update successfully.");
+                } else {
+                    System.out.println("No account found with MaKH: " + MaKH);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error deleting Customer: " + e.getMessage());
+        }
     }
     
     
@@ -433,7 +494,7 @@ public class FormTrashAccount extends javax.swing.JPanel {
                 int option = showDeleteConfirmationDialog(userNameToDelete);
                 if (option == JOptionPane.YES_OPTION) {
                     // Nếu người dùng đồng ý, xóa dữ liệu từ cơ sở dữ liệu
-                    deleteDataFromSQL(userNameToDelete);
+                    deleteDataStaffFromSQL(userNameToDelete);
                     // Xóa dòng trong JTable
                     tableModel.removeRow(row);
                 }
@@ -451,7 +512,7 @@ public class FormTrashAccount extends javax.swing.JPanel {
                 int option = showUpdateConfirmationDialog(userNameToUpdate);
                 if (option == JOptionPane.YES_OPTION) {
                     // Nếu người dùng đồng ý, khôi phục dữ liệu từ cơ sở dữ liệu
-                    updateDataFromSQL(userNameToUpdate);
+                    updateDataStaffCFromSQL(userNameToUpdate);
                     // Xóa dòng trong JTable
                     tableModel.removeRow(row);
                 }
@@ -462,6 +523,67 @@ public class FormTrashAccount extends javax.swing.JPanel {
         // Thiết lập renderer và editor cho cột Action
         table.getColumnModel().getColumn(10).setCellRenderer(new TableActionCellRender());
         table.getColumnModel().getColumn(10).setCellEditor(new TableActionCellEditor(deleteEvent));
+    }
+    
+    private void deleteDataStaffFromSQL(String MaNV) {
+        // Thực hiện xóa dữ liệu từ SQL tại đây
+        Connection connection = null;
+        try  {
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            String deleteQuery = "DELETE FROM nhanvien WHERE MaNV = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, MaNV);
+
+                // Thực hiện câu lệnh DELETE
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Staff deleted successfully.");
+                } else {
+                    System.out.println("No Staff found with User Name: " + MaNV);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error deleting account: " + e.getMessage());
+        }
+    }
+    private void updateDataStaffCFromSQL(String MaNV) {
+        // Thực hiện xóa dữ liệu từ SQL tại đây
+        Connection connection = null;
+        try  {
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            String deleteQuery = "update nhanvien set isvisible = '1' where MaNV = ? ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, MaNV);
+
+                // Thực hiện câu lệnh DELETE
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Account update successfully.");
+                } else {
+                    System.out.println("No account found with MaKH: " + MaNV);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error deleting Customer: " + e.getMessage());
+        }
     }
     
     private void TrashService(){
@@ -538,7 +660,7 @@ public class FormTrashAccount extends javax.swing.JPanel {
                 int option = showDeleteConfirmationDialog(userNameToDelete);
                 if (option == JOptionPane.YES_OPTION) {
                     // Nếu người dùng đồng ý, xóa dữ liệu từ cơ sở dữ liệu
-                    deleteDataFromSQL(userNameToDelete);
+                    deleteDataServiceFromSQL(userNameToDelete);
                     // Xóa dòng trong JTable
                     tableModel.removeRow(row);
                 }
@@ -556,7 +678,7 @@ public class FormTrashAccount extends javax.swing.JPanel {
                 int option = showUpdateConfirmationDialog(userNameToUpdate);
                 if (option == JOptionPane.YES_OPTION) {
                     // Nếu người dùng đồng ý, khôi phục dữ liệu từ cơ sở dữ liệu
-                    updateDataFromSQL(userNameToUpdate);
+                    updateDataServiceFromSQL(userNameToUpdate);
                     // Xóa dòng trong JTable
                     tableModel.removeRow(row);
                 }
@@ -567,6 +689,67 @@ public class FormTrashAccount extends javax.swing.JPanel {
         // Thiết lập renderer và editor cho cột Action
         table.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRender());
         table.getColumnModel().getColumn(3).setCellEditor(new TableActionCellEditor(deleteEvent));
+    }
+    
+    private void deleteDataServiceFromSQL(String MaDV) {
+        // Thực hiện xóa dữ liệu từ SQL tại đây
+        Connection connection = null;
+        try  {
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            String deleteQuery = "DELETE FROM dichvu WHERE MaDV = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, MaDV);
+
+                // Thực hiện câu lệnh DELETE
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Staff deleted successfully.");
+                } else {
+                    System.out.println("No Staff found with User Name: " + MaDV);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error deleting account: " + e.getMessage());
+        }
+    }
+    private void updateDataServiceFromSQL(String MaDV) {
+        // Thực hiện xóa dữ liệu từ SQL tại đây
+        Connection connection = null;
+        try  {
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            String deleteQuery = "update dichvu set isvisible = '1' where MaDV = ? ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, MaDV);
+
+                // Thực hiện câu lệnh DELETE
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Account update successfully.");
+                } else {
+                    System.out.println("No account found with MaKH: " + MaDV);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error deleting Customer: " + e.getMessage());
+        }
     }
     
     private void TrashRoom(){
@@ -647,7 +830,7 @@ public class FormTrashAccount extends javax.swing.JPanel {
                 int option = showDeleteConfirmationDialog(userNameToDelete);
                 if (option == JOptionPane.YES_OPTION) {
                     // Nếu người dùng đồng ý, xóa dữ liệu từ cơ sở dữ liệu
-                    deleteDataFromSQL(userNameToDelete);
+                    deleteDataRoomFromSQL(userNameToDelete);
                     // Xóa dòng trong JTable
                     tableModel.removeRow(row);
                 }
@@ -665,7 +848,7 @@ public class FormTrashAccount extends javax.swing.JPanel {
                 int option = showUpdateConfirmationDialog(userNameToUpdate);
                 if (option == JOptionPane.YES_OPTION) {
                     // Nếu người dùng đồng ý, khôi phục dữ liệu từ cơ sở dữ liệu
-                    updateDataFromSQL(userNameToUpdate);
+                    updateDataRoomFromSQL(userNameToUpdate);
                     // Xóa dòng trong JTable
                     tableModel.removeRow(row);
                 }
@@ -678,12 +861,72 @@ public class FormTrashAccount extends javax.swing.JPanel {
         table.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(deleteEvent));
     }
     
+    private void deleteDataRoomFromSQL(String MaPhong) {
+        // Thực hiện xóa dữ liệu từ SQL tại đây
+        Connection connection = null;
+        try  {
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            String deleteQuery = "DELETE FROM phong WHERE MaPhong = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, MaPhong);
+
+                // Thực hiện câu lệnh DELETE
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Room deleted successfully.");
+                } else {
+                    System.out.println("No Room found with MaPhong: " + MaPhong);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error deleting account: " + e.getMessage());
+        }
+    }
+    private void updateDataRoomFromSQL(String MaPhong) {
+        // Thực hiện xóa dữ liệu từ SQL tại đây
+        Connection connection = null;
+        try  {
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            String deleteQuery = "update phong set isvisible = '1' where MaPhong = ? ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, MaPhong);
+
+                // Thực hiện câu lệnh DELETE
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Room update successfully.");
+                } else {
+                    System.out.println("No room found with MaPhong: " + MaPhong);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error deleting Customer: " + e.getMessage());
+        }
+    }
+    
     private void TrashSupplies(){
         // Khởi tạo model và đặt tên cột
         tableModel = new DefaultTableModel();
-        tableModel.addColumn("MaDV");
-        tableModel.addColumn("TenDichVu");
-        tableModel.addColumn("DonGia");
+        tableModel.addColumn("MaVatTu");
+        tableModel.addColumn("TenVatTu");
         tableModel.addColumn("Action");
         // Thiết lập tableModel cho JTable
         table.setModel(tableModel);
@@ -709,16 +952,16 @@ public class FormTrashAccount extends javax.swing.JPanel {
             connection = DriverManager.getConnection(jdbcUrl);
             
             // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
-            String sqlQuery = "select * from dichvu where isvisible = '0' ";
+            String sqlQuery = "select * from vattu where isvisible = '0' ";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
                 ResultSet resultSet = preparedStatement.executeQuery()) {
 
                 // Lặp qua kết quả và thêm vào model
                 while (resultSet.next()) {
                     Object[] rowData = {
-                    resultSet.getObject("MaDV"),
-                    resultSet.getObject("TenDichVu"),
-                    resultSet.getObject("DonGia"),
+                    resultSet.getObject("MaVatTu"),
+                    resultSet.getObject("TenVatTu"),
+                
                    
                     };
                     tableModel.addRow(rowData);
@@ -753,7 +996,7 @@ public class FormTrashAccount extends javax.swing.JPanel {
                 int option = showDeleteConfirmationDialog(userNameToDelete);
                 if (option == JOptionPane.YES_OPTION) {
                     // Nếu người dùng đồng ý, xóa dữ liệu từ cơ sở dữ liệu
-                    deleteDataFromSQL(userNameToDelete);
+                    deleteDataSuppliesFromSQL(userNameToDelete);
                     // Xóa dòng trong JTable
                     tableModel.removeRow(row);
                 }
@@ -771,7 +1014,7 @@ public class FormTrashAccount extends javax.swing.JPanel {
                 int option = showUpdateConfirmationDialog(userNameToUpdate);
                 if (option == JOptionPane.YES_OPTION) {
                     // Nếu người dùng đồng ý, khôi phục dữ liệu từ cơ sở dữ liệu
-                    updateDataFromSQL(userNameToUpdate);
+                    updateDataSuppliesFromSQL(userNameToUpdate);
                     // Xóa dòng trong JTable
                     tableModel.removeRow(row);
                 }
@@ -780,9 +1023,248 @@ public class FormTrashAccount extends javax.swing.JPanel {
         };
 
         // Thiết lập renderer và editor cho cột Action
-        table.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRender());
-        table.getColumnModel().getColumn(3).setCellEditor(new TableActionCellEditor(deleteEvent));
+        table.getColumnModel().getColumn(2).setCellRenderer(new TableActionCellRender());
+        table.getColumnModel().getColumn(2).setCellEditor(new TableActionCellEditor(deleteEvent));
     }
+    
+    private void deleteDataSuppliesFromSQL(String MaVatTu) {
+        // Thực hiện xóa dữ liệu từ SQL tại đây
+        Connection connection = null;
+        try  {
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            String deleteQuery = "DELETE FROM vattu WHERE MaVatTu = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, MaVatTu);
+
+                // Thực hiện câu lệnh DELETE
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Supplies deleted successfully.");
+                } else {
+                    System.out.println("No Supplies found with MaVatTu: " + MaVatTu);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error deleting Supplies: " + e.getMessage());
+        }
+    }
+    private void updateDataSuppliesFromSQL(String MaVatTu) {
+        // Thực hiện xóa dữ liệu từ SQL tại đây
+        Connection connection = null;
+        try  {
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            String deleteQuery = "update vattu set isvisible = '1' where MaVatTu = ? ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, MaVatTu);
+
+                // Thực hiện câu lệnh DELETE
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Supplies update successfully.");
+                } else {
+                    System.out.println("No Supplies found with MaVatTu: " + MaVatTu);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error deleting Supplies: " + e.getMessage());
+        }
+    }
+    
+    
+    private void TrashRoomSupplies(){
+        // Khởi tạo model và đặt tên cột
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("MaVatTu");
+        tableModel.addColumn("TenVatTu");
+        tableModel.addColumn("MaLoaiPhong");
+        tableModel.addColumn("TenLoaiPhong");
+        tableModel.addColumn("SoLuong");
+        tableModel.addColumn("Action");
+        // Thiết lập tableModel cho JTable
+        table.setModel(tableModel);
+        
+        // Load dữ liệu từ SQL Server vào JTable
+
+        loadDataRoomSuppliesFromSQL();
+        setupDeleteRoomSuppliesAction();
+    }
+    
+    private void loadDataRoomSuppliesFromSQL() {
+        Connection connection = null;
+        try {
+             // Kết nối đến cơ sở dữ liệu SQL Server
+
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            
+            // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+            String sqlQuery = "select vt.MaVatTu, vt.TenVatTu, lp.MaLoaiPhong, lp.TenLoaiPhong, ctvt.SoLuong from CTVatTu ctvt "
+                + "join VATTU vt on vt.MaVatTu = ctvt.MaVatTu join LOAIPHONG lp on lp.MaLoaiPhong =ctvt.MaLoaiPhong where ctvt.isvisible = '0' ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Lặp qua kết quả và thêm vào model
+                while (resultSet.next()) {
+                    Object[] rowData = {
+                    resultSet.getObject("MaVatTu"),
+                    resultSet.getObject("TenVatTu"),
+                    resultSet.getObject("MaLoaiPhong"),
+                    resultSet.getObject("TenLoaiPhong"),
+                    resultSet.getObject("SoLuong"),
+                  
+                    };
+                    tableModel.addRow(rowData);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    private void setupDeleteRoomSuppliesAction() {
+        
+        TableActionEvent deleteEvent = new TableActionEvent() {
+            
+            @Override
+            public void onDelete(int row) {
+                if (table.isEditing()) {
+                    table.getCellEditor().stopCellEditing();
+                }
+                // Lấy dữ liệu từ cột User Name để xóa trong cơ sở dữ liệu
+                String userNameToDelete = table.getValueAt(row, 0).toString();
+                String userNameToDelete1 = table.getValueAt(row, 2).toString();
+                 // Hiển thị hộp thoại xác nhận
+                int option = showDeleteConfirmationDialog(userNameToDelete);
+                if (option == JOptionPane.YES_OPTION) {
+                    // Nếu người dùng đồng ý, xóa dữ liệu từ cơ sở dữ liệu
+                    deleteDataRoomSuppliesFromSQL(userNameToDelete,userNameToDelete1);
+                    // Xóa dòng trong JTable
+                    tableModel.removeRow(row);
+                }
+
+            }
+
+            @Override
+            public void onFresh(int row) {
+                if (table.isEditing()) {
+                    table.getCellEditor().stopCellEditing();
+                }
+                // Lấy dữ liệu từ cột User Name để khôi phục trong cơ sở dữ liệu
+                String userNameToUpdate = table.getValueAt(row, 0).toString();
+                
+                String userNameToUpdate1 = table.getValueAt(row, 2).toString();
+                 // Hiển thị hộp thoại xác nhận
+                int option = showUpdateConfirmationDialog(userNameToUpdate);
+                if (option == JOptionPane.YES_OPTION) {
+                    // Nếu người dùng đồng ý, khôi phục dữ liệu từ cơ sở dữ liệu
+                    updateDataRoomSuppliesFromSQL(userNameToUpdate,userNameToUpdate1);
+                    // Xóa dòng trong JTable
+                    tableModel.removeRow(row);
+                }
+                
+            }
+        };
+
+        // Thiết lập renderer và editor cho cột Action
+        table.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
+        table.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(deleteEvent));
+    }
+    
+    private void deleteDataRoomSuppliesFromSQL(String MaVatTu, String MaLoaiPhong) {
+        // Thực hiện xóa dữ liệu từ SQL tại đây
+        Connection connection = null;
+        try  {
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            String deleteQuery = "DELETE FROM CTVatTu WHERE MaVatTu = ? and MaLoaiPhong = ? ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, MaVatTu);
+                preparedStatement.setString(2, MaLoaiPhong);
+
+                // Thực hiện câu lệnh DELETE
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Room Supplies deleted successfully.");
+                } else {
+                    System.out.println("No Room Supplies found with MaVatTu: " + MaVatTu + " MaLoaiPhong: "+MaLoaiPhong);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error deleting Supplies: " + e.getMessage());
+        }
+    }
+    private void updateDataRoomSuppliesFromSQL(String MaVatTu, String MaLoaiPhong) {
+        // Thực hiện xóa dữ liệu từ SQL tại đây
+        Connection connection = null;
+        try  {
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            String deleteQuery = "update CTVatTu set isvisible = '1' WHERE mavattu = ? and maloaiphong = ? ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, MaVatTu);
+                preparedStatement.setString(2, MaLoaiPhong);
+                // Thực hiện câu lệnh DELETE
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Room Supplies update successfully.");
+                } else {
+                    System.out.println("No Room Supplies found with MaVatTu: " + MaVatTu + " MaLoaiPhong: "+MaLoaiPhong);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error deleting Supplies: " + e.getMessage());
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -902,6 +1384,10 @@ public class FormTrashAccount extends javax.swing.JPanel {
                 // Nếu là item 1, in chữ "Hello World" ra màn hình
                 System.out.println("Hello World");
                 TrashSupplies();
+            }else if (selectedIndex == 7) {
+                // Nếu là item 1, in chữ "Hello World" ra màn hình
+                System.out.println("Hello World");
+                TrashRoomSupplies();
             }
         }
     }//GEN-LAST:event_cmbLTK3ItemStateChanged
