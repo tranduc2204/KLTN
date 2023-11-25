@@ -165,6 +165,8 @@ public class FormTrashAccount extends javax.swing.JPanel {
         }
     }
     
+    
+    
     private void deleteDataFromSQL(String userName) {
         // Thực hiện xóa dữ liệu từ SQL tại đây
         Connection connection = null;
@@ -229,20 +231,452 @@ public class FormTrashAccount extends javax.swing.JPanel {
     private void TrashCustomers(){
         // Khởi tạo model và đặt tên cột
         tableModel = new DefaultTableModel();
-        tableModel.addColumn("User Name hi hi");
-        tableModel.addColumn("Display Name");
-        tableModel.addColumn("Password");
-        tableModel.addColumn("Type Account");
+        tableModel.addColumn("MaKH");
+        tableModel.addColumn("HoKH");
+        tableModel.addColumn("TenKH");
+        tableModel.addColumn("GioiTinh");
+        tableModel.addColumn("DiaChi");
+        tableModel.addColumn("NgaySinh");
+        tableModel.addColumn("SoDT");
         tableModel.addColumn("Action");
-        
         // Thiết lập tableModel cho JTable
         table.setModel(tableModel);
         
         // Load dữ liệu từ SQL Server vào JTable
-//        loadDataFromSQL();
-//        setupDeleteAction();
+        loadDataCustomerFromSQL();
+        setupDeleteCustomerAction();
     }
     
+    private void loadDataCustomerFromSQL() {
+        Connection connection = null;
+        try {
+             // Kết nối đến cơ sở dữ liệu SQL Server
+
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            
+            // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+            String sqlQuery = "select * from khachhang where isvisible = '0' ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Lặp qua kết quả và thêm vào model
+                while (resultSet.next()) {
+                    Object[] rowData = {
+                        resultSet.getObject("MaKH"),
+                        resultSet.getObject("HoKH"),
+                        resultSet.getObject("TenKH"),
+                        resultSet.getObject("GioiTinh"),
+                        resultSet.getObject("DiaChi"),
+                        resultSet.getObject("NgaySinh"),
+                        resultSet.getObject("SoDT"),
+                            
+//                            "Action" // Cần thay thế "Action" bằng cột thực tế bạn muốn hiển thị hoặc xử lý
+                            
+                    };
+                    tableModel.addRow(rowData);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    private void setupDeleteCustomerAction() {
+        
+        TableActionEvent deleteEvent = new TableActionEvent() {
+            
+            @Override
+            public void onDelete(int row) {
+                if (table.isEditing()) {
+                    table.getCellEditor().stopCellEditing();
+                }
+                // Lấy dữ liệu từ cột User Name để xóa trong cơ sở dữ liệu
+                String userNameToDelete = table.getValueAt(row, 0).toString();
+                 // Hiển thị hộp thoại xác nhận
+                int option = showDeleteConfirmationDialog(userNameToDelete);
+                if (option == JOptionPane.YES_OPTION) {
+                    // Nếu người dùng đồng ý, xóa dữ liệu từ cơ sở dữ liệu
+                    deleteDataFromSQL(userNameToDelete);
+                    // Xóa dòng trong JTable
+                    tableModel.removeRow(row);
+                }
+
+            }
+
+            @Override
+            public void onFresh(int row) {
+                if (table.isEditing()) {
+                    table.getCellEditor().stopCellEditing();
+                }
+                // Lấy dữ liệu từ cột User Name để khôi phục trong cơ sở dữ liệu
+                String userNameToUpdate = table.getValueAt(row, 0).toString();
+                 // Hiển thị hộp thoại xác nhận
+                int option = showUpdateConfirmationDialog(userNameToUpdate);
+                if (option == JOptionPane.YES_OPTION) {
+                    // Nếu người dùng đồng ý, khôi phục dữ liệu từ cơ sở dữ liệu
+                    updateDataFromSQL(userNameToUpdate);
+                    // Xóa dòng trong JTable
+                    tableModel.removeRow(row);
+                }
+                
+            }
+        };
+
+        // Thiết lập renderer và editor cho cột Action
+        table.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRender());
+        table.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditor(deleteEvent));
+    }
+    
+    
+    private void TrashStaff(){
+        // Khởi tạo model và đặt tên cột
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("MaNV");
+        tableModel.addColumn("HoNV");
+        tableModel.addColumn("TenNV");
+        tableModel.addColumn("GioiTinh");
+        tableModel.addColumn("DiaChi");
+        tableModel.addColumn("NgaySinh");
+        tableModel.addColumn("DienThoai");
+        tableModel.addColumn("Email");
+        tableModel.addColumn("NoiSinh");
+        tableModel.addColumn("NgayVaoLam");
+        tableModel.addColumn("Action");
+        // Thiết lập tableModel cho JTable
+        table.setModel(tableModel);
+        
+        // Load dữ liệu từ SQL Server vào JTable
+
+        loadDataStaffFromSQL();
+        setupDeleteStaffAction();
+    }
+    
+    private void loadDataStaffFromSQL() {
+        Connection connection = null;
+        try {
+             // Kết nối đến cơ sở dữ liệu SQL Server
+
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            
+            // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+            String sqlQuery = "select * from nhanvien where isvisible = '0' ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Lặp qua kết quả và thêm vào model
+                while (resultSet.next()) {
+                    Object[] rowData = {
+                    resultSet.getObject("MaNV"),
+                    resultSet.getObject("HoNV"),
+                    resultSet.getObject("TenNV"),
+                    resultSet.getObject("GioiTinh"),
+                    resultSet.getObject("DiaChi"),
+                    resultSet.getObject("NgaySinh"),
+                    resultSet.getObject("DienThoai"),
+                    resultSet.getObject("Email"),
+                    resultSet.getObject("NoiSinh"),
+                    resultSet.getObject("NgayVaoLam"),
+ 
+                    };
+                    tableModel.addRow(rowData);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    private void setupDeleteStaffAction() {
+        
+        TableActionEvent deleteEvent = new TableActionEvent() {
+            
+            @Override
+            public void onDelete(int row) {
+                if (table.isEditing()) {
+                    table.getCellEditor().stopCellEditing();
+                }
+                // Lấy dữ liệu từ cột User Name để xóa trong cơ sở dữ liệu
+                String userNameToDelete = table.getValueAt(row, 0).toString();
+                 // Hiển thị hộp thoại xác nhận
+                int option = showDeleteConfirmationDialog(userNameToDelete);
+                if (option == JOptionPane.YES_OPTION) {
+                    // Nếu người dùng đồng ý, xóa dữ liệu từ cơ sở dữ liệu
+                    deleteDataFromSQL(userNameToDelete);
+                    // Xóa dòng trong JTable
+                    tableModel.removeRow(row);
+                }
+
+            }
+
+            @Override
+            public void onFresh(int row) {
+                if (table.isEditing()) {
+                    table.getCellEditor().stopCellEditing();
+                }
+                // Lấy dữ liệu từ cột User Name để khôi phục trong cơ sở dữ liệu
+                String userNameToUpdate = table.getValueAt(row, 0).toString();
+                 // Hiển thị hộp thoại xác nhận
+                int option = showUpdateConfirmationDialog(userNameToUpdate);
+                if (option == JOptionPane.YES_OPTION) {
+                    // Nếu người dùng đồng ý, khôi phục dữ liệu từ cơ sở dữ liệu
+                    updateDataFromSQL(userNameToUpdate);
+                    // Xóa dòng trong JTable
+                    tableModel.removeRow(row);
+                }
+                
+            }
+        };
+
+        // Thiết lập renderer và editor cho cột Action
+        table.getColumnModel().getColumn(10).setCellRenderer(new TableActionCellRender());
+        table.getColumnModel().getColumn(10).setCellEditor(new TableActionCellEditor(deleteEvent));
+    }
+    
+    private void TrashService(){
+        // Khởi tạo model và đặt tên cột
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("MaDV");
+        tableModel.addColumn("TenDichVu");
+        tableModel.addColumn("DonGia");
+        tableModel.addColumn("Action");
+        // Thiết lập tableModel cho JTable
+        table.setModel(tableModel);
+        
+        // Load dữ liệu từ SQL Server vào JTable
+
+        loadDataServiceFromSQL();
+        setupDeleteServiceAction();
+    }
+    
+    private void loadDataServiceFromSQL() {
+        Connection connection = null;
+        try {
+             // Kết nối đến cơ sở dữ liệu SQL Server
+
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            
+            // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+            String sqlQuery = "select * from dichvu where isvisible = '0' ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Lặp qua kết quả và thêm vào model
+                while (resultSet.next()) {
+                    Object[] rowData = {
+                    resultSet.getObject("MaDV"),
+                    resultSet.getObject("TenDichVu"),
+                    resultSet.getObject("DonGia"),
+                    };
+                    tableModel.addRow(rowData);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    private void setupDeleteServiceAction() {
+        
+        TableActionEvent deleteEvent = new TableActionEvent() {
+            
+            @Override
+            public void onDelete(int row) {
+                if (table.isEditing()) {
+                    table.getCellEditor().stopCellEditing();
+                }
+                // Lấy dữ liệu từ cột User Name để xóa trong cơ sở dữ liệu
+                String userNameToDelete = table.getValueAt(row, 0).toString();
+                 // Hiển thị hộp thoại xác nhận
+                int option = showDeleteConfirmationDialog(userNameToDelete);
+                if (option == JOptionPane.YES_OPTION) {
+                    // Nếu người dùng đồng ý, xóa dữ liệu từ cơ sở dữ liệu
+                    deleteDataFromSQL(userNameToDelete);
+                    // Xóa dòng trong JTable
+                    tableModel.removeRow(row);
+                }
+
+            }
+
+            @Override
+            public void onFresh(int row) {
+                if (table.isEditing()) {
+                    table.getCellEditor().stopCellEditing();
+                }
+                // Lấy dữ liệu từ cột User Name để khôi phục trong cơ sở dữ liệu
+                String userNameToUpdate = table.getValueAt(row, 0).toString();
+                 // Hiển thị hộp thoại xác nhận
+                int option = showUpdateConfirmationDialog(userNameToUpdate);
+                if (option == JOptionPane.YES_OPTION) {
+                    // Nếu người dùng đồng ý, khôi phục dữ liệu từ cơ sở dữ liệu
+                    updateDataFromSQL(userNameToUpdate);
+                    // Xóa dòng trong JTable
+                    tableModel.removeRow(row);
+                }
+                
+            }
+        };
+
+        // Thiết lập renderer và editor cho cột Action
+        table.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRender());
+        table.getColumnModel().getColumn(3).setCellEditor(new TableActionCellEditor(deleteEvent));
+    }
+    
+    private void TrashRoom(){
+        // Khởi tạo model và đặt tên cột
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("MaPhong");
+        tableModel.addColumn("TenPhong");
+        tableModel.addColumn("Tien");
+        tableModel.addColumn("MaTinhtrangphong");
+        tableModel.addColumn("MaLoaiPhong");
+        tableModel.addColumn("Action");
+        // Thiết lập tableModel cho JTable
+        table.setModel(tableModel);
+        
+        // Load dữ liệu từ SQL Server vào JTable
+
+        loadDataRoomFromSQL();
+        setupDeleteRoomAction();
+    }
+    
+    private void loadDataRoomFromSQL() {
+        Connection connection = null;
+        try {
+             // Kết nối đến cơ sở dữ liệu SQL Server
+
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            
+            // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+            String sqlQuery = "select * from phong where isvisible = '0' ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Lặp qua kết quả và thêm vào model
+                while (resultSet.next()) {
+                    Object[] rowData = {
+                    resultSet.getObject("MaPhong"),
+                    resultSet.getObject("TenPhong"),
+                    resultSet.getObject("Tien"),
+                    resultSet.getObject("MaTinhtrangphong"),
+                    resultSet.getObject("MaLoaiPhong"),
+                    };
+                    tableModel.addRow(rowData);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    private void setupDeleteRoomAction() {
+        
+        TableActionEvent deleteEvent = new TableActionEvent() {
+            
+            @Override
+            public void onDelete(int row) {
+                if (table.isEditing()) {
+                    table.getCellEditor().stopCellEditing();
+                }
+                // Lấy dữ liệu từ cột User Name để xóa trong cơ sở dữ liệu
+                String userNameToDelete = table.getValueAt(row, 0).toString();
+                 // Hiển thị hộp thoại xác nhận
+                int option = showDeleteConfirmationDialog(userNameToDelete);
+                if (option == JOptionPane.YES_OPTION) {
+                    // Nếu người dùng đồng ý, xóa dữ liệu từ cơ sở dữ liệu
+                    deleteDataFromSQL(userNameToDelete);
+                    // Xóa dòng trong JTable
+                    tableModel.removeRow(row);
+                }
+
+            }
+
+            @Override
+            public void onFresh(int row) {
+                if (table.isEditing()) {
+                    table.getCellEditor().stopCellEditing();
+                }
+                // Lấy dữ liệu từ cột User Name để khôi phục trong cơ sở dữ liệu
+                String userNameToUpdate = table.getValueAt(row, 0).toString();
+                 // Hiển thị hộp thoại xác nhận
+                int option = showUpdateConfirmationDialog(userNameToUpdate);
+                if (option == JOptionPane.YES_OPTION) {
+                    // Nếu người dùng đồng ý, khôi phục dữ liệu từ cơ sở dữ liệu
+                    updateDataFromSQL(userNameToUpdate);
+                    // Xóa dòng trong JTable
+                    tableModel.removeRow(row);
+                }
+                
+            }
+        };
+
+        // Thiết lập renderer và editor cho cột Action
+        table.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
+        table.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(deleteEvent));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -284,7 +718,7 @@ public class FormTrashAccount extends javax.swing.JPanel {
         table.setRowHeight(40);
         jScrollPane1.setViewportView(table);
 
-        cmbLTK3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Trash Account", "Trash Customer", "Trash Staff", " " }));
+        cmbLTK3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Trash Accounts", "Trash Customers", "Trash Bills", "Trash Staffs", "Trash Services", "Trash Rooms", "Trash Supplies", "Trash Room Supplies", "Trash Service Bills" }));
         cmbLTK3.setActionCommand("cmbSelectItem");
         cmbLTK3.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -334,17 +768,7 @@ public class FormTrashAccount extends javax.swing.JPanel {
     private void cmbLTK3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbLTK3ItemStateChanged
         // TODO add your handling code here:
         if (evt.getStateChange() == ItemEvent.SELECTED) {
-//            // Lấy giá trị của mục được chọn
-//            Object selectedValue = cmbLTK3.getSelectedItem();
-//
-//            // Kiểm tra và xử lý giá trị của mục được chọn
-//            if (selectedValue != null) {
-//                String selectedItem = selectedValue.toString();
-//                System.out.println("Selected Item: " + selectedItem);
-//
-//                TrashAccount();
-//                
-//            }
+
             
             int selectedIndex = cmbLTK3.getSelectedIndex();
             
@@ -356,22 +780,27 @@ public class FormTrashAccount extends javax.swing.JPanel {
                 // Nếu là item 1, in chữ "Hello World" ra màn hình
                 System.out.println("Hello World");
                 TrashCustomers();
+            }else if (selectedIndex == 3) {
+                // Nếu là item 1, in chữ "Hello World" ra màn hình
+                System.out.println("Hello World");
+                TrashStaff();
+            }else if (selectedIndex == 4) {
+                // Nếu là item 1, in chữ "Hello World" ra màn hình
+                System.out.println("Hello World");
+                TrashService();
+            }else if (selectedIndex == 5) {
+                // Nếu là item 1, in chữ "Hello World" ra màn hình
+                System.out.println("Hello World");
+                TrashRoom();
             }
         }
     }//GEN-LAST:event_cmbLTK3ItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private swing.Button btnSearch;
     private javax.swing.JComboBox<String> cmbLTK3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField;
-    private swing.PanelBorder panelBorder2;
     private swing.PanelBorder panelBorder3;
-    private javax.swing.JRadioButton rbMAKH1;
-    private javax.swing.JRadioButton rbNGAYSINH1;
-    private javax.swing.JRadioButton rbSDT1;
     private javax.swing.JTable table;
-    private javax.swing.JTextField txtSEARCHMAKH;
     // End of variables declaration//GEN-END:variables
 }
