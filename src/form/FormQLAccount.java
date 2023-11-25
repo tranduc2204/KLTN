@@ -6,7 +6,7 @@
 package form;
 
 import connect.Connect;
-import java.awt.Color;
+import java.awt.Color; 
 import static java.lang.Thread.sleep;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -49,6 +49,7 @@ public class FormQLAccount extends javax.swing.JPanel {
         nhuchay();
         inittable_Account();
         loadthongtintaikhoan();
+       
 
         
     }
@@ -520,7 +521,7 @@ public class FormQLAccount extends javax.swing.JPanel {
 
             JOptionPane.showMessageDialog(this, "xóa thành công");
             loadthongtintaikhoan();
-        } catch (Exception e) {
+        } catch (Exception e) {    
             JOptionPane.showMessageDialog(this, "error " + e.getMessage());
             e.printStackTrace();
         }
