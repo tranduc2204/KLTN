@@ -122,4 +122,6 @@ public class ModelServiceRentv2 {
         DecimalFormat decimalFormat = new DecimalFormat("#,### VND");
         return decimalFormat.format(GiaHD);
     }
+    
+   
 }

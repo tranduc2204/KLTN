@@ -145,7 +145,7 @@ public class MainHome extends javax.swing.JFrame {
             }else if (menuIndex ==5 && quyen.equals("Admin")){
                 main.showForm(new FormCheckOut(username, password, DisplayName,quyen));
             }else if (menuIndex ==7 && quyen.equals("Admin")){
-                main.showForm(new FormServiceRent());
+                main.showForm(new FormServiceRent(username, password, DisplayName,quyen));
             }else if (menuIndex ==8 && quyen.equals("Admin")){
                 Runtime rt = Runtime.getRuntime();
                 try {

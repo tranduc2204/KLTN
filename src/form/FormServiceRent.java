@@ -5,6 +5,18 @@
  */
 package form;
 
+import connect.Connect;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.ModelCheckOut;
+import model.ModelCheckOutv2;
+import model.ModelServiceRent;
+import model.ModelServiceRentv2;
+
 /**
  *
  * @author TeeDee
@@ -16,6 +28,115 @@ public class FormServiceRent extends javax.swing.JPanel {
      */
     public FormServiceRent() {
         initComponents();
+    }
+    
+    Connect cn = new Connect();
+    Connection conn;
+    DefaultTableModel tbmodel;
+
+    private String username, password, quyen, DisplayName;
+    
+    public FormServiceRent(String username, String password, String DisplayName, String quyen) {
+        initComponents();
+        this.username = username;
+        this.password = password;
+        this.DisplayName = DisplayName;
+        this.quyen = quyen;
+        
+        
+        initCombobox_madichvu();
+        initCombobox_manhanvien();
+        initCombobox_makhachhang();
+  
+       
+
+        inittable();
+        loaddulieu1();
+    }
+    
+    private void inittable() {
+        tbmodel = new DefaultTableModel();
+        tbmodel.setColumnIdentifiers(new String[]{"Mã dịch vụ", "Tên dịch vụ", "Mã nhân viên",  "Tên nhân viên",
+            "Mã khách hàng", "Tên khách hàng", "Ngày lập hóa đơn", "Đơn giá",  "Số lượng", "Giá hóa đơn"});
+        TBcheckout.setModel(tbmodel);
+    }
+    
+     public void loaddulieu1() {
+        try {
+            ModelServiceRent ql = new ModelServiceRent();
+            ArrayList<ModelServiceRentv2> list = ql.findALL();
+            tbmodel.setRowCount(0);
+            for (ModelServiceRentv2 p : list) {
+                tbmodel.addRow(new Object[]{
+                    p.getMaDV(), p.getTenDichVu(), p.getMaNV(), p.getTenNhanVien(), p.getMaKH(),p.getTenKH(),p.getNgayLapHD(), p.getGia(),  p.getSL()
+                });
+            }
+            tbmodel.fireTableDataChanged();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+     
+    private void initCombobox_madichvu() {
+        try {
+            conn = cn.getConnection();
+            String sql = "select MaDV from DICHVU where isvisible = '1' ";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            cmbmadichvu.removeAllItems();
+          
+            while (rs.next()) {
+                cmbmadichvu.addItem(rs.getString("MaDV"));
+            }
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    private void initCombobox_manhanvien() {
+        try {
+            conn = cn.getConnection();
+            String sql = "select MaNV from NhanVien where isvisible = '1' ";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            cmbMaNhanvien.removeAllItems();
+          
+            while (rs.next()) {
+                cmbMaNhanvien.addItem(rs.getString("MaNV"));
+            }
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    private void initCombobox_makhachhang() {
+        try {
+            conn = cn.getConnection();
+            String sql = "select MaKH from KhachHang where isvisible = '1' ";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            cmbmakhachhang.removeAllItems();
+          
+            while (rs.next()) {
+                cmbmakhachhang.addItem(rs.getString("MaKH"));
+            }
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -51,8 +172,8 @@ public class FormServiceRent extends javax.swing.JPanel {
         txtTenDichVu = new javax.swing.JTextField();
         cmbMaNhanvien = new javax.swing.JComboBox<>();
         txtTenNhanVien = new javax.swing.JTextField();
-        txtSoLuong = new javax.swing.JTextField();
         cmbmakhachhang = new javax.swing.JComboBox<>();
+        spSL = new javax.swing.JSpinner();
         panelBorder2 = new swing.PanelBorder();
         rbMAKH1 = new javax.swing.JRadioButton();
         txtSEARCHMAKH = new javax.swing.JTextField();
@@ -187,7 +308,7 @@ public class FormServiceRent extends javax.swing.JPanel {
                             .addComponent(txtTenDichVu)
                             .addComponent(cmbMaNhanvien, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtTenNhanVien, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtSoLuong))))
+                            .addComponent(spSL))))
                 .addGap(18, 18, 18)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(roundPanel5Layout.createSequentialGroup()
@@ -247,7 +368,7 @@ public class FormServiceRent extends javax.swing.JPanel {
                     .addComponent(jLabel18)
                     .addComponent(txtGiahd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20)
-                    .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spSL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -360,13 +481,13 @@ public class FormServiceRent extends javax.swing.JPanel {
                         .addComponent(roundPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(17, 17, 17))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -549,55 +670,67 @@ public class FormServiceRent extends javax.swing.JPanel {
 
     private void cmbmadichvuItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmadichvuItemStateChanged
         // TODO add your handling code here:
-//        String Mapdp = cmbmadichvu.getSelectedItem().toString();
-//        try {
-//            ModelCheckIn ql = new ModelCheckIn();
-//
-//            ModelCheckInv2 ttp = ql.findByID(Mapdp);
-//            if (ttp != null) {
-//
-//                String ngaythuephong = ttp.getNgayThuePhong();
-//
-//                try {
-//                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
-//                    Date selectedDatee = dateFormat.parse(ngaythuephong); // Phân tích chuỗi thành đối tượng Date
-//                    jDateChooserngaythuephong.setDate(selectedDatee); // Đặt giá trị ngày cho JDateChooser
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                String Ngaydatphong = ttp.getNgayDatPhong();
-//                try {
-//                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
-//                    Date selectedDatee = dateFormat.parse(ngaythuephong); // Phân tích chuỗi thành đối tượng Date
-//                    jDateChooserngaydatphong.setDate(selectedDatee); // Đặt giá trị ngày cho JDateChooser
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                txtMaPhong.setText(ttp.getMaPhong());
-//                txtTenKH.setText(ttp.getTenPhong());
-//                txtloaiphong.setText(ttp.getTenPhong());
-//                txtloaiphong.setText(ttp.getLoaiPhong());
-//                txtGiaDichvu.setText(ttp.getFormattedGia());
-//                //                txtGiahd.setText(ttp.get);
-//
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Không tim thấy mã khách hàng");
-//            }
-//
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-//            e.printStackTrace();
-//        }
+        String Mapdp = cmbmadichvu.getSelectedItem().toString();
+        try {
+            ModelServiceRent ql = new ModelServiceRent();
+
+            ModelServiceRentv2 ttp = ql.findByID_MADV(Mapdp);
+            if (ttp != null) {
+
+                txtTenDichVu.setText(ttp.getTenDichVu());
+                txtGiaDichvu.setText(ttp.getFormattedGia());
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tim thấy dịch vụ");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_cmbmadichvuItemStateChanged
 
     private void cmbMaNhanvienItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMaNhanvienItemStateChanged
         // TODO add your handling code here:
+        String MaNV = cmbMaNhanvien.getSelectedItem().toString();
+        try {
+            ModelServiceRent ql = new ModelServiceRent();
+
+            ModelServiceRentv2 ttp = ql.findByID_MANV(MaNV);
+            if (ttp != null) {
+
+                txtTenNhanVien.setText(ttp.getTenNhanVien());
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tim thấy nhân viên");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            e.printStackTrace();
+        }
+        
     }//GEN-LAST:event_cmbMaNhanvienItemStateChanged
 
     private void cmbmakhachhangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmakhachhangItemStateChanged
         // TODO add your handling code here:
+        String MaKH = cmbmakhachhang.getSelectedItem().toString();
+        try {
+            ModelServiceRent ql = new ModelServiceRent();
+
+            ModelServiceRentv2 ttp = ql.findByID_MAKH(MaKH);
+            if (ttp != null) {
+
+                txtTenKH.setText(ttp.getTenKH());
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tim thấy khách hàng");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_cmbmakhachhangItemStateChanged
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -610,66 +743,66 @@ public class FormServiceRent extends javax.swing.JPanel {
 
     private void TBcheckoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TBcheckoutMouseClicked
         // TODO add your handling code here:
-        int row = TBcheckout.getSelectedRow();
-
-        if (row >= 0) {
-            txtMaphieutraphong.setText(TBcheckout.getValueAt(row, 0).toString());
-
-            String maphieuthuephong = TBcheckout.getValueAt(row, 1).toString();
-            System.out.println("" + maphieuthuephong);
-            cmbmaphieuthuephong.setSelectedItem(maphieuthuephong);
-
-            String ngaythuephong = TBcheckout.getValueAt(row, 2).toString();
-
-            try {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
-                Date selectedDate = dateFormat.parse(ngaythuephong); // Phân tích chuỗi thành đối tượng Date
-                jDateChooserngaythuephong.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            String ngaydatphong = TBcheckout.getValueAt(row, 3).toString();
-
-            try {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
-                Date selectedDate = dateFormat.parse(ngaydatphong); // Phân tích chuỗi thành đối tượng Date
-                jDateChooserngaydatphong.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            txtMaPhong.setText(TBcheckout.getValueAt(row, 4).toString());
-            txtTenPhong.setText(TBcheckout.getValueAt(row, 5).toString());
-            txtloaiphong.setText(TBcheckout.getValueAt(row, 6).toString());
-
-            ModelCheckOutv2 ms =new ModelCheckOutv2();
-            BigDecimal x = (BigDecimal) TBcheckout.getValueAt(row, 7);
-
-            ms.setGia(x);
-
-            String formattedDonGia = ms.getFormattedGia();
-            System.out.println(formattedDonGia);
-            txtGiaPhong.setText(formattedDonGia);
-
-            ModelCheckOutv2 mss =new ModelCheckOutv2();
-            BigDecimal xx = (BigDecimal) TBcheckout.getValueAt(row, 8);
-            mss.setGiaHD(xx);
-
-            String formattedhoadon = mss.getFormattedGiahd();
-            System.out.println(formattedhoadon);
-            txtGiahd.setText(formattedhoadon);
-
-            String ngaylaphd = TBcheckout.getValueAt(row, 9).toString();
-
-            try {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
-                Date selectedDate = dateFormat.parse(ngaylaphd); // Phân tích chuỗi thành đối tượng Date
-                jDateChooserngaylaphd.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-        }
+//        int row = TBcheckout.getSelectedRow();
+//
+//        if (row >= 0) {
+//            txtMaphieutraphong.setText(TBcheckout.getValueAt(row, 0).toString());
+//
+//            String maphieuthuephong = TBcheckout.getValueAt(row, 1).toString();
+//            System.out.println("" + maphieuthuephong);
+//            cmbmaphieuthuephong.setSelectedItem(maphieuthuephong);
+//
+//            String ngaythuephong = TBcheckout.getValueAt(row, 2).toString();
+//
+//            try {
+//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
+//                Date selectedDate = dateFormat.parse(ngaythuephong); // Phân tích chuỗi thành đối tượng Date
+//                jDateChooserngaythuephong.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//
+//            String ngaydatphong = TBcheckout.getValueAt(row, 3).toString();
+//
+//            try {
+//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
+//                Date selectedDate = dateFormat.parse(ngaydatphong); // Phân tích chuỗi thành đối tượng Date
+//                jDateChooserngaydatphong.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//            txtMaPhong.setText(TBcheckout.getValueAt(row, 4).toString());
+//            txtTenPhong.setText(TBcheckout.getValueAt(row, 5).toString());
+//            txtloaiphong.setText(TBcheckout.getValueAt(row, 6).toString());
+//
+//            ModelCheckOutv2 ms =new ModelCheckOutv2();
+//            BigDecimal x = (BigDecimal) TBcheckout.getValueAt(row, 7);
+//
+//            ms.setGia(x);
+//
+//            String formattedDonGia = ms.getFormattedGia();
+//            System.out.println(formattedDonGia);
+//            txtGiaPhong.setText(formattedDonGia);
+//
+//            ModelCheckOutv2 mss =new ModelCheckOutv2();
+//            BigDecimal xx = (BigDecimal) TBcheckout.getValueAt(row, 8);
+//            mss.setGiaHD(xx);
+//
+//            String formattedhoadon = mss.getFormattedGiahd();
+//            System.out.println(formattedhoadon);
+//            txtGiahd.setText(formattedhoadon);
+//
+//            String ngaylaphd = TBcheckout.getValueAt(row, 9).toString();
+//
+//            try {
+//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
+//                Date selectedDate = dateFormat.parse(ngaylaphd); // Phân tích chuỗi thành đối tượng Date
+//                jDateChooserngaylaphd.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
     }//GEN-LAST:event_TBcheckoutMouseClicked
 
 
@@ -703,10 +836,10 @@ public class FormServiceRent extends javax.swing.JPanel {
     private javax.swing.JRadioButton rbMAKH1;
     private javax.swing.JRadioButton rbsearchngaydat;
     private swing.RoundPanel roundPanel5;
+    private javax.swing.JSpinner spSL;
     private javax.swing.JTextField txtGiaDichvu;
     private javax.swing.JTextField txtGiahd;
     private javax.swing.JTextField txtSEARCHMAKH;
-    private javax.swing.JTextField txtSoLuong;
     private javax.swing.JTextField txtTenDichVu;
     private javax.swing.JTextField txtTenKH;
     private javax.swing.JTextField txtTenNhanVien;
