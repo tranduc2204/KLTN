@@ -26,6 +26,7 @@ import form.FormQLSupplies;
 import form.FormQLSuppliesForRoom;
 import form.FormRecycle_Bin;
 import form.FormRent;
+import form.FormServiceRent;
 import form.FormSetting;
 import form.FormTrashAccount;
 
@@ -143,6 +144,8 @@ public class MainHome extends javax.swing.JFrame {
                 main.showForm(new FormCheckIn(username, password, DisplayName,quyen));
             }else if (menuIndex ==5 && quyen.equals("Admin")){
                 main.showForm(new FormCheckOut(username, password, DisplayName,quyen));
+            }else if (menuIndex ==7 && quyen.equals("Admin")){
+                main.showForm(new FormServiceRent());
             }else if (menuIndex ==8 && quyen.equals("Admin")){
                 Runtime rt = Runtime.getRuntime();
                 try {
