@@ -41,6 +41,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import form.FormStatistic2;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
@@ -148,6 +149,8 @@ public class MainHome extends javax.swing.JFrame {
             }else if (menuIndex ==6 && quyen.equals("Admin")){
                 if (subMenuIndex == 0){
                     main.showForm(new FormStatistic1(username, password, DisplayName,quyen));
+                }else if (subMenuIndex == 1){
+                    main.showForm(new FormStatistic2(username, password, DisplayName,quyen));
                 }
                 
             }else if (menuIndex ==7 && quyen.equals("Admin")){
