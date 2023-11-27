@@ -41,7 +41,7 @@ public class FormQLRoom extends javax.swing.JPanel {
 
     private String username, password, quyen, DisplayName;
     
-     public FormQLRoom(String username, String password, String DisplayName, String quyen) {
+    public FormQLRoom(String username, String password, String DisplayName, String quyen) {
         initComponents();
         this.username = username;
         this.password = password;
@@ -67,7 +67,7 @@ public class FormQLRoom extends javax.swing.JPanel {
             tbmodel.setRowCount(0);
             for (ModelRoomv2 p : list) {
                 tbmodel.addRow(new Object[]{
-                    p.getMaPhong(), p.getTenPhong(), p.getMaTinhTrangPhong(), p.getTinhtrangphong(), p.getMaLoaiPhong(), p.getTenLoaiPhong(),  p.getTien()
+                    p.getMaPhong(), p.getTenPhong(), p.getMaTinhTrangPhong(), p.getTinhtrangphong(), p.getMaLoaiPhong(), p.getTenLoaiPhong(),  p.getFormattedDonGia()
                 });
             }
             tbmodel.fireTableDataChanged();
@@ -720,16 +720,16 @@ public class FormQLRoom extends javax.swing.JPanel {
             cmbMALOAIIPHONGa.setSelectedItem(maLOAIPHONG);
             
             
-            ModelRoomv2 ms =new ModelRoomv2();
-            BigDecimal x = (BigDecimal) tbPHONG.getValueAt(row, 6);
-
-            ms.setTien(x);
-
-            String formattedDonGia = ms.getFormattedDonGia();
-            System.out.println(formattedDonGia);
-            txtDONGIA.setText(formattedDonGia);
+//            ModelRoomv2 ms =new ModelRoomv2();
+//            BigDecimal x = (BigDecimal) tbPHONG.getValueAt(row, 6);
+//
+//            ms.setTien(x);
+//
+//            String formattedDonGia = ms.getFormattedDonGia();
+//            System.out.println(formattedDonGia);
+//            txtDONGIA.setText(formattedDonGia);
             
-            
+            txtDONGIA.setText(tbPHONG.getValueAt(row, 6).toString());
 
         }
     }//GEN-LAST:event_tbPHONGMouseClicked

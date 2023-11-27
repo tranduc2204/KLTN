@@ -126,7 +126,7 @@ public class ModelServiceRent {
 
     }
     public boolean update(ModelServiceRentv2 rt) throws Exception {
-        String sql = "update HoaDonDV set NgayLapHD = ? , SL = ?  where MaDV = ? and MaNV = ? , MaKH = ? ";
+        String sql = "update HoaDonDV set NgayLapHD = ? , SL = ?  where MaDV = ? and MaNV = ? and MaKH = ? ";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -144,7 +144,7 @@ public class ModelServiceRent {
     
     public boolean deletecomeroot(ModelServiceRentv2 rt) throws Exception {
        
-        String sql = "update HoaDonDV set isvisible = '0' where MaDV = ? and MaNV = ? , MaKH = ? ";
+        String sql = "update HoaDonDV set isvisible = '0' where MaDV = ? and MaNV = ? and MaKH = ? ";
         
 
         conn = cn.getConnection();

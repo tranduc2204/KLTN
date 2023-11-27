@@ -6,7 +6,6 @@
 package form;
 
 import connect.Connect;
-import java.awt.Color;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,18 +20,22 @@ import model.ModelServicev2;
  *
  * @author TeeDee
  */
-public class FormQLService extends javax.swing.JPanel {
+public class FormViewService extends javax.swing.JFrame {
 
-    public FormQLService() {
+    /**
+     * Creates new form FormViewService
+     */
+    public FormViewService() {
         initComponents();
     }
+    
     Connect cn = new Connect();
     Connection conn;
     DefaultTableModel tbmodel;
 
     private String username, password, quyen, DisplayName;
 
-    public FormQLService(String username, String password, String DisplayName, String quyen) {
+    public FormViewService(String username, String password, String DisplayName, String quyen) {
         initComponents();
         this.username = username;
         this.password = password;
@@ -76,8 +79,6 @@ public class FormQLService extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        panelBorder1 = new swing.PanelBorder();
         roundPanel2 = new swing.RoundPanel();
         jLabel48 = new javax.swing.JLabel();
         jLabel49 = new javax.swing.JLabel();
@@ -85,10 +86,6 @@ public class FormQLService extends javax.swing.JPanel {
         txtMADICHVU = new javax.swing.JTextField();
         txtTENDICHVU = new javax.swing.JTextField();
         txtGIADICHVU = new javax.swing.JTextField();
-        btnAdd = new swing.Button();
-        btnEdit = new swing.Button();
-        btnDelete = new swing.Button();
-        btnRefresh = new swing.Button();
         panelBorder2 = new swing.PanelBorder();
         rbmadv = new javax.swing.JRadioButton();
         txtSEARCHMADV = new javax.swing.JTextField();
@@ -96,10 +93,13 @@ public class FormQLService extends javax.swing.JPanel {
         txtSearchtendv = new javax.swing.JTextField();
         btnSearch = new swing.Button();
         btnView = new swing.Button();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tbdichvu = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tbdichvu = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
 
         roundPanel2.setBackground(new java.awt.Color(36, 87, 157));
         roundPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin dịch vụ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -117,34 +117,6 @@ public class FormQLService extends javax.swing.JPanel {
         jLabel50.setForeground(new java.awt.Color(255, 255, 255));
         jLabel50.setText("Giá dịch vụ:");
 
-        btnAdd.setText("Thêm");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
-            }
-        });
-
-        btnEdit.setText("Sửa");
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
-            }
-        });
-
-        btnDelete.setText("Xóa");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
-
-        btnRefresh.setText("Làm mới");
-        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRefreshActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout roundPanel2Layout = new javax.swing.GroupLayout(roundPanel2);
         roundPanel2.setLayout(roundPanel2Layout);
         roundPanel2Layout.setHorizontalGroup(
@@ -158,21 +130,11 @@ public class FormQLService extends javax.swing.JPanel {
                 .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtGIADICHVU)
                     .addComponent(txtMADICHVU, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                 .addComponent(jLabel49)
                 .addGap(40, 40, 40)
                 .addComponent(txtTENDICHVU, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(92, 92, 92))
-            .addGroup(roundPanel2Layout.createSequentialGroup()
-                .addGap(244, 244, 244)
-                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
-                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
-                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(250, Short.MAX_VALUE))
         );
         roundPanel2Layout.setVerticalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,13 +149,7 @@ public class FormQLService extends javax.swing.JPanel {
                 .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtGIADICHVU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel50))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         panelBorder2.setBackground(new java.awt.Color(36, 87, 157));
@@ -201,13 +157,11 @@ public class FormQLService extends javax.swing.JPanel {
         panelBorder2.setForeground(new java.awt.Color(255, 255, 255));
 
         rbmadv.setBackground(new java.awt.Color(36, 87, 157));
-        buttonGroup1.add(rbmadv);
         rbmadv.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rbmadv.setForeground(new java.awt.Color(255, 255, 255));
         rbmadv.setText("Mã dịch vụ:");
 
         rbtendichvu.setBackground(new java.awt.Color(36, 87, 157));
-        buttonGroup1.add(rbtendichvu);
         rbtendichvu.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rbtendichvu.setForeground(new java.awt.Color(255, 255, 255));
         rbtendichvu.setText("Tên dịch vụ:");
@@ -264,6 +218,9 @@ public class FormQLService extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel8.setText("Thông tin dịch vụ:");
+
         tbdichvu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         tbdichvu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -283,188 +240,40 @@ public class FormQLService extends javax.swing.JPanel {
         });
         jScrollPane4.setViewportView(tbdichvu);
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel8.setText("Thông tin dịch vụ:");
-
-        javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
-        panelBorder1.setLayout(panelBorder1Layout);
-        panelBorder1Layout.setHorizontalGroup(
-            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4)
-                    .addGroup(panelBorder1Layout.createSequentialGroup()
-                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)
-                            .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        panelBorder1Layout.setVerticalGroup(
-            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addComponent(roundPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(roundPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tbdichvuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbdichvuMouseClicked
-        // TODO add your handling code here:
-        int row = tbdichvu.getSelectedRow();
-        
-        
-        if (row >= 0) {
-            
-//            ModelServicev2 ms =new ModelServicev2();
-//            BigDecimal x = (BigDecimal) tbdichvu.getValueAt(row, 2);
-//            ms.setDonGia(x);
-//            String formattedDonGia = ms.getFormattedDonGia();
-//            System.out.println(formattedDonGia);
-            
-            txtMADICHVU.setText(tbdichvu.getValueAt(row, 0).toString());
-            txtTENDICHVU.setText(tbdichvu.getValueAt(row, 1).toString());
-            txtGIADICHVU.setText(tbdichvu.getValueAt(row, 2).toString());
-//            txtGIADICHVU.setText(formattedDonGia);
-            
-            
-            
-        }
-    }//GEN-LAST:event_tbdichvuMouseClicked
-
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
-        StringBuilder sb = new StringBuilder();
-        if (txtMADICHVU.getText().equals("")) {
-            sb.append("mã dịch vụ không được để trống");
-            txtMADICHVU.setBackground(Color.red);
-
-        } else {
-            txtMADICHVU.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        try {
-            double tienn = Double.parseDouble(txtGIADICHVU.getText());
-            
-            BigDecimal bigDecimalValue = new BigDecimal(tienn);
-            
-            ModelServicev2 dv = new ModelServicev2();
-            dv.setMaDichVu(txtMADICHVU.getText());
-            dv.setTenDichVu(txtTENDICHVU.getText());
-            dv.setDonGia(bigDecimalValue);
-             
-            ModelService ql = new ModelService();
-            ql.insert(dv);
-
-            JOptionPane.showMessageDialog(this, "Lưu thành công");
-            loaddichvu();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_btnAddActionPerformed
-
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
-       StringBuilder sb = new StringBuilder();
-        if (txtMADICHVU.getText().equals("")) {
-            sb.append("mã dịch vụ không được để trống");
-            txtMADICHVU.setBackground(Color.red);
-
-        } else {
-            txtMADICHVU.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        if (JOptionPane.showConfirmDialog(this, "bạn có muốn sửa dịch vụ không??") == JOptionPane.NO_OPTION) {
-            return;
-        }
-        try {
-            double tienn = Double.parseDouble(txtGIADICHVU.getText());
-            
-            BigDecimal bigDecimalValue = new BigDecimal(tienn);
-            
-            ModelServicev2 dv = new ModelServicev2();
-            dv.setMaDichVu(txtMADICHVU.getText());
-            dv.setTenDichVu(txtTENDICHVU.getText());
-            
-            dv.setDonGia(bigDecimalValue);
-//            dv.setDonGia(tienn);
-
-            ModelService ql = new ModelService();
-            ql.update(dv);
-
-            JOptionPane.showMessageDialog(this, "sửa thành công");
-            loaddichvu();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_btnEditActionPerformed
-
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
-        StringBuilder sb = new StringBuilder();
-        if (txtMADICHVU.getText().equals("")) {
-            sb.append("mã dịch vụ không được để trống");
-            txtMADICHVU.setBackground(Color.red);
-
-        } else {
-            txtMADICHVU.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        if (JOptionPane.showConfirmDialog(this, "bạn có muốn xóa dịch vụ không??") == JOptionPane.NO_OPTION) {
-            return;
-        }
-        try {
-           
-            
-            ModelServicev2 qll = new ModelServicev2();
-            qll.setMaDichVu(txtMADICHVU.getText());
-            
-            ModelService ql = new ModelService();
-            ql.deletecomeroot(qll);
-
-            JOptionPane.showMessageDialog(this, "xóa thành công");
-            loaddichvu();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_btnDeleteActionPerformed
-
-    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        // TODO add your handling code here:
-       txtMADICHVU.setText("");
-       txtTENDICHVU.setText("");
-       txtGIADICHVU.setText("");
-    }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
@@ -526,22 +335,70 @@ public class FormQLService extends javax.swing.JPanel {
         loaddichvu();
     }//GEN-LAST:event_btnViewActionPerformed
 
+    private void tbdichvuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbdichvuMouseClicked
+        // TODO add your handling code here:
+        int row = tbdichvu.getSelectedRow();
+
+        if (row >= 0) {
+
+//            ModelServicev2 ms =new ModelServicev2();
+//            BigDecimal x = (BigDecimal) tbdichvu.getValueAt(row, 2);
+//            ms.setDonGia(x);
+//            String formattedDonGia = ms.getFormattedDonGia();
+//            System.out.println(formattedDonGia);
+
+            txtMADICHVU.setText(tbdichvu.getValueAt(row, 0).toString());
+            txtTENDICHVU.setText(tbdichvu.getValueAt(row, 1).toString());
+            //            txtGIADICHVU.setText(tbdichvu.getValueAt(row, 2).toString());
+            txtGIADICHVU.setText(tbdichvu.getValueAt(row, 2).toString());
+
+        }
+    }//GEN-LAST:event_tbdichvuMouseClicked
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(FormViewService.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FormViewService.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FormViewService.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FormViewService.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new FormViewService().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private swing.Button btnAdd;
-    private swing.Button btnDelete;
-    private swing.Button btnEdit;
-    private swing.Button btnRefresh;
     private swing.Button btnSearch;
     private swing.Button btnView;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
-    private swing.PanelBorder panelBorder1;
     private swing.PanelBorder panelBorder2;
     private javax.swing.JRadioButton rbmadv;
     private javax.swing.JRadioButton rbtendichvu;

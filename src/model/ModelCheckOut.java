@@ -21,7 +21,7 @@ public class ModelCheckOut {
     
     public ArrayList<ModelCheckOutv2> findALL() throws Exception {
         String sql = "select MaHoaDonPhong, ptp.MaPhieuThuePhong, NgayThuePhong, NgayDatPhong, p.MaPhong, TenPhong, lp.TenLoaiPhong,"
-                + " Tien, ((DATEDIFF(DAY, NgayDatPhong, NgayThuePhong)) *Tien) AS GiaHD,NgayLapHoaDon "
+                + " Tien, ((DATEDIFF(DAY, NgayThuePhong, NgayLapHoaDon)) *Tien) AS GiaHD,NgayLapHoaDon "
                 + "from HoaDonPhong hdp join PhieuThuePhong ptp on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong "
                 + "join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong join phong p "
                 + "on p.MaPhong = pdp.MaPhong join LOAIPHONG lp on p.MaLoaiPhong = lp.MaLoaiPhong where hdp.isvisible = '1' ";

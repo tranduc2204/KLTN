@@ -27,16 +27,16 @@ import model.ModelAccountv2;
  *
  * @author TeeDee
  */
-public class FormTrashAccount extends javax.swing.JPanel {
+public class FormTrash extends javax.swing.JPanel {
 
     /**
-     * Creates new form FormTrashAccount
+     * Creates new form FormTrash
      */
     Connect cn = new Connect();
     Connection conn;
     private DefaultTableModel tableModel;
     
-    public FormTrashAccount() {
+    public FormTrash() {
         initComponents();
         TrashAccount();
         

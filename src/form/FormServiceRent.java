@@ -6,13 +6,20 @@
 package form;
 
 import connect.Connect;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.ModelCheckOut;
 import model.ModelCheckOutv2;
 import model.ModelServiceRent;
 import model.ModelServiceRentv2;
@@ -58,7 +65,7 @@ public class FormServiceRent extends javax.swing.JPanel {
         tbmodel = new DefaultTableModel();
         tbmodel.setColumnIdentifiers(new String[]{"Mã dịch vụ", "Tên dịch vụ", "Mã nhân viên",  "Tên nhân viên",
             "Mã khách hàng", "Tên khách hàng", "Ngày lập hóa đơn", "Đơn giá",  "Số lượng", "Giá hóa đơn"});
-        TBcheckout.setModel(tbmodel);
+        TBServiceRent.setModel(tbmodel);
     }
     
      public void loaddulieu1() {
@@ -68,7 +75,7 @@ public class FormServiceRent extends javax.swing.JPanel {
             tbmodel.setRowCount(0);
             for (ModelServiceRentv2 p : list) {
                 tbmodel.addRow(new Object[]{
-                    p.getMaDV(), p.getTenDichVu(), p.getMaNV(), p.getTenNhanVien(), p.getMaKH(),p.getTenKH(),p.getNgayLapHD(), p.getGia(),  p.getSL()
+                    p.getMaDV(), p.getTenDichVu(), p.getMaNV(), p.getTenNhanVien(), p.getMaKH(),p.getTenKH(),p.getNgayLapHD(), p.getFormattedGia(),  p.getSL(),p.getFormattedGiahd()
                 });
             }
             tbmodel.fireTableDataChanged();
@@ -174,17 +181,13 @@ public class FormServiceRent extends javax.swing.JPanel {
         txtTenNhanVien = new javax.swing.JTextField();
         cmbmakhachhang = new javax.swing.JComboBox<>();
         spSL = new javax.swing.JSpinner();
-        panelBorder2 = new swing.PanelBorder();
-        rbMAKH1 = new javax.swing.JRadioButton();
-        txtSEARCHMAKH = new javax.swing.JTextField();
-        rbsearchngaydat = new javax.swing.JRadioButton();
-        btnSearch = new swing.Button();
-        btnView = new swing.Button();
-        jDateChooserTim = new com.toedter.calendar.JDateChooser();
+        btnPay = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TBcheckout = new javax.swing.JTable();
+        TBServiceRent = new javax.swing.JTable();
+        button1 = new swing.Button();
+        button2 = new swing.Button();
 
         txtloaiphong.setEnabled(false);
 
@@ -283,6 +286,14 @@ public class FormServiceRent extends javax.swing.JPanel {
             }
         });
 
+        btnPay.setBackground(new java.awt.Color(255, 102, 102));
+        btnPay.setText("Tính tiền");
+        btnPay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPayActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout roundPanel5Layout = new javax.swing.GroupLayout(roundPanel5);
         roundPanel5.setLayout(roundPanel5Layout);
         roundPanel5Layout.setHorizontalGroup(
@@ -310,11 +321,13 @@ public class FormServiceRent extends javax.swing.JPanel {
                             .addComponent(txtTenNhanVien, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(spSL))))
                 .addGap(18, 18, 18)
-                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(roundPanel5Layout.createSequentialGroup()
                         .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
-                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
+                        .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(roundPanel5Layout.createSequentialGroup()
                         .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel17)
@@ -374,82 +387,17 @@ public class FormServiceRent extends javax.swing.JPanel {
                     .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelBorder2.setBackground(new java.awt.Color(36, 87, 157));
-        panelBorder2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
-        panelBorder2.setForeground(new java.awt.Color(255, 255, 255));
-
-        rbMAKH1.setBackground(new java.awt.Color(36, 87, 157));
-        rbMAKH1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        rbMAKH1.setForeground(new java.awt.Color(255, 255, 255));
-        rbMAKH1.setText("Mã khách hàng:");
-
-        rbsearchngaydat.setBackground(new java.awt.Color(36, 87, 157));
-        rbsearchngaydat.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        rbsearchngaydat.setForeground(new java.awt.Color(255, 255, 255));
-        rbsearchngaydat.setText("Ngày thuê phòng:");
-
-        btnSearch.setText("Tìm kiếm");
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
-            }
-        });
-
-        btnView.setText("Xem");
-        btnView.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelBorder2Layout = new javax.swing.GroupLayout(panelBorder2);
-        panelBorder2.setLayout(panelBorder2Layout);
-        panelBorder2Layout.setHorizontalGroup(
-            panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBorder2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(panelBorder2Layout.createSequentialGroup()
-                        .addComponent(rbsearchngaydat)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jDateChooserTim, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelBorder2Layout.createSequentialGroup()
-                        .addComponent(rbMAKH1)
-                        .addGap(31, 31, 31)
-                        .addComponent(txtSEARCHMAKH, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37))
-        );
-        panelBorder2Layout.setVerticalGroup(
-            panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbMAKH1)
-                    .addComponent(txtSEARCHMAKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
-                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jDateChooserTim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(rbsearchngaydat)))
-                .addGap(12, 12, 12))
-        );
-
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel8.setText("Thông tin trả phòng:");
+        jLabel8.setText("Thông tin thuê dịch vụ:");
 
-        TBcheckout.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        TBcheckout.setModel(new javax.swing.table.DefaultTableModel(
+        TBServiceRent.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TBServiceRent.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -460,17 +408,41 @@ public class FormServiceRent extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        TBcheckout.addMouseListener(new java.awt.event.MouseAdapter() {
+        TBServiceRent.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TBcheckoutMouseClicked(evt);
+                TBServiceRentMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(TBcheckout);
+        jScrollPane1.setViewportView(TBServiceRent);
+
+        button1.setBackground(new java.awt.Color(36, 87, 157));
+        button1.setForeground(new java.awt.Color(255, 255, 255));
+        button1.setText("Thêm khách hàng");
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+
+        button2.setBackground(new java.awt.Color(36, 87, 157));
+        button2.setForeground(new java.awt.Color(255, 255, 255));
+        button2.setText("Xem dịch vụ");
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(664, 664, 664))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -481,191 +453,161 @@ public class FormServiceRent extends javax.swing.JPanel {
                         .addComponent(roundPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(17, 17, 17))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(roundPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addComponent(jLabel8)
-                .addGap(7, 7, 7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-//        Date selectedDate = jDateChooserngaylaphd.getDate();
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(selectedDate);
-//
-//        int year = calendar.get(Calendar.YEAR);
-//        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-//        int day = calendar.get(Calendar.DAY_OF_MONTH);
-//        String ngayhd = year + "-" + month + "-" + day;
-//
-//        StringBuilder sb = new StringBuilder();
-//        if (txtTenDichVu.getText().equals("")) {
-//            sb.append("Mã phiếu trả phòng không được để trống");
-//            txtTenDichVu.setBackground(Color.red);
-//
-//        } else {
-//            txtTenDichVu.setBackground(Color.white);
-//
-//        }
-//        if (sb.length() > 0) {
-//            JOptionPane.showMessageDialog(this, sb);
-//        }
-//        String Maphieuthuephong = cmbmadichvu.getSelectedItem().toString();
-//
-//        try {
-//            ModelCheckOutv2 ci = new ModelCheckOutv2();
-//            ci.setMaHoaDonPhong(txtTenDichVu.getText());
-//            ci.setNgayLapHoaDon(ngayhd);
-//            ci.setMaPhieuThuePhong(Maphieuthuephong);
-//
-//            ModelCheckOut ql1 = new ModelCheckOut();
-//            ql1.update(ci);
-//
-//            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-//
-//            int row = TBcheckout.getSelectedRow();
-//            if (row >= 0) {
-//                String maphong = TBcheckout.getValueAt(row, 5).toString();
-//
-//                ModelPhongv2 p = new ModelPhongv2();
-//                p.setMaPhong(maphong);
-//
-//                ModelPhong ql = new ModelPhong();
-//                ql.updateTT3(p);
-//
-//            }
-//            ModelPhongv2 p = new ModelPhongv2();
-//            p.setMaPhong(txtMaPhong.getText());
-//
-//            ModelPhong ql = new ModelPhong();
-//            ql.updateTT1(p);
-//
-//            loaddulieu1();
-//        } catch (Exception e) {
-//            //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-//            JOptionPane.showMessageDialog(this, "Mã hóa đơn phòng này đã tồn tại, nếu muốn thêm với mã hóa đơn phòng này vui lòng xóa phiếu đặt phòng trong db");
-//            e.printStackTrace();
-//        }
+        Date selectedDate = jDateChooserngaylaphoadon.getDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDate);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String ngayhd = year + "-" + month + "-" + day;
+
+        String MaDichvu = cmbmadichvu.getSelectedItem().toString();
+        String MaNV = cmbMaNhanvien.getSelectedItem().toString();
+        String MaKH = cmbmakhachhang.getSelectedItem().toString();
+
+        // Lấy giá trị hiện tại của JSpinner
+        Object selectedValue = spSL.getValue();
+        
+        int spinnerValue = (int) selectedValue;
+        
+        if (spinnerValue > 0){
+            try {
+                ModelServiceRentv2 ci = new ModelServiceRentv2();
+                ci.setMaDV(MaDichvu);
+                ci.setMaNV(MaNV);
+                ci.setMaKH(MaKH);
+                ci.setNgayLapHD(ngayhd);
+                ci.setSL(spinnerValue);
+
+                ModelServiceRent ql1 = new ModelServiceRent();
+                ql1.update(ci);
+
+                JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+
+
+                loaddulieu1();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "");
+                e.printStackTrace();
+            }
+        }else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn số lượng dịch vụ lớn hơn 0");
+
+        }
 
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
 
-//         Date selectedDate = jDateChooserngaylaphd.getDate();
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(selectedDate);
-//
-//        int year = calendar.get(Calendar.YEAR);
-//        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-//        int day = calendar.get(Calendar.DAY_OF_MONTH);
-//        String ngayhd = year + "-" + month + "-" + day;
-//
-//        StringBuilder sb = new StringBuilder();
-//        if (txtTenDichVu.getText().equals("")) {
-//            sb.append("Mã phiếu trả phòng không được để trống");
-//            txtTenDichVu.setBackground(Color.red);
-//
-//        } else {
-//            txtTenDichVu.setBackground(Color.white);
-//
-//            String Maphieuthuephong = cmbmadichvu.getSelectedItem().toString();
-//
-//            try {
-//                ModelCheckOutv2 ci = new ModelCheckOutv2();
-//                ci.setMaHoaDonPhong(txtTenDichVu.getText());
-//                ci.setNgayLapHoaDon(ngayhd);
-//                ci.setMaPhieuThuePhong(Maphieuthuephong);
-//
-//                ModelCheckOut ql1 = new ModelCheckOut();
-//                ql1.insert(ci);
-//
-//                JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-//
-//                ModelPhongv2 p = new ModelPhongv2();
-//                p.setMaPhong(txtMaPhong.getText());
-//
-//                ModelPhong ql = new ModelPhong();
-//                ql.updateTT1(p);
-//
-//                loaddulieu1();
-//            } catch (Exception e) {
-//                //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-//                JOptionPane.showMessageDialog(this, "Mã hóa đơn phòng này đã tồn tại, nếu muốn thêm với mã hóa đơn phòng này vui lòng xóa phiếu đặt phòng trong db");
-//                e.printStackTrace();
-//            }
-//
-//        }
-//        if (sb.length() > 0) {
-//            JOptionPane.showMessageDialog(this, sb);
-//        }
+        Date selectedDate = jDateChooserngaylaphoadon.getDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDate);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String ngayhd = year + "-" + month + "-" + day;
+
+        String MaDichvu = cmbmadichvu.getSelectedItem().toString();
+        String MaNV = cmbMaNhanvien.getSelectedItem().toString();
+        String MaKH = cmbmakhachhang.getSelectedItem().toString();
+        
+        // Lấy giá trị hiện tại của JSpinner
+        Object selectedValue = spSL.getValue();
+
+//        // Chuyển đổi giá trị thành chuỗi
+//        String stringValue = selectedValue.toString();
+        
+        int spinnerValue = (int) selectedValue;
+        if (spinnerValue > 0){
+            try {
+                ModelServiceRentv2 ci = new ModelServiceRentv2();
+                ci.setMaDV(MaDichvu);
+                ci.setMaNV(MaNV);
+                ci.setMaKH(MaKH);
+                ci.setNgayLapHD(ngayhd);
+                ci.setSL(spinnerValue);
+
+                ModelServiceRent ql1 = new ModelServiceRent();
+                ql1.insert(ci);
+
+                JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+
+
+                loaddulieu1();
+            } catch (Exception e) {
+                //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                JOptionPane.showMessageDialog(this, "");
+                e.printStackTrace();
+            }
+        }else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn số lượng dịch vụ lớn hơn 0");
+
+        }
+        
 
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void bthDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bthDeleteActionPerformed
         // TODO add your handling code here:
 
-//        StringBuilder sb = new StringBuilder();
-//        if (txtTenDichVu.getText().equals("")) {
-//            sb.append("Mã phiếu trả phòng không được để trống");
-//            txtTenDichVu.setBackground(Color.red);
-//
-//        } else {
-//            txtTenDichVu.setBackground(Color.white);
-//        }
-//        if (sb.length() > 0) {
-//            JOptionPane.showMessageDialog(this, sb);
-//        }
-//        try {
-//            ModelCheckOutv2 ci = new ModelCheckOutv2();//MaHoaDonPhong
-//            ci.setMaHoaDonPhong(txtTenDichVu.getText());
-//
-//            ModelCheckOut ql1 = new ModelCheckOut();
-//            ql1.deletecomeroot(ci);
-//
-//            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-//
-//            int row = TBcheckout.getSelectedRow();
-//            if (row >= 0) {
-//                String maphong = TBcheckout.getValueAt(row, 5).toString();
-//
-//                ModelPhongv2 p = new ModelPhongv2();
-//                p.setMaPhong(maphong);
-//
-//                ModelPhong ql = new ModelPhong();
-//                ql.updateTT3(p);
-//
-//            }
-//
-//            loaddulieu1();
-//        } catch (Exception e) {
-//            //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-//            JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
-//            e.printStackTrace();
-//        }
+        String MaDichvu = cmbmadichvu.getSelectedItem().toString();
+        String MaNV = cmbMaNhanvien.getSelectedItem().toString();
+        String MaKH = cmbmakhachhang.getSelectedItem().toString();
+
+        try {
+            ModelServiceRentv2 ci = new ModelServiceRentv2();
+            ci.setMaDV(MaDichvu);
+            ci.setMaNV(MaNV);
+            ci.setMaKH(MaKH);
+
+
+            ModelServiceRent ql1 = new ModelServiceRent();
+            ql1.deletecomeroot(ci);
+
+            JOptionPane.showMessageDialog(this, "Xóa thành công!!!");
+
+
+            loaddulieu1();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "");
+            e.printStackTrace();
+        }
+        
 
     }//GEN-LAST:event_bthDeleteActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void cmbmadichvuItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmadichvuItemStateChanged
@@ -733,91 +675,117 @@ public class FormServiceRent extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cmbmakhachhangItemStateChanged
 
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+    private void TBServiceRentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TBServiceRentMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnSearchActionPerformed
+        int row = TBServiceRent.getSelectedRow();
 
-    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnViewActionPerformed
+        if (row >= 0) {
+            
+            
+            String madv = TBServiceRent.getValueAt(row, 0).toString();
+            System.out.println("" + madv);
+            cmbmadichvu.setSelectedItem(madv);
+            
+            txtTenDichVu.setText(TBServiceRent.getValueAt(row, 1).toString());
 
-    private void TBcheckoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TBcheckoutMouseClicked
+            String manv = TBServiceRent.getValueAt(row, 2).toString();
+            System.out.println("" + manv);
+            cmbMaNhanvien.setSelectedItem(manv);
+            
+            txtTenNhanVien.setText(TBServiceRent.getValueAt(row, 3).toString());
+            
+            String makh = TBServiceRent.getValueAt(row, 4).toString();
+            System.out.println("" + makh);
+            cmbmakhachhang.setSelectedItem(makh);
+            
+            txtTenKH.setText(TBServiceRent.getValueAt(row, 5).toString());
+
+            String ngaylaphd = TBServiceRent.getValueAt(row, 6).toString();
+
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
+                Date selectedDate = dateFormat.parse(ngaylaphd); // Phân tích chuỗi thành đối tượng Date
+                jDateChooserngaylaphoadon.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            
+            txtGiaDichvu.setText(TBServiceRent.getValueAt(row, 7).toString());
+            
+            Object sl = TBServiceRent.getValueAt(row, 8);
+            spSL.setValue(sl);
+            txtGiahd.setText(TBServiceRent.getValueAt(row, 9).toString());
+            
+
+        }
+    }//GEN-LAST:event_TBServiceRentMouseClicked
+
+    private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
         // TODO add your handling code here:
-//        int row = TBcheckout.getSelectedRow();
-//
-//        if (row >= 0) {
-//            txtMaphieutraphong.setText(TBcheckout.getValueAt(row, 0).toString());
-//
-//            String maphieuthuephong = TBcheckout.getValueAt(row, 1).toString();
-//            System.out.println("" + maphieuthuephong);
-//            cmbmaphieuthuephong.setSelectedItem(maphieuthuephong);
-//
-//            String ngaythuephong = TBcheckout.getValueAt(row, 2).toString();
-//
-//            try {
-//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
-//                Date selectedDate = dateFormat.parse(ngaythuephong); // Phân tích chuỗi thành đối tượng Date
-//                jDateChooserngaythuephong.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//
-//            String ngaydatphong = TBcheckout.getValueAt(row, 3).toString();
-//
-//            try {
-//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
-//                Date selectedDate = dateFormat.parse(ngaydatphong); // Phân tích chuỗi thành đối tượng Date
-//                jDateChooserngaydatphong.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//            txtMaPhong.setText(TBcheckout.getValueAt(row, 4).toString());
-//            txtTenPhong.setText(TBcheckout.getValueAt(row, 5).toString());
-//            txtloaiphong.setText(TBcheckout.getValueAt(row, 6).toString());
-//
-//            ModelCheckOutv2 ms =new ModelCheckOutv2();
-//            BigDecimal x = (BigDecimal) TBcheckout.getValueAt(row, 7);
-//
-//            ms.setGia(x);
-//
-//            String formattedDonGia = ms.getFormattedGia();
-//            System.out.println(formattedDonGia);
-//            txtGiaPhong.setText(formattedDonGia);
-//
-//            ModelCheckOutv2 mss =new ModelCheckOutv2();
-//            BigDecimal xx = (BigDecimal) TBcheckout.getValueAt(row, 8);
-//            mss.setGiaHD(xx);
-//
-//            String formattedhoadon = mss.getFormattedGiahd();
-//            System.out.println(formattedhoadon);
-//            txtGiahd.setText(formattedhoadon);
-//
-//            String ngaylaphd = TBcheckout.getValueAt(row, 9).toString();
-//
-//            try {
-//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
-//                Date selectedDate = dateFormat.parse(ngaylaphd); // Phân tích chuỗi thành đối tượng Date
-//                jDateChooserngaylaphd.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
-    }//GEN-LAST:event_TBcheckoutMouseClicked
+        // Lấy giá trị hiện tại của JSpinner
+        Object selectedValue = spSL.getValue();
+
+        // lấy giá trị kiểu int cho sốluongwj
+        int spinnerValue = (int) selectedValue;
+        
+        String tmp = txtGiaDichvu.getText();
+        
+        DecimalFormat decimalFormat = new DecimalFormat("#,### VND");
+        
+        try {
+            Number giaNumber = decimalFormat.parse(tmp);
+            // Lấy giá trị số từ đối tượng Number
+            Float gia = giaNumber.floatValue();
+            
+            System.out.println(gia);
+            
+            Float tmp2;
+            
+            if (spinnerValue > 0){
+                tmp2 = (float) ((float)spinnerValue * gia);
+                BigDecimal giahd = BigDecimal.valueOf(tmp2);
+
+                ModelServiceRentv2 sr = new ModelServiceRentv2();
+                sr.setGiaHD(giahd);
+                String formattedhoadon = sr.getFormattedGiahd();
+                txtGiahd.setText(formattedhoadon);
+            }else {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn số lượng dịch vụ lớn hơn 0");
+            }
+            
+            
+        } catch (ParseException ex) {
+            Logger.getLogger(FormServiceRent.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnPayActionPerformed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        // TODO add your handling code here:
+        FormaddKH l = new FormaddKH(username, password, DisplayName,quyen);
+        l.setVisible(true);
+        l.setLocationRelativeTo(null);
+    }//GEN-LAST:event_button1ActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        // TODO add your handling code here:
+        FormViewService l = new FormViewService(username, password, DisplayName,quyen);
+        l.setVisible(true);
+        l.setLocationRelativeTo(null);
+    }//GEN-LAST:event_button2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TBcheckout;
+    private javax.swing.JTable TBServiceRent;
     private swing.Button bthDelete;
     private swing.Button btnAdd;
     private swing.Button btnEdit;
+    private javax.swing.JButton btnPay;
     private swing.Button btnRefresh;
-    private swing.Button btnSearch;
-    private swing.Button btnView;
+    private swing.Button button1;
+    private swing.Button button2;
     private javax.swing.JComboBox<String> cmbMaNhanvien;
     private javax.swing.JComboBox<String> cmbmadichvu;
     private javax.swing.JComboBox<String> cmbmakhachhang;
-    private com.toedter.calendar.JDateChooser jDateChooserTim;
     private com.toedter.calendar.JDateChooser jDateChooserngaylaphoadon;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -832,14 +800,10 @@ public class FormServiceRent extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private swing.PanelBorder panelBorder2;
-    private javax.swing.JRadioButton rbMAKH1;
-    private javax.swing.JRadioButton rbsearchngaydat;
     private swing.RoundPanel roundPanel5;
     private javax.swing.JSpinner spSL;
     private javax.swing.JTextField txtGiaDichvu;
     private javax.swing.JTextField txtGiahd;
-    private javax.swing.JTextField txtSEARCHMAKH;
     private javax.swing.JTextField txtTenDichVu;
     private javax.swing.JTextField txtTenKH;
     private javax.swing.JTextField txtTenNhanVien;

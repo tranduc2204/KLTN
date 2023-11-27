@@ -11,11 +11,17 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.ModelCheckIn;
@@ -24,7 +30,7 @@ import model.ModelCheckOut;
 import model.ModelCheckOutv2;
 import model.ModelPhong;
 import model.ModelPhongv2;
-import model.ModelRent;
+import model.ModelServiceRentv2;
 
 /**
  *
@@ -63,7 +69,7 @@ public class FormCheckOut extends javax.swing.JPanel {
     
     private void inittable() {
         tbmodel = new DefaultTableModel();
-        tbmodel.setColumnIdentifiers(new String[]{"Mã phiếu trả phòng", "Mã phiếu thuê phòng", "Ngày thuê phòng",  "Ngày đặt phòng", "Mã phòng", "Tên phòng", "Loại phòng",  "Giá phòng", "Giá hóa đơn", "Ngày lập hóa đơn"});
+        tbmodel.setColumnIdentifiers(new String[]{"Mã phiếu trả phòng", "Mã phiếu thuê phòng",  "Ngày đặt phòng", "Ngày thuê phòng", "Mã phòng", "Tên phòng", "Loại phòng",  "Giá phòng", "Giá hóa đơn", "Ngày lập hóa đơn"});
         TBcheckout.setModel(tbmodel);
     }
     
@@ -76,7 +82,7 @@ public class FormCheckOut extends javax.swing.JPanel {
                 tbmodel.addRow(new Object[]{
 //      "Mã phiếu trả phòng, Mã phiếu thuê phòng", "Ngày thuê phòng",  "Ngày đặt phòng", "Tên phòng", "Loại phòng",  "Giá phòng", "Giá hóa đơn", "Ngày lập hóa đơn"});
 
-                    p.getMaHoaDonPhong(), p.getMaPhieuThuePhong(), p.getNgayThuePhong(), p.getNgayDatPhong(), p.getMaPhong(),p.getTenPhong(), p.getLoaiPhong(),  p.getGia(), p.getGiaHD(), p.getNgayLapHoaDon()
+                    p.getMaHoaDonPhong(), p.getMaPhieuThuePhong(), p.getNgayDatPhong(), p.getNgayThuePhong(), p.getMaPhong(),p.getTenPhong(), p.getLoaiPhong(),  p.getFormattedGia(), p.getFormattedGiahd(), p.getNgayLapHoaDon()
                 });
             }
             tbmodel.fireTableDataChanged();
@@ -126,8 +132,6 @@ public class FormCheckOut extends javax.swing.JPanel {
         btnRefresh = new swing.Button();
         txtGiaPhong = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jDateChooserngaydatphong = new com.toedter.calendar.JDateChooser();
         jLabel20 = new javax.swing.JLabel();
         txtloaiphong = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
@@ -141,6 +145,9 @@ public class FormCheckOut extends javax.swing.JPanel {
         jDateChooserngaylaphd = new com.toedter.calendar.JDateChooser();
         jLabel22 = new javax.swing.JLabel();
         txtMaPhong = new javax.swing.JTextField();
+        btnPay = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        jDateChooserngaydatphong = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         TBcheckout = new javax.swing.JTable();
         panelBorder2 = new swing.PanelBorder();
@@ -200,12 +207,6 @@ public class FormCheckOut extends javax.swing.JPanel {
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("Giá phòng:");
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Ngày đặt phòng:");
-
-        jDateChooserngaydatphong.setEnabled(false);
-
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setText("Loại phòng:");
@@ -244,6 +245,20 @@ public class FormCheckOut extends javax.swing.JPanel {
 
         txtMaPhong.setEnabled(false);
 
+        btnPay.setBackground(new java.awt.Color(255, 102, 102));
+        btnPay.setText("Tính tiền");
+        btnPay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPayActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Ngày đặt phòng:");
+
+        jDateChooserngaydatphong.setEnabled(false);
+
         javax.swing.GroupLayout roundPanel5Layout = new javax.swing.GroupLayout(roundPanel5);
         roundPanel5.setLayout(roundPanel5Layout);
         roundPanel5Layout.setHorizontalGroup(
@@ -261,21 +276,23 @@ public class FormCheckOut extends javax.swing.JPanel {
                             .addComponent(jLabel10)
                             .addComponent(jLabel21)
                             .addComponent(jLabel11)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel19))
+                            .addComponent(jLabel19)
+                            .addComponent(jLabel15))
                         .addGap(28, 28, 28)
                         .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(cmbmaphieuthuephong, 0, 249, Short.MAX_VALUE)
                             .addComponent(txtMaphieutraphong)
-                            .addComponent(jDateChooserngaythuephong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jDateChooserngaydatphong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jDateChooserngaylaphd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jDateChooserngaylaphd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jDateChooserngaythuephong, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jDateChooserngaydatphong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
-                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(roundPanel5Layout.createSequentialGroup()
                         .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
-                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(roundPanel5Layout.createSequentialGroup()
                         .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel20)
@@ -298,34 +315,31 @@ public class FormCheckOut extends javax.swing.JPanel {
             .addGroup(roundPanel5Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(roundPanel5Layout.createSequentialGroup()
-                        .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel22)
-                                .addComponent(txtMaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel11)
-                                .addComponent(txtMaphieutraphong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(26, 26, 26)
-                        .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(cmbmaphieuthuephong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel16)
-                            .addComponent(txtTenPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29)
-                        .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel21)
-                            .addComponent(jDateChooserngaythuephong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel20)
-                        .addComponent(txtloaiphong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(25, 25, 25)
-                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel17)
-                        .addComponent(txtGiaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel22)
+                        .addComponent(txtMaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel11)
+                        .addComponent(txtMaphieutraphong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(26, 26, 26)
+                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(cmbmaphieuthuephong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16)
+                    .addComponent(txtTenPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jDateChooserngaydatphong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15))
+                    .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel20)
+                        .addComponent(txtloaiphong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel15)))
+                .addGap(25, 25, 25)
+                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(txtGiaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21)
+                    .addComponent(jDateChooserngaythuephong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -338,7 +352,8 @@ public class FormCheckOut extends javax.swing.JPanel {
                     .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -701,7 +716,19 @@ public class FormCheckOut extends javax.swing.JPanel {
             System.out.println("" + maphieuthuephong);
             cmbmaphieuthuephong.setSelectedItem(maphieuthuephong);
             
-            String ngaythuephong = TBcheckout.getValueAt(row, 2).toString();
+            
+            
+            String ngaydatphong = TBcheckout.getValueAt(row, 2).toString();
+
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
+                Date selectedDate = dateFormat.parse(ngaydatphong); // Phân tích chuỗi thành đối tượng Date
+                jDateChooserngaydatphong.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            
+            String ngaythuephong = TBcheckout.getValueAt(row, 3).toString();
 
             try {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
@@ -711,36 +738,30 @@ public class FormCheckOut extends javax.swing.JPanel {
                 e.printStackTrace();
             }
             
-            String ngaydatphong = TBcheckout.getValueAt(row, 3).toString();
-
-            try {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
-                Date selectedDate = dateFormat.parse(ngaydatphong); // Phân tích chuỗi thành đối tượng Date
-                jDateChooserngaydatphong.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
             txtMaPhong.setText(TBcheckout.getValueAt(row, 4).toString());
             txtTenPhong.setText(TBcheckout.getValueAt(row, 5).toString());
             txtloaiphong.setText(TBcheckout.getValueAt(row, 6).toString());
 
-            ModelCheckOutv2 ms =new ModelCheckOutv2();
-            BigDecimal x = (BigDecimal) TBcheckout.getValueAt(row, 7);
-
-            ms.setGia(x);
-
-            String formattedDonGia = ms.getFormattedGia();
-            System.out.println(formattedDonGia);
-            txtGiaPhong.setText(formattedDonGia);
+//            ModelCheckOutv2 ms =new ModelCheckOutv2();
+//            BigDecimal x = (BigDecimal) TBcheckout.getValueAt(row, 7);
+//
+//            ms.setGia(x);
+//
+//            String formattedDonGia = ms.getFormattedGia();
+//            System.out.println(formattedDonGia);
+//            txtGiaPhong.setText(formattedDonGia);
             
+            txtGiaPhong.setText(TBcheckout.getValueAt(row, 7).toString());
             
-            ModelCheckOutv2 mss =new ModelCheckOutv2();
-            BigDecimal xx = (BigDecimal) TBcheckout.getValueAt(row, 8);
-            mss.setGiaHD(xx);
+//            ModelCheckOutv2 mss =new ModelCheckOutv2();
+//            BigDecimal xx = (BigDecimal) TBcheckout.getValueAt(row, 8);
+//            mss.setGiaHD(xx);
+//            
+//            String formattedhoadon = mss.getFormattedGiahd();
+//            System.out.println(formattedhoadon);
+//            txtGiahd.setText(formattedhoadon);
             
-            String formattedhoadon = mss.getFormattedGiahd();
-            System.out.println(formattedhoadon);
-            txtGiahd.setText(formattedhoadon);
+            txtGiahd.setText(TBcheckout.getValueAt(row, 8).toString());
             
 
             String ngaylaphd = TBcheckout.getValueAt(row, 9).toString();
@@ -764,12 +785,57 @@ public class FormCheckOut extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnViewActionPerformed
 
+    private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
+        // TODO add your handling code here:
+        
+
+        String tmp = txtGiaPhong.getText();
+
+        DecimalFormat decimalFormat = new DecimalFormat("#,### VND");
+
+        try {
+            Number giaNumber = decimalFormat.parse(tmp);
+            // Lấy giá trị số từ đối tượng Number
+            Float gia = giaNumber.floatValue();
+
+//            System.out.println(gia);
+
+            Date date1 = jDateChooserngaythuephong.getDate();
+            Date date2 = jDateChooserngaylaphd.getDate();
+            
+            if (date1 != null && date2 != null) {
+                LocalDate localDate1 = date1.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+                LocalDate localDate2 = date2.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+
+                // Tính khoảng cách giữa hai ngày bằng Period
+                float daysDifference = ChronoUnit.DAYS.between(localDate1, localDate2);
+                System.out.println("Difference in days: " + daysDifference);
+                
+                
+                Float tmp2;
+                tmp2 = (float) (daysDifference * gia);
+                BigDecimal giahd = BigDecimal.valueOf(tmp2);
+
+                ModelCheckOutv2 sr = new ModelCheckOutv2();
+                sr.setGiaHD(giahd);
+                String formattedhoadon = sr.getFormattedGiahd();
+                txtGiahd.setText(formattedhoadon);
+            }
+            
+
+
+        } catch (ParseException ex) {
+            Logger.getLogger(FormServiceRent.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnPayActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TBcheckout;
     private swing.Button bthDelete;
     private swing.Button btnAdd;
     private swing.Button btnEdit;
+    private javax.swing.JButton btnPay;
     private swing.Button btnRefresh;
     private swing.Button btnSearch;
     private swing.Button btnView;

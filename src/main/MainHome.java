@@ -28,7 +28,8 @@ import form.FormRecycle_Bin;
 import form.FormRent;
 import form.FormServiceRent;
 import form.FormSetting;
-import form.FormTrashAccount;
+import form.FormStatistic1;
+import form.FormTrash;
 
 import form.MainForm;
 import form.test;
@@ -113,7 +114,7 @@ public class MainHome extends javax.swing.JFrame {
             }else if (menuIndex ==1 && quyen.equals("root")){
                 main.showForm(new FormBackupRestore());
             }else if (menuIndex ==2 && quyen.equals("root")){
-                main.showForm(new FormTrashAccount());
+                main.showForm(new FormTrash());
             }else if (menuIndex ==2 && quyen.equals("Admin")){
                 if (subMenuIndex == 0){
                     main.showForm(new FormQLAccount(username, password, DisplayName,quyen));
@@ -144,6 +145,11 @@ public class MainHome extends javax.swing.JFrame {
                 main.showForm(new FormCheckIn(username, password, DisplayName,quyen));
             }else if (menuIndex ==5 && quyen.equals("Admin")){
                 main.showForm(new FormCheckOut(username, password, DisplayName,quyen));
+            }else if (menuIndex ==6 && quyen.equals("Admin")){
+                if (subMenuIndex == 0){
+                    main.showForm(new FormStatistic1(username, password, DisplayName,quyen));
+                }
+                
             }else if (menuIndex ==7 && quyen.equals("Admin")){
                 main.showForm(new FormServiceRent(username, password, DisplayName,quyen));
             }else if (menuIndex ==8 && quyen.equals("Admin")){
