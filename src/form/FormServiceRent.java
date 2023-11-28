@@ -5,6 +5,7 @@
  */
 package form;
 
+import static com.formdev.flatlaf.util.MultiResolutionImageSupport.map;
 import connect.Connect;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -16,13 +17,22 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.ModelCheckOutv2;
+import static jdk.nashorn.internal.objects.NativeArray.map;
 import model.ModelServiceRent;
 import model.ModelServiceRentv2;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -182,6 +192,7 @@ public class FormServiceRent extends javax.swing.JPanel {
         cmbmakhachhang = new javax.swing.JComboBox<>();
         spSL = new javax.swing.JSpinner();
         btnPay = new javax.swing.JButton();
+        btnReport = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -294,6 +305,14 @@ public class FormServiceRent extends javax.swing.JPanel {
             }
         });
 
+        btnReport.setBackground(new java.awt.Color(255, 99, 76));
+        btnReport.setText("In Report");
+        btnReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout roundPanel5Layout = new javax.swing.GroupLayout(roundPanel5);
         roundPanel5.setLayout(roundPanel5Layout);
         roundPanel5Layout.setHorizontalGroup(
@@ -321,13 +340,15 @@ public class FormServiceRent extends javax.swing.JPanel {
                             .addComponent(txtTenNhanVien, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(spSL))))
                 .addGap(18, 18, 18)
-                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(roundPanel5Layout.createSequentialGroup()
                         .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
                         .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
-                        .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(41, 41, 41)
+                        .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(roundPanel5Layout.createSequentialGroup()
                         .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel17)
@@ -388,7 +409,8 @@ public class FormServiceRent extends javax.swing.JPanel {
                         .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -438,7 +460,7 @@ public class FormServiceRent extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(63, Short.MAX_VALUE)
                 .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -773,6 +795,37 @@ public class FormServiceRent extends javax.swing.JPanel {
         l.setLocationRelativeTo(null);
     }//GEN-LAST:event_button2ActionPerformed
 
+    private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
+        // TODO add your handling code here:
+        String MaDichvu = cmbmadichvu.getSelectedItem().toString();
+        String MaNV = cmbMaNhanvien.getSelectedItem().toString();
+        String MaKH = cmbmakhachhang.getSelectedItem().toString();
+        
+        if (MaDichvu.equals("")==true || MaNV.equals("")==true || MaKH.equals("")==true) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn mã phiếu dịch vụ mã nhân viên và mã khách hàng");
+        } else {
+
+            //All Files	D:\TranDuc\java\nhom4_qlksnewworld_5804_Ct6\src\nhom4_qlksnewworld_5804_ct6\newReport.jrxml
+            try {//All Files	D:\TranDuc\java\nhom4_qlksnewworld_5804_Ct6\src\report\rptphieuthuephong.jrxml
+//                Hashtable map = new Hashtable();
+                Map<String, Object> map = new HashMap<>();
+                JasperReport rpt = JasperCompileManager.compileReport("src/report/reportServiceRent.jrxml");
+                System.out.println(MaDichvu);
+                map.put("madv", MaDichvu);
+                map.put("manv", MaNV);
+                map.put("makh", MaKH);
+                conn = cn.getConnection();
+                JasperPrint p = JasperFillManager.fillReport(rpt, map, conn);
+                JasperViewer.viewReport(p, false);
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(this, ex.toString());
+            }
+
+        }
+        
+        
+    }//GEN-LAST:event_btnReportActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TBServiceRent;
@@ -781,6 +834,7 @@ public class FormServiceRent extends javax.swing.JPanel {
     private swing.Button btnEdit;
     private javax.swing.JButton btnPay;
     private swing.Button btnRefresh;
+    private javax.swing.JButton btnReport;
     private swing.Button button1;
     private swing.Button button2;
     private javax.swing.JComboBox<String> cmbMaNhanvien;
