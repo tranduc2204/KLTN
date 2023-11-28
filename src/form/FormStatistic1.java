@@ -245,7 +245,7 @@ public class FormStatistic1 extends javax.swing.JPanel {
 
         try {
             Map<String, Object> map = new HashMap<>();
-            JasperReport rpt = JasperCompileManager.compileReport("src/report/reportStatistic1.jrxml");
+            JasperReport rpt = JasperCompileManager.compileReport("src/report/rpStatistic1.jrxml");
             map.put("tungay", tungay);
             map.put("denngay", denngay);
      
