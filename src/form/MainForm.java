@@ -49,7 +49,7 @@ public class MainForm extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 780, Short.MAX_VALUE)
+            .addGap(0, 920, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
