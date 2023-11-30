@@ -245,7 +245,7 @@ public class FormQLCustomers extends javax.swing.JPanel {
                         .addGap(12, 12, 12))
                     .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel15)
-                        .addComponent(jDateChooserngaysinh, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jDateChooserngaysinh, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         panelBorder2.setBackground(new java.awt.Color(36, 87, 157));

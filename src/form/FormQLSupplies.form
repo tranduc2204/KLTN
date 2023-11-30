@@ -50,7 +50,7 @@
               <Component id="jSeparator1" min="-2" pref="12" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="245" max="-2" attributes="0"/>
-              <EmptySpace pref="50" max="32767" attributes="0"/>
+              <EmptySpace pref="43" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -78,32 +78,25 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace pref="197" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="txtMAVatTu" alignment="1" min="-2" pref="415" max="-2" attributes="0"/>
+                      <Component id="txtLoaiVatTu" alignment="1" min="-2" pref="415" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="321" max="-2" attributes="0"/>
-                          <Component id="btnAdd" min="-2" pref="103" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnEdit" min="-2" pref="103" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="31" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="txtMAVatTu" min="-2" pref="415" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="txtLoaiVatTu" min="-2" pref="415" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
                           <Component id="bthDelete" min="-2" pref="103" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnAdd3" min="-2" pref="103" max="-2" attributes="0"/>
-                          <EmptySpace pref="284" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="btnAdd" min="-2" pref="103" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btnEdit" min="-2" pref="103" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace pref="197" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -115,15 +108,16 @@
                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="txtMAVatTu" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtLoaiVatTu" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnAdd" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="69" max="32767" attributes="0"/>
+                          <EmptySpace pref="25" max="32767" attributes="0"/>
+                          <Component id="txtLoaiVatTu" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnEdit" min="-2" pref="48" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="btnAdd" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
-                              <Component id="btnEdit" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                               <Component id="bthDelete" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                               <Component id="btnAdd3" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                           </Group>
@@ -135,22 +129,6 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="swing.Button" name="btnAdd">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="swing.Button" name="btnEdit">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="swing.Button" name="bthDelete">
           <Properties>
             <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
@@ -176,6 +154,22 @@
           <Properties>
             <Property name="labelText" type="java.lang.String" value="Lo&#x1ea1;i v&#x1ead;t t&#x1b0;"/>
           </Properties>
+        </Component>
+        <Component class="swing.Button" name="btnAdd">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="swing.Button" name="btnEdit">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

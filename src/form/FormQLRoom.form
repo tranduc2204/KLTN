@@ -81,28 +81,35 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="txtMAPHONG" pref="393" max="32767" attributes="0"/>
-                      <Component id="txtTTPHONG" alignment="0" pref="393" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jLabel41" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="cmbMATINHTRANGPHONG" min="-2" pref="210" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="txtTENPHONG" min="-2" pref="393" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="txtTENPHONG" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="68" pref="68" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="txtMAPHONG" alignment="0" min="-2" pref="393" max="-2" attributes="0"/>
+                              <Component id="txtTTPHONG" min="-2" pref="393" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel41" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="cmbMATINHTRANGPHONG" min="-2" pref="210" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="142" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="txtDONGIA" min="-2" pref="393" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="jLabel40" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="cmbMALOAIIPHONGa" pref="210" max="32767" attributes="0"/>
+                          <Component id="cmbMALOAIIPHONGa" min="-2" pref="268" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="txtTLP" max="32767" attributes="0"/>
-                      <Component id="txtDONGIA" max="32767" attributes="0"/>
+                      <Component id="txtTLP" min="-2" pref="393" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
@@ -129,20 +136,20 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel40" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="cmbMALOAIIPHONGa" alignment="1" min="-2" pref="32" max="-2" attributes="0"/>
+                              <Component id="cmbMALOAIIPHONGa" alignment="1" min="-2" pref="44" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtTENPHONG" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtTENPHONG" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="txtTLP" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="cmbMATINHTRANGPHONG" min="-2" pref="32" max="-2" attributes="0"/>
+                              <Component id="cmbMATINHTRANGPHONG" min="-2" pref="44" max="-2" attributes="0"/>
                               <Component id="jLabel41" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -151,7 +158,7 @@
                       <Group type="102" attributes="0">
                           <Component id="txtDONGIA" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="btnRefresh" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
@@ -159,8 +166,8 @@
                                       <Component id="btnEdit" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="btnAdd" min="-2" pref="48" max="-2" attributes="0"/>
                               </Group>
                           </Group>

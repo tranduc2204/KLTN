@@ -172,7 +172,7 @@
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                               <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                              <Component id="jDateChooserngaysinh" min="-2" pref="34" max="-2" attributes="0"/>
+                              <Component id="jDateChooserngaysinh" min="-2" pref="44" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>

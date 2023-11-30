@@ -23,12 +23,11 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="roundPanel5" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="panelBorder2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
@@ -39,16 +38,10 @@
                           </Group>
                           <Component id="jSeparator1" min="-2" pref="183" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="130" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="roundPanel5" max="32767" attributes="0"/>
-                          <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -60,7 +53,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="panelBorder2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="46" max="32767" attributes="0"/>
+                      <EmptySpace pref="39" max="32767" attributes="0"/>
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jSeparator1" min="-2" pref="12" max="-2" attributes="0"/>
@@ -128,8 +121,8 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="cmbmaphon" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="cmbmaphon" min="-2" pref="291" max="-2" attributes="0"/>
                       </Group>
                       <Component id="txtTenPhong" alignment="0" max="32767" attributes="0"/>
                       <Component id="txtloaiphong" alignment="0" max="32767" attributes="0"/>
@@ -157,12 +150,12 @@
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="txtMaphieudatphong" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                      <Component id="cmbmaphon" min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="cmbmaphon" min="-2" pref="44" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="cmbmakh" min="-2" pref="31" max="-2" attributes="0"/>
+                          <Component id="cmbmakh" min="-2" pref="44" max="-2" attributes="0"/>
                           <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="txtTenPhong" min="-2" max="-2" attributes="0"/>
@@ -171,9 +164,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="txtloaiphong" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace type="separate" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jDateChooserngaydatphong" alignment="1" min="-2" pref="31" max="-2" attributes="0"/>
+                              <Component id="jDateChooserngaydatphong" alignment="1" min="-2" pref="44" max="-2" attributes="0"/>
                               <Component id="jLabel15" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -182,12 +175,12 @@
                           <Component id="txtTENkh1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="cmbmanv" min="-2" pref="31" max="-2" attributes="0"/>
+                              <Component id="cmbmanv" min="-2" pref="44" max="-2" attributes="0"/>
                               <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txtTenNV" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtGiaPhong" alignment="3" min="-2" max="-2" attributes="0"/>
