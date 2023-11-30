@@ -5,6 +5,9 @@
  */
 package form;
 
+
+
+
 import connect.Connect;
 import java.awt.Color; 
 import static java.lang.Thread.sleep;
@@ -21,6 +24,8 @@ import model.ModelAccount;
 import model.ModelAccountv2;
 import model.ModelCustomers;
 import model.ModelCustomersv2;
+import org.mindrot.jbcrypt.BCrypt;
+
 
 /**
  *
@@ -46,7 +51,7 @@ public class FormQLAccount extends javax.swing.JPanel {
         this.DisplayName = DisplayName;
         this.quyen = quyen;
         Time();
-        nhuchay();
+      
         inittable_Account();
         loadthongtintaikhoan();
        
@@ -64,29 +69,6 @@ public class FormQLAccount extends javax.swing.JPanel {
         };
         Timer timer = new Timer();
         timer.schedule(time, 0, 1000);
-    }
-   
-
-    public void nhuchay() {
-//        Thread thread1 = new Thread() {
-//            @Override
-//            public void run() {
-//                String txt = lbCHAY.getText() + "   ";
-//                while (true) {
-//                    txt = txt.substring(1, txt.length()) + txt.charAt(0);
-//                    try {
-//                        sleep(200);
-//                    } catch (InterruptedException ex) {
-////                        Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//
-//                    lbCHAY.setText(txt);
-//
-//                }
-//            }
-//
-//        };
-//        thread1.start();
     }
     
     private void inittable_Account() {
@@ -110,6 +92,23 @@ public class FormQLAccount extends javax.swing.JPanel {
             e.printStackTrace();
         }
 
+    }
+    
+    //  hash password
+    // Số vòng lặp cho quá trình băm, tăng lên để tăng độ an toàn nhưng cũng làm tăng thời gian xử lý
+    private static final int ROUNDS = 12;
+
+    public static String hashPassword(String plainTextPassword) {
+        // Tạo salt ngẫu nhiên
+        String salt = BCrypt.gensalt(ROUNDS);
+
+        // Mã hóa mật khẩu bằng cách sử dụng salt
+        return BCrypt.hashpw(plainTextPassword, salt);
+    }
+
+    public static boolean checkPassword(String candidatePassword, String hashedPassword) {
+        // Kiểm tra mật khẩu nhập vào có khớp với mật khẩu đã lưu không
+        return BCrypt.checkpw(candidatePassword, hashedPassword);
     }
 
     /**
@@ -440,10 +439,16 @@ public class FormQLAccount extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, sb);
         }
         try {
+            // Ví dụ sử dụng
+           
+            
+            String rawPassword = txtMATKHAU3.getText();
+            String hashedPassword = hashPassword(rawPassword);
+            
             ModelAccountv2 acc = new ModelAccountv2();
             acc.setUsername(txtTENDANGNHAP3.getText());
             acc.setDisplayname(txtTENTAIKHOAN3.getText());
-            acc.setPassword(txtMATKHAU3.getText());
+            acc.setPassword(hashedPassword);
             //acc.setType(txtLTAIKHOAN.getText());
             acc.setType(loai);
 
@@ -476,10 +481,14 @@ public class FormQLAccount extends javax.swing.JPanel {
             return;
         }
         try {
+            
+            String rawPassword = txtMATKHAU3.getText();
+            String hashedPassword = hashPassword(rawPassword);
+            
             ModelAccountv2 acc = new ModelAccountv2();
             acc.setUsername(txtTENDANGNHAP3.getText());
             acc.setDisplayname(txtTENTAIKHOAN3.getText());
-            acc.setPassword(txtMATKHAU3.getText());
+            acc.setPassword(hashedPassword);
             //acc.setType(txtLTAIKHOAN.getText());
             acc.setType(loai);
             ModelAccount ql = new ModelAccount();

@@ -19,7 +19,7 @@ public class ModelAccount {
     Connect cn = new Connect();
     Connection conn;
     public ArrayList<ModelAccountv2> findALL() throws Exception {
-        String sql = "select * from Account where isvisible = '1' and ( Typpe = 'Admin' or Typpe = 'User' )";
+        String sql = "select * from Account where isvisible = '1' and ( Typpe = 'Admin' or Typpe = 'User' ) ";//
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
