@@ -180,7 +180,7 @@ public class MainHome extends javax.swing.JFrame {
                 }
             }else if (menuIndex == 12){
                 int dk = JOptionPane.showConfirmDialog(main, "Bạn có muốn đăng xuất khỏi chương trình", "Confirm", JOptionPane.YES_NO_OPTION);
-                if (dk != JOptionPane.NO_OPTION) {
+                if (dk == JOptionPane.YES_OPTION) {
                     main.hide();
                     header.hide();
                     menu.hide();
@@ -195,7 +195,7 @@ public class MainHome extends javax.swing.JFrame {
                 }
             }else if (menuIndex == 13){
                 int dk = JOptionPane.showConfirmDialog(main, "Bạn có muốn thoát khỏi chương trình", "Confirm", JOptionPane.YES_NO_OPTION);
-                if (dk != JOptionPane.NO_OPTION) {
+                if (dk == JOptionPane.YES_OPTION) {
                     System.exit(0);
                 } else {
                     return;

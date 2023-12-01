@@ -101,21 +101,21 @@ public class Menu extends javax.swing.JPanel {
         
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Dashboard"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/2.png")), "Charts"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/4.png")), "Admin Management", "Accounts Management",
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/user.png")), "Admin Management", "Accounts Management",
                 "Customers Management", "Bills Management","Staffs Management","Services Management","Rooms Management",
                 "Supplies Management","Room Supplies Management", "Service Bill Management"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/8.png")), "Rent"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/booking.png")), "Rent"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/8.png")), "Check in"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/9.png")), "Check out"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/10.png")), "Statistic", "Statistic 001", "Statistic 002"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/pie-chart.png")), "Statistic", "Statistic 001", "Statistic 002"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/11.png")), "Service"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Help"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Setting"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Change Language","Vietnamese","English"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/question.png")), "Help"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/settings.png")), "Setting"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/translation.png")), "Change Language","Vietnamese","English"));
         addEnpty();
 
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/13.png")), "Log out"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/14.png")), "Exit"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/logout.png")), "Log out"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/power-off.png")), "Exit"));
     }
     
     public void initMenuItemVietNam() {
