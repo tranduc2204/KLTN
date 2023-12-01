@@ -140,22 +140,13 @@ public class MainHome extends javax.swing.JFrame {
                 
 
             }else if (menuIndex ==3 && quyen.equals("Admin")){
-
-                main.showForm(new FormRent(username, password, DisplayName,quyen));
-            }else if (menuIndex ==4 && quyen.equals("Admin")){
-                main.showForm(new FormCheckIn(username, password, DisplayName,quyen));
-            }else if (menuIndex ==5 && quyen.equals("Admin")){
-                main.showForm(new FormCheckOut(username, password, DisplayName,quyen));
-            }else if (menuIndex ==6 && quyen.equals("Admin")){
                 if (subMenuIndex == 0){
                     main.showForm(new FormStatistic1(username, password, DisplayName,quyen));
                 }else if (subMenuIndex == 1){
                     main.showForm(new FormStatistic2(username, password, DisplayName,quyen));
                 }
                 
-            }else if (menuIndex ==7 && quyen.equals("Admin")){
-                main.showForm(new FormServiceRent(username, password, DisplayName,quyen));
-            }else if (menuIndex ==8 && quyen.equals("Admin")){
+            }else if (menuIndex ==4 && quyen.equals("Admin")){
                 Runtime rt = Runtime.getRuntime();
                 try {
                     String filePath = "src\\form\\THNN_TranDuc.chm";  //Đường dẫn và tên file cần mở
@@ -166,10 +157,10 @@ public class MainHome extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(main, "Cannot load help file!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-            else if (menuIndex == 9 && quyen.equals("Admin")){
+            else if (menuIndex == 5 && quyen.equals("Admin")){
                 main.showForm(new FormSetting());
                 
-            }else if(menuIndex == 10 && quyen.equals("Admin") ){
+            }else if(menuIndex == 6 && quyen.equals("Admin") ){
                 if (subMenuIndex == 0){
                     System.out.println("hihi");
                     menu.clearMenu();
@@ -178,22 +169,19 @@ public class MainHome extends javax.swing.JFrame {
                     menu.clearMenu();
                     menu.initMenuItem();
                 }
-            }else if (menuIndex == 12){
+            }else if (menuIndex == 8 && quyen.equals("Admin")){
                 int dk = JOptionPane.showConfirmDialog(main, "Bạn có muốn đăng xuất khỏi chương trình", "Confirm", JOptionPane.YES_NO_OPTION);
-                if (dk == JOptionPane.YES_OPTION) {
+                if (dk != JOptionPane.NO_OPTION) {
                     main.hide();
                     header.hide();
                     menu.hide();
                     bg.hide();
                     log.setLocationRelativeTo(null);
                     log.setVisible(true);
-                    
-                    
-                   
                 } else {
                     return;
                 }
-            }else if (menuIndex == 13){
+            }else if (menuIndex == 9 && quyen.equals("Admin")){
                 int dk = JOptionPane.showConfirmDialog(main, "Bạn có muốn thoát khỏi chương trình", "Confirm", JOptionPane.YES_NO_OPTION);
                 if (dk == JOptionPane.YES_OPTION) {
                     System.exit(0);
@@ -202,10 +190,10 @@ public class MainHome extends javax.swing.JFrame {
                 }
             }
             ///////////////////////user//////////////////
-            else if (menuIndex == 8 && quyen.equals("User")){
+            else if (menuIndex == 9 && quyen.equals("User")){
                 int dk = JOptionPane.showConfirmDialog(main, "Bạn có muốn đăng xuất khỏi chương trình", "Confirm", JOptionPane.YES_NO_OPTION);
                 if (dk != JOptionPane.NO_OPTION) {
-                    main.hide();
+                     main.hide();
                     header.hide();
                     menu.hide();
                     bg.hide();
@@ -214,25 +202,86 @@ public class MainHome extends javax.swing.JFrame {
                 } else {
                     return;
                 }
-            }else if (menuIndex == 9 && quyen.equals("User")){
+            }else if (menuIndex == 10 && quyen.equals("User")){
                 int dk = JOptionPane.showConfirmDialog(main, "Bạn có muốn thoát khỏi chương trình", "Confirm", JOptionPane.YES_NO_OPTION);
-                if (dk != JOptionPane.NO_OPTION) {
+                if (dk == JOptionPane.YES_OPTION) {
                     System.exit(0);
                 } else {
                     return;
                 }
-            }else if(menuIndex == 6 && quyen.equals("User") ){
+            }else if(menuIndex == 7 && quyen.equals("User") ){
                 if (subMenuIndex == 0){
+                    System.out.println("hihi");
                     menu.clearMenu();
                     menu.initMenuItem1VietNam();
                 }else if(subMenuIndex == 1){
                     menu.clearMenu();
                     menu.initMenuItem1();
                 }
-            }else if (menuIndex == 5 && quyen.equals("User")){
+            }else if (menuIndex == 6 && quyen.equals("User")){
                 main.showForm(new FormSetting());
                 
+            }else if (menuIndex == 5 && quyen.equals("User")){
+                Runtime rt = Runtime.getRuntime();
+                try {
+                    String filePath = "src\\form\\THNN_TranDuc.chm";  //Đường dẫn và tên file cần mở
+                    rt.exec("hh.exe " + filePath);
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(main, "Cannot load help file!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }else if (menuIndex == 4 && quyen.equals("User")){
+                main.showForm(new FormServiceRent(username, password, DisplayName,quyen));
+            }else if (menuIndex == 3 && quyen.equals("User")){
+                main.showForm(new FormCheckOut(username, password, DisplayName,quyen));
+            }else if (menuIndex == 2 && quyen.equals("User")){
+                main.showForm(new FormCheckIn(username, password, DisplayName,quyen));
+            }else if (menuIndex == 1 && quyen.equals("User")){
+                main.showForm(new FormRent(username, password, DisplayName,quyen));
+            }else if (menuIndex ==3 && quyen.equals("root")){
+                Runtime rt = Runtime.getRuntime();
+                try {
+                    String filePath = "src\\form\\THNN_TranDuc.chm";  //Đường dẫn và tên file cần mở
+                    rt.exec("hh.exe " + filePath);
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(main, "Cannot load help file!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else if (menuIndex == 4 && quyen.equals("root")){
+                main.showForm(new FormSetting());
+                
+            }else if(menuIndex == 5 && quyen.equals("root") ){
+                if (subMenuIndex == 0){
+                    System.out.println("hihi");
+                    menu.clearMenu();
+                    menu.initMenuItemrootVietNam();
+                }else if(subMenuIndex == 1){
+                    menu.clearMenu();
+                    menu.initMenuItemroot();
+                }
+            }else if (menuIndex == 7 && quyen.equals("root")){
+                int dk = JOptionPane.showConfirmDialog(main, "Bạn có muốn đăng xuất khỏi chương trình", "Confirm", JOptionPane.YES_NO_OPTION);
+                if (dk != JOptionPane.NO_OPTION) {
+                     main.hide();
+                    header.hide();
+                    menu.hide();
+                    bg.hide();
+                    log.setLocationRelativeTo(null);
+                    log.setVisible(true);
+                } else {
+                    return;
+                }
+            }else if (menuIndex == 8 && quyen.equals("root")){
+                int dk = JOptionPane.showConfirmDialog(main, "Bạn có muốn thoát khỏi chương trình", "Confirm", JOptionPane.YES_NO_OPTION);
+                if (dk == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                } else {
+                    return;
+                }
             }
+            
         }
 
             });

@@ -83,20 +83,34 @@ public class Menu extends javax.swing.JPanel {
     private void addEnpty(){
         panel.add(new JLabel(), "push");
     }
-    
+    //menu root
     public void initMenuItemroot() {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Dashboard"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Backup Restore"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "System Trash"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Help"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Setting"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Change Language","Vietnamese","English"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/data-recovery.png")), "Backup Restore"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/delete_2.png")), "System Trash"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/question.png")), "Help"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/settings.png")), "Setting"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/translation.png")),"Change Language","Vietnamese","English"));
         addEnpty();
 
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/13.png")), "Log out"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/14.png")), "Exit"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/logout.png")), "Log out"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/power-off.png")), "Exit"));
     }
     
+    public void initMenuItemrootVietNam() {
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Trang tổng quan"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/data-recovery.png")), "Phục hồi dữ liệu"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/delete_2.png")), "Thùng rác hệ thống"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/question.png")), "Trợ giúp"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/settings.png")), "Cài đặt"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/translation.png")), "Đổi ngôn ngữ","Việt Nam","Tiếng anh"));
+        addEnpty();
+
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/logout.png")), "Đăng xuất"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/power-off.png")), "Thoát"));
+    }
+    
+    // menu admin
     public void initMenuItem() {
         
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Dashboard"));
@@ -104,11 +118,7 @@ public class Menu extends javax.swing.JPanel {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/user.png")), "Admin Management", "Accounts Management",
                 "Customers Management", "Bills Management","Staffs Management","Services Management","Rooms Management",
                 "Supplies Management","Room Supplies Management", "Service Bill Management"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/booking.png")), "Rent"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/8.png")), "Check in"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/9.png")), "Check out"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/pie-chart.png")), "Statistic", "Statistic 001", "Statistic 002"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/11.png")), "Service"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/question.png")), "Help"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/settings.png")), "Setting"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/translation.png")), "Change Language","Vietnamese","English"));
@@ -120,47 +130,47 @@ public class Menu extends javax.swing.JPanel {
     
     public void initMenuItemVietNam() {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Trang tổng quan"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/2.png")), "Charts"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/3.png")), "Báo cáo", "Thu nhập", "Expense", "Profit"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/4.png")), "Quản lý", "Quản lý tài khoản", 
-                "Quản lý khách hàng", "Quản lý hóa đơn","Quản lý nhân viên","Quản lý dịch vụ","Quản lý phòng","Quản lý vật tư"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/8.png")), "Thuê phòng"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/9.png")), "Trả phòng"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/10.png")), "Thống kê", "Statistic 001", "Statistic 002"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/11.png")), "Dịch vụ"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Trợ giúp"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Cài đặt"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Đổi ngôn ngữ","Vietnamese","English"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/2.png")), "Biểu đồ"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/user.png")), "Quản lý", "Quản lý tài khoản", 
+                "Quản lý khách hàng", "Quản lý hóa đơn","Quản lý nhân viên","Quản lý dịch vụ","Quản lý phòng","Quản lý vật tư", "Quản lý vật tư phòng"
+                ,"Quản lý hóa đơn dịch vụ"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/pie-chart.png")), "Thống kê", "Thống kê 001", "Thống kê 002"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/question.png")), "Trợ giúp"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/settings.png")), "Cài đặt"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/translation.png")), "Đổi ngôn ngữ","Việt Nam","Tiếng anh"));
         addEnpty();
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/13.png")), "Đăng xuất"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/14.png")), "Thoát"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/logout.png")), "Đăng xuất"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/power-off.png")), "Thoát"));
     }
     
+    // menu user
     public void initMenuItem1() {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Dashboard"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/8.png")), "Rent"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/booking.png")), "Rent"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/8.png")), "Check in"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/9.png")), "Check out"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/11.png")), "Service"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Help"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Setting"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Change Language","Vietnamese","English"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/question.png")), "Help"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/settings.png")), "Setting"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/translation.png")), "Change Language","Vietnamese","English"));
         addEnpty();
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/13.png")), "Log out"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/14.png")), "Exit"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/logout.png")), "Log out"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/power-off.png")), "Exit"));
         
     }
     
     public void initMenuItem1VietNam() {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Dashboard"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/booking.png")), "Đặt phòng"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/8.png")), "Thuê phòng"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/9.png")), "Trả phòng"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/11.png")), "Dịch vụ"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Trợ giúp"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Cài đặt"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/12.png")), "Đổi ngôn ngữ","Vietnamese","English"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/question.png")), "Trợ giúp"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/settings.png")), "Cài đặt"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/translation.png")), "Đổi ngôn ngữ","Việt Nam","Tiếng anh"));
         addEnpty();
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/13.png")), "Đăng xuất"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/14.png")), "Thoát"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/logout.png")), "Đăng xuất"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/power-off.png")), "Thoát"));
         
     }
     

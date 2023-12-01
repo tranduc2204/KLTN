@@ -121,21 +121,6 @@ public class FormcheckRoom extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        roundPanel2 = new swing.RoundPanel();
-        jLabel33 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
-        jLabel35 = new javax.swing.JLabel();
-        txtTENPHONG = new javax.swing.JTextField();
-        txtTTPHONG = new javax.swing.JTextField();
-        jLabel37 = new javax.swing.JLabel();
-        jLabel38 = new javax.swing.JLabel();
-        jLabel39 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
-        txtTLP = new javax.swing.JTextField();
-        txtDONGIA = new javax.swing.JTextField();
-        txtMAPHONG = new javax.swing.JTextField();
-        cmbMATINHTRANGPHONG = new javax.swing.JComboBox<>();
-        cmbMALOAIIPHONGa = new javax.swing.JComboBox<>();
         panelBorder2 = new swing.PanelBorder();
         rbMAPHONG = new javax.swing.JRadioButton();
         txtsearchmaphong = new javax.swing.JTextField();
@@ -150,125 +135,19 @@ public class FormcheckRoom extends javax.swing.JFrame {
         tbPHONG = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        roundPanel2 = new swing.RoundPanel();
+        jLabel40 = new javax.swing.JLabel();
+        cmbMATINHTRANGPHONG = new javax.swing.JComboBox<>();
+        cmbMALOAIIPHONGa = new javax.swing.JComboBox<>();
+        txtMAPHONG = new component.TextField();
+        txtTENPHONG = new component.TextField();
+        txtTTPHONG = new component.TextField();
+        txtDONGIA = new component.TextField();
+        jLabel41 = new javax.swing.JLabel();
+        txtTLP = new component.TextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
-
-        roundPanel2.setBackground(new java.awt.Color(36, 87, 157));
-        roundPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin phòng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
-        roundPanel2.setForeground(new java.awt.Color(255, 255, 255));
-
-        jLabel33.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel33.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel33.setText("Tên phòng:");
-
-        jLabel34.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel34.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel34.setText("Mã tình trạng phòng:");
-
-        jLabel35.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel35.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel35.setText("Loại phòng:");
-
-        txtTTPHONG.setEditable(false);
-
-        jLabel37.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel37.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel37.setText("Đơn giá:");
-
-        jLabel38.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel38.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel38.setText("Mã phòng:");
-
-        jLabel39.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel39.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel39.setText("Tình trạng phòng");
-
-        jLabel40.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel40.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel40.setText("Mã loại phòng:");
-
-        txtTLP.setEditable(false);
-
-        cmbMATINHTRANGPHONG.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbMATINHTRANGPHONGItemStateChanged(evt);
-            }
-        });
-
-        cmbMALOAIIPHONGa.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbMALOAIIPHONGaItemStateChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout roundPanel2Layout = new javax.swing.GroupLayout(roundPanel2);
-        roundPanel2.setLayout(roundPanel2Layout);
-        roundPanel2Layout.setHorizontalGroup(
-            roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel2Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(roundPanel2Layout.createSequentialGroup()
-                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel38)
-                            .addComponent(jLabel33))
-                        .addGap(97, 97, 97)
-                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtTENPHONG, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
-                            .addComponent(txtMAPHONG)))
-                    .addGroup(roundPanel2Layout.createSequentialGroup()
-                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel34)
-                            .addComponent(jLabel39))
-                        .addGap(18, 18, 18)
-                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtTTPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbMATINHTRANGPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel35)
-                        .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.LEADING))
-                    .addComponent(jLabel40))
-                .addGap(49, 49, 49)
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cmbMALOAIIPHONGa, 0, 224, Short.MAX_VALUE)
-                    .addComponent(txtTLP)
-                    .addComponent(txtDONGIA))
-                .addGap(98, 98, 98))
-        );
-        roundPanel2Layout.setVerticalGroup(
-            roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel2Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel38)
-                    .addComponent(txtMAPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel40)
-                    .addComponent(cmbMALOAIIPHONGa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(roundPanel2Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtTENPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel35)
-                            .addComponent(txtTLP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel33)))
-                .addGap(26, 26, 26)
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbMATINHTRANGPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel34)
-                    .addComponent(jLabel37)
-                    .addComponent(txtDONGIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel39)
-                    .addComponent(txtTTPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
 
         panelBorder2.setBackground(new java.awt.Color(36, 87, 157));
         panelBorder2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -386,6 +265,104 @@ public class FormcheckRoom extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel8.setText("Thông tin phòng:");
 
+        roundPanel2.setBackground(new java.awt.Color(36, 87, 157));
+        roundPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin phòng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
+        roundPanel2.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel40.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel40.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel40.setText("Mã loại phòng:");
+
+        cmbMATINHTRANGPHONG.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbMATINHTRANGPHONGItemStateChanged(evt);
+            }
+        });
+        cmbMATINHTRANGPHONG.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMATINHTRANGPHONGActionPerformed(evt);
+            }
+        });
+
+        cmbMALOAIIPHONGa.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbMALOAIIPHONGaItemStateChanged(evt);
+            }
+        });
+
+        txtMAPHONG.setLabelText("Mã phòng");
+
+        txtTENPHONG.setLabelText("Tên phòng");
+
+        txtTTPHONG.setLabelText("Tình trạng phòng");
+
+        txtDONGIA.setLabelText("Đơn giá");
+
+        jLabel41.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel41.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel41.setText("Mã tình trạng phòng:");
+
+        txtTLP.setLabelText("Loại phòng");
+
+        javax.swing.GroupLayout roundPanel2Layout = new javax.swing.GroupLayout(roundPanel2);
+        roundPanel2.setLayout(roundPanel2Layout);
+        roundPanel2Layout.setHorizontalGroup(
+            roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundPanel2Layout.createSequentialGroup()
+                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(txtTENPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(roundPanel2Layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtMAPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTTPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(roundPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel41)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmbMATINHTRANGPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(roundPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDONGIA, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTLP, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(roundPanel2Layout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(jLabel40)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmbMALOAIIPHONGa, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(70, 70, 70))
+        );
+        roundPanel2Layout.setVerticalGroup(
+            roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundPanel2Layout.createSequentialGroup()
+                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(roundPanel2Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(txtMAPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cmbMALOAIIPHONGa, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel40))))
+                .addGap(18, 18, 18)
+                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtTENPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTLP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(roundPanel2Layout.createSequentialGroup()
+                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cmbMATINHTRANGPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel41))
+                        .addGap(18, 18, 18)
+                        .addComponent(txtTTPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDONGIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -393,7 +370,6 @@ public class FormcheckRoom extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(roundPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1082, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -401,16 +377,18 @@ public class FormcheckRoom extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(roundPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(roundPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -421,46 +399,6 @@ public class FormcheckRoom extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void cmbMATINHTRANGPHONGItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMATINHTRANGPHONGItemStateChanged
-        // TODO add your handling code here:
-        String MaTinhTrangPhong = cmbMATINHTRANGPHONG.getSelectedItem().toString();
-        try {
-            ModelRoomTT ql = new ModelRoomTT();
-
-            model.ModelRoomTTv2 ttp = ql.findByID(MaTinhTrangPhong);
-            if (ttp != null) {
-                txtTTPHONG.setText(ttp.getTinhtrangphong());
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Không tim thấy mã tình trạng phòng");
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_cmbMATINHTRANGPHONGItemStateChanged
-
-    private void cmbMALOAIIPHONGaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMALOAIIPHONGaItemStateChanged
-        // TODO add your handling code here:
-        String MaLoaiPHong = cmbMALOAIIPHONGa.getSelectedItem().toString();
-        try {
-            ModelRoomLP ql = new ModelRoomLP();
-
-            model.ModelRoomLPv2 lp = ql.findByID(MaLoaiPHong);
-            if (lp != null) {
-                txtTLP.setText(lp.getTenLoaiPhong());
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Không tim thấy mã loại phòng");
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_cmbMALOAIIPHONGaItemStateChanged
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
@@ -559,6 +497,50 @@ public class FormcheckRoom extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tbPHONGMouseClicked
 
+    private void cmbMATINHTRANGPHONGItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMATINHTRANGPHONGItemStateChanged
+        // TODO add your handling code here:
+        String MaTinhTrangPhong = cmbMATINHTRANGPHONG.getSelectedItem().toString();
+        try {
+            ModelRoomTT ql = new ModelRoomTT();
+
+            model.ModelRoomTTv2 ttp = ql.findByID(MaTinhTrangPhong);
+            if (ttp != null) {
+                txtTTPHONG.setText(ttp.getTinhtrangphong());
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tim thấy mã tình trạng phòng");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_cmbMATINHTRANGPHONGItemStateChanged
+
+    private void cmbMATINHTRANGPHONGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMATINHTRANGPHONGActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbMATINHTRANGPHONGActionPerformed
+
+    private void cmbMALOAIIPHONGaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMALOAIIPHONGaItemStateChanged
+        // TODO add your handling code here:
+        String MaLoaiPHong = cmbMALOAIIPHONGa.getSelectedItem().toString();
+        try {
+            ModelRoomLP ql = new ModelRoomLP();
+
+            model.ModelRoomLPv2 lp = ql.findByID(MaLoaiPHong);
+            if (lp != null) {
+                txtTLP.setText(lp.getTenLoaiPhong());
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tim thấy mã loại phòng");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_cmbMALOAIIPHONGaItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -599,13 +581,8 @@ public class FormcheckRoom extends javax.swing.JFrame {
     private swing.Button btnView;
     private javax.swing.JComboBox<String> cmbMALOAIIPHONGa;
     private javax.swing.JComboBox<String> cmbMATINHTRANGPHONG;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel37;
-    private javax.swing.JLabel jLabel38;
-    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel8;
@@ -616,11 +593,11 @@ public class FormcheckRoom extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbMAPHONG;
     private swing.RoundPanel roundPanel2;
     private javax.swing.JTable tbPHONG;
-    private javax.swing.JTextField txtDONGIA;
-    private javax.swing.JTextField txtMAPHONG;
-    private javax.swing.JTextField txtTENPHONG;
-    private javax.swing.JTextField txtTLP;
-    private javax.swing.JTextField txtTTPHONG;
+    private component.TextField txtDONGIA;
+    private component.TextField txtMAPHONG;
+    private component.TextField txtTENPHONG;
+    private component.TextField txtTLP;
+    private component.TextField txtTTPHONG;
     private javax.swing.JTextField txtdengia;
     private javax.swing.JTextField txtsearchmaphong;
     private javax.swing.JTextField txttugia;
