@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="765ccb72-8d98-42c3-b07e-ab84eb74f379">
-	<property name="ireport.zoom" value="1.9487171000000019"/>
+	<property name="ireport.zoom" value="1.2100000000000009"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="532"/>
+	<property name="ireport.y" value="695"/>
 	<subDataset name="dataset1" uuid="b0e8862b-e7ef-4fe9-847b-6965b20af0ba"/>
 	<parameter name="mahoadonphong" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -187,7 +187,7 @@ where MaHoaDonPhong = $P{mahoadonphong}]]>
 			</textField>
 			<textField>
 				<reportElement x="205" y="90" width="100" height="20" uuid="9e9008fe-ae60-4964-b1dd-5efdae76e4e1"/>
-				<textFieldExpression><![CDATA[  $F{TenKH}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{TenKH}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="143" y="110" width="100" height="20" uuid="55181310-e5cc-486e-8aac-bf893abb30bf"/>
@@ -220,7 +220,7 @@ where MaHoaDonPhong = $P{mahoadonphong}]]>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="24" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Thông tin chi tiết]]></text>
+				<text><![CDATA[Thông tin chi tiết hóa đơn phòng]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="20" y="67" width="112" height="20" uuid="4874a515-488a-4773-b839-324200f4bb18"/>

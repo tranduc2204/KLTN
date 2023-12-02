@@ -797,7 +797,7 @@ public class FormServiceRent extends javax.swing.JPanel {
             try {//All Files	D:\TranDuc\java\nhom4_qlksnewworld_5804_Ct6\src\report\rptphieuthuephong.jrxml
 //                Hashtable map = new Hashtable();
                 Map<String, Object> map = new HashMap<>();
-                JasperReport rpt = JasperCompileManager.compileReport("src/report/reportServiceRent.jrxml");
+                JasperReport rpt = JasperCompileManager.compileReport("src/report/rpServiceRent.jrxml");
                 System.out.println(MaDichvu);
                 map.put("madv", MaDichvu);
                 map.put("manv", MaNV);
