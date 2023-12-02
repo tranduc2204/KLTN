@@ -90,6 +90,7 @@ public class Menu extends javax.swing.JPanel {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/delete_2.png")), "System Trash"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/question.png")), "Help"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/settings.png")), "Setting"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/padlock.png")), "Change Password"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/translation.png")),"Change Language","Vietnamese","English"));
         addEnpty();
 
@@ -103,6 +104,7 @@ public class Menu extends javax.swing.JPanel {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/delete_2.png")), "Thùng rác hệ thống"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/question.png")), "Trợ giúp"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/settings.png")), "Cài đặt"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/padlock.png")), "Đổi mật khẩu"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/translation.png")), "Đổi ngôn ngữ","Việt Nam","Tiếng anh"));
         addEnpty();
 
@@ -121,6 +123,7 @@ public class Menu extends javax.swing.JPanel {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/pie-chart.png")), "Statistic", "Statistic 001", "Statistic 002"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/question.png")), "Help"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/settings.png")), "Setting"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/padlock.png")), "Change Password"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/translation.png")), "Change Language","Vietnamese","English"));
         addEnpty();
 
@@ -137,6 +140,7 @@ public class Menu extends javax.swing.JPanel {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/pie-chart.png")), "Thống kê", "Thống kê 001", "Thống kê 002"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/question.png")), "Trợ giúp"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/settings.png")), "Cài đặt"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/padlock.png")), "Đổi mật khẩu"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/translation.png")), "Đổi ngôn ngữ","Việt Nam","Tiếng anh"));
         addEnpty();
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/logout.png")), "Đăng xuất"));
@@ -152,6 +156,7 @@ public class Menu extends javax.swing.JPanel {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/11.png")), "Service"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/question.png")), "Help"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/settings.png")), "Setting"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/padlock.png")), "Change Password"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/translation.png")), "Change Language","Vietnamese","English"));
         addEnpty();
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/logout.png")), "Log out"));
@@ -167,6 +172,7 @@ public class Menu extends javax.swing.JPanel {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/11.png")), "Dịch vụ"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/question.png")), "Trợ giúp"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/settings.png")), "Cài đặt"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/padlock.png")), "Đổi mật khẩu"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/translation.png")), "Đổi ngôn ngữ","Việt Nam","Tiếng anh"));
         addEnpty();
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/logout.png")), "Đăng xuất"));

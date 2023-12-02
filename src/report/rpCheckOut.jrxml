@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="765ccb72-8d98-42c3-b07e-ab84eb74f379">
 	<property name="ireport.zoom" value="1.2100000000000009"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="695"/>
+	<property name="ireport.y" value="694"/>
 	<subDataset name="dataset1" uuid="b0e8862b-e7ef-4fe9-847b-6965b20af0ba"/>
 	<parameter name="mahoadonphong" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>

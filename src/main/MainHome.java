@@ -11,6 +11,8 @@ import event.EventMenuSelected;
 import event.EventShowPopupMenu;
 import form.FormBackupRestore;
 import form.FormBill;
+import form.FormChangePass;
+import form.FormChangePassv2;
 import form.FormChart;
 import form.FormCheckIn;
 import form.FormCheckOut;
@@ -160,7 +162,13 @@ public class MainHome extends javax.swing.JFrame {
             else if (menuIndex == 5 && quyen.equals("Admin")){
                 main.showForm(new FormSetting());
                 
-            }else if(menuIndex == 6 && quyen.equals("Admin") ){
+            } else if (menuIndex == 6 && quyen.equals("Admin")){
+//                main.showForm(new FormChangePassv2(username, password, DisplayName,quyen));
+                FormChangePassv2 l = new FormChangePassv2(username, password, DisplayName,quyen);
+                l.setVisible(true);
+                l.setLocationRelativeTo(null);
+                
+            }else if(menuIndex == 7 && quyen.equals("Admin") ){
                 if (subMenuIndex == 0){
                     System.out.println("hihi");
                     menu.clearMenu();
@@ -169,7 +177,7 @@ public class MainHome extends javax.swing.JFrame {
                     menu.clearMenu();
                     menu.initMenuItem();
                 }
-            }else if (menuIndex == 8 && quyen.equals("Admin")){
+            }else if (menuIndex == 9 && quyen.equals("Admin")){
                 int dk = JOptionPane.showConfirmDialog(main, "Bạn có muốn đăng xuất khỏi chương trình", "Confirm", JOptionPane.YES_NO_OPTION);
                 if (dk != JOptionPane.NO_OPTION) {
                     main.hide();
@@ -181,7 +189,7 @@ public class MainHome extends javax.swing.JFrame {
                 } else {
                     return;
                 }
-            }else if (menuIndex == 9 && quyen.equals("Admin")){
+            }else if (menuIndex == 10 && quyen.equals("Admin")){
                 int dk = JOptionPane.showConfirmDialog(main, "Bạn có muốn thoát khỏi chương trình", "Confirm", JOptionPane.YES_NO_OPTION);
                 if (dk == JOptionPane.YES_OPTION) {
                     System.exit(0);
@@ -190,9 +198,9 @@ public class MainHome extends javax.swing.JFrame {
                 }
             }
             ///////////////////////user//////////////////
-            else if (menuIndex == 9 && quyen.equals("User")){
+            else if (menuIndex == 10 && quyen.equals("User")){
                 int dk = JOptionPane.showConfirmDialog(main, "Bạn có muốn đăng xuất khỏi chương trình", "Confirm", JOptionPane.YES_NO_OPTION);
-                if (dk != JOptionPane.NO_OPTION) {
+                if (dk == JOptionPane.YES_OPTION) {
                      main.hide();
                     header.hide();
                     menu.hide();
@@ -202,14 +210,14 @@ public class MainHome extends javax.swing.JFrame {
                 } else {
                     return;
                 }
-            }else if (menuIndex == 10 && quyen.equals("User")){
+            }else if (menuIndex == 11 && quyen.equals("User")){
                 int dk = JOptionPane.showConfirmDialog(main, "Bạn có muốn thoát khỏi chương trình", "Confirm", JOptionPane.YES_NO_OPTION);
                 if (dk == JOptionPane.YES_OPTION) {
                     System.exit(0);
                 } else {
                     return;
                 }
-            }else if(menuIndex == 7 && quyen.equals("User") ){
+            }else if(menuIndex == 8 && quyen.equals("User") ){
                 if (subMenuIndex == 0){
                     System.out.println("hihi");
                     menu.clearMenu();
@@ -218,6 +226,11 @@ public class MainHome extends javax.swing.JFrame {
                     menu.clearMenu();
                     menu.initMenuItem1();
                 }
+            }else if (menuIndex == 7 && quyen.equals("User")){
+                FormChangePassv2 l = new FormChangePassv2(username, password, DisplayName,quyen);
+                l.setVisible(true);
+                l.setLocationRelativeTo(null);
+                
             }else if (menuIndex == 6 && quyen.equals("User")){
                 main.showForm(new FormSetting());
                 
@@ -252,7 +265,12 @@ public class MainHome extends javax.swing.JFrame {
             } else if (menuIndex == 4 && quyen.equals("root")){
                 main.showForm(new FormSetting());
                 
-            }else if(menuIndex == 5 && quyen.equals("root") ){
+            }else if (menuIndex == 5 && quyen.equals("root")){
+                FormChangePassv2 l = new FormChangePassv2(username, password, DisplayName,quyen);
+                l.setVisible(true);
+                l.setLocationRelativeTo(null);
+                
+            }else if(menuIndex == 6 && quyen.equals("root") ){
                 if (subMenuIndex == 0){
                     System.out.println("hihi");
                     menu.clearMenu();
@@ -261,7 +279,7 @@ public class MainHome extends javax.swing.JFrame {
                     menu.clearMenu();
                     menu.initMenuItemroot();
                 }
-            }else if (menuIndex == 7 && quyen.equals("root")){
+            }else if (menuIndex == 8 && quyen.equals("root")){
                 int dk = JOptionPane.showConfirmDialog(main, "Bạn có muốn đăng xuất khỏi chương trình", "Confirm", JOptionPane.YES_NO_OPTION);
                 if (dk != JOptionPane.NO_OPTION) {
                      main.hide();
@@ -273,7 +291,7 @@ public class MainHome extends javax.swing.JFrame {
                 } else {
                     return;
                 }
-            }else if (menuIndex == 8 && quyen.equals("root")){
+            }else if (menuIndex == 9 && quyen.equals("root")){
                 int dk = JOptionPane.showConfirmDialog(main, "Bạn có muốn thoát khỏi chương trình", "Confirm", JOptionPane.YES_NO_OPTION);
                 if (dk == JOptionPane.YES_OPTION) {
                     System.exit(0);

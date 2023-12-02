@@ -52,7 +52,7 @@ public class FormLogin extends javax.swing.JFrame {
         String UserName = txtTENDN.getText().trim();
         String PassWorrd = passwordField2.getText().trim();
 
-        String quyen, ten;
+        String quyen, ten, tk,matkhau;
 
         StringBuffer sb = new StringBuffer();
 
@@ -78,13 +78,15 @@ public class FormLogin extends javax.swing.JFrame {
                 if (PasswordHashingExample.checkPassword(PassWorrd, hashedPasswordInDatabase)) {
                     ten = rs.getString("DisplayName");
                     quyen = rs.getString("Typpe");
+                    tk = rs.getString("UserName");
+                    matkhau = rs.getString("PassWorrd");
                     if (ckLuuMK.isSelected() == true){
                         // lưu thông tin đăng nhập
                         saveLoginInfo(UserName, PassWorrd);
                     }
                     
 
-                    MainHome l = new MainHome(UserName, PassWorrd, ten, quyen);
+                    MainHome l = new MainHome(tk, matkhau, ten, quyen);
                     l.setVisible(true);
                     l.setLocationRelativeTo(null);
                     this.setVisible(false);
@@ -143,7 +145,6 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
-        button3 = new swing.Button();
         button4 = new swing.Button();
         btnLogin = new swing.Button();
         ckLuuMK = new javax.swing.JCheckBox();
@@ -162,16 +163,6 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel7.setText("HỆ THỐNG QUẢN LÝ NEW WORLD HOTEL");
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/New_world.png"))); // NOI18N
-
-        button3.setBackground(new java.awt.Color(204, 204, 204));
-        button3.setText("Đổi mật khẩu");
-        button3.setMaximumSize(new java.awt.Dimension(39, 25));
-        button3.setMinimumSize(new java.awt.Dimension(39, 25));
-        button3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button3ActionPerformed(evt);
-            }
-        });
 
         button4.setBackground(new java.awt.Color(204, 204, 204));
         button4.setText("Thoát");
@@ -212,23 +203,16 @@ public class FormLogin extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addGap(254, 254, 254))
             .addGroup(roundPanel1Layout.createSequentialGroup()
-                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(72, 72, 72)
+                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtTENDN, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passwordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(roundPanel1Layout.createSequentialGroup()
-                        .addGap(91, 91, 91)
-                        .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(roundPanel1Layout.createSequentialGroup()
-                                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
-                                .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35))
-                            .addComponent(ckLuuMK)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel1Layout.createSequentialGroup()
-                        .addGap(72, 72, 72)
-                        .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTENDN, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(passwordField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(54, 54, 54)
+                        .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(149, 149, 149))
+                    .addComponent(ckLuuMK))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addGap(124, 124, 124))
@@ -253,12 +237,11 @@ public class FormLogin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(ckLuuMK))
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
+                .addGap(16, 16, 16)
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36))
+                    .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -298,13 +281,6 @@ public class FormLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
-        // TODO add your handling code here:
-        FormChangePass l = new FormChangePass();
-        l.setVisible(true);
-        l.setLocationRelativeTo(null);
-    }//GEN-LAST:event_button3ActionPerformed
 
     private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
         // TODO add your handling code here:
@@ -364,7 +340,6 @@ public class FormLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.Button btnLogin;
-    private swing.Button button3;
     private swing.Button button4;
     private javax.swing.JCheckBox ckLuuMK;
     private javax.swing.JLabel jLabel7;

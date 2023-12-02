@@ -68,6 +68,22 @@ public class ModelAccount {
         return pstmt.executeUpdate() > 0;
 
     }
+    
+    public boolean updatechange(ModelAccountv2 acc) throws Exception {
+        String sql = "update account set passworrd=? where username =?";
+
+        conn = cn.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+
+        pstmt.setString(2, acc.getUsername());
+        pstmt.setString(1, acc.getPassword());
+   
+        
+
+        return pstmt.executeUpdate() > 0;
+
+    }
+    
 
     public boolean delete(String username) throws Exception {
         String sql = "delete from account where username= ? ";
