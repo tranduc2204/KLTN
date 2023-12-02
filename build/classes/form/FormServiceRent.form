@@ -49,7 +49,7 @@
               <Component id="button1" min="-2" pref="170" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
               <Component id="button2" min="-2" pref="170" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="601" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="596" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -67,7 +67,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="12" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="209" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="203" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -141,10 +141,16 @@
                               </Group>
                               <Component id="txtTenKH" alignment="0" min="-2" pref="427" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="txtGiaDichvu" alignment="0" min="-2" pref="427" max="-2" attributes="0"/>
-                          <Component id="txtGiahd" alignment="0" min="-2" pref="427" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="txtVAT" min="-2" pref="147" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="txtGiahd" min="-2" pref="254" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="txtGiaDichvu" min="-2" pref="427" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="bthDelete" min="-2" pref="103" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Component id="btnRefresh" min="-2" pref="103" max="-2" attributes="0"/>
@@ -207,8 +213,9 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="spSL" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                              <Component id="spSL" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtGiahd" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtVAT" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="80" max="32767" attributes="0"/>
                       </Group>
@@ -386,6 +393,14 @@
           <Properties>
             <Property name="labelText" type="java.lang.String" value="Gi&#xe1; h&#xf3;a &#x111;&#x1a1;n"/>
           </Properties>
+        </Component>
+        <Component class="component.TextField" name="txtVAT">
+          <Properties>
+            <Property name="labelText" type="java.lang.String" value="Gi&#xe1; VAT"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtVATActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

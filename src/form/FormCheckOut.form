@@ -118,18 +118,22 @@
                           <EmptySpace pref="51" max="32767" attributes="0"/>
                           <Component id="btnReport" min="-2" pref="94" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtMaPhong" max="32767" attributes="0"/>
+                              <Component id="txtMaPhong" pref="444" max="32767" attributes="0"/>
                               <Component id="txtTenPhong" max="32767" attributes="0"/>
                               <Component id="txtloaiphong" max="32767" attributes="0"/>
                               <Component id="txtGiaPhong" alignment="1" max="32767" attributes="0"/>
-                              <Component id="txtGiahd" alignment="1" min="-2" pref="444" max="-2" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="txtVAT" min="-2" pref="147" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="txtGiahd" min="-2" pref="272" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="54" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -179,7 +183,10 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="txtGiaPhong" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtGiahd" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txtGiahd" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtVAT" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -364,10 +371,18 @@
         </Component>
         <Component class="component.TextField" name="txtGiahd">
           <Properties>
-            <Property name="labelText" type="java.lang.String" value="Gi&#xe1; ph&#xf2;ng"/>
+            <Property name="labelText" type="java.lang.String" value="Gi&#xe1; h&#xf3;a &#x111;&#x1a1;n"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtGiahdActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="component.TextField" name="txtVAT">
+          <Properties>
+            <Property name="labelText" type="java.lang.String" value="Gi&#xe1; VAT"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtVATActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

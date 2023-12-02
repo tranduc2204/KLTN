@@ -74,7 +74,7 @@ public class FormServiceRent extends javax.swing.JPanel {
     private void inittable() {
         tbmodel = new DefaultTableModel();
         tbmodel.setColumnIdentifiers(new String[]{"Mã dịch vụ", "Tên dịch vụ", "Mã nhân viên",  "Tên nhân viên",
-            "Mã khách hàng", "Tên khách hàng", "Ngày lập hóa đơn", "Đơn giá",  "Số lượng", "Giá hóa đơn"});
+            "Mã khách hàng", "Tên khách hàng", "Ngày lập hóa đơn", "Đơn giá",  "Số lượng","VAT", "Giá hóa đơn"});
         TBServiceRent.setModel(tbmodel);
     }
     
@@ -85,7 +85,7 @@ public class FormServiceRent extends javax.swing.JPanel {
             tbmodel.setRowCount(0);
             for (ModelServiceRentv2 p : list) {
                 tbmodel.addRow(new Object[]{
-                    p.getMaDV(), p.getTenDichVu(), p.getMaNV(), p.getTenNhanVien(), p.getMaKH(),p.getTenKH(),p.getNgayLapHD(), p.getFormattedGia(),  p.getSL(),p.getFormattedGiahd()
+                    p.getMaDV(), p.getTenDichVu(), p.getMaNV(), p.getTenNhanVien(), p.getMaKH(),p.getTenKH(),p.getNgayLapHD(), p.getFormattedGia(),  p.getSL(),p.getFormattedVAT(),p.getFormattedGiahd()
                 });
             }
             tbmodel.fireTableDataChanged();
@@ -187,6 +187,7 @@ public class FormServiceRent extends javax.swing.JPanel {
         txtTenKH = new component.TextField();
         txtGiaDichvu = new component.TextField();
         txtGiahd = new component.TextField();
+        txtVAT = new component.TextField();
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -289,6 +290,13 @@ public class FormServiceRent extends javax.swing.JPanel {
 
         txtGiahd.setLabelText("Giá hóa đơn");
 
+        txtVAT.setLabelText("Giá VAT");
+        txtVAT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtVATActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout roundPanel5Layout = new javax.swing.GroupLayout(roundPanel5);
         roundPanel5.setLayout(roundPanel5Layout);
         roundPanel5Layout.setHorizontalGroup(
@@ -331,8 +339,12 @@ public class FormServiceRent extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jDateChooserngaylaphoadon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(txtTenKH, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(txtGiaDichvu, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtGiahd, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(roundPanel5Layout.createSequentialGroup()
+                                .addComponent(txtVAT, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtGiahd, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtGiaDichvu, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(roundPanel5Layout.createSequentialGroup()
                         .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)
@@ -383,8 +395,9 @@ public class FormServiceRent extends javax.swing.JPanel {
                     .addGroup(roundPanel5Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(spSL, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtGiahd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(spSL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtGiahd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtVAT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(80, Short.MAX_VALUE))))
         );
 
@@ -452,7 +465,7 @@ public class FormServiceRent extends javax.swing.JPanel {
                 .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61)
                 .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(601, 601, 601))
+                .addGap(596, 596, 596))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -467,7 +480,7 @@ public class FormServiceRent extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -709,7 +722,9 @@ public class FormServiceRent extends javax.swing.JPanel {
             
             Object sl = TBServiceRent.getValueAt(row, 8);
             spSL.setValue(sl);
-            txtGiahd.setText(TBServiceRent.getValueAt(row, 9).toString());
+            
+            txtVAT.setText(TBServiceRent.getValueAt(row, 9).toString());
+            txtGiahd.setText(TBServiceRent.getValueAt(row, 10).toString());
             
 
         }
@@ -799,6 +814,10 @@ public class FormServiceRent extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnReportActionPerformed
 
+    private void txtVATActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVATActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtVATActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TBServiceRent;
@@ -828,6 +847,7 @@ public class FormServiceRent extends javax.swing.JPanel {
     private component.TextField txtTenDichVu;
     private component.TextField txtTenKH;
     private component.TextField txtTenNhanVien;
+    private component.TextField txtVAT;
     private javax.swing.JTextField txtloaiphong;
     // End of variables declaration//GEN-END:variables
 }

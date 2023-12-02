@@ -15,9 +15,9 @@ import java.text.DecimalFormat;
 public class ModelServiceRentv2 {
     String MaDV, TenDichVu ,MaNV, TenNhanVien, MaKH, TenKH, NgayLapHD;
     int SL;
-    BigDecimal Gia, GiaHD;
+    BigDecimal Gia, GiaHD, VAT;
 
-    public ModelServiceRentv2(String MaDV, String TenDichVu, String MaNV, String TenNhanVien, String MaKH, String TenKH, String NgayLapHD, int SL, BigDecimal Gia, BigDecimal GiaHD) {
+    public ModelServiceRentv2(String MaDV, String TenDichVu, String MaNV, String TenNhanVien, String MaKH, String TenKH, String NgayLapHD, int SL, BigDecimal Gia,BigDecimal VAT, BigDecimal GiaHD) {
         this.MaDV = MaDV;
         this.TenDichVu = TenDichVu;
         this.MaNV = MaNV;
@@ -27,6 +27,7 @@ public class ModelServiceRentv2 {
         this.NgayLapHD = NgayLapHD;
         this.SL = SL;
         this.Gia = Gia;
+        this.VAT = VAT;
         this.GiaHD = GiaHD;
     }
 
@@ -112,6 +113,15 @@ public class ModelServiceRentv2 {
     public void setGiaHD(BigDecimal GiaHD) {
         this.GiaHD = GiaHD;
     }
+
+    public BigDecimal getVAT() {
+        return VAT;
+    }
+
+    public void setVAT(BigDecimal VAT) {
+        this.VAT = VAT;
+    }
+    
     
     public String getFormattedGia() {
         DecimalFormat decimalFormat = new DecimalFormat("#,### VND");
@@ -122,6 +132,9 @@ public class ModelServiceRentv2 {
         DecimalFormat decimalFormat = new DecimalFormat("#,### VND");
         return decimalFormat.format(GiaHD);
     }
-    
+    public String getFormattedVAT() {
+        DecimalFormat decimalFormat = new DecimalFormat("#,### VND");
+        return decimalFormat.format(VAT);
+    }
    
 }

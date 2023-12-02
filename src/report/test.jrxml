@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c80f4628-c44c-4478-8865-9891bc994752">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select MaHoaDonPhong, KH.MaKH, HoKH, TenKH, kh.DiaChi, kh.SoDT, kh.GioiTinh, kh.NgaySinh, NgayDatPhong, NgayThuePhong, NgayLapHoaDon, lp.TenLoaiPhong, (DATEDIFF(DAY, NgayThuePhong, NgayLapHoaDon)) as Songay, CONCAT(FORMAT(Tien, 'N0'),' VND') as Tien, CONCAT(FORMAT((((DATEDIFF(DAY, NgayThuePhong, NgayLapHoaDon)) *Tien) * 0.1), 'N0'),' VND') as VAT, CONCAT(FORMAT(((DATEDIFF(DAY, NgayThuePhong, NgayLapHoaDon)) *Tien) + (((DATEDIFF(DAY, NgayThuePhong, NgayLapHoaDon)) *Tien) * 0.1), 'N0'), ' VND')  AS GiaHD
+from HoaDonPhong hdp join PhieuThuePhong ptp on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong
+join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong join KHACHHANG kh on kh.MaKH = pdp.MaKH
+join NHANVIEN nv on nv.MaNV = pdp.MaNV join PHONG p on p.MaPhong = pdp.MaPhong join LOAIPHONG lp on lp.MaLoaiPhong = p.MaLoaiPhong]]>
+	</queryString>
+	<field name="MaHoaDonPhong" class="java.lang.String"/>
+	<field name="MaKH" class="java.lang.String"/>
+	<field name="HoKH" class="java.lang.String"/>
+	<field name="TenKH" class="java.lang.String"/>
+	<field name="DiaChi" class="java.lang.String"/>
+	<field name="SoDT" class="java.lang.String"/>
+	<field name="GioiTinh" class="java.lang.Short"/>
+	<field name="NgaySinh" class="java.sql.Date"/>
+	<field name="NgayDatPhong" class="java.sql.Date"/>
+	<field name="NgayThuePhong" class="java.sql.Date"/>
+	<field name="NgayLapHoaDon" class="java.sql.Date"/>
+	<field name="TenLoaiPhong" class="java.lang.String"/>
+	<field name="Songay" class="java.lang.Integer"/>
+	<field name="Tien" class="java.lang.String"/>
+	<field name="VAT" class="java.lang.String"/>
+	<field name="GiaHD" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="67" y="0" width="111" height="20" uuid="5e81356c-0ec9-4e9e-bd82-e89379517d9e"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Giá phòng:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="398" splitType="Stretch">
+			<staticText>
+				<reportElement x="44" y="27" width="111" height="20" uuid="05b370b6-831c-428b-89c4-9993d9f6c125"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Giá phòng:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

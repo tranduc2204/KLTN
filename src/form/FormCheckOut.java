@@ -77,7 +77,7 @@ public class FormCheckOut extends javax.swing.JPanel {
     
     private void inittable() {
         tbmodel = new DefaultTableModel();
-        tbmodel.setColumnIdentifiers(new String[]{"Mã phiếu trả phòng", "Mã phiếu thuê phòng",  "Ngày đặt phòng", "Ngày thuê phòng", "Mã phòng", "Tên phòng", "Loại phòng",  "Giá phòng", "Giá hóa đơn", "Ngày lập hóa đơn"});
+        tbmodel.setColumnIdentifiers(new String[]{"Mã phiếu trả phòng", "Mã phiếu thuê phòng",  "Ngày đặt phòng", "Ngày thuê phòng", "Mã phòng", "Tên phòng", "Loại phòng",  "Giá phòng", "VAT","Giá hóa đơn", "Ngày lập hóa đơn"});
         TBcheckout.setModel(tbmodel);
     }
     
@@ -90,7 +90,7 @@ public class FormCheckOut extends javax.swing.JPanel {
                 tbmodel.addRow(new Object[]{
 //      "Mã phiếu trả phòng, Mã phiếu thuê phòng", "Ngày thuê phòng",  "Ngày đặt phòng", "Tên phòng", "Loại phòng",  "Giá phòng", "Giá hóa đơn", "Ngày lập hóa đơn"});
 
-                    p.getMaHoaDonPhong(), p.getMaPhieuThuePhong(), p.getNgayDatPhong(), p.getNgayThuePhong(), p.getMaPhong(),p.getTenPhong(), p.getLoaiPhong(),  p.getFormattedGia(), p.getFormattedGiahd(), p.getNgayLapHoaDon()
+                    p.getMaHoaDonPhong(), p.getMaPhieuThuePhong(), p.getNgayDatPhong(), p.getNgayThuePhong(), p.getMaPhong(),p.getTenPhong(), p.getLoaiPhong(),  p.getFormattedGia(),p.getFormattedVAT(), p.getFormattedGiahd(), p.getNgayLapHoaDon()
                 });
             }
             tbmodel.fireTableDataChanged();
@@ -151,6 +151,7 @@ public class FormCheckOut extends javax.swing.JPanel {
         txtloaiphong = new component.TextField();
         txtGiaPhong = new component.TextField();
         txtGiahd = new component.TextField();
+        txtVAT = new component.TextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         TBcheckout = new javax.swing.JTable();
         panelBorder2 = new swing.PanelBorder();
@@ -271,10 +272,17 @@ public class FormCheckOut extends javax.swing.JPanel {
             }
         });
 
-        txtGiahd.setLabelText("Giá phòng");
+        txtGiahd.setLabelText("Giá hóa đơn");
         txtGiahd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtGiahdActionPerformed(evt);
+            }
+        });
+
+        txtVAT.setLabelText("Giá VAT");
+        txtVAT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtVATActionPerformed(evt);
             }
         });
 
@@ -319,15 +327,18 @@ public class FormCheckOut extends javax.swing.JPanel {
                         .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                         .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(roundPanel5Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtMaPhong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtMaPhong, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
                             .addComponent(txtTenPhong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtloaiphong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtGiaPhong, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtGiahd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(54, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createSequentialGroup()
+                                .addComponent(txtVAT, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtGiahd, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(54, 54, 54))
         );
         roundPanel5Layout.setVerticalGroup(
             roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -367,7 +378,9 @@ public class FormCheckOut extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(txtGiaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtGiahd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtGiahd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtVAT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -767,11 +780,11 @@ public class FormCheckOut extends javax.swing.JPanel {
 
             txtGiaPhong.setText(TBcheckout.getValueAt(row, 7).toString());
             
-
-            txtGiahd.setText(TBcheckout.getValueAt(row, 8).toString());
+            txtVAT.setText(TBcheckout.getValueAt(row, 8).toString());
+            txtGiahd.setText(TBcheckout.getValueAt(row, 9).toString());
             
 
-            String ngaylaphd = TBcheckout.getValueAt(row, 9).toString();
+            String ngaylaphd = TBcheckout.getValueAt(row, 10).toString();
 
             try {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
@@ -845,7 +858,7 @@ public class FormCheckOut extends javax.swing.JPanel {
         } else {
             try {
                 Map<String, Object> map = new HashMap<>();
-                JasperReport rpt = JasperCompileManager.compileReport("src/report/reportCheckOut.jrxml");
+                JasperReport rpt = JasperCompileManager.compileReport("src/report/rpCheckOut.jrxml");
                 map.put("mahoadonphong", txtMaphieutraphong.getText());
                 conn = cn.getConnection();
                 JasperPrint p = JasperFillManager.fillReport(rpt, map, conn);
@@ -880,6 +893,10 @@ public class FormCheckOut extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtGiahdActionPerformed
 
+    private void txtVATActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVATActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtVATActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TBcheckout;
@@ -913,6 +930,7 @@ public class FormCheckOut extends javax.swing.JPanel {
     private component.TextField txtMaphieutraphong;
     private javax.swing.JTextField txtSEARCHMAKH;
     private component.TextField txtTenPhong;
+    private component.TextField txtVAT;
     private component.TextField txtloaiphong;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,7 +14,7 @@ import java.text.DecimalFormat;
  */
 public class ModelCheckOutv2 {
     String MaHoaDonPhong ,MaPhieuThuePhong, NgayThuePhong, NgayDatPhong, MaPhong,TenPhong, LoaiPhong, NgayLapHoaDon;
-    BigDecimal Gia, GiaHD;
+    BigDecimal Gia, GiaHD, VAT;
 
     public ModelCheckOutv2() {
     }
@@ -99,7 +99,16 @@ public class ModelCheckOutv2 {
         this.GiaHD = GiaHD;
     }
 
-    public ModelCheckOutv2(String MaHoaDonPhong, String MaPhieuThuePhong, String NgayThuePhong, String NgayDatPhong, String MaPhong, String TenPhong, String LoaiPhong, String NgayLapHoaDon, BigDecimal Gia, BigDecimal GiaHD) {
+    public BigDecimal getVAT() {
+        return VAT;
+    }
+
+    public void setVAT(BigDecimal VAT) {
+        this.VAT = VAT;
+    }
+    
+
+    public ModelCheckOutv2(String MaHoaDonPhong, String MaPhieuThuePhong, String NgayThuePhong, String NgayDatPhong, String MaPhong, String TenPhong, String LoaiPhong, String NgayLapHoaDon, BigDecimal Gia, BigDecimal VAT,BigDecimal GiaHD) {
         this.MaHoaDonPhong = MaHoaDonPhong;
         this.MaPhieuThuePhong = MaPhieuThuePhong;
         this.NgayThuePhong = NgayThuePhong;
@@ -109,6 +118,7 @@ public class ModelCheckOutv2 {
         this.LoaiPhong = LoaiPhong;
         this.NgayLapHoaDon = NgayLapHoaDon;
         this.Gia = Gia;
+        this.VAT = VAT;
         this.GiaHD = GiaHD;
     }
 
@@ -124,5 +134,9 @@ public class ModelCheckOutv2 {
     public String getFormattedGiahd() {
         DecimalFormat decimalFormat = new DecimalFormat("#,### VND");
         return decimalFormat.format(GiaHD);
+    }
+    public String getFormattedVAT() {
+        DecimalFormat decimalFormat = new DecimalFormat("#,### VND");
+        return decimalFormat.format(VAT);
     }
 }
