@@ -9,17 +9,21 @@
 	<parameter name="denngay" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="nam" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select TenDichVu, TenNV, TenKH, NgayLapHD, SL, CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia, CONCAT(FORMAT((SL* DonGia), 'N0'),' VND') as GiaHD  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH
- where NgayLapHD between $P{tungay} and $P{denngay}]]>
+		<![CDATA[select MaHoaDonPhong, TenNV, TenKH,TenPhong, NgayLapHoaDon, Tien  from HoaDonPhong hdp join PhieuThuePhong ptp 
+on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong  join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong 
+join PHONG p on p.MaPhong = pdp.MaPhong join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH 
+where YEAR (NgayLapHoaDon) = $P{nam}]]>
 	</queryString>
-	<field name="TenDichVu" class="java.lang.String"/>
+	<field name="MaHoaDonPhong" class="java.lang.String"/>
 	<field name="TenNV" class="java.lang.String"/>
 	<field name="TenKH" class="java.lang.String"/>
-	<field name="NgayLapHD" class="java.sql.Date"/>
-	<field name="SL" class="java.lang.Integer"/>
-	<field name="DonGia" class="java.lang.String"/>
-	<field name="GiaHD" class="java.lang.String"/>
+	<field name="TenPhong" class="java.lang.String"/>
+	<field name="NgayLapHoaDon" class="java.sql.Date"/>
+	<field name="Tien" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>

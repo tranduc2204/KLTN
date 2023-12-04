@@ -57,6 +57,7 @@ public class FormStatistic1 extends javax.swing.JPanel {
       
         Statistics();
         loadDataFromSQL();
+        ThemN();
     }
     
     private void Statistics(){
@@ -74,39 +75,41 @@ public class FormStatistic1 extends javax.swing.JPanel {
         table.setModel(tableModel);
     }
     
-    private void loaddoanhthu(){
-        Date selectedDate = jDateChooserTuNgay.getDate();
+    public void ThemN() {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDate);
+        int currentYear = calendar.get(Calendar.YEAR);
 
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String tungay = year + "-" + month + "-" + day;
-
-
-        Date selectedDate1 = jDateChooserDenNgay.getDate();
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.setTime(selectedDate1);
-
-        int year1 = calendar1.get(Calendar.YEAR);
-        int month1 = calendar1.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-        int day1 = calendar1.get(Calendar.DAY_OF_MONTH);
-        String denngay = year1 + "-" + month1 + "-" + day1;
-        
-        System.out.println(tungay);
-        System.out.println(denngay);
+        cmbNam1.removeAllItems();
+        for (int i = 2000; i <= currentYear; i++) {
+            cmbNam1.addItem(Integer.toString(i));
+        }
+        cmbThang1.removeAllItems();
+        for (int i = 1; i <= 12; i++) {
+            cmbThang1.addItem(String.valueOf(i));
+        }
+        cmbNam2.removeAllItems();
+        for (int i = 2000; i <= currentYear; i++) {
+            cmbNam2.addItem(Integer.toString(i));
+        }
+    }
+    
+    private void loaddoanhthuthangofnam(){
 
         // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
-        
+        String thang = cmbThang1.getSelectedItem().toString();
+        String nam = cmbNam1.getSelectedItem().toString();
         try {
             conn = cn.getConnection();
-            String sqlQuery = "select sum(Tien) as doanhthu from HoaDonPhong hdp join PhieuThuePhong ptp on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong  join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong join PHONG p on p.MaPhong = pdp.MaPhong join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH where NgayLapHoaDon between ? and ? ";
+            String sqlQuery = "select sum(Tien) as doanhthu, month(NgayLapHoaDon) as thang, year(NgayLapHoaDon) as nam from HoaDonPhong hdp join PhieuThuePhong ptp on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong \n" +
+"join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong join PHONG p on p.MaPhong = pdp.MaPhong \n" +
+"join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH \n" +
+"group by month(NgayLapHoaDon), year(NgayLapHoaDon)\n" +
+"having month(NgayLapHoaDon) = ? and YEAR (NgayLapHoaDon) = ? ";
 
             PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
 
-            preparedStatement.setString(1, tungay);
-            preparedStatement.setString(2, denngay);
+            preparedStatement.setString(1, thang);
+            preparedStatement.setString(2, nam);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             
@@ -125,6 +128,114 @@ public class FormStatistic1 extends javax.swing.JPanel {
         }
            
     }
+    
+    private void loadDataFromSQLthangofnam() {
+        String thang = cmbThang1.getSelectedItem().toString();
+        String nam = cmbNam1.getSelectedItem().toString();
+                                                                                                                                                                                                                                                                                                                                     
+        try {
+            conn = cn.getConnection();
+            String sqlQuery = "select MaHoaDonPhong, TenNV, TenKH,TenPhong, NgayLapHoaDon, Tien  from HoaDonPhong hdp join PhieuThuePhong ptp \n" +
+"on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong  join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong \n" +
+"join PHONG p on p.MaPhong = pdp.MaPhong join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH \n" +
+"where month(NgayLapHoaDon) = ? and YEAR (NgayLapHoaDon) = ? ";
+
+            PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
+
+            preparedStatement.setString(1, thang);
+            preparedStatement.setString(2, nam);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Lặp qua kết quả và thêm vào model
+            while (resultSet.next()) {
+                Object[] rowData = {
+                        resultSet.getObject("MaHoaDonPhong"),
+                        resultSet.getObject("TenNV"),
+                        resultSet.getObject("TenKH"),
+                        resultSet.getObject("TenPhong"),
+                        resultSet.getObject("NgayLapHoaDon"),
+                        resultSet.getObject("Tien"),
+                };
+                tableModel.addRow(rowData);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            e.printStackTrace();
+        }
+    } 
+    
+    private void loaddoanhthuofnam(){
+
+        // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+        
+        String nam = cmbNam2.getSelectedItem().toString();
+        try {
+            conn = cn.getConnection();
+            String sqlQuery = "select sum(Tien) as doanhthu,  year(NgayLapHoaDon) as nam from HoaDonPhong hdp join PhieuThuePhong ptp on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong \n" +
+"join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong join PHONG p on p.MaPhong = pdp.MaPhong \n" +
+"join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH \n" +
+"group by  year(NgayLapHoaDon)\n" +
+"having year(NgayLapHoaDon) = ? ";
+
+            PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
+
+            preparedStatement.setString(1, nam);
+            
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            float doanhthu;
+            // Lặp qua kết quả và thêm vào model
+            if (resultSet.next()) {;
+                doanhthu = resultSet.getFloat("doanhthu");
+                BigDecimal x = new BigDecimal(doanhthu);
+                ModelStatistic1 ms = new ModelStatistic1();
+                ms.setTien(x);
+                txtDoanhThu.setText(ms.getFormattedDonGia());
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            e.printStackTrace();
+        }
+           
+    }
+    
+    private void loadDataFromSQLofnam() {
+       
+        String nam = cmbNam2.getSelectedItem().toString();
+                                                                                                                                                                                                                                                                                                                                     
+        try {
+            conn = cn.getConnection();
+            String sqlQuery = "select MaHoaDonPhong, TenNV, TenKH,TenPhong, NgayLapHoaDon, Tien  from HoaDonPhong hdp join PhieuThuePhong ptp \n" +
+"on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong  join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong \n" +
+"join PHONG p on p.MaPhong = pdp.MaPhong join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH \n" +
+"where YEAR (NgayLapHoaDon) = ? ";
+
+            PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
+
+           
+            preparedStatement.setString(1, nam);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Lặp qua kết quả và thêm vào model
+            while (resultSet.next()) {
+                Object[] rowData = {
+                        resultSet.getObject("MaHoaDonPhong"),
+                        resultSet.getObject("TenNV"),
+                        resultSet.getObject("TenKH"),
+                        resultSet.getObject("TenPhong"),
+                        resultSet.getObject("NgayLapHoaDon"),
+                        resultSet.getObject("Tien"),
+                };
+                tableModel.addRow(rowData);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            e.printStackTrace();
+        }
+    } 
     
     private void loadDataFromSQL() {
 
@@ -163,91 +274,18 @@ public class FormStatistic1 extends javax.swing.JPanel {
     }
     
     
-    private void loadDataFromSQL_serch() {
-
-        Date selectedDate = jDateChooserTuNgay.getDate();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDate);
-
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String tungay = year + "-" + month + "-" + day;
-
-
-        Date selectedDate1 = jDateChooserDenNgay.getDate();
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.setTime(selectedDate1);
-
-        int year1 = calendar1.get(Calendar.YEAR);
-        int month1 = calendar1.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-        int day1 = calendar1.get(Calendar.DAY_OF_MONTH);
-        String denngay = year1 + "-" + month1 + "-" + day1;
-        
-        System.out.println(tungay);
-        System.out.println(denngay);
-
-        // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
-        
-        try {
-            conn = cn.getConnection();
-            String sqlQuery = "select MaHoaDonPhong, TenNV, TenKH,TenPhong, NgayLapHoaDon, Tien  from HoaDonPhong hdp join PhieuThuePhong ptp on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong  join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong join PHONG p on p.MaPhong = pdp.MaPhong join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH where NgayLapHoaDon between ? and ? ";
-
-            PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
-
-            preparedStatement.setString(1, tungay);
-            preparedStatement.setString(2, denngay);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            // Lặp qua kết quả và thêm vào model
-            while (resultSet.next()) {
-                Object[] rowData = {
-                        resultSet.getObject("MaHoaDonPhong"),
-                        resultSet.getObject("TenNV"),
-                        resultSet.getObject("TenKH"),
-                        resultSet.getObject("TenPhong"),
-                        resultSet.getObject("NgayLapHoaDon"),
-                        resultSet.getObject("Tien"),
-                };
-                tableModel.addRow(rowData);
-            }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, e.getMessage());
-            e.printStackTrace();
-        }
-    } 
     
-    private void report() { 
+    
+    private void report_monthofyear() { 
 
-        Date selectedDate = jDateChooserTuNgay.getDate();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDate);
-
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String tungay = year + "-" + month + "-" + day;
-
-
-        Date selectedDate1 = jDateChooserDenNgay.getDate();
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.setTime(selectedDate1);
-
-        int year1 = calendar1.get(Calendar.YEAR);
-        int month1 = calendar1.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-        int day1 = calendar1.get(Calendar.DAY_OF_MONTH);
-        String denngay = year1 + "-" + month1 + "-" + day1;
+        String thang = cmbThang1.getSelectedItem().toString();
+        String nam = cmbNam1.getSelectedItem().toString();
         
-        System.out.println(tungay);
-        System.out.println(denngay);
-       
-
         try {
             Map<String, Object> map = new HashMap<>();
             JasperReport rpt = JasperCompileManager.compileReport("src/report/rpStatistic1.jrxml");
-            map.put("tungay", tungay);
-            map.put("denngay", denngay);
+            map.put("thang", thang);
+            map.put("nam", nam);
      
             conn = cn.getConnection();
             JasperPrint p = JasperFillManager.fillReport(rpt, map, conn);
@@ -255,8 +293,25 @@ public class FormStatistic1 extends javax.swing.JPanel {
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(this, ex.toString());
         }
+    }
+    
+    private void report_ofyear() { 
 
+       
+        String nam = cmbNam2.getSelectedItem().toString();
         
+        try {
+            Map<String, Object> map = new HashMap<>();
+            JasperReport rpt = JasperCompileManager.compileReport("src/report/rpStatistic1.jrxml");
+            map.put("thang", nam);
+            
+     
+            conn = cn.getConnection();
+            JasperPrint p = JasperFillManager.fillReport(rpt, map, conn);
+            JasperViewer.viewReport(p, false);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(this, ex.toString());
+        }
     }
 
     /**
@@ -268,30 +323,25 @@ public class FormStatistic1 extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         roundPanel2 = new swing.RoundPanel();
-        jDateChooserTuNgay = new com.toedter.calendar.JDateChooser();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jDateChooserDenNgay = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        btnRefresh = new swing.Button();
         txtDoanhThu = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        btnRefresh1 = new swing.Button();
         btnReport = new javax.swing.JButton();
+        panelBorder2 = new swing.PanelBorder();
+        rbThangofNam = new javax.swing.JRadioButton();
+        rbNam = new javax.swing.JRadioButton();
+        btnRefresh1 = new swing.Button();
+        btnStatistic = new swing.Button();
+        cmbThang1 = new javax.swing.JComboBox<>();
+        cmbNam1 = new javax.swing.JComboBox<>();
+        cmbNam2 = new javax.swing.JComboBox<>();
 
         roundPanel2.setBackground(new java.awt.Color(36, 87, 157));
         roundPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thống kê doanh thu hóa đơn phòng:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
         roundPanel2.setForeground(new java.awt.Color(255, 255, 255));
-
-        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setText("Từ ngày:");
-
-        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setText("Đến ngày:");
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -315,23 +365,9 @@ public class FormStatistic1 extends javax.swing.JPanel {
         table.setRowHeight(40);
         jScrollPane1.setViewportView(table);
 
-        btnRefresh.setText("Thống kê");
-        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRefreshActionPerformed(evt);
-            }
-        });
-
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setText("Doanh thu:");
-
-        btnRefresh1.setText("Xem");
-        btnRefresh1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRefresh1ActionPerformed(evt);
-            }
-        });
 
         btnReport.setBackground(new java.awt.Color(255, 99, 76));
         btnReport.setText("In Report");
@@ -341,69 +377,122 @@ public class FormStatistic1 extends javax.swing.JPanel {
             }
         });
 
+        panelBorder2.setBackground(new java.awt.Color(36, 87, 157));
+        panelBorder2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tiêu chí thống kê", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
+        panelBorder2.setForeground(new java.awt.Color(255, 255, 255));
+
+        rbThangofNam.setBackground(new java.awt.Color(36, 87, 157));
+        buttonGroup1.add(rbThangofNam);
+        rbThangofNam.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        rbThangofNam.setForeground(new java.awt.Color(255, 255, 255));
+        rbThangofNam.setText("Thống kê theo tháng của năm");
+
+        rbNam.setBackground(new java.awt.Color(36, 87, 157));
+        buttonGroup1.add(rbNam);
+        rbNam.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        rbNam.setForeground(new java.awt.Color(255, 255, 255));
+        rbNam.setText("Thống kê theo năm");
+
+        btnRefresh1.setText("Xem");
+        btnRefresh1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefresh1ActionPerformed(evt);
+            }
+        });
+
+        btnStatistic.setText("Thống kê");
+        btnStatistic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStatisticActionPerformed(evt);
+            }
+        });
+
+        cmbThang1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbNam1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbNam2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        javax.swing.GroupLayout panelBorder2Layout = new javax.swing.GroupLayout(panelBorder2);
+        panelBorder2.setLayout(panelBorder2Layout);
+        panelBorder2Layout.setHorizontalGroup(
+            panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBorder2Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panelBorder2Layout.createSequentialGroup()
+                        .addComponent(rbNam)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmbNam2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelBorder2Layout.createSequentialGroup()
+                        .addComponent(rbThangofNam)
+                        .addGap(169, 169, 169)
+                        .addComponent(cmbThang1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(cmbNam1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnRefresh1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(90, 90, 90)
+                .addComponent(btnStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(154, 154, 154))
+        );
+        panelBorder2Layout.setVerticalGroup(
+            panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBorder2Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbThangofNam)
+                    .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cmbThang1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbNam1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(33, 33, 33)
+                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbNam)
+                    .addComponent(cmbNam2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addComponent(btnRefresh1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout roundPanel2Layout = new javax.swing.GroupLayout(roundPanel2);
         roundPanel2.setLayout(roundPanel2Layout);
         roundPanel2Layout.setHorizontalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel2Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panelBorder2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel2Layout.createSequentialGroup()
-                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(roundPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnRefresh1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(roundPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel19)
-                                .addGap(76, 76, 76)
-                                .addComponent(jDateChooserTuNgay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(129, 129, 129)
-                                .addComponent(jLabel20)
-                                .addGap(31, 31, 31)
-                                .addComponent(jDateChooserDenNgay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(109, 109, 109))
-                    .addGroup(roundPanel2Layout.createSequentialGroup()
-                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(roundPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel21)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtDoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(23, 23, 23))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1006, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(31, 31, 31))))
+                        .addComponent(jLabel21)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1006, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
         roundPanel2Layout.setVerticalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel2Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDateChooserDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19)
-                    .addComponent(jDateChooserTuNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20))
-                .addGap(72, 72, 72)
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRefresh1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
+                .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(roundPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(403, 403, 403)
+                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel21)
+                            .addComponent(txtDoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(roundPanel2Layout.createSequentialGroup()
-                        .addGap(484, 484, 484)
-                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addGroup(roundPanel2Layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addComponent(jLabel21))
-                            .addGroup(roundPanel2Layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addComponent(txtDoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(125, 125, 125)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(23, 23, 23))
         );
 
@@ -425,21 +514,33 @@ public class FormStatistic1 extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+    private void btnStatisticActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatisticActionPerformed
         // TODO add your handling code here:
+        
+        txtDoanhThu.setText("");
         tableModel.setRowCount(0);
-        Date selectedDate = jDateChooserTuNgay.getDate();
-        Date selectedDate1 = jDateChooserDenNgay.getDate();
-        if (selectedDate != null && selectedDate1 != null){
-            loadDataFromSQL_serch();
-            loaddoanhthu();
+        
+        if (rbThangofNam.isSelected() ==true){
+            loaddoanhthuthangofnam();
+            loadDataFromSQLthangofnam();
+        }else if(rbNam.isSelected() == true){
+            loaddoanhthuofnam();
+            loadDataFromSQLofnam();
         }else {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày");
         }
+//        Date selectedDate = jDateChooserTuNgay.getDate();
+//        Date selectedDate1 = jDateChooserDenNgay.getDate();
+//        if (selectedDate != null && selectedDate1 != null){
+//            loadDataFromSQL_serch();
+//            loaddoanhthu();
+//        }else {
+//            
+//        }
+    
         
         
-        
-    }//GEN-LAST:event_btnRefreshActionPerformed
+    }//GEN-LAST:event_btnStatisticActionPerformed
 
     private void btnRefresh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefresh1ActionPerformed
         // TODO add your handling code here:
@@ -450,27 +551,33 @@ public class FormStatistic1 extends javax.swing.JPanel {
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
         // TODO add your handling code here:
-
-        Date selectedDate = jDateChooserTuNgay.getDate();
-        Date selectedDate1 = jDateChooserDenNgay.getDate();
-        if (selectedDate != null && selectedDate1 != null){
-            report();
+        
+        if (rbThangofNam.isSelected() ==true){
+           report_monthofyear();
+        }else if(rbNam.isSelected() == true){
+            report_ofyear();
         }else {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn loại thống kê");
         }
+        
+        
+        
     }//GEN-LAST:event_btnReportActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private swing.Button btnRefresh;
     private swing.Button btnRefresh1;
     private javax.swing.JButton btnReport;
-    private com.toedter.calendar.JDateChooser jDateChooserDenNgay;
-    private com.toedter.calendar.JDateChooser jDateChooserTuNgay;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
+    private swing.Button btnStatistic;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> cmbNam1;
+    private javax.swing.JComboBox<String> cmbNam2;
+    private javax.swing.JComboBox<String> cmbThang1;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JScrollPane jScrollPane1;
+    private swing.PanelBorder panelBorder2;
+    private javax.swing.JRadioButton rbNam;
+    private javax.swing.JRadioButton rbThangofNam;
     private swing.RoundPanel roundPanel2;
     private javax.swing.JTable table;
     private javax.swing.JTextField txtDoanhThu;

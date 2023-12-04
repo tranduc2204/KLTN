@@ -160,7 +160,7 @@ public class MainHome extends javax.swing.JFrame {
                 }
             }
             else if (menuIndex == 5 && quyen.equals("Admin")){
-                main.showForm(new FormSetting());
+                main.showForm(new FormSetting(username, password, DisplayName,quyen));
                 
             } else if (menuIndex == 6 && quyen.equals("Admin")){
 //                main.showForm(new FormChangePassv2(username, password, DisplayName,quyen));
@@ -232,7 +232,7 @@ public class MainHome extends javax.swing.JFrame {
                 l.setLocationRelativeTo(null);
                 
             }else if (menuIndex == 6 && quyen.equals("User")){
-                main.showForm(new FormSetting());
+                main.showForm(new FormSetting(username, password, DisplayName,quyen));
                 
             }else if (menuIndex == 5 && quyen.equals("User")){
                 Runtime rt = Runtime.getRuntime();
@@ -263,7 +263,7 @@ public class MainHome extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(main, "Cannot load help file!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else if (menuIndex == 4 && quyen.equals("root")){
-                main.showForm(new FormSetting());
+                main.showForm(new FormSetting(username, password, DisplayName,quyen));
                 
             }else if (menuIndex == 5 && quyen.equals("root")){
                 FormChangePassv2 l = new FormChangePassv2(username, password, DisplayName,quyen);

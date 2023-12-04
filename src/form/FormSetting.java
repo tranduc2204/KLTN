@@ -13,11 +13,13 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import component.Header;
 import component.Menu;
+import connect.Connect;
 import event.EventShowPopupMenu;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import main.MainHome;
@@ -39,9 +41,28 @@ public class FormSetting extends javax.swing.JPanel {
      */
  
     private Menu menu;
-
+    Connect cn = new Connect();
+    Connection conn;
+    
+    private String username, password, quyen, DisplayName;
     
     public FormSetting() {
+//        initComponents();
+//        
+//       
+//        init();
+//        
+//        // Kiểm tra giao diện hiện tại
+//        LookAndFeel currentLaf = UIManager.getLookAndFeel();
+//        if (currentLaf instanceof FlatMacLightLaf) {
+//            switchButton1.setSelected(false);
+//        } else if (currentLaf instanceof FlatMacDarkLaf) {
+//            // Giao diện hiện tại là FlatMacDarkLaf
+//            switchButton1.setSelected(true);
+//        } 
+    }
+    
+    public FormSetting(String username, String password, String DisplayName, String quyen) {
         initComponents();
         
        
@@ -131,13 +152,13 @@ public class FormSetting extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbDark)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbDark1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(switchButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(switchButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbDark)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(43, 43, 43))))
         );
         layout.setVerticalGroup(
@@ -153,7 +174,7 @@ public class FormSetting extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbDark)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

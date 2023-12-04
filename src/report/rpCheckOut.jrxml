@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="765ccb72-8d98-42c3-b07e-ab84eb74f379">
 	<property name="ireport.zoom" value="1.2100000000000009"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="694"/>
+	<property name="ireport.y" value="0"/>
 	<subDataset name="dataset1" uuid="b0e8862b-e7ef-4fe9-847b-6965b20af0ba"/>
 	<parameter name="mahoadonphong" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -35,87 +35,87 @@ where MaHoaDonPhong = $P{mahoadonphong}]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="385" splitType="Stretch">
+		<band height="340" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="342" width="555" height="30" uuid="2d45cbfc-1fee-470e-af3f-d8d271e5afcc"/>
+				<reportElement x="0" y="202" width="555" height="30" uuid="2d45cbfc-1fee-470e-af3f-d8d271e5afcc"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="24" isBold="true"/>
 				</textElement>
 				<text><![CDATA[HỆ THỐNG KHÁCH SẠN NEW WORLD]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="151" width="88" height="20" uuid="a9097861-b352-40b1-a36b-5f31d09dfd88"/>
+				<reportElement x="0" y="17" width="88" height="20" uuid="a9097861-b352-40b1-a36b-5f31d09dfd88"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Địa chỉ:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="171" width="88" height="20" uuid="86a224b4-0e91-4f99-8d5e-212469d9ba70"/>
+				<reportElement x="0" y="37" width="88" height="20" uuid="86a224b4-0e91-4f99-8d5e-212469d9ba70"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[224 Đ. Lê Lai]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="191" width="184" height="20" uuid="89689ddc-68cf-46a9-b6b3-77bc9fd3f455"/>
+				<reportElement x="0" y="57" width="184" height="20" uuid="89689ddc-68cf-46a9-b6b3-77bc9fd3f455"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Phường Bến Thành, Quận 1,]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="211" width="184" height="20" uuid="12236a71-5ce1-44d8-816d-598d8732f54c"/>
+				<reportElement x="0" y="77" width="184" height="20" uuid="12236a71-5ce1-44d8-816d-598d8732f54c"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Thành phố Hồ Chí Minh 700000]]></text>
 			</staticText>
 			<image>
-				<reportElement x="305" y="0" width="250" height="171" uuid="a5f45015-c2b2-432f-bc40-5cc2b8ecf70a"/>
+				<reportElement x="319" y="-40" width="250" height="171" uuid="a5f45015-c2b2-432f-bc40-5cc2b8ecf70a"/>
 				<imageExpression><![CDATA["D:\\KLTN_TranDuc\\TranDuc_2021010131\\src\\res\\logoreport.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="397" y="131" width="67" height="20" uuid="9a64c70e-9d04-42b7-a03d-fb8fb69b7a9a"/>
+				<reportElement x="397" y="84" width="67" height="20" uuid="9a64c70e-9d04-42b7-a03d-fb8fb69b7a9a"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Điện thoại:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="464" y="131" width="91" height="20" uuid="7bc40f30-d8f0-4ad3-a3bf-74fc53d9478b"/>
+				<reportElement x="464" y="84" width="91" height="20" uuid="7bc40f30-d8f0-4ad3-a3bf-74fc53d9478b"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[  0764464485]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="275" width="88" height="20" uuid="82a5e33c-ad1e-4541-a30b-a364f2f0f6fe"/>
+				<reportElement x="0" y="141" width="88" height="20" uuid="82a5e33c-ad1e-4541-a30b-a364f2f0f6fe"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Mã hóa đơn:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="117" y="295" width="100" height="20" uuid="3947d108-33ea-42bc-9754-e2a373d1b506"/>
+				<reportElement x="117" y="161" width="100" height="20" uuid="3947d108-33ea-42bc-9754-e2a373d1b506"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="295" width="117" height="20" uuid="163df32a-af07-4791-9498-52a079600a99"/>
+				<reportElement x="0" y="161" width="117" height="20" uuid="163df32a-af07-4791-9498-52a079600a99"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Ngày xuất hóa đơn:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="231" width="184" height="20" uuid="8fea1073-9a00-41a4-abb1-25f87caa0457"/>
+				<reportElement x="0" y="97" width="184" height="20" uuid="8fea1073-9a00-41a4-abb1-25f87caa0457"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Mã số thuế/GST: 200506877R]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="117" y="275" width="100" height="20" uuid="73dc7ec7-b5fa-4825-aafb-d6bc8b0c89bb"/>
+				<reportElement x="117" y="141" width="100" height="20" uuid="73dc7ec7-b5fa-4825-aafb-d6bc8b0c89bb"/>
 				<textFieldExpression><![CDATA[$F{MaHoaDonPhong}]]></textFieldExpression>
 			</textField>
 		</band>
