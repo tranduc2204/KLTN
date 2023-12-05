@@ -6,8 +6,13 @@
 package form;
 
 import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
+import connect.Connect;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.Icon;
+import javax.swing.JOptionPane;
 import main.MainHome;
 import model.ModelCard;
 import swing.icon.GoogleMaterialDesignIcons;
@@ -20,6 +25,8 @@ import swing.noticeboard.ModelNoticeBoard;
  */
 public class FormHome extends javax.swing.JPanel {
 
+    Connect cn = new Connect();
+    Connection conn;
     /**
      * Creates new form Form_Home
      */
@@ -36,14 +43,57 @@ public class FormHome extends javax.swing.JPanel {
     }
     
     private void initCardData() {
-        Icon icon1 = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PEOPLE, 60, new Color(255, 255, 255, 100), new Color(255, 255, 255, 15));
-        card1.setData(new ModelCard("Customers", 5100, 20, icon1));// 5100 là tổng 
-        Icon icon2 = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.MONETIZATION_ON, 60, new Color(255, 255, 255, 100), new Color(255, 255, 255, 15));
-        card2.setData(new ModelCard("Income", 2000, 60, icon2));
+        int sl;
+        try{
+            conn = cn.getConnection();
+            String sql_login = "select count (*) as SL from KHACHHANG";
+            PreparedStatement pst = conn.prepareStatement(sql_login);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {;
+                sl = rs.getInt("SL");
+
+                Icon icon1 = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PEOPLE, 60, new Color(255, 255, 255, 100), new Color(255, 255, 255, 15));
+                card1.setData(new ModelCard("Customers", sl, 50, icon1));// 5100 là tổng 
+
+            } else {
+                JOptionPane.showConfirmDialog(this, "Đăng nhập thất bai, sai tài khoản hoặc mật khẩu");
+
+            }
+        }catch(Exception e){
+            
+        }
+        
+        int doanhthu;
+        try{
+            conn = cn.getConnection();
+            String sql_login = "select sum(Tien) as doanhthu from HoaDonPhong hdp join PhieuThuePhong ptp on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong\n" +
+"join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong join PHONG p on p.MaPhong = pdp.MaPhong \n" +
+"join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH \n" +
+"where month(NgayLapHoaDon) =  MONTH(GETDATE()) and year(NgayLapHoaDon) = Year(GETDATE())";
+            PreparedStatement pst = conn.prepareStatement(sql_login);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {;
+                doanhthu = rs.getInt("doanhthu");
+
+                Icon icon2 = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.MONETIZATION_ON, 60, new Color(255, 255, 255, 100), new Color(255, 255, 255, 15));
+                card2.setData(new ModelCard("Room Income", doanhthu, 60, icon2));//2000 60
+
+            } else {
+                JOptionPane.showConfirmDialog(this, "Đăng nhập thất bai, sai tài khoản hoặc mật khẩu");
+
+            }
+        }catch(Exception e){
+            
+        }
+        
+        
+        
+        
+        
         Icon icon3 = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SHOPPING_BASKET, 60, new Color(255, 255, 255, 100), new Color(255, 255, 255, 15));
         card3.setData(new ModelCard("Expense", 3000, 80, icon3));
         Icon icon4 = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.BUSINESS_CENTER, 60, new Color(255, 255, 255, 100), new Color(255, 255, 255, 15));
-        card4.setData(new ModelCard("Other Income", 550, 95, icon4));
+        card4.setData(new ModelCard("Service Income", 550, 95, icon4));
     }
     
     private void initNoticeBoard() {
@@ -198,8 +248,8 @@ public class FormHome extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(jLabel1)))
                 .addGap(18, 18, 18)
-                .addComponent(card4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 9, Short.MAX_VALUE))
+                .addComponent(card4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
