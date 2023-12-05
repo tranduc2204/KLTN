@@ -94,10 +94,9 @@ public class FormStatistic1 extends javax.swing.JPanel {
     }
     
     private void loaddoanhthuthangofnam(){
-
-        // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
         String thang = cmbThang1.getSelectedItem().toString();
         String nam = cmbNam1.getSelectedItem().toString();
+        
         try {
             conn = cn.getConnection();
             String sqlQuery = "select sum(Tien) as doanhthu, month(NgayLapHoaDon) as thang, year(NgayLapHoaDon) as nam from HoaDonPhong hdp join PhieuThuePhong ptp on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong \n" +
@@ -291,7 +290,7 @@ public class FormStatistic1 extends javax.swing.JPanel {
             JasperPrint p = JasperFillManager.fillReport(rpt, map, conn);
             JasperViewer.viewReport(p, false);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex.toString());
+            JOptionPane.showMessageDialog(this, "Tháng của năm thống kê không có dữ liệu");//"ex.toString()"
         }
     }
     
@@ -302,15 +301,15 @@ public class FormStatistic1 extends javax.swing.JPanel {
         
         try {
             Map<String, Object> map = new HashMap<>();
-            JasperReport rpt = JasperCompileManager.compileReport("src/report/rpStatistic1.jrxml");
-            map.put("thang", nam);
+            JasperReport rpt = JasperCompileManager.compileReport("src/report/rpStatistic1veryear.jrxml");
+            map.put("nam", nam);
             
      
             conn = cn.getConnection();
             JasperPrint p = JasperFillManager.fillReport(rpt, map, conn);
             JasperViewer.viewReport(p, false);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex.toString());
+            JOptionPane.showMessageDialog(this, "Năm thống kê không có dữ liệu");
         }
     }
 
@@ -481,15 +480,15 @@ public class FormStatistic1 extends javax.swing.JPanel {
             .addGroup(roundPanel2Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(roundPanel2Layout.createSequentialGroup()
                         .addGap(403, 403, 403)
                         .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel21)
                             .addComponent(txtDoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(roundPanel2Layout.createSequentialGroup()
-                        .addGap(125, 125, 125)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(23, 23, 23))
@@ -528,17 +527,6 @@ public class FormStatistic1 extends javax.swing.JPanel {
         }else {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày");
         }
-//        Date selectedDate = jDateChooserTuNgay.getDate();
-//        Date selectedDate1 = jDateChooserDenNgay.getDate();
-//        if (selectedDate != null && selectedDate1 != null){
-//            loadDataFromSQL_serch();
-//            loaddoanhthu();
-//        }else {
-//            
-//        }
-    
-        
-        
     }//GEN-LAST:event_btnStatisticActionPerformed
 
     private void btnRefresh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefresh1ActionPerformed

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9632465f-c375-4feb-98ac-7d4cc258164d">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="73"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="tungay" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -16,10 +16,10 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select MaHoaDonPhong, TenNV, TenKH,TenPhong, NgayLapHoaDon, Tien  from HoaDonPhong hdp join PhieuThuePhong ptp 
+		<![CDATA[select MaHoaDonPhong, TenNV, TenKH,TenPhong, NgayLapHoaDon, Tien, CONCAT(FORMAT(Tien, 'N0'),' VND') as Tien1  from HoaDonPhong hdp join PhieuThuePhong ptp 
 on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong  join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong 
-join PHONG p on p.MaPhong = pdp.MaPhong join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH 
-]]>
+join PHONG p on p.MaPhong = pdp.MaPhong join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH
+where month(NgayLapHoaDon) = $P{thang} and YEAR (NgayLapHoaDon) = $P{nam}]]>
 	</queryString>
 	<field name="MaHoaDonPhong" class="java.lang.String"/>
 	<field name="TenNV" class="java.lang.String"/>
@@ -27,80 +27,84 @@ join PHONG p on p.MaPhong = pdp.MaPhong join NHANVIEN nv on nv.MaNV = pdp.MaNV j
 	<field name="TenPhong" class="java.lang.String"/>
 	<field name="NgayLapHoaDon" class="java.sql.Date"/>
 	<field name="Tien" class="java.math.BigDecimal"/>
+	<field name="Tien1" class="java.lang.String"/>
+	<variable name="Tien_SUM" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{Tien}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="354" splitType="Stretch">
+		<band height="283" splitType="Stretch">
 			<image>
-				<reportElement x="306" y="-32" width="250" height="171" uuid="5c9e2e05-8a59-48a8-94ba-27f651c00d5e"/>
+				<reportElement x="320" y="65" width="250" height="171" uuid="5c9e2e05-8a59-48a8-94ba-27f651c00d5e"/>
 				<imageExpression><![CDATA["D:\\KLTN_TranDuc\\TranDuc_2021010131\\src\\res\\logoreport.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="1" y="66" width="184" height="20" uuid="bc9e5909-2711-4f89-a071-e9859662ee12"/>
+				<reportElement x="1" y="152" width="184" height="20" uuid="bc9e5909-2711-4f89-a071-e9859662ee12"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Phường Bến Thành, Quận 1,]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="46" width="88" height="20" uuid="fe5f4060-a324-4e06-9cd5-e528159f5e27"/>
+				<reportElement x="1" y="132" width="88" height="20" uuid="fe5f4060-a324-4e06-9cd5-e528159f5e27"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[224 Đ. Lê Lai]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="465" y="106" width="91" height="20" uuid="4f76dffe-0a46-40d1-b35b-9435420c41e6"/>
+				<reportElement x="464" y="212" width="91" height="20" uuid="4f76dffe-0a46-40d1-b35b-9435420c41e6"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[  0764464485]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="26" width="88" height="20" uuid="d5fccba2-28c8-45f0-b0b1-0b2de947d12f"/>
+				<reportElement x="1" y="112" width="88" height="20" uuid="d5fccba2-28c8-45f0-b0b1-0b2de947d12f"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Địa chỉ:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="106" width="184" height="20" uuid="a4f35c6f-2d67-448a-99b8-1df7b2dd97d3"/>
+				<reportElement x="1" y="192" width="184" height="20" uuid="a4f35c6f-2d67-448a-99b8-1df7b2dd97d3"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Mã số thuế/GST: 200506877R]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="258" width="555" height="30" uuid="6c0a36bc-786f-4546-ad55-dd141c1a23a3"/>
+				<reportElement x="1" y="12" width="555" height="30" uuid="6c0a36bc-786f-4546-ad55-dd141c1a23a3"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="24" isBold="true"/>
 				</textElement>
 				<text><![CDATA[HỆ THỐNG KHÁCH SẠN NEW WORLD]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="150" width="117" height="20" uuid="ab7c1f65-9b24-4131-b4e7-1aeea7c76033"/>
+				<reportElement x="0" y="236" width="117" height="20" uuid="ab7c1f65-9b24-4131-b4e7-1aeea7c76033"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Ngày xuất hóa đơn:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="398" y="106" width="67" height="20" uuid="3d4f2374-7c6f-4529-8d83-7756e146659f"/>
+				<reportElement x="397" y="212" width="67" height="20" uuid="3d4f2374-7c6f-4529-8d83-7756e146659f"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Điện thoại:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="86" width="184" height="20" uuid="b8535a26-b1de-4c8a-948a-324261d430a5"/>
+				<reportElement x="1" y="172" width="184" height="20" uuid="b8535a26-b1de-4c8a-948a-324261d430a5"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Thành phố Hồ Chí Minh 700000]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="117" y="150" width="100" height="20" uuid="d5de7dde-50c7-434c-86b6-dbf8f181197e"/>
+				<reportElement x="117" y="236" width="100" height="20" uuid="d5de7dde-50c7-434c-86b6-dbf8f181197e"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
@@ -163,7 +167,7 @@ join PHONG p on p.MaPhong = pdp.MaPhong join NHANVIEN nv on nv.MaNV = pdp.MaNV j
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="104" splitType="Stretch">
+		<band height="63" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="19" width="61" height="20" uuid="c477b703-2bce-4219-89f2-2e808554d44e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
@@ -189,26 +193,50 @@ join PHONG p on p.MaPhong = pdp.MaPhong join NHANVIEN nv on nv.MaNV = pdp.MaNV j
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{NgayLapHoaDon}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="486" y="19" width="69" height="20" uuid="00bc71a7-eacf-4d1d-92f9-e15a4cd011e5"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Tien}]]></textFieldExpression>
-			</textField>
 			<line>
 				<reportElement x="0" y="53" width="554" height="1" uuid="af060d0d-89c0-429c-96f6-7451038d92ae"/>
 			</line>
+			<textField>
+				<reportElement x="486" y="19" width="57" height="20" uuid="0eac64de-c67d-45b6-a5da-4258d8123aa5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Tien1}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="54" splitType="Stretch">
+		<band height="136" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="100" height="20" uuid="845f0091-de96-4766-9fea-d7ab6a1a56c5"/>
+				<reportElement x="0" y="103" width="100" height="20" uuid="845f0091-de96-4766-9fea-d7ab6a1a56c5"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="455" y="0" width="100" height="20" uuid="1a4fdec5-ccd1-48da-9a7f-65ca4041ac6a"/>
+				<reportElement x="456" y="103" width="100" height="20" uuid="1a4fdec5-ccd1-48da-9a7f-65ca4041ac6a"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="345" y="0" width="128" height="20" uuid="17c527d8-40fe-4c1c-b8c0-ce982c3cb5df"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tổng Doanh Thu:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="486" y="0" width="70" height="20" uuid="97129821-8956-4144-9535-70c0d085f002"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat("###,###,###").format($V{Tien_SUM}) + " VND"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="3" width="128" height="17" uuid="09ca4356-4840-4701-adda-86fe7f9ff2c9"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tổng Số Hóa Đơn:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="128" y="3" width="100" height="20" uuid="d8aa91f4-b5ae-4cb7-a45f-500eeddd1667"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
