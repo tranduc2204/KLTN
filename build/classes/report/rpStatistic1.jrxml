@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9632465f-c375-4feb-98ac-7d4cc258164d">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="73"/>
 	<parameter name="tungay" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -197,11 +197,6 @@ join PHONG p on p.MaPhong = pdp.MaPhong join NHANVIEN nv on nv.MaNV = pdp.MaNV j
 			<line>
 				<reportElement x="0" y="53" width="554" height="1" uuid="af060d0d-89c0-429c-96f6-7451038d92ae"/>
 			</line>
-			<textField>
-				<reportElement x="365" y="69" width="100" height="20" uuid="06091637-0512-4c5b-9167-8591e6566143"/>
-				<textFieldExpression><![CDATA[$F{Tien}.sum( java.math.BigDecimal )
-]]></textFieldExpression>
-			</textField>
 		</band>
 	</detail>
 	<pageFooter>
