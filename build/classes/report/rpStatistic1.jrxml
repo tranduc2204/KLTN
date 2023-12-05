@@ -121,7 +121,7 @@ where month(NgayLapHoaDon) = $P{thang} and YEAR (NgayLapHoaDon) = $P{nam}]]>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="68" splitType="Stretch">
+		<band height="62" splitType="Stretch">
 			<staticText>
 				<reportElement x="371" y="26" width="102" height="20" uuid="6cc16481-0661-434c-8fd3-d1f627dc84c4"/>
 				<textElement textAlignment="Center">
@@ -169,35 +169,35 @@ where month(NgayLapHoaDon) = $P{thang} and YEAR (NgayLapHoaDon) = $P{nam}]]>
 	<detail>
 		<band height="63" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="19" width="61" height="20" uuid="c477b703-2bce-4219-89f2-2e808554d44e"/>
+				<reportElement x="0" y="24" width="61" height="20" uuid="c477b703-2bce-4219-89f2-2e808554d44e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{MaHoaDonPhong}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="85" y="19" width="81" height="20" uuid="6c7f0d30-5175-4f62-9fc3-33a2d51186bf"/>
+				<reportElement x="85" y="24" width="81" height="20" uuid="6c7f0d30-5175-4f62-9fc3-33a2d51186bf"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{TenNV}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="190" y="19" width="73" height="20" uuid="de74353e-35de-4362-95ee-c726f9177fde"/>
+				<reportElement x="190" y="24" width="73" height="20" uuid="de74353e-35de-4362-95ee-c726f9177fde"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{TenKH}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="287" y="19" width="71" height="20" uuid="5ec3db96-99ce-4d20-9662-51f6df496211"/>
+				<reportElement x="287" y="24" width="71" height="20" uuid="5ec3db96-99ce-4d20-9662-51f6df496211"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{TenPhong}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="373" y="19" width="100" height="20" uuid="cd0e530b-0a75-430a-b47c-9ee172ebfb17"/>
+				<reportElement x="373" y="24" width="100" height="20" uuid="cd0e530b-0a75-430a-b47c-9ee172ebfb17"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{NgayLapHoaDon}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="53" width="554" height="1" uuid="af060d0d-89c0-429c-96f6-7451038d92ae"/>
+				<reportElement x="0" y="11" width="554" height="1" uuid="af060d0d-89c0-429c-96f6-7451038d92ae"/>
 			</line>
 			<textField>
-				<reportElement x="486" y="19" width="57" height="20" uuid="0eac64de-c67d-45b6-a5da-4258d8123aa5"/>
+				<reportElement x="486" y="24" width="57" height="20" uuid="0eac64de-c67d-45b6-a5da-4258d8123aa5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{Tien1}]]></textFieldExpression>
 			</textField>

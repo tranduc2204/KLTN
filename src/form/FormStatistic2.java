@@ -133,7 +133,7 @@ public class FormStatistic2 extends javax.swing.JPanel {
             conn = cn.getConnection();
            String sqlQuery = "select  TenDichVu, TenNV, TenKH,NgayLapHD,SL, DonGia, (sl* DonGia) as GiaHD  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV \n" +
 "join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH \n" +
-"where month(NgayLapHD) = ?? and year(NgayLapHD) = ? ";
+"where month(NgayLapHD) = ? and year(NgayLapHD) = ? ";
 
             PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
 
@@ -162,8 +162,8 @@ public class FormStatistic2 extends javax.swing.JPanel {
     }
     
     private void loaddoanhthuofnam(){// load sum 
-        String thang = cmbThang1.getSelectedItem().toString();
-        String nam = cmbNam1.getSelectedItem().toString();
+       
+        String nam = cmbNam2.getSelectedItem().toString();
         
         try {
             conn = cn.getConnection();
@@ -195,8 +195,8 @@ public class FormStatistic2 extends javax.swing.JPanel {
     }
 
     private void loadDataFromSQLofnam() {
-        String thang = cmbThang1.getSelectedItem().toString();
-        String nam = cmbNam1.getSelectedItem().toString();
+       
+        String nam = cmbNam2.getSelectedItem().toString();
         
         try {
             conn = cn.getConnection();
@@ -278,7 +278,7 @@ public class FormStatistic2 extends javax.swing.JPanel {
             JasperPrint p = JasperFillManager.fillReport(rpt, map, conn);
             JasperViewer.viewReport(p, false);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, "Tháng của năm thống kê không có dữ liệu");//"ex.toString()"
+            JOptionPane.showMessageDialog(this,ex.toString() );//"ex.toString()"
         }
     }
     
@@ -289,7 +289,7 @@ public class FormStatistic2 extends javax.swing.JPanel {
         
         try {
             Map<String, Object> map = new HashMap<>();
-            JasperReport rpt = JasperCompileManager.compileReport("src/report/rpStatistic1veryear.jrxml");
+            JasperReport rpt = JasperCompileManager.compileReport("src/report/rpStatistic2veryear.jrxml");
             map.put("nam", nam);
             
      
@@ -297,7 +297,7 @@ public class FormStatistic2 extends javax.swing.JPanel {
             JasperPrint p = JasperFillManager.fillReport(rpt, map, conn);
             JasperViewer.viewReport(p, false);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, "Năm thống kê không có dữ liệu");
+            JOptionPane.showMessageDialog(this, ex.toString());
         }
     }
 
@@ -310,6 +310,7 @@ public class FormStatistic2 extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         roundPanel2 = new swing.RoundPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
@@ -368,11 +369,13 @@ public class FormStatistic2 extends javax.swing.JPanel {
         panelBorder2.setForeground(new java.awt.Color(255, 255, 255));
 
         rbThangofNam.setBackground(new java.awt.Color(36, 87, 157));
+        buttonGroup1.add(rbThangofNam);
         rbThangofNam.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         rbThangofNam.setForeground(new java.awt.Color(255, 255, 255));
         rbThangofNam.setText("Thống kê theo tháng của năm");
 
         rbNam.setBackground(new java.awt.Color(36, 87, 157));
+        buttonGroup1.add(rbNam);
         rbNam.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         rbNam.setForeground(new java.awt.Color(255, 255, 255));
         rbNam.setText("Thống kê theo năm");
@@ -537,6 +540,7 @@ public class FormStatistic2 extends javax.swing.JPanel {
     private swing.Button btnRefresh1;
     private javax.swing.JButton btnReport;
     private swing.Button btnStatistic;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cmbNam1;
     private javax.swing.JComboBox<String> cmbNam2;
     private javax.swing.JComboBox<String> cmbThang1;

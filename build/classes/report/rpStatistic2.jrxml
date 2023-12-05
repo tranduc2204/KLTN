@@ -12,48 +12,115 @@
 	<parameter name="nam" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="thang" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select MaHoaDonPhong, TenNV, TenKH,TenPhong, NgayLapHoaDon, Tien  from HoaDonPhong hdp join PhieuThuePhong ptp 
-on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong  join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong 
-join PHONG p on p.MaPhong = pdp.MaPhong join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH 
-where YEAR (NgayLapHoaDon) = $P{nam}]]>
+		<![CDATA[select  TenDichVu, TenNV, TenKH,NgayLapHD,SL, DonGia, (sl* DonGia) as GiaHD  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV 
+join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH
+where month(NgayLapHD) = $P{thang} and YEAR (NgayLapHD) = $P{nam}]]>
 	</queryString>
-	<field name="MaHoaDonPhong" class="java.lang.String"/>
+	<field name="TenDichVu" class="java.lang.String"/>
 	<field name="TenNV" class="java.lang.String"/>
 	<field name="TenKH" class="java.lang.String"/>
-	<field name="TenPhong" class="java.lang.String"/>
-	<field name="NgayLapHoaDon" class="java.sql.Date"/>
-	<field name="Tien" class="java.math.BigDecimal"/>
+	<field name="NgayLapHD" class="java.sql.Date"/>
+	<field name="SL" class="java.lang.Integer"/>
+	<field name="DonGia" class="java.math.BigDecimal"/>
+	<field name="GiaHD" class="java.math.BigDecimal"/>
+	<variable name="Tien_SUM" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{GiaHD}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="283" splitType="Stretch">
+		<band height="284" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="554" height="43" uuid="e947aac1-039d-4505-80d0-829932b3e61b"/>
+				<reportElement x="2" y="175" width="184" height="20" uuid="9cc3f8fe-4566-49f6-a5bf-9977dba4dd59"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Thành phố Hồ Chí Minh 700000]]></text>
+			</staticText>
+			<image>
+				<reportElement x="317" y="68" width="250" height="171" uuid="2a00eb02-ad55-4a32-9d32-a6520fe5dfe3"/>
+				<imageExpression><![CDATA["D:\\KLTN_TranDuc\\TranDuc_2021010131\\src\\res\\logoreport.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="118" y="239" width="100" height="20" uuid="073b7a70-0b07-4f71-9cc8-f18b0bd1e372"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="135" width="88" height="20" uuid="1ed7b0a7-5420-44a1-8a19-6a3ad6206605"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[224 Đ. Lê Lai]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="239" width="117" height="20" uuid="154519dc-c3d4-4569-80b4-d93261f9cfa1"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ngày xuất hóa đơn:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="155" width="184" height="20" uuid="7effcd9a-b286-4fdc-a37d-23c7a13b9d32"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Phường Bến Thành, Quận 1,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="388" y="219" width="67" height="20" uuid="72c0a9d0-9bf4-4397-a804-b2c48ea6c498"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Điện thoại:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="219" width="76" height="20" uuid="4cfa3646-b18f-4143-b3f9-38b1723a4dc6"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[  0764464485]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="115" width="88" height="20" uuid="c20397ff-c785-44a9-bdf3-32720bc26ecb"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Địa chỉ:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="195" width="184" height="20" uuid="df41ae51-a8e5-4522-ac08-9a6642717a2d"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Mã số thuế/GST: 200506877R]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="15" width="555" height="30" uuid="0f788a2d-7b47-43d3-abc9-04ee44bc7179"/>
 				<textElement textAlignment="Center">
-					<font fontName="Arial" size="22" isBold="true"/>
+					<font fontName="Arial" size="24" isBold="true"/>
 				</textElement>
 				<text><![CDATA[HỆ THỐNG KHÁCH SẠN NEW WORLD]]></text>
 			</staticText>
-			<image>
-				<reportElement x="186" y="67" width="210" height="151" uuid="ee44d119-95e6-4a98-ba51-9d1620ffb998"/>
-				<imageExpression><![CDATA["D:\\KLTN_TranDuc\\TranDuc_2021010131\\src\\res\\logoreport.jpg"]]></imageExpression>
-			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="82" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="238" width="555" height="31" uuid="f026aafd-0943-4465-8a47-3924a649da31"/>
+				<reportElement x="2" y="13" width="552" height="31" uuid="f026aafd-0943-4465-8a47-3924a649da31"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="20" isBold="true"/>
 				</textElement>
 				<text><![CDATA[THỐNG KÊ DOANH THU HÓA ĐƠN DỊCH VỤ]]></text>
 			</staticText>
 		</band>
-	</title>
-	<pageHeader>
-		<band height="35" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch">
+		<band height="57" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="28" width="68" height="20" uuid="7616e2e0-6689-4550-92f4-e0f74e04b285"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -106,60 +173,81 @@ where YEAR (NgayLapHoaDon) = $P{nam}]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="64" splitType="Stretch">
+		<band height="51" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="13" width="78" height="20" uuid="bd241672-dc33-4d37-8307-9218a6623d1b"/>
+				<reportElement x="0" y="21" width="78" height="20" uuid="bd241672-dc33-4d37-8307-9218a6623d1b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{TenDichVu}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="68" y="13" width="80" height="20" uuid="5404175d-e284-4db0-b8a7-25c12609183f"/>
+				<reportElement x="68" y="21" width="80" height="20" uuid="5404175d-e284-4db0-b8a7-25c12609183f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{TenNV}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="169" y="13" width="59" height="20" uuid="758b80ab-9aab-4959-b14e-af284660ac65"/>
+				<reportElement x="169" y="21" width="59" height="20" uuid="758b80ab-9aab-4959-b14e-af284660ac65"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{TenKH}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="248" y="13" width="87" height="20" uuid="01962706-6b6c-416e-89e1-0b044f774f54"/>
+				<reportElement x="248" y="21" width="87" height="20" uuid="01962706-6b6c-416e-89e1-0b044f774f54"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{NgayLapHD}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="350" y="13" width="55" height="20" uuid="fd07db6d-82bb-4e21-a0ce-df2e0d0f7171"/>
+				<reportElement x="350" y="21" width="55" height="20" uuid="fd07db6d-82bb-4e21-a0ce-df2e0d0f7171"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{SL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="415" y="13" width="64" height="20" uuid="9f72855f-11a2-42be-a81d-4ca80fbf80e4"/>
+				<reportElement x="415" y="21" width="64" height="20" uuid="9f72855f-11a2-42be-a81d-4ca80fbf80e4"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{DonGia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="503" y="13" width="51" height="20" uuid="a5a095fc-846e-41d8-9728-0ef30336b89e"/>
+				<reportElement x="503" y="21" width="51" height="20" uuid="a5a095fc-846e-41d8-9728-0ef30336b89e"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{GiaHD}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="48" width="554" height="1" uuid="b17a6a31-7c25-4b05-9f0d-185c5b32d295"/>
+				<reportElement x="0" y="10" width="554" height="1" uuid="b17a6a31-7c25-4b05-9f0d-185c5b32d295"/>
 			</line>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch">
+		<band height="110" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="100" height="20" uuid="a13d0fcd-7ba1-41c1-8696-5fcefdb84990"/>
+				<reportElement x="0" y="90" width="100" height="20" uuid="a13d0fcd-7ba1-41c1-8696-5fcefdb84990"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="455" y="0" width="100" height="20" uuid="250a1973-3d6e-4f8f-9f55-6c84e876a4cc"/>
+				<reportElement x="455" y="90" width="100" height="20" uuid="250a1973-3d6e-4f8f-9f55-6c84e876a4cc"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="128" y="12" width="100" height="20" uuid="72524686-2547-407c-b47f-fc98f3a58f83"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="12" width="128" height="17" uuid="c2d8c96f-bd16-4999-882c-621d46ce1c2c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tổng Số Hóa Đơn:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="345" y="9" width="128" height="20" uuid="bc0cf9c8-320a-4254-8823-85a3b7b8d795"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tổng Doanh Thu:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="486" y="9" width="70" height="20" uuid="e1616b1e-9cfe-4036-be7e-897cc5dc3e2a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat("###,###,###").format($V{Tien_SUM}) + " VND"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
