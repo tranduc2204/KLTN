@@ -6,7 +6,16 @@
 package form;
 
 import chart.ModelChart;
+import connect.Connect;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.Icon;
+import javax.swing.JOptionPane;
+import model.ModelCard;
+import swing.icon.GoogleMaterialDesignIcons;
+import swing.icon.IconFontSwing;
 
 /**
  *
@@ -14,6 +23,8 @@ import java.awt.Color;
  */
 public class FormChart extends javax.swing.JPanel {
 
+    Connect cn = new Connect();
+    Connection conn;
     /**
      * Creates new form FormChart
      */
@@ -21,40 +32,99 @@ public class FormChart extends javax.swing.JPanel {
         initComponents();
         setOpaque(false);
         init();
-        
-        
     }
     private void init(){
-        chart.addLegend("Income", new Color(12, 84, 175), new Color(0, 108, 247));
-        chart.addLegend("Expense", new Color(54, 4, 143), new Color(104, 49, 200));
-        chart.addLegend("Profit", new Color(5, 125, 0), new Color(95, 209, 69));
-        chart.addLegend("Cost", new Color(186, 37, 37), new Color(241, 100, 120));
-        chart.addData(new ModelChart("January", new double[]{500, 200, 80, 89}));
-        chart.addData(new ModelChart("February", new double[]{600, 750, 90, 150}));
-        chart.addData(new ModelChart("March", new double[]{200, 350, 460, 900}));
-        chart.addData(new ModelChart("April", new double[]{480, 150, 750, 700}));
-        chart.addData(new ModelChart("May", new double[]{350, 540, 300, 150}));
-        chart.addData(new ModelChart("June", new double[]{190, 280, 81, 200}));
+        
+        // data progress
+        int total_room;
+        try{
+            conn = cn.getConnection();
+            String sql_login = "select count (*) as sophong from phong";
+            PreparedStatement pst = conn.prepareStatement(sql_login);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                total_room = rs.getInt("sophong");
+
+                int Booked_room;
+                String sql1 = "select count (*) as sophong from phong where MaTinhtrangphong = 'TT2' ";        
+                PreparedStatement pst1 = conn.prepareStatement(sql1);
+                ResultSet rs1 = pst1.executeQuery();
+                if (rs1.next()) {
+                    Booked_room = rs1.getInt("sophong");
+                    double kq = (double)((double)Booked_room /(double) total_room)*100 ;
+                    double kqend = Math.ceil(kq);//làm tròn lên
+                    int view = (int)kqend;
+                   
+                    progress1.setValue(view);
+                    progress1.start();
+                }
+                
+                
+                int Rented_room;
+                String sql2 = "select count (*) as sophong from phong where MaTinhtrangphong = 'TT3' ";        
+                PreparedStatement pst2 = conn.prepareStatement(sql2);
+                ResultSet rs2 = pst2.executeQuery();
+                if (rs2.next()) {
+                    Rented_room = rs2.getInt("sophong");
+                    double kq1 = (double)((double)Rented_room /(double) total_room)*100 ;
+                    double kqend1 = Math.ceil(kq1);//làm tròn lên
+                    int view1 = (int)kqend1;
+                    progress2.setValue(view1);
+                    progress2.start();
+                }
+            } else {
+                JOptionPane.showConfirmDialog(this, "");
+            }
+        }catch(Exception e){
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        // chart dưới
+//        chart.addLegend("Income", new Color(12, 84, 175), new Color(0, 108, 247));
+//        chart.addLegend("Expense", new Color(54, 4, 143), new Color(104, 49, 200));
+        chart.addLegend("Room Income", new Color(5, 125, 0), new Color(95, 209, 69));
+        chart.addLegend("Service Income", new Color(186, 37, 37), new Color(241, 100, 120));
+        chart.addData(new ModelChart("January", new double[]{500, 200}));
+        chart.addData(new ModelChart("February", new double[]{600, 750}));
+        chart.addData(new ModelChart("March", new double[]{200, 350}));
+        chart.addData(new ModelChart("April", new double[]{480, 150}));
+        chart.addData(new ModelChart("May", new double[]{350, 540}));
+        chart.addData(new ModelChart("June", new double[]{190, 280}));
+        
+        chart.addData(new ModelChart("July", new double[]{500, 200}));
+        chart.addData(new ModelChart("August", new double[]{600, 750}));
+        chart.addData(new ModelChart("September", new double[]{200, 350}));
+        chart.addData(new ModelChart("October", new double[]{480, 150}));
+        chart.addData(new ModelChart("November", new double[]{350, 540}));
+        chart.addData(new ModelChart("December", new double[]{190, 280}));
         chart.start();
-        lineChart.addLegend("Income", new Color(12, 84, 175), new Color(0, 108, 247));
-        lineChart.addLegend("Expense", new Color(54, 4, 143), new Color(104, 49, 200));
-        lineChart.addLegend("Profit", new Color(5, 125, 0), new Color(95, 209, 69));
-        lineChart.addLegend("Cost", new Color(186, 37, 37), new Color(241, 100, 120));
-        lineChart.addData(new ModelChart("January", new double[]{500, 200, 80, 89}));
-        lineChart.addData(new ModelChart("February", new double[]{600, 750, 90, 150}));
-        lineChart.addData(new ModelChart("March", new double[]{200, 350, 460, 900}));
-        lineChart.addData(new ModelChart("April", new double[]{480, 150, 750, 700}));
-        lineChart.addData(new ModelChart("May", new double[]{350, 540, 300, 150}));
-        lineChart.addData(new ModelChart("June", new double[]{190, 280, 81, 200}));
+        
+        
+//        lineChart.addLegend("Income", new Color(12, 84, 175), new Color(0, 108, 247));
+//        lineChart.addLegend("Expense", new Color(54, 4, 143), new Color(104, 49, 200));
+        lineChart.addLegend("Room Income", new Color(5, 125, 0), new Color(95, 209, 69));
+        lineChart.addLegend("Service Income", new Color(186, 37, 37), new Color(241, 100, 120));
+        lineChart.addData(new ModelChart("January", new double[]{500, 200}));
+        lineChart.addData(new ModelChart("February", new double[]{600, 750}));
+        lineChart.addData(new ModelChart("March", new double[]{200, 350}));
+        lineChart.addData(new ModelChart("April", new double[]{480, 150}));
+        lineChart.addData(new ModelChart("May", new double[]{350, 540}));
+        lineChart.addData(new ModelChart("June", new double[]{190, 280}));
+        
+        lineChart.addData(new ModelChart("July", new double[]{0, 200}));
+        lineChart.addData(new ModelChart("August", new double[]{600, 750}));
+        lineChart.addData(new ModelChart("September", new double[]{200, 350}));
+        lineChart.addData(new ModelChart("October", new double[]{480, 150}));
+        lineChart.addData(new ModelChart("November", new double[]{350, 540}));
+        lineChart.addData(new ModelChart("December", new double[]{190, 280}));
         
         lineChart.start();
-        
-//        progress1.setValue();
-
-        progress1.start();
-        progress2.start();
-        progress3.start();
-      
     }
 
     /**
@@ -74,9 +144,6 @@ public class FormChart extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         progress2 = new swing.Progress();
         jLabel3 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        progress3 = new swing.Progress();
-        jLabel4 = new javax.swing.JLabel();
         roundPanel2 = new swing.RoundPanel();
         chart = new chart.Chart();
         roundPanel3 = new swing.RoundPanel();
@@ -91,7 +158,7 @@ public class FormChart extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Total Income Sold");
+        jLabel1.setText("Total Booked Room");
 
         progress1.setBackground(new java.awt.Color(66, 246, 84));
         progress1.setForeground(new java.awt.Color(19, 153, 32));
@@ -102,18 +169,18 @@ public class FormChart extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(progress1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(26, 26, 26))
-            .addComponent(progress1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(12, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(progress1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -131,7 +198,7 @@ public class FormChart extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Total Income Profit");
+        jLabel3.setText("Total Rented Room");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -141,7 +208,7 @@ public class FormChart extends javax.swing.JPanel {
                 .addGap(19, 19, 19)
                 .addComponent(jLabel3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(progress2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(progress2, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,64 +219,31 @@ public class FormChart extends javax.swing.JPanel {
                 .addComponent(progress2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel3.setOpaque(false);
-
-        progress3.setBackground(new java.awt.Color(66, 193, 246));
-        progress3.setForeground(new java.awt.Color(26, 132, 181));
-        progress3.setValue(85);
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Total Expense");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(progress3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(31, 31, 31))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(progress3, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
         javax.swing.GroupLayout roundPanel1Layout = new javax.swing.GroupLayout(roundPanel1);
         roundPanel1.setLayout(roundPanel1Layout);
         roundPanel1Layout.setHorizontalGroup(
             roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
                     .addGroup(roundPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addContainerGap()
+                        .addComponent(jLabel2))
+                    .addGroup(roundPanel1Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         roundPanel1Layout.setVerticalGroup(
             roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(roundPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(51, 51, 51)
-                        .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -237,13 +271,13 @@ public class FormChart extends javax.swing.JPanel {
         roundPanel3Layout.setHorizontalGroup(
             roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel3Layout.createSequentialGroup()
-                .addComponent(lineChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lineChart, javax.swing.GroupLayout.DEFAULT_SIZE, 859, Short.MAX_VALUE)
                 .addContainerGap())
         );
         roundPanel3Layout.setVerticalGroup(
             roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel3Layout.createSequentialGroup()
-                .addComponent(lineChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lineChart, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -253,10 +287,10 @@ public class FormChart extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(roundPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(roundPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(roundPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(0, 0, 0))
         );
@@ -277,14 +311,11 @@ public class FormChart extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private chart.LineChart lineChart;
     private swing.Progress progress1;
     private swing.Progress progress2;
-    private swing.Progress progress3;
     private swing.RoundPanel roundPanel1;
     private swing.RoundPanel roundPanel2;
     private swing.RoundPanel roundPanel3;

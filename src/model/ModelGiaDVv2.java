@@ -12,34 +12,17 @@ import java.text.DecimalFormat;
  *
  * @author TeeDee
  */
-public class ModelServicev2 {
-    private String MaDV, TenDichVu, MaDonGiaDV;
-    private BigDecimal  DonGia;
+public class ModelGiaDVv2 {
+    String MaDonGiaDV, NgayApDung;
+    BigDecimal  DonGia;
 
-    public ModelServicev2() {
+    public ModelGiaDVv2() {
     }
 
-    public ModelServicev2(String MaDV, String TenDichVu, String MaDonGiaDV, BigDecimal DonGia) {
-        this.MaDV = MaDV;
-        this.TenDichVu = TenDichVu;
+    public ModelGiaDVv2(String MaDonGiaDV, String NgayApDung, BigDecimal DonGia) {
         this.MaDonGiaDV = MaDonGiaDV;
+        this.NgayApDung = NgayApDung;
         this.DonGia = DonGia;
-    }
-
-    public String getMaDV() {
-        return MaDV;
-    }
-
-    public void setMaDV(String MaDV) {
-        this.MaDV = MaDV;
-    }
-
-    public String getTenDichVu() {
-        return TenDichVu;
-    }
-
-    public void setTenDichVu(String TenDichVu) {
-        this.TenDichVu = TenDichVu;
     }
 
     public String getMaDonGiaDV() {
@@ -50,6 +33,14 @@ public class ModelServicev2 {
         this.MaDonGiaDV = MaDonGiaDV;
     }
 
+    public String getNgayApDung() {
+        return NgayApDung;
+    }
+
+    public void setNgayApDung(String NgayApDung) {
+        this.NgayApDung = NgayApDung;
+    }
+
     public BigDecimal getDonGia() {
         return DonGia;
     }
@@ -57,7 +48,7 @@ public class ModelServicev2 {
     public void setDonGia(BigDecimal DonGia) {
         this.DonGia = DonGia;
     }
-
+    
     
     
     public String getFormattedDonGia() {

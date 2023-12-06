@@ -79,21 +79,55 @@ public class FormHome extends javax.swing.JPanel {
                 card2.setData(new ModelCard("Room Income", doanhthu, 60, icon2));//2000 60
 
             } else {
-                JOptionPane.showConfirmDialog(this, "Đăng nhập thất bai, sai tài khoản hoặc mật khẩu");
+                JOptionPane.showConfirmDialog(this, "");
 
             }
         }catch(Exception e){
             
         }
         
+        int doanhthu_service;
+        try{
+            conn = cn.getConnection();
+            String sql_login = "select  sum(SL* DonGia) as GiaHD   from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV \n" +
+"join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH \n" +
+"group by month(NgayLapHD), year(NgayLapHD)";
+            PreparedStatement pst = conn.prepareStatement(sql_login);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {;
+                doanhthu = rs.getInt("GiaHD");
+
+                Icon icon3 = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SHOPPING_BASKET, 60, new Color(255, 255, 255, 100), new Color(255, 255, 255, 15));
+                card3.setData(new ModelCard("Service Income", doanhthu, 80, icon3)); //3000
+
+            } else {
+                JOptionPane.showConfirmDialog(this, "");
+
+            }
+        }catch(Exception e){
+            
+        }
         
+        int countStaff;
+        try{
+            conn = cn.getConnection();
+            String sql_login = "select count (*) as SL from Nhanvien";
+            PreparedStatement pst = conn.prepareStatement(sql_login);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {;
+                sl = rs.getInt("SL");
+
+                Icon icon4 = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.BUSINESS_CENTER, 60, new Color(255, 255, 255, 100), new Color(255, 255, 255, 15));
+                card4.setData(new ModelCard("Staff", sl, 95, icon4)); //550
+            } else {
+                JOptionPane.showConfirmDialog(this, "");
+
+            }
+        }catch(Exception e){
+            
+        }
         
-        
-        
-        Icon icon3 = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SHOPPING_BASKET, 60, new Color(255, 255, 255, 100), new Color(255, 255, 255, 15));
-        card3.setData(new ModelCard("Expense", 3000, 80, icon3));
-        Icon icon4 = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.BUSINESS_CENTER, 60, new Color(255, 255, 255, 100), new Color(255, 255, 255, 15));
-        card4.setData(new ModelCard("Service Income", 550, 95, icon4));
+   
     }
     
     private void initNoticeBoard() {

@@ -20,16 +20,17 @@ public class ModelService {
     Connection conn;
     
     public ArrayList<ModelServicev2> findALL() throws Exception {
-        String sql = "select * from DICHVU where isvisible = '1' ";
-//        String sql = "select MaDV , TenDichVu, FORMAT(DonGia, 'C', 'vi-VN')as DonGia from DICHVU";
+        String sql = "select MaDV, TenDichVu,dgdv.MaDonGiaDV, DonGia  from DICHVU dv join DonGiaDV dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV where isvisible = '1' ";
+
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
         ArrayList<ModelServicev2> list = new ArrayList<>();
         while (rs.next()) {
             ModelServicev2 dv = new ModelServicev2();
-            dv.setMaDichVu(rs.getString("MaDV"));
+            dv.setMaDV(rs.getString("MaDV"));
             dv.setTenDichVu(rs.getString("TenDichVu"));
+            dv.setMaDonGiaDV(rs.getString("MaDonGiaDV"));
             dv.setDonGia(rs.getBigDecimal("DonGia"));
           
 
@@ -49,7 +50,7 @@ public class ModelService {
 
         if (rs.next()) {
             ModelServicev2 dv = new ModelServicev2();
-            dv.setMaDichVu(rs.getString("MaDV"));
+            dv.setMaDV(rs.getString("MaDV"));
             dv.setTenDichVu(rs.getString("TenDichVu"));
             dv.setDonGia(rs.getBigDecimal("DonGia"));
            
@@ -57,13 +58,17 @@ public class ModelService {
         }
         return null;
     }
+    
+    
+    
+    
     public boolean insert(ModelServicev2 dv) throws Exception {
         String sql = "insert into dichvu (MaDV, tendichvu,dongia) values (?,?,?)";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
 
-        pstmt.setString(1, dv.getMaDichVu());
+        pstmt.setString(1, dv.getMaDV());
         pstmt.setString(2, dv.getTenDichVu());
         pstmt.setBigDecimal(3, dv.getDonGia());
         
@@ -78,7 +83,7 @@ public class ModelService {
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
 
-        pstmt.setString(3, dv.getMaDichVu());
+        pstmt.setString(3, dv.getMaDV());
         pstmt.setString(1, dv.getTenDichVu());
         pstmt.setBigDecimal(2, dv.getDonGia());
 
@@ -110,13 +115,13 @@ public class ModelService {
 
         try {
             PreparedStatement pstmt1 = conn.prepareStatement(sql1);
-            pstmt1.setString(1, nv.getMaDichVu());
+            pstmt1.setString(1, nv.getMaDV());
 
             int rowsAffected1 = pstmt1.executeUpdate(); // Số dòng bị ảnh hưởng bởi lệnh sql1
             
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, nv.getMaDichVu());
+            pstmt.setString(1, nv.getMaDV());
 
             int rowsAffected = pstmt.executeUpdate(); // Số dòng bị ảnh hưởng bởi lệnh sql
 
