@@ -379,6 +379,8 @@ public class FormQLService extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
+        
+        String madongia = cmbmadongia.getSelectedItem().toString();
         StringBuilder sb = new StringBuilder();
         if (txtMADICHVU.getText().equals("")) {
             sb.append("mã dịch vụ không được để trống");
@@ -391,14 +393,11 @@ public class FormQLService extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, sb);
         }
         try {
-            double tienn = Double.parseDouble(txtGIADICHVU.getText());
-            
-            BigDecimal bigDecimalValue = new BigDecimal(tienn);
-            
+ 
             ModelServicev2 dv = new ModelServicev2();
-            dv.setMaDichVu(txtMADICHVU.getText());
+            dv.setMaDV(txtMADICHVU.getText());
             dv.setTenDichVu(txtTENDICHVU.getText());
-            dv.setDonGia(bigDecimalValue);
+            dv.setMaDonGiaDV(madongia);
              
             ModelService ql = new ModelService();
             ql.insert(dv);
@@ -412,7 +411,10 @@ public class FormQLService extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
+        
+// TODO add your handling code here:
+        String madongia = cmbmadongia.getSelectedItem().toString();
+        
        StringBuilder sb = new StringBuilder();
         if (txtMADICHVU.getText().equals("")) {
             sb.append("mã dịch vụ không được để trống");
@@ -428,15 +430,12 @@ public class FormQLService extends javax.swing.JPanel {
             return;
         }
         try {
-            double tienn = Double.parseDouble(txtGIADICHVU.getText());
-            
-            BigDecimal bigDecimalValue = new BigDecimal(tienn);
             
             ModelServicev2 dv = new ModelServicev2();
-            dv.setMaDichVu(txtMADICHVU.getText());
+            dv.setMaDV(txtMADICHVU.getText());
             dv.setTenDichVu(txtTENDICHVU.getText());
             
-            dv.setDonGia(bigDecimalValue);
+            dv.setMaDonGiaDV(madongia);
 //            dv.setDonGia(tienn);
 
             ModelService ql = new ModelService();
@@ -470,7 +469,7 @@ public class FormQLService extends javax.swing.JPanel {
            
             
             ModelServicev2 qll = new ModelServicev2();
-            qll.setMaDichVu(txtMADICHVU.getText());
+            qll.setMaDV(txtMADICHVU.getText());
             
             ModelService ql = new ModelService();
             ql.deletecomeroot(qll);

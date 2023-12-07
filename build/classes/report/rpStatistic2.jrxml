@@ -16,8 +16,9 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select  TenDichVu, TenNV, TenKH,NgayLapHD,SL, DonGia, (sl* DonGia) as GiaHD  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV 
+		<![CDATA[select  TenDichVu, TenNV, TenKH,NgayLapHD,SL, DonGia, ((DonGia*SL) +  ((DonGia*SL)*0.1)) as GiaHD  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV 
 join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH
+join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV
 where month(NgayLapHD) = $P{thang} and YEAR (NgayLapHD) = $P{nam}]]>
 	</queryString>
 	<field name="TenDichVu" class="java.lang.String"/>
@@ -199,12 +200,12 @@ where month(NgayLapHD) = $P{thang} and YEAR (NgayLapHD) = $P{nam}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{SL}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="415" y="21" width="64" height="20" uuid="9f72855f-11a2-42be-a81d-4ca80fbf80e4"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{DonGia}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="503" y="21" width="51" height="20" uuid="a5a095fc-846e-41d8-9728-0ef30336b89e"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{GiaHD}]]></textFieldExpression>

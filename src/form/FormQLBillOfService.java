@@ -49,13 +49,10 @@ public class FormQLBillOfService extends javax.swing.JPanel {
         this.DisplayName = DisplayName;
         this.quyen = quyen;
         
-        
         initCombobox_madichvu();
         initCombobox_manhanvien();
         initCombobox_makhachhang();
   
-       
-
         inittable();
         loaddulieu1();
     }

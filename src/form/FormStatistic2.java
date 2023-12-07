@@ -66,6 +66,7 @@ public class FormStatistic2 extends javax.swing.JPanel {
         tableModel.addColumn("Ngày lập hóa đơn");
         tableModel.addColumn("Số lượng");
         tableModel.addColumn("Đơn giá");
+        tableModel.addColumn("VAT");
         tableModel.addColumn("Giá hóa đơn");
 
         
@@ -97,10 +98,10 @@ public class FormStatistic2 extends javax.swing.JPanel {
         
         try {
             conn = cn.getConnection();
-            String sqlQuery = "select  sum(SL* DonGia) as GiaHD , month(NgayLapHD) as thang, year(NgayLapHD) as nam  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV \n" +
-"join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH \n" +
+            String sqlQuery = "select  sum((DonGia*SL) +  ((DonGia*SL)*0.1)) as GiaHD , month(NgayLapHD) as thang, year(NgayLapHD) as nam  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV\n" +
+"join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH  join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV \n" +
 "group by month(NgayLapHD), year(NgayLapHD)\n" +
-"having month(NgayLapHD) = ? and year(NgayLapHD) = ? ";
+"having month(NgayLapHD) = ? and year(NgayLapHD) = ?  ";
 
             PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
 
@@ -111,7 +112,7 @@ public class FormStatistic2 extends javax.swing.JPanel {
             
             float doanhthu;
             // Lặp qua kết quả và thêm vào model
-            if (resultSet.next()) {;
+            if (resultSet.next()) {
                 doanhthu = resultSet.getFloat("GiaHD");
                 BigDecimal x = new BigDecimal(doanhthu);
                 ModelStatistic2 ms = new ModelStatistic2();
@@ -131,8 +132,10 @@ public class FormStatistic2 extends javax.swing.JPanel {
         
         try {
             conn = cn.getConnection();
-           String sqlQuery = "select  TenDichVu, TenNV, TenKH,NgayLapHD,SL, DonGia, (sl* DonGia) as GiaHD  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV \n" +
-"join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH \n" +
+           String sqlQuery = "select TenDichVu, TenNV, TenKH, NgayLapHD, SL, CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia,CONCAT(FORMAT(((DonGia*SL)*0.1), 'N0'),' VND') as VAT, \n" +
+"CONCAT(FORMAT(((DonGia*SL) +  ((DonGia*SL)*0.1)), 'N0'),' VND') AS GiaHD   from HoaDonDV hddv \n" +
+"join DICHVU dv on hddv.MaDV = dv.MaDV join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH  \n" +
+"join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV \n" +
 "where month(NgayLapHD) = ? and year(NgayLapHD) = ? ";
 
             PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
@@ -151,6 +154,7 @@ public class FormStatistic2 extends javax.swing.JPanel {
                     resultSet.getObject("NgayLapHD"),
                     resultSet.getObject("SL"),
                     resultSet.getObject("DonGia"),
+                    resultSet.getObject("VAT"),
                     resultSet.getObject("GiaHD"),
                 };
                 tableModel.addRow(rowData);
@@ -167,10 +171,10 @@ public class FormStatistic2 extends javax.swing.JPanel {
         
         try {
             conn = cn.getConnection();
-            String sqlQuery = "select  sum(SL* DonGia) as GiaHD , month(NgayLapHD) as thang, year(NgayLapHD) as nam  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV \n" +
-"join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH \n" +
-"group by month(NgayLapHD), year(NgayLapHD)\n" +
-"having year(NgayLapHD) = ? ";
+            String sqlQuery = "select  sum((DonGia*SL) +  ((DonGia*SL)*0.1)) as GiaHD , year(NgayLapHD) as nam  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV \n" +
+"join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV \n" +
+"group by  year(NgayLapHD)\n" +
+"having YEAR(NgayLapHD) = ? ";
 
             PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
 
@@ -200,9 +204,11 @@ public class FormStatistic2 extends javax.swing.JPanel {
         
         try {
             conn = cn.getConnection();
-           String sqlQuery = "select  TenDichVu, TenNV, TenKH,NgayLapHD,SL, DonGia, (sl* DonGia) as GiaHD  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV \n" +
-"join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH \n" +
-"where year(NgayLapHD) = ? ";
+           String sqlQuery = "select TenDichVu, TenNV, TenKH, NgayLapHD, SL, CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia,CONCAT(FORMAT(((DonGia*SL)*0.1), 'N0'),' VND') as VAT, \n" +
+"CONCAT(FORMAT(((DonGia*SL) +  ((DonGia*SL)*0.1)), 'N0'),' VND') AS GiaHD   from HoaDonDV hddv \n" +
+"join DICHVU dv on hddv.MaDV = dv.MaDV join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH  \n" +
+"join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV \n" +
+"where year(NgayLapHD) = ?  ";
 
             PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
 
@@ -219,6 +225,7 @@ public class FormStatistic2 extends javax.swing.JPanel {
                     resultSet.getObject("NgayLapHD"),
                     resultSet.getObject("SL"),
                     resultSet.getObject("DonGia"),
+                    resultSet.getObject("VAT"),
                     resultSet.getObject("GiaHD"),
                 };
                 tableModel.addRow(rowData);
@@ -234,8 +241,11 @@ public class FormStatistic2 extends javax.swing.JPanel {
         conn = cn.getConnection();
 
         // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
-        String sqlQuery = "select TenDichVu, TenNV, TenKH, NgayLapHD, SL, DonGia, (SL* DonGia) as GiaHD  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH  ";
-        //where NgayLapHoaDon between ? and ?
+        String sqlQuery = "select TenDichVu, TenNV, TenKH, NgayLapHD, SL, CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia,CONCAT(FORMAT(((DonGia*SL)*0.1), 'N0'),' VND') as VAT, \n" +
+"CONCAT(FORMAT(((DonGia*SL) +  ((DonGia*SL)*0.1)), 'N0'),' VND') AS GiaHD   from HoaDonDV hddv \n" +
+"join DICHVU dv on hddv.MaDV = dv.MaDV join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH  \n" +
+"join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV  ";
+     
 
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
@@ -246,12 +256,14 @@ public class FormStatistic2 extends javax.swing.JPanel {
             // Lặp qua kết quả và thêm vào model
             while (resultSet.next()) {
                 Object[] rowData = {
+
                 resultSet.getObject("TenDichVu"),
                 resultSet.getObject("TenNV"),
                 resultSet.getObject("TenKH"),
                 resultSet.getObject("NgayLapHD"),
                 resultSet.getObject("SL"),
                 resultSet.getObject("DonGia"),
+                resultSet.getObject("VAT"),
                 resultSet.getObject("GiaHD"),
 
                 };

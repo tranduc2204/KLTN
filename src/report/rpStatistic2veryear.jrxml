@@ -2,13 +2,14 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="845e03ed-7de4-42ab-b991-4e58b1174fdc">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="104"/>
 	<parameter name="nam" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select  TenDichVu, TenNV, TenKH,NgayLapHD,SL, DonGia, (sl* DonGia) as GiaHD  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV 
+		<![CDATA[select  TenDichVu, TenNV, TenKH,NgayLapHD,SL, DonGia,((DonGia*SL) +  ((DonGia*SL)*0.1)) as GiaHD  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV 
 join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH
+join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV
 where YEAR (NgayLapHD) = $P{nam}]]>
 	</queryString>
 	<field name="TenDichVu" class="java.lang.String"/>
@@ -183,7 +184,7 @@ where YEAR (NgayLapHD) = $P{nam}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{TenKH}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="417" y="30" width="64" height="20" uuid="5912549b-2cae-49ed-b945-68975ba390c9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{DonGia}]]></textFieldExpression>
@@ -193,7 +194,7 @@ where YEAR (NgayLapHD) = $P{nam}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{TenDichVu}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="505" y="30" width="51" height="20" uuid="a486b07e-5e14-4978-b8b4-4f739cf93e4d"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{GiaHD}]]></textFieldExpression>

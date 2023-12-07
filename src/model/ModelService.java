@@ -63,14 +63,14 @@ public class ModelService {
     
     
     public boolean insert(ModelServicev2 dv) throws Exception {
-        String sql = "insert into dichvu (MaDV, tendichvu,dongia) values (?,?,?)";
+        String sql = "insert into dichvu (MaDV, tendichvu,madongiadv) values (?,?,?)";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, dv.getMaDV());
         pstmt.setString(2, dv.getTenDichVu());
-        pstmt.setBigDecimal(3, dv.getDonGia());
+        pstmt.setString(3, dv.getMaDonGiaDV());
         
 
         return pstmt.executeUpdate() > 0;
@@ -78,14 +78,14 @@ public class ModelService {
     }
     
     public boolean update(ModelServicev2 dv) throws Exception {
-        String sql = "update dichvu set tendichvu =?,dongia=? where MaDV = ?";
+        String sql = "update dichvu set tendichvu =?,madongiadv=? where MaDV = ?";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(3, dv.getMaDV());
         pstmt.setString(1, dv.getTenDichVu());
-        pstmt.setBigDecimal(2, dv.getDonGia());
+        pstmt.setString(2, dv.getMaDonGiaDV());
 
        
 
@@ -105,10 +105,46 @@ public class ModelService {
 
     }
     
+//    public boolean deletecomeroot(ModelServicev2 nv) throws Exception {
+//        String sql1 = "update HoaDonDV set isvisible = '0' where MaDV = ? ";
+//       
+//        String sql = "update dichvu set isvisible = '0' where MaDV = ? ";
+//
+//        conn = cn.getConnection();
+//        conn.setAutoCommit(false); // Tắt chế độ tự động commit
+//
+//        try {
+//            PreparedStatement pstmt1 = conn.prepareStatement(sql1);
+//            pstmt1.setString(1, nv.getMaDV());
+//
+//            int rowsAffected1 = pstmt1.executeUpdate(); // Số dòng bị ảnh hưởng bởi lệnh sql1
+//            
+//
+//            PreparedStatement pstmt = conn.prepareStatement(sql);
+//            pstmt.setString(1, nv.getMaDV());
+//
+//            int rowsAffected = pstmt.executeUpdate(); // Số dòng bị ảnh hưởng bởi lệnh sql
+//
+//            if (rowsAffected1 > 0 || rowsAffected > 0) {
+//                conn.commit(); // Commit thay đổi nếu cả hai lệnh thành công
+//                System.out.println("ok");
+//                return true;
+//                
+//            } else {
+//                conn.rollback(); // Rollback nếu có lỗi
+//                System.out.println("no");
+//                return false;
+//            }
+//        } catch (Exception e) {
+//            conn.rollback(); // Rollback nếu có lỗi
+//            throw e;
+//        } finally {
+//            conn.setAutoCommit(true); // Bật chế độ tự động commit trở lại
+//        }
+//    }
+    
     public boolean deletecomeroot(ModelServicev2 nv) throws Exception {
         String sql1 = "update HoaDonDV set isvisible = '0' where MaDV = ? ";
-       
-        String sql = "update dichvu set isvisible = '0' where MaDV = ? ";
 
         conn = cn.getConnection();
         conn.setAutoCommit(false); // Tắt chế độ tự động commit
@@ -118,14 +154,8 @@ public class ModelService {
             pstmt1.setString(1, nv.getMaDV());
 
             int rowsAffected1 = pstmt1.executeUpdate(); // Số dòng bị ảnh hưởng bởi lệnh sql1
-            
 
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, nv.getMaDV());
-
-            int rowsAffected = pstmt.executeUpdate(); // Số dòng bị ảnh hưởng bởi lệnh sql
-
-            if (rowsAffected1 > 0 || rowsAffected > 0) {
+            if (rowsAffected1 > 0 ) {
                 conn.commit(); // Commit thay đổi nếu cả hai lệnh thành công
                 System.out.println("ok");
                 return true;

@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.ModelGiaDV;
+import model.ModelGiaDVv2;
 import model.ModelService;
 import model.ModelServicev2;
 
@@ -45,10 +47,11 @@ public class FormViewService extends javax.swing.JFrame {
         
         inittabledichvu();
         loaddichvu();
+        initCombobox_madongia();
     }
     private void inittabledichvu() {
         tbmodel = new DefaultTableModel();
-        tbmodel.setColumnIdentifiers(new String[]{"Mã dịch vụ", "Tên dịch vụ", "Đơn giá"});
+        tbmodel.setColumnIdentifiers(new String[]{"Mã dịch vụ", "Tên dịch vụ","Mã đơn giá dịch vụ",  "Đơn giá"});
         tbdichvu.setModel(tbmodel);
     }
 
@@ -59,7 +62,7 @@ public class FormViewService extends javax.swing.JFrame {
             tbmodel.setRowCount(0);
             for (ModelServicev2 dv : list) {
                 tbmodel.addRow(new Object[]{
-                    dv.getMaDichVu(), dv.getTenDichVu(), dv.getFormattedDonGia()
+                    dv.getMaDV(), dv.getTenDichVu(), dv.getMaDonGiaDV(), dv.getFormattedDonGia()
                 });
             }
             tbmodel.fireTableDataChanged();
@@ -68,6 +71,26 @@ public class FormViewService extends javax.swing.JFrame {
             e.printStackTrace();
         }
 
+    }
+    
+    private void initCombobox_madongia() {
+        try {
+            conn = cn.getConnection();
+            String sql = "select MaDonGiaDV from DonGiaDV";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            cmbmadongia.removeAllItems();
+          
+            while (rs.next()) {
+                cmbmadongia.addItem(rs.getString("MaDonGiaDV"));
+            }
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -83,6 +106,8 @@ public class FormViewService extends javax.swing.JFrame {
         txtMADICHVU = new component.TextField();
         txtTENDICHVU = new component.TextField();
         txtGIADICHVU = new component.TextField();
+        cmbmadongia = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
         panelBorder2 = new swing.PanelBorder();
         rbmadv = new javax.swing.JRadioButton();
         txtSEARCHMADV = new javax.swing.JTextField();
@@ -108,21 +133,33 @@ public class FormViewService extends javax.swing.JFrame {
 
         txtGIADICHVU.setLabelText("Giá dịch vụ");
 
+        cmbmadongia.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbmadongiaItemStateChanged(evt);
+            }
+        });
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Mã đơn giá:");
+
         javax.swing.GroupLayout roundPanel2Layout = new javax.swing.GroupLayout(roundPanel2);
         roundPanel2.setLayout(roundPanel2Layout);
         roundPanel2Layout.setHorizontalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel2Layout.createSequentialGroup()
                 .addGap(44, 44, 44)
+                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtMADICHVU, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(roundPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmbmadongia, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
                 .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(roundPanel2Layout.createSequentialGroup()
-                        .addComponent(txtGIADICHVU, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(roundPanel2Layout.createSequentialGroup()
-                        .addComponent(txtMADICHVU, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
-                        .addComponent(txtTENDICHVU, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(73, 73, 73))))
+                    .addComponent(txtGIADICHVU, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTENDICHVU, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(73, 73, 73))
         );
         roundPanel2Layout.setVerticalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,7 +169,10 @@ public class FormViewService extends javax.swing.JFrame {
                     .addComponent(txtMADICHVU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTENDICHVU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(txtGIADICHVU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtGIADICHVU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbmadongia, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
                 .addContainerGap())
         );
 
@@ -322,22 +362,37 @@ public class FormViewService extends javax.swing.JFrame {
     private void tbdichvuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbdichvuMouseClicked
         // TODO add your handling code here:
         int row = tbdichvu.getSelectedRow();
-
         if (row >= 0) {
-
-//            ModelServicev2 ms =new ModelServicev2();
-//            BigDecimal x = (BigDecimal) tbdichvu.getValueAt(row, 2);
-//            ms.setDonGia(x);
-//            String formattedDonGia = ms.getFormattedDonGia();
-//            System.out.println(formattedDonGia);
-
+ 
             txtMADICHVU.setText(tbdichvu.getValueAt(row, 0).toString());
             txtTENDICHVU.setText(tbdichvu.getValueAt(row, 1).toString());
-            //            txtGIADICHVU.setText(tbdichvu.getValueAt(row, 2).toString());
-            txtGIADICHVU.setText(tbdichvu.getValueAt(row, 2).toString());
-
+            String madv = tbdichvu.getValueAt(row, 2).toString();
+            System.out.println("" + madv);
+            cmbmadongia.setSelectedItem(madv);
+            txtGIADICHVU.setText(tbdichvu.getValueAt(row, 3).toString());
+   
         }
     }//GEN-LAST:event_tbdichvuMouseClicked
+
+    private void cmbmadongiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmadongiaItemStateChanged
+        // TODO add your handling code here:
+        String Mapdp = cmbmadongia.getSelectedItem().toString();
+        try {
+            ModelGiaDV ql = new ModelGiaDV();
+
+            ModelGiaDVv2 ttp = ql.findByID_giahddv(Mapdp);
+            if (ttp != null) {
+                txtGIADICHVU.setText(ttp.getFormattedDonGia());
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tim thấy dịch vụ");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_cmbmadongiaItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -377,6 +432,8 @@ public class FormViewService extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.Button btnSearch;
     private swing.Button btnView;
+    private javax.swing.JComboBox<String> cmbmadongia;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
