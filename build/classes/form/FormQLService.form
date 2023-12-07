@@ -117,11 +117,15 @@
                               <EmptySpace min="-2" pref="151" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="txtTENDICHVU" min="-2" pref="400" max="-2" attributes="0"/>
-                                  <Component id="txtGIADICHVU" min="-2" pref="400" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="txtGIAMGIA" min="-2" pref="136" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="txtGIADICHVU" min="-2" pref="246" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="69" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -138,6 +142,7 @@
                           <Component id="txtGIADICHVU" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cmbmadongia" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
                           <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtGIAMGIA" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -225,6 +230,14 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="M&#xe3; &#x111;&#x1a1;n gi&#xe1;:"/>
               </Properties>
+            </Component>
+            <Component class="component.TextField" name="txtGIAMGIA">
+              <Properties>
+                <Property name="labelText" type="java.lang.String" value="Gi&#x1ea3;m gi&#xe1;"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtGIAMGIAActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

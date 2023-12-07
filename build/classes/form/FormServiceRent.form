@@ -141,13 +141,16 @@
                               </Group>
                               <Component id="txtTenKH" alignment="0" min="-2" pref="427" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="txtVAT" min="-2" pref="147" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="txtGiahd" min="-2" pref="254" max="-2" attributes="0"/>
+                                  <Component id="txtGiamGia" min="-2" pref="147" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="txtGiaDichvu" min="-2" pref="427" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="txtGiaDichvu" max="32767" attributes="0"/>
+                                  <Component id="txtGiahd" pref="254" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -196,6 +199,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txtTenNhanVien" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtGiaDichvu" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtGiamGia" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
@@ -400,6 +404,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtVATActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="component.TextField" name="txtGiamGia">
+          <Properties>
+            <Property name="labelText" type="java.lang.String" value="Gi&#x1ea3;m gi&#xe1;"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtGiamGiaActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

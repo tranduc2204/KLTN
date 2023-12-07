@@ -20,7 +20,7 @@ public class ModelService {
     Connection conn;
     
     public ArrayList<ModelServicev2> findALL() throws Exception {
-        String sql = "select MaDV, TenDichVu,dgdv.MaDonGiaDV, DonGia  from DICHVU dv join DonGiaDV dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV where isvisible = '1' ";
+        String sql = "select MaDV, TenDichVu,dgdv.MaDonGiaDV,GiamGia, DonGia  from DICHVU dv join DonGiaDV dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV where isvisible = '1' ";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -31,6 +31,7 @@ public class ModelService {
             dv.setMaDV(rs.getString("MaDV"));
             dv.setTenDichVu(rs.getString("TenDichVu"));
             dv.setMaDonGiaDV(rs.getString("MaDonGiaDV"));
+            dv.setGiamGia(rs.getInt("GiamGia"));
             dv.setDonGia(rs.getBigDecimal("DonGia"));
           
 
@@ -63,7 +64,7 @@ public class ModelService {
     
     
     public boolean insert(ModelServicev2 dv) throws Exception {
-        String sql = "insert into dichvu (MaDV, tendichvu,madongiadv) values (?,?,?)";
+        String sql = "insert into dichvu (MaDV, tendichvu,madongiadv,GiamGia) values (?,?,?,?)";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -71,22 +72,22 @@ public class ModelService {
         pstmt.setString(1, dv.getMaDV());
         pstmt.setString(2, dv.getTenDichVu());
         pstmt.setString(3, dv.getMaDonGiaDV());
-        
+        pstmt.setInt(4, dv.getGiamGia());
 
         return pstmt.executeUpdate() > 0;
 
     }
     
     public boolean update(ModelServicev2 dv) throws Exception {
-        String sql = "update dichvu set tendichvu =?,madongiadv=? where MaDV = ?";
+        String sql = "update dichvu set tendichvu =?,madongiadv=?,GiamGia?  where MaDV = ?";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
 
-        pstmt.setString(3, dv.getMaDV());
+        pstmt.setString(4, dv.getMaDV());
         pstmt.setString(1, dv.getTenDichVu());
         pstmt.setString(2, dv.getMaDonGiaDV());
-
+        pstmt.setBigDecimal(3, dv.getDonGia());
        
 
         return pstmt.executeUpdate() > 0;

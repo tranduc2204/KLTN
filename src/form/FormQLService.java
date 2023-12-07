@@ -7,7 +7,6 @@ package form;
 
 import connect.Connect;
 import java.awt.Color;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -50,7 +49,7 @@ public class FormQLService extends javax.swing.JPanel {
     }
     private void inittabledichvu() {
         tbmodel = new DefaultTableModel();
-        tbmodel.setColumnIdentifiers(new String[]{"Mã dịch vụ", "Tên dịch vụ","Mã đơn giá dịch vụ",  "Đơn giá"});
+        tbmodel.setColumnIdentifiers(new String[]{"Mã dịch vụ", "Tên dịch vụ","Mã đơn giá dịch vụ", "Giảm giá", "Đơn giá"});
         tbdichvu.setModel(tbmodel);
     }
 
@@ -61,7 +60,7 @@ public class FormQLService extends javax.swing.JPanel {
             tbmodel.setRowCount(0);
             for (ModelServicev2 dv : list) {
                 tbmodel.addRow(new Object[]{
-                    dv.getMaDV(), dv.getTenDichVu(), dv.getMaDonGiaDV(), dv.getFormattedDonGia()
+                    dv.getMaDV(), dv.getTenDichVu(), dv.getMaDonGiaDV(),dv.getFormattedPercentage(), dv.getFormattedDonGia()
                 });
             }
             tbmodel.fireTableDataChanged();
@@ -113,6 +112,7 @@ public class FormQLService extends javax.swing.JPanel {
         txtTENDICHVU = new component.TextField();
         cmbmadongia = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
+        txtGIAMGIA = new component.TextField();
         panelBorder2 = new swing.PanelBorder();
         rbmadv = new javax.swing.JRadioButton();
         txtSEARCHMADV = new javax.swing.JTextField();
@@ -178,6 +178,13 @@ public class FormQLService extends javax.swing.JPanel {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Mã đơn giá:");
 
+        txtGIAMGIA.setLabelText("Giảm giá");
+        txtGIAMGIA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtGIAMGIAActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout roundPanel2Layout = new javax.swing.GroupLayout(roundPanel2);
         roundPanel2.setLayout(roundPanel2Layout);
         roundPanel2Layout.setHorizontalGroup(
@@ -204,8 +211,11 @@ public class FormQLService extends javax.swing.JPanel {
                         .addGap(151, 151, 151)
                         .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtTENDICHVU, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtGIADICHVU, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(roundPanel2Layout.createSequentialGroup()
+                                .addComponent(txtGIAMGIA, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtGIADICHVU, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         roundPanel2Layout.setVerticalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,7 +228,8 @@ public class FormQLService extends javax.swing.JPanel {
                 .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtGIADICHVU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbmadongia, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
+                    .addComponent(jLabel11)
+                    .addComponent(txtGIAMGIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -372,7 +383,8 @@ public class FormQLService extends javax.swing.JPanel {
             String madv = tbdichvu.getValueAt(row, 2).toString();
             System.out.println("" + madv);
             cmbmadongia.setSelectedItem(madv);
-            txtGIADICHVU.setText(tbdichvu.getValueAt(row, 3).toString());
+            txtGIAMGIA.setText(tbdichvu.getValueAt(row, 3).toString());
+            txtGIADICHVU.setText(tbdichvu.getValueAt(row, 4).toString());
    
         }
     }//GEN-LAST:event_tbdichvuMouseClicked
@@ -381,6 +393,10 @@ public class FormQLService extends javax.swing.JPanel {
         // TODO add your handling code here:
         
         String madongia = cmbmadongia.getSelectedItem().toString();
+        
+        String giamgiastr = txtGIAMGIA.getText();
+        int giamgia = Integer.parseInt(giamgiastr);
+        
         StringBuilder sb = new StringBuilder();
         if (txtMADICHVU.getText().equals("")) {
             sb.append("mã dịch vụ không được để trống");
@@ -398,6 +414,7 @@ public class FormQLService extends javax.swing.JPanel {
             dv.setMaDV(txtMADICHVU.getText());
             dv.setTenDichVu(txtTENDICHVU.getText());
             dv.setMaDonGiaDV(madongia);
+            dv.setGiamGia(giamgia);
              
             ModelService ql = new ModelService();
             ql.insert(dv);
@@ -487,6 +504,7 @@ public class FormQLService extends javax.swing.JPanel {
        txtMADICHVU.setText("");
        txtTENDICHVU.setText("");
        txtGIADICHVU.setText("");
+       txtGIAMGIA.setText("");
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -573,6 +591,10 @@ public class FormQLService extends javax.swing.JPanel {
         
     }//GEN-LAST:event_cmbmadongiaItemStateChanged
 
+    private void txtGIAMGIAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGIAMGIAActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtGIAMGIAActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.Button btnAdd;
@@ -594,6 +616,7 @@ public class FormQLService extends javax.swing.JPanel {
     private swing.RoundPanel roundPanel2;
     private javax.swing.JTable tbdichvu;
     private component.TextField txtGIADICHVU;
+    private component.TextField txtGIAMGIA;
     private component.TextField txtMADICHVU;
     private javax.swing.JTextField txtSEARCHMADV;
     private javax.swing.JTextField txtSearchtendv;
