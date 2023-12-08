@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -69,6 +71,22 @@ public class FormServiceRent extends javax.swing.JPanel {
 
         inittable();
         loaddulieu1();
+        // lấy ngày hiện tại
+        LocalDate currentDate = LocalDate.now();
+        // Định dạng ngày theo "yyyy-MM-dd"
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = currentDate.format(formatter);
+        
+
+
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
+            Date selectedDate = dateFormat.parse(formattedDate); // Phân tích chuỗi thành đối tượng Date
+            jDateChooserngaylaphoadon.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        
     }
     
     private void inittable() {
@@ -279,18 +297,24 @@ public class FormServiceRent extends javax.swing.JPanel {
             }
         });
 
+        txtTenDichVu.setEditable(false);
         txtTenDichVu.setLabelText("Tên dịch vụ");
 
+        txtTenNhanVien.setEditable(false);
         txtTenNhanVien.setLabelText("Tên nhân viên");
 
         spSL.setLabelText("Số lượng");
 
+        txtTenKH.setEditable(false);
         txtTenKH.setLabelText("Tên khách hàng");
 
+        txtGiaDichvu.setEditable(false);
         txtGiaDichvu.setLabelText("Giá dịch vụ");
 
+        txtGiahd.setEditable(false);
         txtGiahd.setLabelText("Giá hóa đơn");
 
+        txtVAT.setEditable(false);
         txtVAT.setLabelText("Giá VAT");
         txtVAT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -298,6 +322,7 @@ public class FormServiceRent extends javax.swing.JPanel {
             }
         });
 
+        txtGiamGia.setEditable(false);
         txtGiamGia.setLabelText("Giảm giá");
         txtGiamGia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -640,6 +665,7 @@ public class FormServiceRent extends javax.swing.JPanel {
 
                 txtTenDichVu.setText(ttp.getTenDichVu());
                 txtGiaDichvu.setText(ttp.getFormattedGia());
+                txtGiamGia.setText(ttp.getFormattedPercentage());
 
             } else {
                 JOptionPane.showMessageDialog(this, "Không tim thấy dịch vụ");
@@ -720,7 +746,7 @@ public class FormServiceRent extends javax.swing.JPanel {
             txtTenKH.setText(TBServiceRent.getValueAt(row, 5).toString());
 
             String ngaylaphd = TBServiceRent.getValueAt(row, 6).toString();
-
+            System.out.println(ngaylaphd);
             try {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
                 Date selectedDate = dateFormat.parse(ngaylaphd); // Phân tích chuỗi thành đối tượng Date
@@ -753,6 +779,11 @@ public class FormServiceRent extends javax.swing.JPanel {
         
         DecimalFormat decimalFormat = new DecimalFormat("#,### VND");
         
+        
+        String giamgia = txtGiamGia.getText();
+        String giamgianotpercent = giamgia.replace("%", "");
+        int giam = Integer.parseInt(giamgianotpercent); 
+        
         try {
             Number giaNumber = decimalFormat.parse(tmp);
             // Lấy giá trị số từ đối tượng Number
@@ -763,13 +794,27 @@ public class FormServiceRent extends javax.swing.JPanel {
             Float tmp2;
             
             if (spinnerValue > 0){
-                tmp2 = (float) ((float)spinnerValue * gia);
-                BigDecimal giahd = BigDecimal.valueOf(tmp2);
-
+                System.out.println("\nkq test");
+                float giacb = (float) ((float)spinnerValue * gia);
+                float vat = (float) (((float)spinnerValue * gia )* 0.1);
+                float dis = (float) (giacb*giam/100) ;
+//                ((DonGia*SL) +  ((DonGia*SL)*0.1) - ((DonGia * SL)*GiamGia/100))
+                float kq =(float) (giacb + vat - dis);
+                System.out.println("gia" + giacb);
+                System.out.println("vat"+ vat);
+                System.out.println("dis" + dis);
+                System.out.println("kq "+ kq);
+                
+                BigDecimal giahd = BigDecimal.valueOf(kq);
+                BigDecimal giavat = BigDecimal.valueOf(vat);
+                
                 ModelServiceRentv2 sr = new ModelServiceRentv2();
                 sr.setGiaHD(giahd);
+                sr.setVAT(giavat);
                 String formattedhoadon = sr.getFormattedGiahd();
+                String formattedvat = sr.getFormattedVAT();
                 txtGiahd.setText(formattedhoadon);
+                txtVAT.setText(formattedvat);
             }else {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn số lượng dịch vụ lớn hơn 0");
             }

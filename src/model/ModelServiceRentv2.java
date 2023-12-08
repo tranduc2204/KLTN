@@ -14,10 +14,13 @@ import java.text.DecimalFormat;
  */
 public class ModelServiceRentv2 {
     String MaDV, TenDichVu ,MaNV, TenNhanVien, MaKH, TenKH, NgayLapHD;
-    int SL;
+    int SL, GiamGia;
     BigDecimal Gia, GiaHD, VAT;
 
-    public ModelServiceRentv2(String MaDV, String TenDichVu, String MaNV, String TenNhanVien, String MaKH, String TenKH, String NgayLapHD, int SL, BigDecimal Gia,BigDecimal VAT, BigDecimal GiaHD) {
+    public ModelServiceRentv2() {
+    }
+
+    public ModelServiceRentv2(String MaDV, String TenDichVu, String MaNV, String TenNhanVien, String MaKH, String TenKH, String NgayLapHD, int SL, int GiamGia, BigDecimal Gia, BigDecimal GiaHD, BigDecimal VAT) {
         this.MaDV = MaDV;
         this.TenDichVu = TenDichVu;
         this.MaNV = MaNV;
@@ -26,12 +29,10 @@ public class ModelServiceRentv2 {
         this.TenKH = TenKH;
         this.NgayLapHD = NgayLapHD;
         this.SL = SL;
+        this.GiamGia = GiamGia;
         this.Gia = Gia;
-        this.VAT = VAT;
         this.GiaHD = GiaHD;
-    }
-
-    public ModelServiceRentv2() {
+        this.VAT = VAT;
     }
 
     public String getMaDV() {
@@ -98,6 +99,14 @@ public class ModelServiceRentv2 {
         this.SL = SL;
     }
 
+    public int getGiamGia() {
+        return GiamGia;
+    }
+
+    public void setGiamGia(int GiamGia) {
+        this.GiamGia = GiamGia;
+    }
+
     public BigDecimal getGia() {
         return Gia;
     }
@@ -121,7 +130,11 @@ public class ModelServiceRentv2 {
     public void setVAT(BigDecimal VAT) {
         this.VAT = VAT;
     }
-    
+
+    public String getFormattedPercentage(){
+        DecimalFormat decimalFormat = new DecimalFormat("0%");
+        return decimalFormat.format((double) GiamGia / 100); // Chia cho 100 để đưa về dạng phần trăm
+    }
     
     public String getFormattedGia() {
         DecimalFormat decimalFormat = new DecimalFormat("#,### VND");

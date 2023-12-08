@@ -79,7 +79,7 @@ public class ModelService {
     }
     
     public boolean update(ModelServicev2 dv) throws Exception {
-        String sql = "update dichvu set tendichvu =?,madongiadv=?,GiamGia?  where MaDV = ?";
+        String sql = "update dichvu set tendichvu =?,madongiadv=?, GiamGia = ?  where MaDV = ?";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -87,7 +87,7 @@ public class ModelService {
         pstmt.setString(4, dv.getMaDV());
         pstmt.setString(1, dv.getTenDichVu());
         pstmt.setString(2, dv.getMaDonGiaDV());
-        pstmt.setBigDecimal(3, dv.getDonGia());
+        pstmt.setInt(3, dv.getGiamGia());
        
 
         return pstmt.executeUpdate() > 0;
@@ -145,7 +145,7 @@ public class ModelService {
 //    }
     
     public boolean deletecomeroot(ModelServicev2 nv) throws Exception {
-        String sql1 = "update HoaDonDV set isvisible = '0' where MaDV = ? ";
+        String sql1 = "update DICHVU set isvisible = '0' where MaDV = ? ";
 
         conn = cn.getConnection();
         conn.setAutoCommit(false); // Tắt chế độ tự động commit

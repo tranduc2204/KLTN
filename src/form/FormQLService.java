@@ -432,7 +432,11 @@ public class FormQLService extends javax.swing.JPanel {
 // TODO add your handling code here:
         String madongia = cmbmadongia.getSelectedItem().toString();
         
-       StringBuilder sb = new StringBuilder();
+        String giamgia = txtGIAMGIA.getText();
+        String giamgianotpercent = giamgia.replace("%", "");
+        int giam = Integer.parseInt(giamgianotpercent); 
+        
+        StringBuilder sb = new StringBuilder();
         if (txtMADICHVU.getText().equals("")) {
             sb.append("mã dịch vụ không được để trống");
             txtMADICHVU.setBackground(Color.red);
@@ -453,8 +457,8 @@ public class FormQLService extends javax.swing.JPanel {
             dv.setTenDichVu(txtTENDICHVU.getText());
             
             dv.setMaDonGiaDV(madongia);
-//            dv.setDonGia(tienn);
-
+            dv.setGiamGia(giam);
+            System.out.println(giam);
             ModelService ql = new ModelService();
             ql.update(dv);
 

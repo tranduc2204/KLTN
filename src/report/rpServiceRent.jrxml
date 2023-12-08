@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="22f6f4cb-b50d-4dea-b9ed-6f9bf42aa094">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="288"/>
+	<property name="ireport.y" value="412"/>
 	<parameter name="madv" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -13,9 +13,10 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select dv.MaDV,KH.MaKH, HoKH, TenKH,kh.DiaChi,kh.SoDT,kh.GioiTinh, kh.NgaySinh, TenDichVu,NgayLapHD, CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia, SL,  CONCAT(FORMAT((DonGia * SL)*0.1, 'N0'), ' VND') AS VAT ,CONCAT(FORMAT((DonGia * SL) +((DonGia * SL)*0.1), 'N0'), ' VND') AS GiaHD  
+		<![CDATA[select dv.MaDV,KH.MaKH, HoKH, TenKH,kh.DiaChi,kh.SoDT,kh.GioiTinh, kh.NgaySinh, TenDichVu,NgayLapHD, CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia, SL,CONCAT(GiamGia,' %') as GiamGia,  CONCAT(FORMAT((DonGia * SL)*0.1, 'N0'), ' VND') AS VAT ,
+CONCAT(FORMAT(((DonGia*SL) +  ((DonGia*SL)*0.1) - ((DonGia * SL)*GiamGia/100)), 'N0'),' VND') AS GiaHD 
 from HoaDonDV hddv join NHANVIEN nv on hddv.MaNV = nv.MaNV join KHACHHANG kh on hddv.MaKH = kh.MaKH  
-join DICHVU dv on dv.MaDV = hddv.MaDV 
+join DICHVU dv on dv.MaDV = hddv.MaDV  join DonGiaDV dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV
 where dv.MaDV = $P{madv}  and nv.MaNV = $P{manv}  and kh.MaKH = $P{makh}]]>
 	</queryString>
 	<field name="MaDV" class="java.lang.String"/>
@@ -30,6 +31,7 @@ where dv.MaDV = $P{madv}  and nv.MaNV = $P{manv}  and kh.MaKH = $P{makh}]]>
 	<field name="NgayLapHD" class="java.sql.Date"/>
 	<field name="DonGia" class="java.lang.String"/>
 	<field name="SL" class="java.lang.Integer"/>
+	<field name="GiamGia" class="java.lang.String"/>
 	<field name="VAT" class="java.lang.String"/>
 	<field name="GiaHD" class="java.lang.String"/>
 	<background>
@@ -213,16 +215,16 @@ where dv.MaDV = $P{madv}  and nv.MaNV = $P{manv}  and kh.MaKH = $P{makh}]]>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="295" splitType="Stretch">
+		<band height="315" splitType="Stretch">
 			<rectangle>
 				<reportElement x="10" y="12" width="534" height="38" uuid="e9bddc35-d7ad-4790-8a04-35be0dcc439b"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="10" y="50" width="534" height="155" uuid="dbdd3b9e-c151-464c-bd33-d62267160da7"/>
+				<reportElement x="10" y="50" width="534" height="188" uuid="dbdd3b9e-c151-464c-bd33-d62267160da7"/>
 			</rectangle>
 			<textField>
 				<reportElement x="132" y="169" width="100" height="20" uuid="f3269971-85fe-461e-ba8b-b09c2e9a2d5f"/>
-				<textFieldExpression><![CDATA[$F{SL}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{GiamGia}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="132" y="68" width="100" height="20" uuid="a796e8ea-a225-49aa-9f90-5edcd9df03a5"/>
@@ -247,7 +249,7 @@ where dv.MaDV = $P{madv}  and nv.MaNV = $P{manv}  and kh.MaKH = $P{makh}]]>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Số lượng:]]></text>
+				<text><![CDATA[Giảm giá:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="20" y="100" width="112" height="20" uuid="0e459889-7855-4ac8-ba18-c3a928295075"/>
@@ -272,32 +274,43 @@ where dv.MaDV = $P{madv}  and nv.MaNV = $P{manv}  and kh.MaKH = $P{makh}]]>
 				<textFieldExpression><![CDATA[$F{DonGia}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement x="10" y="205" width="534" height="33" uuid="f4e768aa-7f96-4c4b-8285-68ab3a530087"/>
+				<reportElement x="10" y="238" width="534" height="33" uuid="f4e768aa-7f96-4c4b-8285-68ab3a530087"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="304" y="218" width="88" height="20" uuid="bd76973e-649f-47b6-a48f-768375429b22"/>
+				<reportElement x="304" y="238" width="88" height="20" uuid="bd76973e-649f-47b6-a48f-768375429b22"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[VAT(10%):]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="392" y="218" width="100" height="20" uuid="7cd29e36-9287-485e-ab59-8777edf69a4f"/>
+				<reportElement x="393" y="238" width="100" height="20" uuid="7cd29e36-9287-485e-ab59-8777edf69a4f"/>
 				<textFieldExpression><![CDATA[$F{VAT}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement x="10" y="238" width="534" height="33" uuid="f1e63773-b909-491b-ae78-ffba3748d263"/>
+				<reportElement x="10" y="271" width="534" height="33" uuid="f1e63773-b909-491b-ae78-ffba3748d263"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="304" y="251" width="88" height="20" uuid="772520c3-89e2-4fe4-a3df-d0642990bcab"/>
+				<reportElement x="305" y="271" width="88" height="20" uuid="772520c3-89e2-4fe4-a3df-d0642990bcab"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Giá hóa đơn:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="392" y="251" width="100" height="20" uuid="22531520-b29f-4843-9ed2-290d42b979c7"/>
+				<reportElement x="393" y="271" width="100" height="20" uuid="22531520-b29f-4843-9ed2-290d42b979c7"/>
 				<textFieldExpression><![CDATA[$F{GiaHD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="19" y="204" width="111" height="20" uuid="eee6b171-09c1-4565-a03e-981d09952894"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Số lượng:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="131" y="204" width="100" height="20" uuid="8d0a0472-3c8d-464a-abee-d31e8bb54a75"/>
+				<textFieldExpression><![CDATA[$F{SL}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

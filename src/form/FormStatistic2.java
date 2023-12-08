@@ -65,6 +65,7 @@ public class FormStatistic2 extends javax.swing.JPanel {
         tableModel.addColumn("Tên khách hàng");
         tableModel.addColumn("Ngày lập hóa đơn");
         tableModel.addColumn("Số lượng");
+        tableModel.addColumn("Giảm giá");
         tableModel.addColumn("Đơn giá");
         tableModel.addColumn("VAT");
         tableModel.addColumn("Giá hóa đơn");
@@ -98,7 +99,7 @@ public class FormStatistic2 extends javax.swing.JPanel {
         
         try {
             conn = cn.getConnection();
-            String sqlQuery = "select  sum((DonGia*SL) +  ((DonGia*SL)*0.1)) as GiaHD , month(NgayLapHD) as thang, year(NgayLapHD) as nam  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV\n" +
+            String sqlQuery = "select  sum(((DonGia*SL) +  ((DonGia*SL)*0.1) - ((DonGia * SL)*GiamGia/100))) as GiaHD , month(NgayLapHD) as thang, year(NgayLapHD) as nam  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV\n" +
 "join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH  join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV \n" +
 "group by month(NgayLapHD), year(NgayLapHD)\n" +
 "having month(NgayLapHD) = ? and year(NgayLapHD) = ?  ";
@@ -132,8 +133,8 @@ public class FormStatistic2 extends javax.swing.JPanel {
         
         try {
             conn = cn.getConnection();
-           String sqlQuery = "select TenDichVu, TenNV, TenKH, NgayLapHD, SL, CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia,CONCAT(FORMAT(((DonGia*SL)*0.1), 'N0'),' VND') as VAT, \n" +
-"CONCAT(FORMAT(((DonGia*SL) +  ((DonGia*SL)*0.1)), 'N0'),' VND') AS GiaHD   from HoaDonDV hddv \n" +
+           String sqlQuery = "select TenDichVu, TenNV, TenKH, NgayLapHD, SL, GiamGia, CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia,CONCAT(FORMAT(((DonGia*SL)*0.1), 'N0'),' VND') as VAT, \n" +
+"CONCAT(FORMAT(((DonGia*SL) +  ((DonGia*SL)*0.1) - ((DonGia * SL)*GiamGia/100)), 'N0'),' VND') AS GiaHD   from HoaDonDV hddv \n" +
 "join DICHVU dv on hddv.MaDV = dv.MaDV join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH  \n" +
 "join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV \n" +
 "where month(NgayLapHD) = ? and year(NgayLapHD) = ? ";
@@ -153,6 +154,7 @@ public class FormStatistic2 extends javax.swing.JPanel {
                     resultSet.getObject("TenKH"),
                     resultSet.getObject("NgayLapHD"),
                     resultSet.getObject("SL"),
+                    resultSet.getObject("GiamGia"),
                     resultSet.getObject("DonGia"),
                     resultSet.getObject("VAT"),
                     resultSet.getObject("GiaHD"),
@@ -171,9 +173,9 @@ public class FormStatistic2 extends javax.swing.JPanel {
         
         try {
             conn = cn.getConnection();
-            String sqlQuery = "select  sum((DonGia*SL) +  ((DonGia*SL)*0.1)) as GiaHD , year(NgayLapHD) as nam  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV \n" +
-"join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV \n" +
-"group by  year(NgayLapHD)\n" +
+            String sqlQuery = "select  sum(((DonGia*SL) +  ((DonGia*SL)*0.1) - ((DonGia * SL)*GiamGia/100))) as GiaHD , year(NgayLapHD) as nam  from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV\n" +
+"join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH  join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV \n" +
+"group by year(NgayLapHD) \n" +
 "having YEAR(NgayLapHD) = ? ";
 
             PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
@@ -204,8 +206,8 @@ public class FormStatistic2 extends javax.swing.JPanel {
         
         try {
             conn = cn.getConnection();
-           String sqlQuery = "select TenDichVu, TenNV, TenKH, NgayLapHD, SL, CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia,CONCAT(FORMAT(((DonGia*SL)*0.1), 'N0'),' VND') as VAT, \n" +
-"CONCAT(FORMAT(((DonGia*SL) +  ((DonGia*SL)*0.1)), 'N0'),' VND') AS GiaHD   from HoaDonDV hddv \n" +
+           String sqlQuery = "select TenDichVu, TenNV, TenKH, NgayLapHD, SL, GiamGia, CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia,CONCAT(FORMAT(((DonGia*SL)*0.1), 'N0'),' VND') as VAT, \n" +
+"CONCAT(FORMAT(((DonGia*SL) +  ((DonGia*SL)*0.1) - ((DonGia * SL)*GiamGia/100)), 'N0'),' VND') AS GiaHD   from HoaDonDV hddv \n" +
 "join DICHVU dv on hddv.MaDV = dv.MaDV join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH  \n" +
 "join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV \n" +
 "where year(NgayLapHD) = ?  ";
@@ -224,6 +226,7 @@ public class FormStatistic2 extends javax.swing.JPanel {
                     resultSet.getObject("TenKH"),
                     resultSet.getObject("NgayLapHD"),
                     resultSet.getObject("SL"),
+                    resultSet.getObject("GiamGia"),
                     resultSet.getObject("DonGia"),
                     resultSet.getObject("VAT"),
                     resultSet.getObject("GiaHD"),
@@ -241,10 +244,10 @@ public class FormStatistic2 extends javax.swing.JPanel {
         conn = cn.getConnection();
 
         // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
-        String sqlQuery = "select TenDichVu, TenNV, TenKH, NgayLapHD, SL, CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia,CONCAT(FORMAT(((DonGia*SL)*0.1), 'N0'),' VND') as VAT, \n" +
-"CONCAT(FORMAT(((DonGia*SL) +  ((DonGia*SL)*0.1)), 'N0'),' VND') AS GiaHD   from HoaDonDV hddv \n" +
+        String sqlQuery = "select TenDichVu, TenNV, TenKH, NgayLapHD, SL, GiamGia, CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia,CONCAT(FORMAT(((DonGia*SL)*0.1), 'N0'),' VND') as VAT, \n" +
+"CONCAT(FORMAT(((DonGia*SL) +  ((DonGia*SL)*0.1) - ((DonGia * SL)*GiamGia/100)), 'N0'),' VND') AS GiaHD   from HoaDonDV hddv \n" +
 "join DICHVU dv on hddv.MaDV = dv.MaDV join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH  \n" +
-"join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV  ";
+"join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV    ";
      
 
         try {
@@ -262,6 +265,7 @@ public class FormStatistic2 extends javax.swing.JPanel {
                 resultSet.getObject("TenKH"),
                 resultSet.getObject("NgayLapHD"),
                 resultSet.getObject("SL"),
+                resultSet.getObject("GiamGia"),
                 resultSet.getObject("DonGia"),
                 resultSet.getObject("VAT"),
                 resultSet.getObject("GiaHD"),
@@ -427,34 +431,38 @@ public class FormStatistic2 extends javax.swing.JPanel {
                         .addComponent(rbThangofNam)
                         .addGap(169, 169, 169)
                         .addComponent(cmbThang1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(cmbNam1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(465, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnRefresh1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
-                .addComponent(btnStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(152, 152, 152))
+                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelBorder2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbNam1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelBorder2Layout.createSequentialGroup()
+                        .addGap(119, 119, 119)
+                        .addComponent(btnRefresh1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(btnStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelBorder2Layout.setVerticalGroup(
             panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder2Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rbThangofNam)
-                    .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cmbThang1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cmbNam1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(33, 33, 33)
-                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbNam)
-                    .addComponent(cmbNam2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRefresh1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder2Layout.createSequentialGroup()
+                        .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rbThangofNam)
+                            .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cmbThang1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbNam1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(33, 33, 33)
+                        .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rbNam)
+                            .addComponent(cmbNam2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(67, 67, 67))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder2Layout.createSequentialGroup()
+                        .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnRefresh1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout roundPanel2Layout = new javax.swing.GroupLayout(roundPanel2);
@@ -480,7 +488,7 @@ public class FormStatistic2 extends javax.swing.JPanel {
         roundPanel2Layout.setVerticalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(35, 35, 35)
                 .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)

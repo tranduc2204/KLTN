@@ -20,7 +20,7 @@ public class ModelServiceRent {
     Connection conn;
     
     public ArrayList<ModelServiceRentv2> findALL() throws Exception {
-        String sql = "select dv.MaDV, TenDichVu, nv.MaNV, TenNV, kh.MaKH, TenKH,NgayLapHD, DonGia, SL, ((DonGia*SL)*0.1) as VAT,((DonGia*SL) +  ((DonGia*SL)*0.1)) AS GiaHD \n" +
+        String sql = "select dv.MaDV, TenDichVu, nv.MaNV, TenNV, kh.MaKH, TenKH,NgayLapHD, DonGia, SL, ((DonGia*SL)*0.1) as VAT, ((DonGia*SL) +  ((DonGia*SL)*0.1) - ((DonGia * SL)*GiamGia/100)) AS GiaHD \n" +
 "from HoaDonDV hddv join NHANVIEN nv on hddv.MaNV = nv.MaNV join KHACHHANG kh on hddv.MaKH = kh.MaKH \n" +
 "join DICHVU dv on dv.MaDV = hddv.MaDV join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV  where hddv.isvisible = '1' ";
         conn = cn.getConnection();//where ptp.isvisible = '1' 
@@ -49,7 +49,7 @@ public class ModelServiceRent {
     public ModelServiceRentv2 findByID_MADV(String MaDV) throws Exception {
 //        String sql = "select * from PhieuDatPhong where MaPhieuDatPhong =?";
 
-        String sql = "select TenDichVu, DonGia from DICHVU dv join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV  where MaDV =? ";  
+        String sql = "select TenDichVu, DonGia, GiamGia from DICHVU dv join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV  where MaDV =? ";  
         
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -62,7 +62,7 @@ public class ModelServiceRent {
 
             tp.setTenDichVu(rs.getString("TenDichVu"));
             tp.setGia(rs.getBigDecimal("DonGia"));
-            
+            tp.setGiamGia(rs.getInt("GiamGia"));
             return tp;
         }
         return null;

@@ -60,7 +60,7 @@ public class FormQLBillOfService extends javax.swing.JPanel {
     private void inittable() {
         tbmodel = new DefaultTableModel();
         tbmodel.setColumnIdentifiers(new String[]{"Mã dịch vụ", "Tên dịch vụ", "Mã nhân viên",  "Tên nhân viên",
-            "Mã khách hàng", "Tên khách hàng", "Ngày lập hóa đơn", "Đơn giá",  "Số lượng", "Giá hóa đơn"});
+            "Mã khách hàng", "Tên khách hàng", "Ngày lập hóa đơn", "Đơn giá",  "Số lượng","Giảm giá", "Giá hóa đơn"});
         TBServiceRent.setModel(tbmodel);
     }
     
@@ -71,7 +71,8 @@ public class FormQLBillOfService extends javax.swing.JPanel {
             tbmodel.setRowCount(0);
             for (ModelServiceRentv2 p : list) {
                 tbmodel.addRow(new Object[]{
-                    p.getMaDV(), p.getTenDichVu(), p.getMaNV(), p.getTenNhanVien(), p.getMaKH(),p.getTenKH(),p.getNgayLapHD(), p.getFormattedGia(),  p.getSL(),p.getFormattedGiahd()
+                    p.getMaDV(), p.getTenDichVu(), p.getMaNV(), p.getTenNhanVien(), p.getMaKH(),p.getTenKH(),
+                    p.getNgayLapHD(), p.getFormattedGia(),  p.getSL(),p.getFormattedPercentage(),p.getFormattedGiahd()
                 });
             }
             tbmodel.fireTableDataChanged();
@@ -172,6 +173,7 @@ public class FormQLBillOfService extends javax.swing.JPanel {
         txtGiahd = new component.TextField();
         txtGiaDichvu = new component.TextField();
         txtTenKH = new component.TextField();
+        txtGIAMGIA = new component.TextField();
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -262,6 +264,13 @@ public class FormQLBillOfService extends javax.swing.JPanel {
 
         txtTenKH.setLabelText("Tên khách hàng");
 
+        txtGIAMGIA.setLabelText("Giảm giá");
+        txtGIAMGIA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtGIAMGIAActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout roundPanel5Layout = new javax.swing.GroupLayout(roundPanel5);
         roundPanel5.setLayout(roundPanel5Layout);
         roundPanel5Layout.setHorizontalGroup(
@@ -291,9 +300,12 @@ public class FormQLBillOfService extends javax.swing.JPanel {
                                     .addComponent(spSL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtTenNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtGiaDichvu, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-                                    .addComponent(txtGiahd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(roundPanel5Layout.createSequentialGroup()
+                                        .addComponent(txtGIAMGIA, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtGiaDichvu, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtGiahd, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createSequentialGroup()
                                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, roundPanel5Layout.createSequentialGroup()
@@ -342,7 +354,9 @@ public class FormQLBillOfService extends javax.swing.JPanel {
                             .addComponent(jLabel21)
                             .addComponent(jLabel19))
                         .addGap(18, 18, 18)
-                        .addComponent(txtTenNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTenNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtGIAMGIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(spSL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -547,7 +561,7 @@ public class FormQLBillOfService extends javax.swing.JPanel {
 
                 txtTenDichVu.setText(ttp.getTenDichVu());
                 txtGiaDichvu.setText(ttp.getFormattedGia());
-
+                txtGIAMGIA.setText(ttp.getFormattedPercentage());
             } else {
                 JOptionPane.showMessageDialog(this, "Không tim thấy dịch vụ");
             }
@@ -682,6 +696,10 @@ public class FormQLBillOfService extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_TBServiceRentMouseClicked
 
+    private void txtGIAMGIAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGIAMGIAActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtGIAMGIAActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TBServiceRent;
@@ -703,6 +721,7 @@ public class FormQLBillOfService extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private swing.RoundPanel roundPanel5;
     private component.Spinner spSL;
+    private component.TextField txtGIAMGIA;
     private component.TextField txtGiaDichvu;
     private component.TextField txtGiahd;
     private component.TextField txtTenDichVu;

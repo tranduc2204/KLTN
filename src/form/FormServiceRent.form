@@ -370,11 +370,13 @@
         </Component>
         <Component class="component.TextField" name="txtTenDichVu">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="labelText" type="java.lang.String" value="T&#xea;n d&#x1ecb;ch v&#x1ee5;"/>
           </Properties>
         </Component>
         <Component class="component.TextField" name="txtTenNhanVien">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="labelText" type="java.lang.String" value="T&#xea;n nh&#xe2;n vi&#xea;n"/>
           </Properties>
         </Component>
@@ -385,21 +387,25 @@
         </Component>
         <Component class="component.TextField" name="txtTenKH">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="labelText" type="java.lang.String" value="T&#xea;n kh&#xe1;ch h&#xe0;ng"/>
           </Properties>
         </Component>
         <Component class="component.TextField" name="txtGiaDichvu">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="labelText" type="java.lang.String" value="Gi&#xe1; d&#x1ecb;ch v&#x1ee5;"/>
           </Properties>
         </Component>
         <Component class="component.TextField" name="txtGiahd">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="labelText" type="java.lang.String" value="Gi&#xe1; h&#xf3;a &#x111;&#x1a1;n"/>
           </Properties>
         </Component>
         <Component class="component.TextField" name="txtVAT">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="labelText" type="java.lang.String" value="Gi&#xe1; VAT"/>
           </Properties>
           <Events>
@@ -408,6 +414,7 @@
         </Component>
         <Component class="component.TextField" name="txtGiamGia">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="labelText" type="java.lang.String" value="Gi&#x1ea3;m gi&#xe1;"/>
           </Properties>
           <Events>

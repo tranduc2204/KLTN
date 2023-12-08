@@ -97,9 +97,13 @@
                                       <Component id="txtTenNhanVien" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="txtGiaDichvu" pref="430" max="32767" attributes="0"/>
-                                      <Component id="txtGiahd" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="txtGIAMGIA" min="-2" pref="136" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="txtGiaDichvu" min="-2" pref="284" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="txtGiahd" min="-2" pref="430" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
@@ -167,7 +171,10 @@
                               <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtTenNhanVien" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txtTenNhanVien" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtGIAMGIA" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="spSL" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -346,6 +353,14 @@
           <Properties>
             <Property name="labelText" type="java.lang.String" value="T&#xea;n kh&#xe1;ch h&#xe0;ng"/>
           </Properties>
+        </Component>
+        <Component class="component.TextField" name="txtGIAMGIA">
+          <Properties>
+            <Property name="labelText" type="java.lang.String" value="Gi&#x1ea3;m gi&#xe1;"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtGIAMGIAActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
