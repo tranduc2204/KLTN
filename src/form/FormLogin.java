@@ -52,7 +52,7 @@ public class FormLogin extends javax.swing.JFrame {
         String UserName = txtTENDN.getText().trim();
         String PassWorrd = passwordField2.getText().trim();
 
-        String quyen, ten, tk,matkhau;
+        String quyen, ten, tk,matkhau, manv;
 
         StringBuffer sb = new StringBuffer();
 
@@ -80,13 +80,14 @@ public class FormLogin extends javax.swing.JFrame {
                     quyen = rs.getString("Typpe");
                     tk = rs.getString("UserName");
                     matkhau = rs.getString("PassWorrd");
+                    manv = rs.getString("MaNV");
                     if (ckLuuMK.isSelected() == true){
                         // lưu thông tin đăng nhập
                         saveLoginInfo(UserName, PassWorrd);
                     }
                     
 
-                    MainHome l = new MainHome(tk, matkhau, ten, quyen);
+                    MainHome l = new MainHome(tk, matkhau, ten, quyen, manv);
                     l.setVisible(true);
                     l.setLocationRelativeTo(null);
                     this.setVisible(false);

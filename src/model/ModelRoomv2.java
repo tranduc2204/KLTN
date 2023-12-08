@@ -16,7 +16,7 @@ public class ModelRoomv2 {
     
     private String MaPhong, TenPhong, MaTinhTrangPhong,tinhtrangphong, MaLoaiPhong,TenLoaiPhong;
     private BigDecimal tien;
-    private int isvisible;
+    private int isvisible, GiamGia;
 
     public ModelRoomv2() {
     }

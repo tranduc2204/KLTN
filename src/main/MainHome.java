@@ -75,13 +75,13 @@ public class MainHome extends javax.swing.JFrame {
     Connect cn = new Connect();
     Connection conn;
     
-    private String username, password, quyen, DisplayName;
+    private String username, password, quyen, DisplayName, MaNV;
     
     public MainHome(){
         initComponents();
     }
     
-    public MainHome(String username, String password, String DisplayName, String quyen) {
+    public MainHome(String username, String password, String DisplayName, String quyen, String MaNV) {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
 
@@ -94,6 +94,7 @@ public class MainHome extends javax.swing.JFrame {
         this.password = password;
         this.DisplayName = DisplayName;
         this.quyen = quyen;
+        this.MaNV = MaNV;
         
 
         layout = new MigLayout("fill", "0[]0[100%, fill]0", "0[fill, top]0");
@@ -250,7 +251,7 @@ public class MainHome extends javax.swing.JFrame {
             }else if (menuIndex == 2 && quyen.equals("User")){
                 main.showForm(new FormCheckIn(username, password, DisplayName,quyen));
             }else if (menuIndex == 1 && quyen.equals("User")){
-                main.showForm(new FormRent(username, password, DisplayName,quyen));
+                main.showForm(new FormRent(username, password, DisplayName,quyen, MaNV));
             }else if (menuIndex ==3 && quyen.equals("root")){
                 Runtime rt = Runtime.getRuntime();
                 try {
