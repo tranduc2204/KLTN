@@ -20,10 +20,12 @@ public class ModelRent {
     Connection conn;
     
     public ArrayList<ModelRentv2> findALL() throws Exception {
-        String sql = "select MaPhieuDatPhong, kh.MaKH, TenKH, nv.MaNV, TenNV, p.MaPhong, TenPhong, lp.TenLoaiPhong, "
-                + "NgayDatPhong, Tien from PhieuDatPhong pdp join PHONG p on pdp.MaPhong = p.MaPhong "
-                + "join KHACHHANG kh on kh.MaKH =pdp.MaKH join NHANVIEN nv on pdp.MaNV = nv.MaNV "
-                + "join LOAIPHONG lp on lp.MaLoaiPhong = p.MaLoaiPhong where pdp.isvisible = '1' ";
+        String sql = "select MaPhieuDatPhong, kh.MaKH, HoKH,TenKH, nv.MaNV, HoNV,TenNV, p.MaPhong, TenPhong, lp.TenLoaiPhong, \n" +
+"NgayDatPhong,NgayDuKienThue, NgayDuKienTra, DonGia from PhieuDatPhong pdp join PHONG p on pdp.MaPhong = p.MaPhong \n" +
+"join KHACHHANG kh on kh.MaKH =pdp.MaKH join NHANVIEN nv on pdp.MaNV = nv.MaNV \n" +
+"join LOAIPHONG lp on lp.MaLoaiPhong = p.MaLoaiPhong\n" +
+"join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong\n" +
+"where pdp.isvisible = '1' ";
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
@@ -32,15 +34,19 @@ public class ModelRent {
             ModelRentv2 tp = new ModelRentv2();
             tp.setMaPhieuDatPhong(rs.getString("MaPhieuDatPhong"));
             tp.setMaKH(rs.getString("MaKH"));
+            tp.setHoKH(rs.getString("HoKH"));
             tp.setTenKH(rs.getString("TenKH"));
             tp.setMaNV(rs.getString("MaNV"));
+            tp.setHoNV(rs.getString("HoNV"));
             tp.setTenNV(rs.getString("TenNV"));
            
             tp.setMaPhong(rs.getString("MaPhong"));
             tp.setTenPhong(rs.getString("TenPhong"));
             tp.setLoaiPhong(rs.getString("TenLoaiPhong"));
             tp.setNgayDatPhong(rs.getString("NgayDatPhong"));
-            tp.setGia(rs.getBigDecimal("Tien"));
+            tp.setNgayDuKienThue(rs.getString("NgayDuKienThue"));
+            tp.setNgayDuKienTra(rs.getString("NgayDuKienTra"));
+            tp.setGia(rs.getBigDecimal("DonGia"));
             
             
             list.add(tp);

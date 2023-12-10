@@ -20,7 +20,7 @@ public class ModelServiceRent {
     Connection conn;
     
     public ArrayList<ModelServiceRentv2> findALL() throws Exception {
-        String sql = "select dv.MaDV, TenDichVu, nv.MaNV, TenNV, kh.MaKH, TenKH,NgayLapHD, DonGia, SL, ((DonGia*SL)*0.1) as VAT, ((DonGia*SL) +  ((DonGia*SL)*0.1) - ((DonGia * SL)*GiamGia/100)) AS GiaHD \n" +
+        String sql = "select dv.MaDV, TenDichVu, nv.MaNV, TenNV, kh.MaKH,HoKH,  TenKH,NgayLapHD, DonGia, SL, ((DonGia*SL)*0.1) as VAT, ((DonGia*SL) +  ((DonGia*SL)*0.1) - ((DonGia * SL)*GiamGia/100)) AS GiaHD \n" +
 "from HoaDonDV hddv join NHANVIEN nv on hddv.MaNV = nv.MaNV join KHACHHANG kh on hddv.MaKH = kh.MaKH \n" +
 "join DICHVU dv on dv.MaDV = hddv.MaDV join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV  where hddv.isvisible = '1' ";
         conn = cn.getConnection();//where ptp.isvisible = '1' 
@@ -34,6 +34,7 @@ public class ModelServiceRent {
             co.setMaNV(rs.getString("MaNV"));
             co.setTenNhanVien(rs.getString("TenNV"));
             co.setMaKH(rs.getString("MaKH"));
+            co.setHoKH(rs.getString("HoKH"));
             co.setTenKH(rs.getString("TenKH"));
             co.setNgayLapHD(rs.getString("NgayLapHD"));
             co.setGia(rs.getBigDecimal("DonGia"));
@@ -92,7 +93,7 @@ public class ModelServiceRent {
     public ModelServiceRentv2 findByID_MAKH(String MaKH) throws Exception {
 //        String sql = "select * from PhieuDatPhong where MaPhieuDatPhong =?";
 
-        String sql = "select TenKH from KhachHang where MaKH =? ";  
+        String sql = "select HoKH, TenKH from KhachHang where MaKH =? ";  
         
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -102,7 +103,7 @@ public class ModelServiceRent {
 
         if (rs.next()) {
             ModelServiceRentv2 tp = new ModelServiceRentv2();
-
+            tp.setHoKH(rs.getString("HoKH"));
             tp.setTenKH(rs.getString("TenKH"));
             
             return tp;

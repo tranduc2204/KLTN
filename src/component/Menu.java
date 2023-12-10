@@ -85,7 +85,7 @@ public class Menu extends javax.swing.JPanel {
     }
     //menu root
     public void initMenuItemroot() {
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Dashboard"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Home"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/data-recovery.png")), "Backup Restore"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/delete_2.png")), "System Trash"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/question.png")), "Help"));
@@ -99,7 +99,7 @@ public class Menu extends javax.swing.JPanel {
     }
     
     public void initMenuItemrootVietNam() {
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Trang tổng quan"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Trang chủ"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/data-recovery.png")), "Phục hồi dữ liệu"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/delete_2.png")), "Thùng rác hệ thống"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/question.png")), "Trợ giúp"));
@@ -115,8 +115,8 @@ public class Menu extends javax.swing.JPanel {
     // menu admin
     public void initMenuItem() {
         
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Dashboard"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/2.png")), "Charts"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Home"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/2.png")), "Dashboard"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/user.png")), "Admin Management", "Accounts Management",
                 "Customers Management", "Bills Management","Staffs Management","Services Management","Rooms Management",
                 "Supplies Management","Room Supplies Management", "Service Bill Management"));
@@ -132,7 +132,7 @@ public class Menu extends javax.swing.JPanel {
     }
     
     public void initMenuItemVietNam() {
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Trang tổng quan"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Trang chủ"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/2.png")), "Biểu đồ"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/user.png")), "Quản lý", "Quản lý tài khoản", 
                 "Quản lý khách hàng", "Quản lý hóa đơn","Quản lý nhân viên","Quản lý dịch vụ","Quản lý phòng","Quản lý vật tư", "Quản lý vật tư phòng"
@@ -149,7 +149,7 @@ public class Menu extends javax.swing.JPanel {
     
     // menu user
     public void initMenuItem1() {
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Dashboard"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Home"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/booking.png")), "Rent"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/8.png")), "Check in"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/9.png")), "Check out"));
@@ -165,7 +165,7 @@ public class Menu extends javax.swing.JPanel {
     }
     
     public void initMenuItem1VietNam() {
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Dashboard"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/1.png")), "Trang chủ"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/booking.png")), "Đặt phòng"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/8.png")), "Thuê phòng"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/res/9.png")), "Trả phòng"));

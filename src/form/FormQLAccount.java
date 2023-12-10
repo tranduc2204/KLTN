@@ -24,6 +24,8 @@ import model.ModelAccount;
 import model.ModelAccountv2;
 import model.ModelCustomers;
 import model.ModelCustomersv2;
+import model.ModelStaff;
+import model.ModelStaffv2;
 import org.mindrot.jbcrypt.BCrypt;
 
 
@@ -54,7 +56,7 @@ public class FormQLAccount extends javax.swing.JPanel {
       
         inittable_Account();
         loadthongtintaikhoan();
-       
+        initCombobox_manv();
 
         
     }
@@ -73,7 +75,7 @@ public class FormQLAccount extends javax.swing.JPanel {
     
     private void inittable_Account() {
         tbmodel = new DefaultTableModel();
-        tbmodel.setColumnIdentifiers(new String[]{"Tên đăng nhập", "Tên tài khoản", "Mật khẩu", "Loại tài khoản"});
+        tbmodel.setColumnIdentifiers(new String[]{"Tên đăng nhập", "Tên tài khoản", "Mật khẩu", "Loại tài khoản", "Mã nhân viên", "Họ tên nhân viên"});
         tbAccount.setModel(tbmodel);
     }
     public void loadthongtintaikhoan() {
@@ -83,7 +85,7 @@ public class FormQLAccount extends javax.swing.JPanel {
             tbmodel.setRowCount(0);
             for (ModelAccountv2 acc : list) {
                 tbmodel.addRow(new Object[]{
-                    acc.getUsername(), acc.getDisplayname(), acc.getPassword(), acc.getType()
+                    acc.getUsername(), acc.getDisplayname(), acc.getPassword(), acc.getType(), acc.getManv(), acc.getHonv() + " " + acc.getTennv()
                 });
             }
             tbmodel.fireTableDataChanged();
@@ -92,6 +94,26 @@ public class FormQLAccount extends javax.swing.JPanel {
             e.printStackTrace();
         }
 
+    }
+    
+    private void initCombobox_manv() {
+        try {
+            conn = cn.getConnection();
+            String sql = "Select MaNV from NhanVien where isvisible = '1' ";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            cmbmanv.removeAllItems();
+            cmbmanv.removeAllItems();
+            while (rs.next()) {
+                cmbmanv.addItem(rs.getString("MaNV"));
+            }
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     //  hash password
@@ -131,6 +153,9 @@ public class FormQLAccount extends javax.swing.JPanel {
         txtTENDANGNHAP3 = new component.TextField();
         txtTENTAIKHOAN3 = new component.TextField();
         txtMATKHAU3 = new component.TextField();
+        jLabel11 = new javax.swing.JLabel();
+        cmbmanv = new javax.swing.JComboBox<>();
+        txtHoten = new component.TextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbAccount = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
@@ -150,7 +175,7 @@ public class FormQLAccount extends javax.swing.JPanel {
         roundPanel2.setOpaque(true);
 
         roundPanel5.setBackground(new java.awt.Color(36, 87, 157));
-        roundPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin nhân viên", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
+        roundPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin tài khoản", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
         cmbLTK3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
 
@@ -188,43 +213,65 @@ public class FormQLAccount extends javax.swing.JPanel {
 
         txtMATKHAU3.setLabelText("Mật khẩu");
 
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Mã nhân viên:");
+
+        cmbmanv.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbmanvItemStateChanged(evt);
+            }
+        });
+
+        txtHoten.setLabelText("Họ tên nhân viên");
+
         javax.swing.GroupLayout roundPanel5Layout = new javax.swing.GroupLayout(roundPanel5);
         roundPanel5.setLayout(roundPanel5Layout);
         roundPanel5Layout.setHorizontalGroup(
             roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createSequentialGroup()
+                .addContainerGap(232, Short.MAX_VALUE)
+                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69)
+                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61)
+                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
+                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(233, 233, 233))
             .addGroup(roundPanel5Layout.createSequentialGroup()
                 .addGap(65, 65, 65)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtTENDANGNHAP3, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+                    .addGroup(roundPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbmanv, 0, 302, Short.MAX_VALUE))
+                    .addComponent(txtTENDANGNHAP3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtTENTAIKHOAN3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(159, 159, 159)
-                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtMATKHAU3, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbLTK3, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createSequentialGroup()
-                .addContainerGap(259, Short.MAX_VALUE)
-                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
-                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82)
-                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(206, 206, 206))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtMATKHAU3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbLTK3, javax.swing.GroupLayout.Alignment.TRAILING, 0, 420, Short.MAX_VALUE)
+                    .addComponent(txtHoten, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(65, 65, 65))
         );
         roundPanel5Layout.setVerticalGroup(
             roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel5Layout.createSequentialGroup()
-                .addContainerGap(47, Short.MAX_VALUE)
+                .addGap(40, 40, 40)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTENDANGNHAP3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMATKHAU3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                .addGap(18, 18, 18)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTENTAIKHOAN3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbLTK3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
+                .addGap(18, 18, 18)
+                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(cmbmanv, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtHoten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -352,7 +399,7 @@ public class FormQLAccount extends javax.swing.JPanel {
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)
                             .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 418, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         roundPanel2Layout.setVerticalGroup(
@@ -361,7 +408,7 @@ public class FormQLAccount extends javax.swing.JPanel {
                 .addComponent(roundPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -394,6 +441,13 @@ public class FormQLAccount extends javax.swing.JPanel {
             String LTAIKHOAN = tbAccount.getValueAt(row, 3).toString();
             System.out.println("" + LTAIKHOAN);
             cmbLTK3.setSelectedItem(LTAIKHOAN);
+            
+            String manv = tbAccount.getValueAt(row, 4).toString();
+            System.out.println(manv);
+            cmbmanv.setSelectedItem(manv);
+            
+            txtHoten.setText(tbAccount.getValueAt(row, 5).toString());
+            
         }
     }//GEN-LAST:event_tbAccountMouseClicked
 
@@ -408,6 +462,7 @@ public class FormQLAccount extends javax.swing.JPanel {
             txtTENDANGNHAP3.setBackground(Color.white);
         }
         String loai = cmbLTK3.getSelectedItem().toString();
+        String MaNV = cmbmanv.getSelectedItem().toString();
         if (sb.length() > 0) {
             JOptionPane.showMessageDialog(this, sb);
         }
@@ -418,13 +473,16 @@ public class FormQLAccount extends javax.swing.JPanel {
             String rawPassword = txtMATKHAU3.getText();
             String hashedPassword = hashPassword(rawPassword);
             
+            
+            
             ModelAccountv2 acc = new ModelAccountv2();
             acc.setUsername(txtTENDANGNHAP3.getText());
             acc.setDisplayname(txtTENTAIKHOAN3.getText());
             acc.setPassword(hashedPassword);
             //acc.setType(txtLTAIKHOAN.getText());
             acc.setType(loai);
-
+            acc.setManv(MaNV);
+            
             ModelAccount ql = new ModelAccount();
             ql.insert(acc);
             loadthongtintaikhoan();
@@ -440,6 +498,7 @@ public class FormQLAccount extends javax.swing.JPanel {
         // TODO add your handling code here:
         StringBuilder sb = new StringBuilder();
         String loai = cmbLTK3.getSelectedItem().toString();
+        String MaNV = cmbmanv.getSelectedItem().toString();
         if (txtTENDANGNHAP3.getText().equals("")) {
             sb.append("tên đăng nhập không được để trống");
             txtTENDANGNHAP3.setBackground(Color.red);
@@ -464,6 +523,7 @@ public class FormQLAccount extends javax.swing.JPanel {
             acc.setPassword(hashedPassword);
             //acc.setType(txtLTAIKHOAN.getText());
             acc.setType(loai);
+            acc.setManv(MaNV);
             ModelAccount ql = new ModelAccount();
             ql.update(acc);
 
@@ -614,6 +674,27 @@ public class FormQLAccount extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSearchActionPerformed
 
+    private void cmbmanvItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmanvItemStateChanged
+        // TODO add your handling code here:
+        String Manv = cmbmanv.getSelectedItem().toString();
+        try {
+            ModelStaff ql = new ModelStaff();
+
+            ModelStaffv2 ttp = ql.findByID(Manv);
+            if (ttp != null) {
+
+                txtHoten.setText(ttp.getHoNV()+" "+ ttp.getTenNV());
+               
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tim thấy nhân viên");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_cmbmanvItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.Button btnAdd;
@@ -625,6 +706,8 @@ public class FormQLAccount extends javax.swing.JPanel {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cmbLOAITAIKHOAN1;
     private javax.swing.JComboBox<String> cmbLTK3;
+    private javax.swing.JComboBox<String> cmbmanv;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
@@ -634,6 +717,7 @@ public class FormQLAccount extends javax.swing.JPanel {
     private swing.RoundPanel roundPanel2;
     private swing.RoundPanel roundPanel5;
     private javax.swing.JTable tbAccount;
+    private component.TextField txtHoten;
     private component.TextField txtMATKHAU3;
     private javax.swing.JTextField txtSEARCHTENTK1;
     private javax.swing.JTextField txtSearchtendangnhap1;

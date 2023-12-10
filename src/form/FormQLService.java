@@ -394,8 +394,12 @@ public class FormQLService extends javax.swing.JPanel {
         
         String madongia = cmbmadongia.getSelectedItem().toString();
         
-        String giamgiastr = txtGIAMGIA.getText();
-        int giamgia = Integer.parseInt(giamgiastr);
+        String giamgia = txtGIAMGIA.getText();
+        String giamgianotpercent = giamgia.replace("%", "");
+        int giam = Integer.parseInt(giamgianotpercent); 
+        
+        System.out.println(giam);
+        
         
         StringBuilder sb = new StringBuilder();
         if (txtMADICHVU.getText().equals("")) {
@@ -414,7 +418,7 @@ public class FormQLService extends javax.swing.JPanel {
             dv.setMaDV(txtMADICHVU.getText());
             dv.setTenDichVu(txtTENDICHVU.getText());
             dv.setMaDonGiaDV(madongia);
-            dv.setGiamGia(giamgia);
+            dv.setGiamGia(giam);
              
             ModelService ql = new ModelService();
             ql.insert(dv);

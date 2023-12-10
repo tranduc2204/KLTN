@@ -185,6 +185,11 @@ public class FormLogin extends javax.swing.JFrame {
         ckLuuMK.setText("Ghi nhớ tài khoản");
 
         txtTENDN.setLabelText("Tên đăng nhập");
+        txtTENDN.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTENDNKeyPressed(evt);
+            }
+        });
 
         passwordField2.setText("passwordField1");
         passwordField2.setLabelText("Mật khẩu");
@@ -305,6 +310,14 @@ public class FormLogin extends javax.swing.JFrame {
             btnLogin.doClick();
         }
     }//GEN-LAST:event_passwordField2KeyPressed
+
+    private void txtTENDNKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTENDNKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            btnLogin.requestFocus();
+            btnLogin.doClick();
+        }
+    }//GEN-LAST:event_txtTENDNKeyPressed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

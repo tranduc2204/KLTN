@@ -10,16 +10,19 @@ package model;
  * @author TeeDee
  */
 public class ModelAccountv2 {
-    String username, displayname, password, type;
+    String username, displayname, password, type, manv, honv, tennv;
     int isvisible;
     public ModelAccountv2() {
     }
 
-    public ModelAccountv2(String username, String displayname, String password, String type, int isvisible) {
+    public ModelAccountv2(String username, String displayname, String password, String type, String manv, String honv, String tennv, int isvisible) {
         this.username = username;
         this.displayname = displayname;
         this.password = password;
         this.type = type;
+        this.manv = manv;
+        this.honv = honv;
+        this.tennv = tennv;
         this.isvisible = isvisible;
     }
 
@@ -55,6 +58,30 @@ public class ModelAccountv2 {
         this.type = type;
     }
 
+    public String getManv() {
+        return manv;
+    }
+
+    public void setManv(String manv) {
+        this.manv = manv;
+    }
+
+    public String getHonv() {
+        return honv;
+    }
+
+    public void setHonv(String honv) {
+        this.honv = honv;
+    }
+
+    public String getTennv() {
+        return tennv;
+    }
+
+    public void setTennv(String tennv) {
+        this.tennv = tennv;
+    }
+
     public int getIsvisible() {
         return isvisible;
     }
@@ -62,6 +89,8 @@ public class ModelAccountv2 {
     public void setIsvisible(int isvisible) {
         this.isvisible = isvisible;
     }
+
+    
 
    
 }

@@ -29,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 import static jdk.nashorn.internal.objects.NativeArray.map;
 import model.ModelServiceRent;
 import model.ModelServiceRentv2;
+import model.ModelStaff;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -53,21 +54,21 @@ public class FormServiceRent extends javax.swing.JPanel {
     Connection conn;
     DefaultTableModel tbmodel;
 
-    private String username, password, quyen, DisplayName;
+    private String username, password, quyen, DisplayName, MaNV;
     
-    public FormServiceRent(String username, String password, String DisplayName, String quyen) {
+    public FormServiceRent(String username, String password, String DisplayName, String quyen, String MaNV) {
         initComponents();
         this.username = username;
         this.password = password;
         this.DisplayName = DisplayName;
         this.quyen = quyen;
+        this.MaNV = MaNV;
         
         
         initCombobox_madichvu();
-        initCombobox_manhanvien();
         initCombobox_makhachhang();
   
-       
+        txtMaNV.setText(MaNV);
 
         inittable();
         loaddulieu1();
@@ -91,8 +92,8 @@ public class FormServiceRent extends javax.swing.JPanel {
     
     private void inittable() {
         tbmodel = new DefaultTableModel();
-        tbmodel.setColumnIdentifiers(new String[]{"Mã dịch vụ", "Tên dịch vụ", "Mã nhân viên",  "Tên nhân viên",
-            "Mã khách hàng", "Tên khách hàng", "Ngày lập hóa đơn", "Đơn giá",  "Số lượng","VAT", "Giá hóa đơn"});
+        tbmodel.setColumnIdentifiers(new String[]{"Mã dịch vụ", "Tên dịch vụ", "Mã nhân viên",  "Họ tên nhân viên",
+            "Mã khách hàng", "Họ tên khách hàng", "Ngày lập hóa đơn", "Đơn giá",  "Số lượng","VAT", "Giá hóa đơn"});
         TBServiceRent.setModel(tbmodel);
     }
     
@@ -103,7 +104,7 @@ public class FormServiceRent extends javax.swing.JPanel {
             tbmodel.setRowCount(0);
             for (ModelServiceRentv2 p : list) {
                 tbmodel.addRow(new Object[]{
-                    p.getMaDV(), p.getTenDichVu(), p.getMaNV(), p.getTenNhanVien(), p.getMaKH(),p.getTenKH(),p.getNgayLapHD(), p.getFormattedGia(),  p.getSL(),p.getFormattedVAT(),p.getFormattedGiahd()
+                    p.getMaDV(), p.getTenDichVu(), p.getMaNV(), p.getTenNhanVien(), p.getMaKH(),p.getHoKH()+" "+ p.getTenKH(),p.getNgayLapHD(), p.getFormattedGia(),  p.getSL(),p.getFormattedVAT(),p.getFormattedGiahd()
                 });
             }
             tbmodel.fireTableDataChanged();
@@ -134,25 +135,7 @@ public class FormServiceRent extends javax.swing.JPanel {
         }
     }
     
-    private void initCombobox_manhanvien() {
-        try {
-            conn = cn.getConnection();
-            String sql = "select MaNV from NhanVien where isvisible = '1' ";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery();
-            cmbMaNhanvien.removeAllItems();
-          
-            while (rs.next()) {
-                cmbMaNhanvien.addItem(rs.getString("MaNV"));
-            }
-            rs.close();
-            pstmt.close();
-            conn.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-            e.printStackTrace();
-        }
-    }
+    
     
     private void initCombobox_makhachhang() {
         try {
@@ -189,13 +172,11 @@ public class FormServiceRent extends javax.swing.JPanel {
         btnAdd = new swing.Button();
         bthDelete = new swing.Button();
         btnRefresh = new swing.Button();
-        jLabel21 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         cmbmadichvu = new javax.swing.JComboBox<>();
         jLabel22 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jDateChooserngaylaphoadon = new com.toedter.calendar.JDateChooser();
-        cmbMaNhanvien = new javax.swing.JComboBox<>();
         cmbmakhachhang = new javax.swing.JComboBox<>();
         btnPay = new javax.swing.JButton();
         btnReport = new javax.swing.JButton();
@@ -207,6 +188,7 @@ public class FormServiceRent extends javax.swing.JPanel {
         txtGiahd = new component.TextField();
         txtVAT = new component.TextField();
         txtGiamGia = new component.TextField();
+        txtMaNV = new component.TextField();
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -247,10 +229,6 @@ public class FormServiceRent extends javax.swing.JPanel {
             }
         });
 
-        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setText("Mã nhân viên:");
-
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Mã dịch vụ:");
@@ -269,11 +247,7 @@ public class FormServiceRent extends javax.swing.JPanel {
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("Ngày lập hóa đơn:");
 
-        cmbMaNhanvien.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbMaNhanvienItemStateChanged(evt);
-            }
-        });
+        jDateChooserngaylaphoadon.setEnabled(false);
 
         cmbmakhachhang.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -330,6 +304,14 @@ public class FormServiceRent extends javax.swing.JPanel {
             }
         });
 
+        txtMaNV.setEditable(false);
+        txtMaNV.setLabelText("Mã nhân viên");
+        txtMaNV.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txtMaNVPropertyChange(evt);
+            }
+        });
+
         javax.swing.GroupLayout roundPanel5Layout = new javax.swing.GroupLayout(roundPanel5);
         roundPanel5.setLayout(roundPanel5Layout);
         roundPanel5Layout.setHorizontalGroup(
@@ -352,12 +334,9 @@ public class FormServiceRent extends javax.swing.JPanel {
                     .addGroup(roundPanel5Layout.createSequentialGroup()
                         .addGap(65, 65, 65)
                         .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtTenNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(roundPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel21)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cmbMaNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(spSL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(txtTenNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
+                            .addComponent(txtMaNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(spSL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -407,11 +386,9 @@ public class FormServiceRent extends javax.swing.JPanel {
                     .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cmbMaNhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel21)
-                        .addComponent(jLabel19))
-                    .addComponent(jDateChooserngaylaphoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel19)
+                    .addComponent(jDateChooserngaylaphoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMaNV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTenNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -533,7 +510,8 @@ public class FormServiceRent extends javax.swing.JPanel {
         String ngayhd = year + "-" + month + "-" + day;
 
         String MaDichvu = cmbmadichvu.getSelectedItem().toString();
-        String MaNV = cmbMaNhanvien.getSelectedItem().toString();
+        String MaNV = txtMaNV.getText();
+   
         String MaKH = cmbmakhachhang.getSelectedItem().toString();
 
         // Lấy giá trị hiện tại của JSpinner
@@ -581,7 +559,8 @@ public class FormServiceRent extends javax.swing.JPanel {
         String ngayhd = year + "-" + month + "-" + day;
 
         String MaDichvu = cmbmadichvu.getSelectedItem().toString();
-        String MaNV = cmbMaNhanvien.getSelectedItem().toString();
+        
+        String MaNV = txtMaNV.getText();
         String MaKH = cmbmakhachhang.getSelectedItem().toString();
         
         // Lấy giá trị hiện tại của JSpinner
@@ -624,7 +603,8 @@ public class FormServiceRent extends javax.swing.JPanel {
         // TODO add your handling code here:
 
         String MaDichvu = cmbmadichvu.getSelectedItem().toString();
-        String MaNV = cmbMaNhanvien.getSelectedItem().toString();
+        String MaNV = txtMaNV.getText();
+       
         String MaKH = cmbmakhachhang.getSelectedItem().toString();
 
         try {
@@ -677,28 +657,6 @@ public class FormServiceRent extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cmbmadichvuItemStateChanged
 
-    private void cmbMaNhanvienItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMaNhanvienItemStateChanged
-        // TODO add your handling code here:
-        String MaNV = cmbMaNhanvien.getSelectedItem().toString();
-        try {
-            ModelServiceRent ql = new ModelServiceRent();
-
-            ModelServiceRentv2 ttp = ql.findByID_MANV(MaNV);
-            if (ttp != null) {
-
-                txtTenNhanVien.setText(ttp.getTenNhanVien());
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Không tim thấy nhân viên");
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
-        }
-        
-    }//GEN-LAST:event_cmbMaNhanvienItemStateChanged
-
     private void cmbmakhachhangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmakhachhangItemStateChanged
         // TODO add your handling code here:
         String MaKH = cmbmakhachhang.getSelectedItem().toString();
@@ -708,7 +666,7 @@ public class FormServiceRent extends javax.swing.JPanel {
             ModelServiceRentv2 ttp = ql.findByID_MAKH(MaKH);
             if (ttp != null) {
 
-                txtTenKH.setText(ttp.getTenKH());
+                txtTenKH.setText(ttp.getHoKH()+" "+ ttp.getTenKH());
 
             } else {
                 JOptionPane.showMessageDialog(this, "Không tim thấy khách hàng");
@@ -733,9 +691,10 @@ public class FormServiceRent extends javax.swing.JPanel {
             
             txtTenDichVu.setText(TBServiceRent.getValueAt(row, 1).toString());
 
-            String manv = TBServiceRent.getValueAt(row, 2).toString();
-            System.out.println("" + manv);
-            cmbMaNhanvien.setSelectedItem(manv);
+//            String manv = TBServiceRent.getValueAt(row, 2).toString();
+//            System.out.println("" + manv);
+//            cmbMaNhanvien.setSelectedItem(manv);
+            txtMaNV.setText(TBServiceRent.getValueAt(row, 2).toString());
             
             txtTenNhanVien.setText(TBServiceRent.getValueAt(row, 3).toString());
             
@@ -842,7 +801,8 @@ public class FormServiceRent extends javax.swing.JPanel {
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
         // TODO add your handling code here:
         String MaDichvu = cmbmadichvu.getSelectedItem().toString();
-        String MaNV = cmbMaNhanvien.getSelectedItem().toString();
+        String MaNV = txtMaNV.getText();
+//        String MaNV1 = cmbMaNhanvien.getSelectedItem().toString();
         String MaKH = cmbmakhachhang.getSelectedItem().toString();
         
         if (MaDichvu.equals("")==true || MaNV.equals("")==true || MaKH.equals("")==true) {
@@ -878,6 +838,26 @@ public class FormServiceRent extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtGiamGiaActionPerformed
 
+    private void txtMaNVPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtMaNVPropertyChange
+        // TODO add your handling code here:
+        String MaNV = txtMaNV.getText();
+        try {
+            ModelStaff ql = new ModelStaff();
+
+            model.ModelStaffv2 ttp = ql.findByID(MaNV);
+            if (ttp != null) {
+                txtTenNhanVien.setText(ttp.getHoNV() + " "+ ttp.getTenNV());
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tim thấy mã nhân viên");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_txtMaNVPropertyChange
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TBServiceRent;
@@ -889,13 +869,11 @@ public class FormServiceRent extends javax.swing.JPanel {
     private javax.swing.JButton btnReport;
     private swing.Button button1;
     private swing.Button button2;
-    private javax.swing.JComboBox<String> cmbMaNhanvien;
     private javax.swing.JComboBox<String> cmbmadichvu;
     private javax.swing.JComboBox<String> cmbmakhachhang;
     private com.toedter.calendar.JDateChooser jDateChooserngaylaphoadon;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
@@ -905,6 +883,7 @@ public class FormServiceRent extends javax.swing.JPanel {
     private component.TextField txtGiaDichvu;
     private component.TextField txtGiahd;
     private component.TextField txtGiamGia;
+    private component.TextField txtMaNV;
     private component.TextField txtTenDichVu;
     private component.TextField txtTenKH;
     private component.TextField txtTenNhanVien;

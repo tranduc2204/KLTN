@@ -13,19 +13,20 @@ import java.text.DecimalFormat;
  * @author TeeDee
  */
 public class ModelServiceRentv2 {
-    String MaDV, TenDichVu ,MaNV, TenNhanVien, MaKH, TenKH, NgayLapHD;
+    String MaDV, TenDichVu ,MaNV, TenNhanVien, MaKH,HoKH, TenKH, NgayLapHD;
     int SL, GiamGia;
     BigDecimal Gia, GiaHD, VAT;
 
     public ModelServiceRentv2() {
     }
 
-    public ModelServiceRentv2(String MaDV, String TenDichVu, String MaNV, String TenNhanVien, String MaKH, String TenKH, String NgayLapHD, int SL, int GiamGia, BigDecimal Gia, BigDecimal GiaHD, BigDecimal VAT) {
+    public ModelServiceRentv2(String MaDV, String TenDichVu, String MaNV, String TenNhanVien, String MaKH, String HoKH, String TenKH, String NgayLapHD, int SL, int GiamGia, BigDecimal Gia, BigDecimal GiaHD, BigDecimal VAT) {
         this.MaDV = MaDV;
         this.TenDichVu = TenDichVu;
         this.MaNV = MaNV;
         this.TenNhanVien = TenNhanVien;
         this.MaKH = MaKH;
+        this.HoKH = HoKH;
         this.TenKH = TenKH;
         this.NgayLapHD = NgayLapHD;
         this.SL = SL;
@@ -73,6 +74,14 @@ public class ModelServiceRentv2 {
 
     public void setMaKH(String MaKH) {
         this.MaKH = MaKH;
+    }
+
+    public String getHoKH() {
+        return HoKH;
+    }
+
+    public void setHoKH(String HoKH) {
+        this.HoKH = HoKH;
     }
 
     public String getTenKH() {
@@ -130,6 +139,8 @@ public class ModelServiceRentv2 {
     public void setVAT(BigDecimal VAT) {
         this.VAT = VAT;
     }
+
+    
 
     public String getFormattedPercentage(){
         DecimalFormat decimalFormat = new DecimalFormat("0%");

@@ -245,7 +245,7 @@ public class MainHome extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(main, "Cannot load help file!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }else if (menuIndex == 4 && quyen.equals("User")){
-                main.showForm(new FormServiceRent(username, password, DisplayName,quyen));
+                main.showForm(new FormServiceRent(username, password, DisplayName,quyen,MaNV));
             }else if (menuIndex == 3 && quyen.equals("User")){
                 main.showForm(new FormCheckOut(username, password, DisplayName,quyen));
             }else if (menuIndex == 2 && quyen.equals("User")){

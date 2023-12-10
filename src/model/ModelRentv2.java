@@ -13,22 +13,26 @@ import java.text.DecimalFormat;
  * @author TeeDee
  */
 public class ModelRentv2 {
-    String MaPhieuDatPhong, MaKH, TenKH,MaNV, TenNV, MaPhong, TenPhong, LoaiPhong, NgayDatPhong;
+    String MaPhieuDatPhong, MaKH,HoKH, TenKH,MaNV,HoNV, TenNV, MaPhong, TenPhong, LoaiPhong, NgayDatPhong, NgayDuKienThue, NgayDuKienTra;
     BigDecimal Gia;
 
     public ModelRentv2() {
     }
 
-    public ModelRentv2(String MaPhieuDatPhong, String MaKH, String TenKH, String MaNV, String TenNV, String MaPhong, String TenPhong, String LoaiPhong, String NgayDatPhong, BigDecimal Gia) {
+    public ModelRentv2(String MaPhieuDatPhong, String MaKH, String HoKH, String TenKH, String MaNV, String HoNV, String TenNV, String MaPhong, String TenPhong, String LoaiPhong, String NgayDatPhong, String NgayDuKienThue, String NgayDuKienTra, BigDecimal Gia) {
         this.MaPhieuDatPhong = MaPhieuDatPhong;
         this.MaKH = MaKH;
+        this.HoKH = HoKH;
         this.TenKH = TenKH;
         this.MaNV = MaNV;
+        this.HoNV = HoNV;
         this.TenNV = TenNV;
         this.MaPhong = MaPhong;
         this.TenPhong = TenPhong;
         this.LoaiPhong = LoaiPhong;
         this.NgayDatPhong = NgayDatPhong;
+        this.NgayDuKienThue = NgayDuKienThue;
+        this.NgayDuKienTra = NgayDuKienTra;
         this.Gia = Gia;
     }
 
@@ -48,6 +52,14 @@ public class ModelRentv2 {
         this.MaKH = MaKH;
     }
 
+    public String getHoKH() {
+        return HoKH;
+    }
+
+    public void setHoKH(String HoKH) {
+        this.HoKH = HoKH;
+    }
+
     public String getTenKH() {
         return TenKH;
     }
@@ -62,6 +74,14 @@ public class ModelRentv2 {
 
     public void setMaNV(String MaNV) {
         this.MaNV = MaNV;
+    }
+
+    public String getHoNV() {
+        return HoNV;
+    }
+
+    public void setHoNV(String HoNV) {
+        this.HoNV = HoNV;
     }
 
     public String getTenNV() {
@@ -104,6 +124,22 @@ public class ModelRentv2 {
         this.NgayDatPhong = NgayDatPhong;
     }
 
+    public String getNgayDuKienThue() {
+        return NgayDuKienThue;
+    }
+
+    public void setNgayDuKienThue(String NgayDuKienThue) {
+        this.NgayDuKienThue = NgayDuKienThue;
+    }
+
+    public String getNgayDuKienTra() {
+        return NgayDuKienTra;
+    }
+
+    public void setNgayDuKienTra(String NgayDuKienTra) {
+        this.NgayDuKienTra = NgayDuKienTra;
+    }
+
     public BigDecimal getGia() {
         return Gia;
     }
@@ -111,6 +147,10 @@ public class ModelRentv2 {
     public void setGia(BigDecimal Gia) {
         this.Gia = Gia;
     }
+
+    
+
+    
     
     public String getFormattedGia() {
         DecimalFormat decimalFormat = new DecimalFormat("#,### VND");

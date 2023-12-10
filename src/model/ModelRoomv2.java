@@ -14,22 +14,24 @@ import java.text.DecimalFormat;
  */
 public class ModelRoomv2 {
     
-    private String MaPhong, TenPhong, MaTinhTrangPhong,tinhtrangphong, MaLoaiPhong,TenLoaiPhong;
+    private String MaPhong, TenPhong, MaTinhTrangPhong,tinhtrangphong, MaLoaiPhong,TenLoaiPhong, MaDonGiaPhong;
     private BigDecimal tien;
     private int isvisible, GiamGia;
 
     public ModelRoomv2() {
     }
 
-    public ModelRoomv2(String MaPhong, String TenPhong, String MaTinhTrangPhong, String tinhtrangphong, String MaLoaiPhong, String TenLoaiPhong, BigDecimal tien, int isvisible) {
+    public ModelRoomv2(String MaPhong, String TenPhong, String MaTinhTrangPhong, String tinhtrangphong, String MaLoaiPhong, String TenLoaiPhong, String MaDonGiaPhong, BigDecimal tien, int isvisible, int GiamGia) {
         this.MaPhong = MaPhong;
         this.TenPhong = TenPhong;
         this.MaTinhTrangPhong = MaTinhTrangPhong;
         this.tinhtrangphong = tinhtrangphong;
         this.MaLoaiPhong = MaLoaiPhong;
         this.TenLoaiPhong = TenLoaiPhong;
+        this.MaDonGiaPhong = MaDonGiaPhong;
         this.tien = tien;
         this.isvisible = isvisible;
+        this.GiamGia = GiamGia;
     }
 
     public String getMaPhong() {
@@ -80,6 +82,14 @@ public class ModelRoomv2 {
         this.TenLoaiPhong = TenLoaiPhong;
     }
 
+    public String getMaDonGiaPhong() {
+        return MaDonGiaPhong;
+    }
+
+    public void setMaDonGiaPhong(String MaDonGiaPhong) {
+        this.MaDonGiaPhong = MaDonGiaPhong;
+    }
+
     public BigDecimal getTien() {
         return tien;
     }
@@ -96,11 +106,25 @@ public class ModelRoomv2 {
         this.isvisible = isvisible;
     }
 
+    public int getGiamGia() {
+        return GiamGia;
+    }
+
+    public void setGiamGia(int GiamGia) {
+        this.GiamGia = GiamGia;
+    }
+
+   
     
 
     public String getFormattedDonGia() {
         DecimalFormat decimalFormat = new DecimalFormat("#,### VND");
         return decimalFormat.format(tien);
+    }
+    
+    public String getFormattedPercentage(){
+        DecimalFormat decimalFormat = new DecimalFormat("0%");
+        return decimalFormat.format((double) GiamGia / 100); // Chia cho 100 để đưa về dạng phần trăm
     }
     
 }
