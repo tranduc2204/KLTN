@@ -46,7 +46,7 @@ public class FormcheckRoom extends javax.swing.JFrame {
         txtngayThuePhong.setText(ngaythue);
         txtngayTraPhong.setText(ngaytra);
         initCombobox_maloaiphong();
-        TrashAccount();
+        loaddata();
     }
 
     private void initCombobox_maloaiphong() {
@@ -69,7 +69,7 @@ public class FormcheckRoom extends javax.swing.JFrame {
         }
     }
     
-    private void TrashAccount(){
+    private void loaddata(){
         // Khởi tạo model và đặt tên cột
         tableModel = new DefaultTableModel();
         tableModel.addColumn("Mã phòng");
@@ -106,8 +106,83 @@ public class FormcheckRoom extends javax.swing.JFrame {
             
             String sql = "select distinct p.MaPhong, TenPhong, TenLoaiPhong, TenVatTu, SoLuong , Concat(GiamGia,'%') as GiamGia\n" +
 "from phong p join LOAIPHONG lp on p.MaLoaiPhong = lp.MaLoaiPhong join CTVatTu ctvt on ctvt.MaLoaiPhong = lp.MaLoaiPhong join VATTU vt on vt.MaVatTu = ctvt.MaVatTu\n" +
-"where TenVatTu = N'Giường' and MaTinhtrangphong = 'TT2' and p.MaPhong not in (select distinct MaPhong from PhieuDatPhong where booked_status = 0 \n" +
-"and NgayDuKienThue between '" + ngaythuephong + "' AND '" + ngaytraphong + "' and  NgayDuKienTra between '" + ngaythuephong + "' AND '" + ngaytraphong + "'  ) \n" +
+"where TenVatTu = N'Giường' and MaTinhtrangphong = 'TT2' and p.isvisible = '1' and p.MaPhong not in (select distinct MaPhong from PhieuDatPhong where booked_status = 0 \n" +
+"and (NgayDuKienThue between '" + ngaythuephong + "' AND '" + ngaytraphong + "' or  NgayDuKienTra between '" + ngaythuephong + "' AND '" + ngaytraphong + "' ) ) \n" +
+"order by p.MaPhong ";
+            
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Lặp qua kết quả và thêm vào model
+                while (resultSet.next()) {
+                    Object[] rowData = {
+                            resultSet.getObject("MaPhong"),
+                            resultSet.getObject("TenPhong"),
+                            resultSet.getObject("TenLoaiPhong"),
+                            resultSet.getObject("TenVatTu"),
+                            resultSet.getObject("SoLuong"),
+                            resultSet.getObject("GiamGia"),
+                    };
+                    tableModel.addRow(rowData);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    private void loaiphong(){
+        // Khởi tạo model và đặt tên cột
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Mã phòng");
+        tableModel.addColumn("Tên phòng");
+        tableModel.addColumn("Tên loại phòng");
+        tableModel.addColumn("Tên vật tư");
+        tableModel.addColumn("Số lượng");
+        tableModel.addColumn("Giảm giá");
+        
+        // Thiết lập tableModel cho JTable
+        table.setModel(tableModel);
+        
+        // Load dữ liệu từ SQL Server vào JTable
+        loadDataFromSQL_loaiphong();
+        
+    }
+    
+    
+    private void loadDataFromSQL_loaiphong() {
+        
+        String tenloaiphong = cmbLoaiPhong.getSelectedItem().toString();
+        Connection connection = null;
+        try {
+            
+             // Kết nối đến cơ sở dữ liệu SQL Server
+            String ngaythuephong = txtngayThuePhong.getText();
+            String ngaytraphong = txtngayTraPhong.getText();
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            
+            // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+            
+            String sql = "select distinct p.MaPhong, TenPhong, TenLoaiPhong, TenVatTu, SoLuong , Concat(GiamGia,'%') as GiamGia\n" +
+"from phong p join LOAIPHONG lp on p.MaLoaiPhong = lp.MaLoaiPhong join CTVatTu ctvt on ctvt.MaLoaiPhong = lp.MaLoaiPhong join VATTU vt on vt.MaVatTu = ctvt.MaVatTu\n" +
+"where TenVatTu = N'Giường' and MaTinhtrangphong = 'TT2' and tenloaiphong = N'"+tenloaiphong+"' and p.isvisible = '1' and p.MaPhong not in (select distinct MaPhong from PhieuDatPhong where booked_status = 0 \n" +
+"and (NgayDuKienThue between '" + ngaythuephong + "' AND '" + ngaytraphong + "' or  NgayDuKienTra between '" + ngaythuephong + "' AND '" + ngaytraphong + "' ) ) \n" +
 "order by p.MaPhong ";
             
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -140,6 +215,175 @@ public class FormcheckRoom extends javax.swing.JFrame {
         }
     }
 
+    private void soluong(){
+        // Khởi tạo model và đặt tên cột
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Mã phòng");
+        tableModel.addColumn("Tên phòng");
+        tableModel.addColumn("Tên loại phòng");
+        tableModel.addColumn("Tên vật tư");
+        tableModel.addColumn("Số lượng");
+        tableModel.addColumn("Giảm giá");
+        
+        // Thiết lập tableModel cho JTable
+        table.setModel(tableModel);
+        
+        // Load dữ liệu từ SQL Server vào JTable
+        loadDataFromSQL_soluong();
+        
+    }
+    
+    
+    private void loadDataFromSQL_soluong() {
+        
+        Object selectedValue = spSL.getValue();
+        int spinnerValue = (int) selectedValue;
+        if (spinnerValue > 0){
+            
+            Connection connection = null;
+            try {
+
+                 // Kết nối đến cơ sở dữ liệu SQL Server
+                String ngaythuephong = txtngayThuePhong.getText();
+                String ngaytraphong = txtngayTraPhong.getText();
+                String server = "localhost";
+                String port = "1433";
+                String database = "KLTN";
+                String username = "sa";
+                String password = "sa";
+
+                String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+                connection = DriverManager.getConnection(jdbcUrl);
+
+                // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+
+                String sql = "select distinct p.MaPhong, TenPhong, TenLoaiPhong, TenVatTu, SoLuong , Concat(GiamGia,'%') as GiamGia\n" +
+                "from phong p join LOAIPHONG lp on p.MaLoaiPhong = lp.MaLoaiPhong join CTVatTu ctvt on ctvt.MaLoaiPhong = lp.MaLoaiPhong join VATTU vt on vt.MaVatTu = ctvt.MaVatTu\n" +
+                "where TenVatTu = N'Giường' and MaTinhtrangphong = 'TT2' and soluong = "+spinnerValue+"  and p.isvisible = '1' and p.MaPhong not in (select distinct MaPhong from PhieuDatPhong where booked_status = 0 \n" +
+                "and (NgayDuKienThue between '" + ngaythuephong + "' AND '" + ngaytraphong + "' or  NgayDuKienTra between '" + ngaythuephong + "' AND '" + ngaytraphong + "' ) ) \n" +
+                "order by p.MaPhong ";
+
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                    // Lặp qua kết quả và thêm vào model
+                    while (resultSet.next()) {
+                        Object[] rowData = {
+                                resultSet.getObject("MaPhong"),
+                                resultSet.getObject("TenPhong"),
+                                resultSet.getObject("TenLoaiPhong"),
+                                resultSet.getObject("TenVatTu"),
+                                resultSet.getObject("SoLuong"),
+                                resultSet.getObject("GiamGia"),
+                        };
+                        tableModel.addRow(rowData);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+            } finally {
+                try {
+                    if (connection != null) {
+                        connection.close();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+       
+        }else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn số lượng dịch vụ lớn hơn 0");
+        }
+
+    }
+    
+    private void cahai(){
+        // Khởi tạo model và đặt tên cột
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Mã phòng");
+        tableModel.addColumn("Tên phòng");
+        tableModel.addColumn("Tên loại phòng");
+        tableModel.addColumn("Tên vật tư");
+        tableModel.addColumn("Số lượng");
+        tableModel.addColumn("Giảm giá");
+        
+        // Thiết lập tableModel cho JTable
+        table.setModel(tableModel);
+        
+        // Load dữ liệu từ SQL Server vào JTable
+        loadDataFromSQL_cahai();
+        
+    }
+    
+    
+    private void loadDataFromSQL_cahai() {
+        
+        String tenloaiphong = cmbLoaiPhong.getSelectedItem().toString();
+        
+        Object selectedValue = spSL.getValue();
+        int spinnerValue = (int) selectedValue;
+        if (spinnerValue > 0){
+            
+            Connection connection = null;
+            try {
+
+                 // Kết nối đến cơ sở dữ liệu SQL Server
+                String ngaythuephong = txtngayThuePhong.getText();
+                String ngaytraphong = txtngayTraPhong.getText();
+                String server = "localhost";
+                String port = "1433";
+                String database = "KLTN";
+                String username = "sa";
+                String password = "sa";
+
+                String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+                connection = DriverManager.getConnection(jdbcUrl);
+
+                // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+
+                String sql = "select distinct p.MaPhong, TenPhong, TenLoaiPhong, TenVatTu, SoLuong , Concat(GiamGia,'%') as GiamGia\n" +
+                "from phong p join LOAIPHONG lp on p.MaLoaiPhong = lp.MaLoaiPhong join CTVatTu ctvt on ctvt.MaLoaiPhong = lp.MaLoaiPhong join VATTU vt on vt.MaVatTu = ctvt.MaVatTu\n" +
+                "where TenVatTu = N'Giường' and MaTinhtrangphong = 'TT2' and tenloaiphong = N'"+tenloaiphong+"' and soluong = "+spinnerValue+"  and p.isvisible = '1' and p.MaPhong not in (select distinct MaPhong from PhieuDatPhong where booked_status = 0 \n" +
+                "and (NgayDuKienThue between '" + ngaythuephong + "' AND '" + ngaytraphong + "' or  NgayDuKienTra between '" + ngaythuephong + "' AND '" + ngaytraphong + "' ) ) \n" +
+                "order by p.MaPhong ";
+
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                    ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                    // Lặp qua kết quả và thêm vào model
+                    while (resultSet.next()) {
+                        Object[] rowData = {
+                                resultSet.getObject("MaPhong"),
+                                resultSet.getObject("TenPhong"),
+                                resultSet.getObject("TenLoaiPhong"),
+                                resultSet.getObject("TenVatTu"),
+                                resultSet.getObject("SoLuong"),
+                                resultSet.getObject("GiamGia"),
+                        };
+                        tableModel.addRow(rowData);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+            } finally {
+                try {
+                    if (connection != null) {
+                        connection.close();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+       
+        }else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn số lượng dịch vụ lớn hơn 0");
+        }
+
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -160,6 +404,7 @@ public class FormcheckRoom extends javax.swing.JFrame {
         txtngayThuePhong = new component.TextField();
         txtngayTraPhong = new component.TextField();
         btnLoc = new swing.Button();
+        btnLoc1 = new swing.Button();
         jScrollPane2 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
@@ -214,6 +459,13 @@ public class FormcheckRoom extends javax.swing.JFrame {
             }
         });
 
+        btnLoc1.setText("Xem");
+        btnLoc1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoc1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelBorder5Layout = new javax.swing.GroupLayout(panelBorder5);
         panelBorder5.setLayout(panelBorder5Layout);
         panelBorder5Layout.setHorizontalGroup(
@@ -232,9 +484,11 @@ public class FormcheckRoom extends javax.swing.JFrame {
                         .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(cmbLoaiPhong, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(spSL, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE))
-                        .addGap(174, 174, 174)
-                        .addComponent(btnLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(165, 165, 165)
+                        .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnLoc1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(391, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder5Layout.createSequentialGroup()
                 .addGap(87, 87, 87)
                 .addComponent(txtngayThuePhong, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -253,21 +507,17 @@ public class FormcheckRoom extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel43)
-                .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelBorder5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                        .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cmbLoaiPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ckLoaiPhong))
-                        .addGap(18, 18, 18))
-                    .addGroup(panelBorder5Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(btnLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbLoaiPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ckLoaiPhong)
+                    .addComponent(btnLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ckSoGiuong)
-                    .addComponent(spSL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48))
+                    .addComponent(spSL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLoc1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44))
         );
 
         table.setModel(new javax.swing.table.DefaultTableModel(
@@ -281,6 +531,7 @@ public class FormcheckRoom extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        table.setRowHeight(40);
         jScrollPane2.setViewportView(table);
 
         javax.swing.GroupLayout panelBorder3Layout = new javax.swing.GroupLayout(panelBorder3);
@@ -301,7 +552,7 @@ public class FormcheckRoom extends javax.swing.JFrame {
                 .addComponent(panelBorder5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -337,14 +588,22 @@ public class FormcheckRoom extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtngayTraPhongActionPerformed
 
+    private void btnLoc1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoc1ActionPerformed
+        // TODO add your handling code here:
+        loaddata();
+    }//GEN-LAST:event_btnLoc1ActionPerformed
+
     private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
         // TODO add your handling code here:
         if (ckLoaiPhong.isSelected() == true && ckSoGiuong.isSelected() == false){
             System.out.println("loại phòng");
+            loaiphong();
         }else if(ckLoaiPhong.isSelected() == false && ckSoGiuong.isSelected() == true){
             System.out.println("Số giường");
+            soluong();
         }else if (ckLoaiPhong.isSelected() == true && ckSoGiuong.isSelected() == true){
             System.out.println("cả 2");
+            cahai();
         }else if (ckLoaiPhong.isSelected() == false && ckSoGiuong.isSelected() == false){
             System.out.println("chọn lọc");
             JOptionPane.showMessageDialog(this, "Vui lòng chọn phương thức lọc");
@@ -388,17 +647,14 @@ public class FormcheckRoom extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.Button btnLoc;
-    private swing.Button btnSearch;
-    private swing.Button btnSearch1;
+    private swing.Button btnLoc1;
     private javax.swing.JCheckBox ckLoaiPhong;
     private javax.swing.JCheckBox ckSoGiuong;
     private javax.swing.JComboBox<String> cmbLoaiPhong;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private swing.PanelBorder panelBorder2;
     private swing.PanelBorder panelBorder3;
-    private swing.PanelBorder panelBorder4;
     private swing.PanelBorder panelBorder5;
     private component.Spinner spSL;
     private javax.swing.JTable table;

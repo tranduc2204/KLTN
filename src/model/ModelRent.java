@@ -88,32 +88,36 @@ public class ModelRent {
     }
     
     public boolean insert(ModelRentv2 rt) throws Exception {
-        String sql = "insert into PhieuDatPhong (MaPhieuDatPhong, NgayDatPhong,MaPhong,MaKH,MaNV) values (?,?,?,?,?)";
+        String sql = "insert into PhieuDatPhong (MaPhieuDatPhong, NgayDatPhong,NgayDuKienThue, NgayDuKienTra ,MaPhong,MaKH,MaNV) values (?,?,?,?,?,?,?)";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, rt.getMaPhieuDatPhong());
         pstmt.setString(2, rt.getNgayDatPhong());
-        pstmt.setString(3, rt.getMaPhong());
-        pstmt.setString(4, rt.getMaKH());
-        pstmt.setString(5, rt.getMaNV());
+        pstmt.setString(3, rt.getNgayDuKienThue());
+        pstmt.setString(4, rt.getNgayDuKienTra());
+        pstmt.setString(5, rt.getMaPhong());
+        pstmt.setString(6, rt.getMaKH());
+        pstmt.setString(7, rt.getMaNV());
        
 
         return pstmt.executeUpdate() > 0;
 
     }
     public boolean update(ModelRentv2 rt) throws Exception {
-        String sql = "update PhieuDatPhong set NgayDatPhong =? , MaPhong=? , MaKH=? , MaNV=? where MaPhieuDatPhong = ? ";
+        String sql = "update PhieuDatPhong set NgayDatPhong =?,NgayDuKienThue =?, NgayDuKienTra =? , MaPhong=? , MaKH=? , MaNV=? where MaPhieuDatPhong = ? ";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
 
-        pstmt.setString(5, rt.getMaPhieuDatPhong());
+        pstmt.setString(7, rt.getMaPhieuDatPhong());
         pstmt.setString(1, rt.getNgayDatPhong());
-        pstmt.setString(2, rt.getMaPhong());
-        pstmt.setString(3, rt.getMaKH());
-        pstmt.setString(4, rt.getMaNV());
+        pstmt.setString(2, rt.getNgayDuKienThue());
+        pstmt.setString(3, rt.getNgayDuKienTra());
+        pstmt.setString(4, rt.getMaPhong());
+        pstmt.setString(5, rt.getMaKH());
+        pstmt.setString(6, rt.getMaNV());
 
         return pstmt.executeUpdate() > 0;
   

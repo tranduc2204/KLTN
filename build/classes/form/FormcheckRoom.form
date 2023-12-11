@@ -80,7 +80,7 @@
                   <Component id="panelBorder5" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                   <Component id="jScrollPane2" min="-2" pref="461" max="-2" attributes="0"/>
-                  <EmptySpace pref="17" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -116,11 +116,14 @@
                                   <Component id="cmbLoaiPhong" max="32767" attributes="0"/>
                                   <Component id="spSL" pref="285" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="174" max="-2" attributes="0"/>
-                              <Component id="btnLoc" min="-2" pref="103" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="165" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="btnLoc1" min="-2" pref="103" max="-2" attributes="0"/>
+                                  <Component id="btnLoc" min="-2" pref="103" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="391" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
@@ -143,26 +146,19 @@
                       <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel43" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace pref="21" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="cmbLoaiPhong" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
-                                  <Component id="ckLoaiPhong" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                              <Component id="btnLoc" min="-2" pref="48" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                          </Group>
+                      <EmptySpace pref="25" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="cmbLoaiPhong" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                          <Component id="ckLoaiPhong" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnLoc" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="ckSoGiuong" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="spSL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnLoc1" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -242,6 +238,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLocActionPerformed"/>
               </Events>
             </Component>
+            <Component class="swing.Button" name="btnLoc1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Xem"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoc1ActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -261,6 +265,7 @@
                     <Column editable="true" title="Title 4" type="java.lang.Object"/>
                   </Table>
                 </Property>
+                <Property name="rowHeight" type="int" value="40"/>
               </Properties>
             </Component>
           </SubComponents>

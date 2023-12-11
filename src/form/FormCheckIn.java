@@ -5,12 +5,17 @@
  */
 package form; 
 
+import component.TableActionCellEditor;
+import component.TableActionCellRender;
+import component.TableActionEvent;
 import connect.Connect;
 import java.awt.Color;
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +47,7 @@ public class FormCheckIn extends javax.swing.JPanel {
     
     Connect cn = new Connect();
     Connection conn;
-    DefaultTableModel tbmodel;
+    private DefaultTableModel tableModel;
 
     private String username, password, quyen, DisplayName;
     
@@ -52,60 +57,764 @@ public class FormCheckIn extends javax.swing.JPanel {
         this.password = password;
         this.DisplayName = DisplayName;
         this.quyen = quyen;
-        
-        
-        initCombobox_maphieudatphong();
-  
-       
+        Checkin();
 
-        inittable();
-        loaddulieu1();
     }
     
-    private void inittable() {
-        tbmodel = new DefaultTableModel();
-        tbmodel.setColumnIdentifiers(new String[]{"Mã phiếu thuê phòng", "Mã phiếu đặt phòng", "Ngày đặt phòng", "Mã khách hàng", "Tên khách hàng", "Mã phòng", "Tên phòng", "Loại phòng",  "Giá phòng", "Ngày thuê phòng"});
-        TBRent.setModel(tbmodel);
-    }
     
-    public void loaddulieu1() {
-        try {
-            ModelCheckIn ql = new ModelCheckIn();
-            ArrayList<ModelCheckInv2> list = ql.findALL();
-            tbmodel.setRowCount(0);
-            for (ModelCheckInv2 p : list) {
-                tbmodel.addRow(new Object[]{
-                    p.getMaPhieuThuePhong(), p.getMaPhieuDatPhong(), p.getNgayDatPhong(), p.getMaKH(), p.getTenKH(), p.getMaPhong(),p.getTenPhong(), p.getLoaiPhong(),  p.getGia(), p.getNgayThuePhong()
-                });
-            }
-            tbmodel.fireTableDataChanged();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
-        }
+    
+    private void Checkin(){
+        // Khởi tạo model và đặt tên cột
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Mã phiếu đặt phòng");
+        tableModel.addColumn("Họ tên khách hàng");
+        tableModel.addColumn("Mã phòng");
+        tableModel.addColumn("Tên phòng");
+        
+         tableModel.addColumn("Tên loại phòng");
+        tableModel.addColumn("Ngày đặt phòng");
+        tableModel.addColumn("Ngày thuê phòng");
+        tableModel.addColumn("Ngày trả phòng");
+        tableModel.addColumn("Đơn giá");
 
+
+        table.setModel(tableModel);
+        
+
+        loadDataFromSQL();
     }
      
-   
-    
-    
-    private void initCombobox_maphieudatphong() {
+    private void loadDataFromSQL() {
+         
+        Connection connection = null;
         try {
-            conn = cn.getConnection();
-            String sql = "Select MaPhieuDatPhong from PhieuDatPhong where isvisible = '1' ";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery();
-            cmbmaphieudatphong.removeAllItems();
-            cmbmaphieudatphong.removeAllItems();
-            while (rs.next()) {
-                cmbmaphieudatphong.addItem(rs.getString("MaPhieuDatPhong"));
+             // Kết nối đến cơ sở dữ liệu SQL Server
+
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            
+            // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+            String sqlQuery = "select MaPhieuDatPhong, kh.MaKH, HoKH +' '+TenKH as hotenkh, nv.MaNV, HoNV,TenNV, p.MaPhong, TenPhong, lp.TenLoaiPhong, \n" +
+"NgayDatPhong,NgayDuKienThue, NgayDuKienTra, DonGia from PhieuDatPhong pdp join PHONG p on pdp.MaPhong = p.MaPhong \n" +
+"join KHACHHANG kh on kh.MaKH =pdp.MaKH join NHANVIEN nv on pdp.MaNV = nv.MaNV \n" +
+"join LOAIPHONG lp on lp.MaLoaiPhong = p.MaLoaiPhong\n" +
+"join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong\n" +
+"where pdp.isvisible = '1' and booked_status = 0  ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Lặp qua kết quả và thêm vào model
+                while (resultSet.next()) {
+                    Object[] rowData = {
+                            resultSet.getObject("MaPhieuDatPhong"),
+                            resultSet.getObject("hotenkh"),
+                            resultSet.getObject("MaPhong"),
+                            resultSet.getObject("TenPhong"),
+                            resultSet.getObject("TenLoaiPhong"),
+                            resultSet.getObject("NgayDatPhong"),
+                            resultSet.getObject("NgayDuKienThue"),
+                            resultSet.getObject("NgayDuKienTra"),
+                            resultSet.getObject("DonGia"),
+                           
+                            
+                    };
+                    tableModel.addRow(rowData);
+                }
             }
-            rs.close();
-            pstmt.close();
-            conn.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (SQLException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+     
+    private void updateDataFromSQL(String MaPhieuDatPhong) {
+        // Thực hiện xóa dữ liệu từ SQL tại đây
+        Connection connection = null;
+        try  {
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            String deleteQuery = "update PhieuDatPhong set booked_status = '1' where MaPhieuDatPhong = ? ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, MaPhieuDatPhong);
+
+                // Thực hiện câu lệnh DELETE
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Đơn đặt phòng đã được đặt.");
+                } else {
+                    System.out.println("không có mã đơn đặt phòng: " + MaPhieuDatPhong);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
+    }
+    
+    
+    //////////////////////////// mã
+    private void ma(){
+        // Khởi tạo model và đặt tên cột
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Mã phiếu đặt phòng");
+        tableModel.addColumn("Họ tên khách hàng");
+        tableModel.addColumn("Mã phòng");
+        tableModel.addColumn("Tên phòng");
+        
+         tableModel.addColumn("Tên loại phòng");
+        tableModel.addColumn("Ngày đặt phòng");
+        tableModel.addColumn("Ngày thuê phòng");
+        tableModel.addColumn("Ngày trả phòng");
+        tableModel.addColumn("Đơn giá");
+
+
+        table.setModel(tableModel);
+        
+
+        loadDataFromSQL_ma();
+    }
+     
+    private void loadDataFromSQL_ma() {
+        String maphong = txtMaphong.getText();
+        Connection connection = null;
+        try {
+             // Kết nối đến cơ sở dữ liệu SQL Server
+
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            
+            // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+            String sqlQuery = "select MaPhieuDatPhong, kh.MaKH, HoKH +' '+TenKH as hotenkh, nv.MaNV, HoNV,TenNV, p.MaPhong, TenPhong, lp.TenLoaiPhong, \n" +
+"NgayDatPhong,NgayDuKienThue, NgayDuKienTra, DonGia from PhieuDatPhong pdp join PHONG p on pdp.MaPhong = p.MaPhong \n" +
+"join KHACHHANG kh on kh.MaKH =pdp.MaKH join NHANVIEN nv on pdp.MaNV = nv.MaNV \n" +
+"join LOAIPHONG lp on lp.MaLoaiPhong = p.MaLoaiPhong\n" +
+"join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong\n" +
+"where pdp.isvisible = '1' and booked_status = 0 and p.MaPhong = '"+maphong+"'   ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Lặp qua kết quả và thêm vào model
+                while (resultSet.next()) {
+                    Object[] rowData = {
+                            resultSet.getObject("MaPhieuDatPhong"),
+                            resultSet.getObject("hotenkh"),
+                            resultSet.getObject("MaPhong"),
+                            resultSet.getObject("TenPhong"),
+                            resultSet.getObject("TenLoaiPhong"),
+                            resultSet.getObject("NgayDatPhong"),
+                            resultSet.getObject("NgayDuKienThue"),
+                            resultSet.getObject("NgayDuKienTra"),
+                            resultSet.getObject("DonGia"),
+                           
+                            
+                    };
+                    tableModel.addRow(rowData);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    //////////////////////////// ngay
+    private void ngay(){
+        // Khởi tạo model và đặt tên cột
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Mã phiếu đặt phòng");
+        tableModel.addColumn("Họ tên khách hàng");
+        tableModel.addColumn("Mã phòng");
+        tableModel.addColumn("Tên phòng");
+        
+         tableModel.addColumn("Tên loại phòng");
+        tableModel.addColumn("Ngày đặt phòng");
+        tableModel.addColumn("Ngày thuê phòng");
+        tableModel.addColumn("Ngày trả phòng");
+        tableModel.addColumn("Đơn giá");
+
+
+        table.setModel(tableModel);
+        
+
+        loadDataFromSQL_ngay();
+    }
+     
+    private void loadDataFromSQL_ngay() {
+        
+        
+        Date selectedDate = jDateChooserngaydkthue.getDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDate);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String ngaythue = year + "-" + month + "-" + day;
+        
+        
+        Date selectedDate1 = jDateChooserngaydukientra.getDate();
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(selectedDate1);
+
+        int year1 = calendar1.get(Calendar.YEAR);
+        int month1 = calendar1.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day1 = calendar1.get(Calendar.DAY_OF_MONTH);
+        String ngaytra = year1 + "-" + month1 + "-" + day1;
+        
+        
+        String maphong = txtMaphong.getText();
+        Connection connection = null;
+        try {
+             // Kết nối đến cơ sở dữ liệu SQL Server
+
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            
+            // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+            String sqlQuery = "select MaPhieuDatPhong, kh.MaKH, HoKH +' '+TenKH as hotenkh, nv.MaNV, HoNV,TenNV, p.MaPhong, TenPhong, lp.TenLoaiPhong, \n" +
+"NgayDatPhong,NgayDuKienThue, NgayDuKienTra, DonGia from PhieuDatPhong pdp join PHONG p on pdp.MaPhong = p.MaPhong \n" +
+"join KHACHHANG kh on kh.MaKH =pdp.MaKH join NHANVIEN nv on pdp.MaNV = nv.MaNV \n" +
+"join LOAIPHONG lp on lp.MaLoaiPhong = p.MaLoaiPhong\n" +
+"join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong\n" +
+"where pdp.isvisible = '1' and booked_status = 0 and NgayDuKienThue = '"+ngaythue+"' and NgayDuKienTra = '"+ngaytra+"' ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Lặp qua kết quả và thêm vào model
+                while (resultSet.next()) {
+                    Object[] rowData = {
+                            resultSet.getObject("MaPhieuDatPhong"),
+                            resultSet.getObject("hotenkh"),
+                            resultSet.getObject("MaPhong"),
+                            resultSet.getObject("TenPhong"),
+                            resultSet.getObject("TenLoaiPhong"),
+                            resultSet.getObject("NgayDatPhong"),
+                            resultSet.getObject("NgayDuKienThue"),
+                            resultSet.getObject("NgayDuKienTra"),
+                            resultSet.getObject("DonGia"),
+                           
+                            
+                    };
+                    tableModel.addRow(rowData);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    //////////////////////////// hoten
+    private void hoten(){
+        // Khởi tạo model và đặt tên cột
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Mã phiếu đặt phòng");
+        tableModel.addColumn("Họ tên khách hàng");
+        tableModel.addColumn("Mã phòng");
+        tableModel.addColumn("Tên phòng");
+        
+         tableModel.addColumn("Tên loại phòng");
+        tableModel.addColumn("Ngày đặt phòng");
+        tableModel.addColumn("Ngày thuê phòng");
+        tableModel.addColumn("Ngày trả phòng");
+        tableModel.addColumn("Đơn giá");
+
+
+        table.setModel(tableModel);
+        
+
+        loadDataFromSQL_hoten();
+    }
+     
+    private void loadDataFromSQL_hoten() {
+        
+        String hoten = txtHotenKH.getText();
+        
+
+        String maphong = txtMaphong.getText();
+        Connection connection = null;
+        try {
+             // Kết nối đến cơ sở dữ liệu SQL Server
+
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            
+            // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+            String sqlQuery = "select MaPhieuDatPhong, kh.MaKH, HoKH +' '+TenKH as hotenkh, nv.MaNV, HoNV,TenNV, p.MaPhong, TenPhong, lp.TenLoaiPhong, \n" +
+"NgayDatPhong,NgayDuKienThue, NgayDuKienTra, DonGia from PhieuDatPhong pdp join PHONG p on pdp.MaPhong = p.MaPhong \n" +
+"join KHACHHANG kh on kh.MaKH =pdp.MaKH join NHANVIEN nv on pdp.MaNV = nv.MaNV \n" +
+"join LOAIPHONG lp on lp.MaLoaiPhong = p.MaLoaiPhong\n" +
+"join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong\n" +
+"where pdp.isvisible = '1' and booked_status = 0 and HoKH +' ' +TenKH like N'%"+hoten+"%' ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Lặp qua kết quả và thêm vào model
+                while (resultSet.next()) {
+                    Object[] rowData = {
+                            resultSet.getObject("MaPhieuDatPhong"),
+                            resultSet.getObject("hotenkh"),
+                            resultSet.getObject("MaPhong"),
+                            resultSet.getObject("TenPhong"),
+                            resultSet.getObject("TenLoaiPhong"),
+                            resultSet.getObject("NgayDatPhong"),
+                            resultSet.getObject("NgayDuKienThue"),
+                            resultSet.getObject("NgayDuKienTra"),
+                            resultSet.getObject("DonGia"),
+                    };
+                    tableModel.addRow(rowData);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    //////////////////////////// mã ngày ngay
+    private void mangay(){
+        // Khởi tạo model và đặt tên cột
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Mã phiếu đặt phòng");
+        tableModel.addColumn("Họ tên khách hàng");
+        tableModel.addColumn("Mã phòng");
+        tableModel.addColumn("Tên phòng");
+        
+         tableModel.addColumn("Tên loại phòng");
+        tableModel.addColumn("Ngày đặt phòng");
+        tableModel.addColumn("Ngày thuê phòng");
+        tableModel.addColumn("Ngày trả phòng");
+        tableModel.addColumn("Đơn giá");
+
+
+        table.setModel(tableModel);
+        
+
+        loadDataFromSQL_mangay();
+    }
+     
+    private void loadDataFromSQL_mangay() {
+        
+        
+        Date selectedDate = jDateChooserngaydkthue.getDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDate);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String ngaythue = year + "-" + month + "-" + day;
+        
+        
+        Date selectedDate1 = jDateChooserngaydukientra.getDate();
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(selectedDate1);
+
+        int year1 = calendar1.get(Calendar.YEAR);
+        int month1 = calendar1.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day1 = calendar1.get(Calendar.DAY_OF_MONTH);
+        String ngaytra = year1 + "-" + month1 + "-" + day1;
+        
+        
+        String maphong = txtMaphong.getText();
+        Connection connection = null;
+        try {
+             // Kết nối đến cơ sở dữ liệu SQL Server
+
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            
+            // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+            String sqlQuery = "select MaPhieuDatPhong, kh.MaKH, HoKH +' '+TenKH as hotenkh, nv.MaNV, HoNV,TenNV, p.MaPhong, TenPhong, lp.TenLoaiPhong, \n" +
+"NgayDatPhong,NgayDuKienThue, NgayDuKienTra, DonGia from PhieuDatPhong pdp join PHONG p on pdp.MaPhong = p.MaPhong \n" +
+"join KHACHHANG kh on kh.MaKH =pdp.MaKH join NHANVIEN nv on pdp.MaNV = nv.MaNV \n" +
+"join LOAIPHONG lp on lp.MaLoaiPhong = p.MaLoaiPhong\n" +
+"join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong\n" +
+"where pdp.isvisible = '1' and booked_status = 0 and NgayDuKienThue = '"+ngaythue+"' and NgayDuKienTra = '"+ngaytra+"' and p.MaPhong = '"+maphong+"'   ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Lặp qua kết quả và thêm vào model
+                while (resultSet.next()) {
+                    Object[] rowData = {
+                            resultSet.getObject("MaPhieuDatPhong"),
+                            resultSet.getObject("hotenkh"),
+                            resultSet.getObject("MaPhong"),
+                            resultSet.getObject("TenPhong"),
+                            resultSet.getObject("TenLoaiPhong"),
+                            resultSet.getObject("NgayDatPhong"),
+                            resultSet.getObject("NgayDuKienThue"),
+                            resultSet.getObject("NgayDuKienTra"),
+                            resultSet.getObject("DonGia"),
+                           
+                            
+                    };
+                    tableModel.addRow(rowData);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    //////////////////////////// mã hoten
+    private void mahoten(){
+        // Khởi tạo model và đặt tên cột
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Mã phiếu đặt phòng");
+        tableModel.addColumn("Họ tên khách hàng");
+        tableModel.addColumn("Mã phòng");
+        tableModel.addColumn("Tên phòng");
+        
+         tableModel.addColumn("Tên loại phòng");
+        tableModel.addColumn("Ngày đặt phòng");
+        tableModel.addColumn("Ngày thuê phòng");
+        tableModel.addColumn("Ngày trả phòng");
+        tableModel.addColumn("Đơn giá");
+
+
+        table.setModel(tableModel);
+        
+
+        loadDataFromSQL_mahoten();
+    }
+     
+    private void loadDataFromSQL_mahoten() {
+        
+        String hoten = txtHotenKH.getText();
+        
+
+        String maphong = txtMaphong.getText();
+        Connection connection = null;
+        try {
+             // Kết nối đến cơ sở dữ liệu SQL Server
+
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            
+            // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+            String sqlQuery = "select MaPhieuDatPhong, kh.MaKH, HoKH +' '+TenKH as hotenkh, nv.MaNV, HoNV,TenNV, p.MaPhong, TenPhong, lp.TenLoaiPhong, \n" +
+"NgayDatPhong,NgayDuKienThue, NgayDuKienTra, DonGia from PhieuDatPhong pdp join PHONG p on pdp.MaPhong = p.MaPhong \n" +
+"join KHACHHANG kh on kh.MaKH =pdp.MaKH join NHANVIEN nv on pdp.MaNV = nv.MaNV \n" +
+"join LOAIPHONG lp on lp.MaLoaiPhong = p.MaLoaiPhong\n" +
+"join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong\n" +
+"where pdp.isvisible = '1' and booked_status = 0 and HoKH +' ' +TenKH like N'%"+hoten+"%' and p.MaPhong = '"+maphong+"'   ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Lặp qua kết quả và thêm vào model
+                while (resultSet.next()) {
+                    Object[] rowData = {
+                            resultSet.getObject("MaPhieuDatPhong"),
+                            resultSet.getObject("hotenkh"),
+                            resultSet.getObject("MaPhong"),
+                            resultSet.getObject("TenPhong"),
+                            resultSet.getObject("TenLoaiPhong"),
+                            resultSet.getObject("NgayDatPhong"),
+                            resultSet.getObject("NgayDuKienThue"),
+                            resultSet.getObject("NgayDuKienTra"),
+                            resultSet.getObject("DonGia"),
+                    };
+                    tableModel.addRow(rowData);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    ////////////////////////////  ngày ho ten
+    private void ngayHoten(){
+        // Khởi tạo model và đặt tên cột
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Mã phiếu đặt phòng");
+        tableModel.addColumn("Họ tên khách hàng");
+        tableModel.addColumn("Mã phòng");
+        tableModel.addColumn("Tên phòng");
+        
+         tableModel.addColumn("Tên loại phòng");
+        tableModel.addColumn("Ngày đặt phòng");
+        tableModel.addColumn("Ngày thuê phòng");
+        tableModel.addColumn("Ngày trả phòng");
+        tableModel.addColumn("Đơn giá");
+
+
+        table.setModel(tableModel);
+        
+
+        loadDataFromSQL_ngayHoten();
+    }
+     
+    private void loadDataFromSQL_ngayHoten() {
+        
+        
+        Date selectedDate = jDateChooserngaydkthue.getDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDate);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String ngaythue = year + "-" + month + "-" + day;
+        
+        
+        Date selectedDate1 = jDateChooserngaydukientra.getDate();
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(selectedDate1);
+
+        int year1 = calendar1.get(Calendar.YEAR);
+        int month1 = calendar1.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day1 = calendar1.get(Calendar.DAY_OF_MONTH);
+        String ngaytra = year1 + "-" + month1 + "-" + day1;
+        
+        
+        String hoten = txtHotenKH.getText();
+        Connection connection = null;
+        try {
+             // Kết nối đến cơ sở dữ liệu SQL Server
+
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            
+            // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+            String sqlQuery = "select MaPhieuDatPhong, kh.MaKH, HoKH +' '+TenKH as hotenkh, nv.MaNV, HoNV,TenNV, p.MaPhong, TenPhong, lp.TenLoaiPhong, \n" +
+"NgayDatPhong,NgayDuKienThue, NgayDuKienTra, DonGia from PhieuDatPhong pdp join PHONG p on pdp.MaPhong = p.MaPhong \n" +
+"join KHACHHANG kh on kh.MaKH =pdp.MaKH join NHANVIEN nv on pdp.MaNV = nv.MaNV \n" +
+"join LOAIPHONG lp on lp.MaLoaiPhong = p.MaLoaiPhong\n" +
+"join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong\n" +
+"where pdp.isvisible = '1' and booked_status = 0 and NgayDuKienThue = '"+ngaythue+"' and NgayDuKienTra = '"+ngaytra+"' and HoKH +' ' +TenKH like N'%"+hoten+"%'   ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Lặp qua kết quả và thêm vào model
+                while (resultSet.next()) {
+                    Object[] rowData = {
+                            resultSet.getObject("MaPhieuDatPhong"),
+                            resultSet.getObject("hotenkh"),
+                            resultSet.getObject("MaPhong"),
+                            resultSet.getObject("TenPhong"),
+                            resultSet.getObject("TenLoaiPhong"),
+                            resultSet.getObject("NgayDatPhong"),
+                            resultSet.getObject("NgayDuKienThue"),
+                            resultSet.getObject("NgayDuKienTra"),
+                            resultSet.getObject("DonGia"),
+                           
+                            
+                    };
+                    tableModel.addRow(rowData);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    ////////////////////////////  all
+    private void all(){
+        // Khởi tạo model và đặt tên cột
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Mã phiếu đặt phòng");
+        tableModel.addColumn("Họ tên khách hàng");
+        tableModel.addColumn("Mã phòng");
+        tableModel.addColumn("Tên phòng");
+        
+         tableModel.addColumn("Tên loại phòng");
+        tableModel.addColumn("Ngày đặt phòng");
+        tableModel.addColumn("Ngày thuê phòng");
+        tableModel.addColumn("Ngày trả phòng");
+        tableModel.addColumn("Đơn giá");
+
+
+        table.setModel(tableModel);
+        
+
+        loadDataFromSQL_all();
+    }
+     
+    private void loadDataFromSQL_all() {
+        
+        
+        Date selectedDate = jDateChooserngaydkthue.getDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDate);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String ngaythue = year + "-" + month + "-" + day;
+        
+        
+        Date selectedDate1 = jDateChooserngaydukientra.getDate();
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(selectedDate1);
+
+        int year1 = calendar1.get(Calendar.YEAR);
+        int month1 = calendar1.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day1 = calendar1.get(Calendar.DAY_OF_MONTH);
+        String ngaytra = year1 + "-" + month1 + "-" + day1;
+        
+        
+        String hoten = txtHotenKH.getText();
+        String maphong = txtMaphong.getText();
+        Connection connection = null;
+        try {
+             // Kết nối đến cơ sở dữ liệu SQL Server
+
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            
+            // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+            String sqlQuery = "select MaPhieuDatPhong, kh.MaKH, HoKH +' '+TenKH as hotenkh, nv.MaNV, HoNV,TenNV, p.MaPhong, TenPhong, lp.TenLoaiPhong, \n" +
+"NgayDatPhong,NgayDuKienThue, NgayDuKienTra, DonGia from PhieuDatPhong pdp join PHONG p on pdp.MaPhong = p.MaPhong \n" +
+"join KHACHHANG kh on kh.MaKH =pdp.MaKH join NHANVIEN nv on pdp.MaNV = nv.MaNV \n" +
+"join LOAIPHONG lp on lp.MaLoaiPhong = p.MaLoaiPhong\n" +
+"join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong\n" +
+"where pdp.isvisible = '1' and booked_status = 0 and NgayDuKienThue = '"+ngaythue+"' and NgayDuKienTra = '"+ngaytra+"' and HoKH +' ' +TenKH like N'%"+hoten+"%' and p.MaPhong = '"+maphong+"'    ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Lặp qua kết quả và thêm vào model
+                while (resultSet.next()) {
+                    Object[] rowData = {
+                            resultSet.getObject("MaPhieuDatPhong"),
+                            resultSet.getObject("hotenkh"),
+                            resultSet.getObject("MaPhong"),
+                            resultSet.getObject("TenPhong"),
+                            resultSet.getObject("TenLoaiPhong"),
+                            resultSet.getObject("NgayDatPhong"),
+                            resultSet.getObject("NgayDuKienThue"),
+                            resultSet.getObject("NgayDuKienTra"),
+                            resultSet.getObject("DonGia"),
+                           
+                            
+                    };
+                    tableModel.addRow(rowData);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -119,199 +828,27 @@ public class FormCheckIn extends javax.swing.JPanel {
     private void initComponents() {
 
         roundPanel5 = new swing.RoundPanel();
-        jLabel12 = new javax.swing.JLabel();
-        btnEdit = new swing.Button();
-        btnAdd = new swing.Button();
-        bthDelete = new swing.Button();
-        btnRefresh = new swing.Button();
-        jLabel15 = new javax.swing.JLabel();
-        jDateChooserngaydatphong = new com.toedter.calendar.JDateChooser();
-        cmbmaphieudatphong = new javax.swing.JComboBox<>();
-        jLabel21 = new javax.swing.JLabel();
-        jDateChooserngaythuephong = new com.toedter.calendar.JDateChooser();
-        txtMaphieuthuephong = new component.TextField();
-        txtMaKH = new component.TextField();
-        txtTenKH = new component.TextField();
-        txtMaPhong = new component.TextField();
-        txtTenPhong = new component.TextField();
-        txtloaiphong = new component.TextField();
-        txtGiaPhong = new component.TextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TBRent = new javax.swing.JTable();
-        jLabel8 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        panelBorder2 = new swing.PanelBorder();
-        rbMAKH1 = new javax.swing.JRadioButton();
-        txtSEARCHMAKH = new javax.swing.JTextField();
-        rbsearchngaydat = new javax.swing.JRadioButton();
-        btnSearch = new swing.Button();
+        table = new javax.swing.JTable();
+        btnThuePhong = new javax.swing.JButton();
+        txtMaphieudatphong = new component.TextField();
+        panelBorder5 = new swing.PanelBorder();
+        btnLoc = new swing.Button();
+        ckMaPhong = new javax.swing.JCheckBox();
+        ckHoTen = new javax.swing.JCheckBox();
+        ckNgay = new javax.swing.JCheckBox();
+        txtMaphong = new component.TextField();
+        txtHotenKH = new component.TextField();
+        jLabel16 = new javax.swing.JLabel();
+        jDateChooserngaydkthue = new com.toedter.calendar.JDateChooser();
+        jLabel17 = new javax.swing.JLabel();
+        jDateChooserngaydukientra = new com.toedter.calendar.JDateChooser();
         btnView = new swing.Button();
-        jDateChooserTim = new com.toedter.calendar.JDateChooser();
 
         roundPanel5.setBackground(new java.awt.Color(36, 87, 157));
-        roundPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin thuê phòng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
+        roundPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Trang xác nhận thuê phòng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Mã phiếu đặt phòng:");
-
-        btnEdit.setText("Sửa");
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
-            }
-        });
-
-        btnAdd.setText("Thêm");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
-            }
-        });
-
-        bthDelete.setText("Xóa");
-        bthDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bthDeleteActionPerformed(evt);
-            }
-        });
-
-        btnRefresh.setText("Làm mới");
-        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRefreshActionPerformed(evt);
-            }
-        });
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Ngày đặt phòng:");
-
-        jDateChooserngaydatphong.setEnabled(false);
-
-        cmbmaphieudatphong.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbmaphieudatphongItemStateChanged(evt);
-            }
-        });
-
-        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setText("Ngày thuê phòng:");
-
-        txtMaphieuthuephong.setLabelText("Mã phiếu thuê phòng");
-
-        txtMaKH.setLabelText("Mã khách hàng");
-
-        txtTenKH.setLabelText("Tên khách hàng");
-
-        txtMaPhong.setLabelText("Mã phòng");
-
-        txtTenPhong.setLabelText("Tên phòng");
-
-        txtloaiphong.setLabelText("Loại phòng");
-
-        txtGiaPhong.setLabelText("Giá phòng");
-
-        javax.swing.GroupLayout roundPanel5Layout = new javax.swing.GroupLayout(roundPanel5);
-        roundPanel5.setLayout(roundPanel5Layout);
-        roundPanel5Layout.setHorizontalGroup(
-            roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel5Layout.createSequentialGroup()
-                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))
-                    .addGroup(roundPanel5Layout.createSequentialGroup()
-                        .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(roundPanel5Layout.createSequentialGroup()
-                                .addGap(51, 51, 51)
-                                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtMaphieuthuephong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtMaKH, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(roundPanel5Layout.createSequentialGroup()
-                                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(roundPanel5Layout.createSequentialGroup()
-                                        .addGap(51, 51, 51)
-                                        .addComponent(jLabel15)
-                                        .addGap(49, 49, 49))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(jLabel12)
-                                        .addGap(18, 18, 18)))
-                                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jDateChooserngaydatphong, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbmaphieudatphong, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(53, 53, 53)))
-                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(roundPanel5Layout.createSequentialGroup()
-                        .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(roundPanel5Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTenPhong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(roundPanel5Layout.createSequentialGroup()
-                                .addComponent(txtMaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtloaiphong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtGiaPhong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel21)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jDateChooserngaythuephong, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(60, 60, 60))
-        );
-        roundPanel5Layout.setVerticalGroup(
-            roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel5Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtMaphieuthuephong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbmaphieudatphong, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTenPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
-                .addGap(18, 18, 18)
-                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChooserngaydatphong, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtloaiphong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(roundPanel5Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(jLabel15)))
-                .addGap(18, 18, 18)
-                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(roundPanel5Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(txtGiaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, Short.MAX_VALUE)
-                        .addComponent(jDateChooserngaythuephong, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, roundPanel5Layout.createSequentialGroup()
-                        .addComponent(txtMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel21))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
-        TBRent.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        TBRent.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -322,34 +859,62 @@ public class FormCheckIn extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        TBRent.addMouseListener(new java.awt.event.MouseAdapter() {
+        table.setRowHeight(40);
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TBRentMouseClicked(evt);
+                tableMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tableMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(TBRent);
+        jScrollPane1.setViewportView(table);
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel8.setText("Thông tin thuê phòng:");
-
-        panelBorder2.setBackground(new java.awt.Color(36, 87, 157));
-        panelBorder2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
-        panelBorder2.setForeground(new java.awt.Color(255, 255, 255));
-
-        rbMAKH1.setBackground(new java.awt.Color(36, 87, 157));
-        rbMAKH1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        rbMAKH1.setForeground(new java.awt.Color(255, 255, 255));
-        rbMAKH1.setText("Mã khách hàng:");
-
-        rbsearchngaydat.setBackground(new java.awt.Color(36, 87, 157));
-        rbsearchngaydat.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        rbsearchngaydat.setForeground(new java.awt.Color(255, 255, 255));
-        rbsearchngaydat.setText("Ngày đặt phòng:");
-
-        btnSearch.setText("Tìm kiếm");
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+        btnThuePhong.setText("Thuê phòng");
+        btnThuePhong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
+                btnThuePhongActionPerformed(evt);
+            }
+        });
+
+        txtMaphieudatphong.setLabelText("Mã phiếu đặt phòng");
+
+        panelBorder5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lọc thông tin phiếu thuê phòng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20))); // NOI18N
+
+        btnLoc.setText("Lọc");
+        btnLoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocActionPerformed(evt);
+            }
+        });
+
+        ckMaPhong.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        ckMaPhong.setText("Mã phòng:");
+
+        ckHoTen.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        ckHoTen.setText("Họ tên khách hàng:");
+
+        ckNgay.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+
+        txtMaphong.setLabelText("Mã phòng");
+
+        txtHotenKH.setLabelText("Mã phiếu đặt phòng");
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel16.setText("Ngày thuê phòng:");
+
+        jDateChooserngaydkthue.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooserngaydkthuePropertyChange(evt);
+            }
+        });
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel17.setText("Ngày trả phòng:");
+
+        jDateChooserngaydukientra.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooserngaydukientraPropertyChange(evt);
             }
         });
 
@@ -360,42 +925,99 @@ public class FormCheckIn extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout panelBorder2Layout = new javax.swing.GroupLayout(panelBorder2);
-        panelBorder2.setLayout(panelBorder2Layout);
-        panelBorder2Layout.setHorizontalGroup(
-            panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBorder2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(panelBorder2Layout.createSequentialGroup()
-                        .addComponent(rbsearchngaydat)
+        javax.swing.GroupLayout panelBorder5Layout = new javax.swing.GroupLayout(panelBorder5);
+        panelBorder5.setLayout(panelBorder5Layout);
+        panelBorder5Layout.setHorizontalGroup(
+            panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBorder5Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ckMaPhong)
+                    .addGroup(panelBorder5Layout.createSequentialGroup()
+                        .addComponent(ckNgay)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jDateChooserngaydukientra, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelBorder5Layout.createSequentialGroup()
+                                .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder5Layout.createSequentialGroup()
+                                        .addComponent(jLabel17)
+                                        .addGap(48, 48, 48))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder5Layout.createSequentialGroup()
+                                        .addComponent(jLabel16)
+                                        .addGap(36, 36, 36)))
+                                .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jDateChooserngaydkthue, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                                    .addComponent(txtMaphong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelBorder5Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jDateChooserTim, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelBorder2Layout.createSequentialGroup()
-                        .addComponent(rbMAKH1)
-                        .addGap(31, 31, 31)
-                        .addComponent(txtSEARCHMAKH, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37))
+                        .addComponent(ckHoTen)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtHotenKH, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41))
+                    .addGroup(panelBorder5Layout.createSequentialGroup()
+                        .addGap(189, 189, 189)
+                        .addComponent(btnLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
-        panelBorder2Layout.setVerticalGroup(
-            panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbMAKH1)
-                    .addComponent(txtSEARCHMAKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
-                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jDateChooserTim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(rbsearchngaydat)))
-                .addGap(12, 12, 12))
+        panelBorder5Layout.setVerticalGroup(
+            panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBorder5Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ckMaPhong)
+                    .addComponent(txtMaphong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ckHoTen)
+                    .addComponent(txtHotenKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ckNgay)
+                    .addGroup(panelBorder5Layout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel17))
+                    .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(panelBorder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelBorder5Layout.createSequentialGroup()
+                            .addComponent(jDateChooserngaydkthue, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jDateChooserngaydukientra, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(62, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout roundPanel5Layout = new javax.swing.GroupLayout(roundPanel5);
+        roundPanel5.setLayout(roundPanel5Layout);
+        roundPanel5Layout.setHorizontalGroup(
+            roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1078, Short.MAX_VALUE)
+                    .addGroup(roundPanel5Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(txtMaphieudatphong, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnThuePhong, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelBorder5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        roundPanel5Layout.setVerticalGroup(
+            roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundPanel5Layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(panelBorder5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnThuePhong, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMaphieudatphong, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -404,333 +1026,104 @@ public class FormCheckIn extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(roundPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(roundPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(roundPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelBorder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addGap(2, 2, 2)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(roundPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+    private void tableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMousePressed
         // TODO add your handling code here:
-        Date selectedDate = jDateChooserngaythuephong.getDate();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDate);
-
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String ngaythue = year + "-" + month + "-" + day;
-
-        StringBuilder sb = new StringBuilder();
-        if (txtMaphieuthuephong.getText().equals("")) {
-            sb.append("Mã phiếu thuê phòng không được để trống");
-            txtMaphieuthuephong.setBackground(Color.red);
-
-        } else {
-            txtMaphieuthuephong.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        String Madatphong = cmbmaphieudatphong.getSelectedItem().toString();
         
-        try {
-            ModelCheckInv2 ci = new ModelCheckInv2();
-            ci.setMaPhieuThuePhong(txtMaphieuthuephong.getText());
-            ci.setNgayThuePhong(ngaythue);
-            ci.setMaPhieuDatPhong(Madatphong);
-            
+    }//GEN-LAST:event_tableMousePressed
 
-            ModelCheckIn ql1 = new ModelCheckIn();
-            ql1.update(ci);
-
-            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-            
-            int row = TBRent.getSelectedRow();
-            if (row >= 0) {
-                String maphong = TBRent.getValueAt(row, 5).toString();
-                
-                ModelPhongv2 p = new ModelPhongv2();
-                p.setMaPhong(maphong);
-
-                ModelPhong ql = new ModelPhong();
-                ql.updateTT2(p);
-                
-                
-                
-            }
-            ModelPhongv2 p = new ModelPhongv2();
-            p.setMaPhong(txtMaPhong.getText());
-
-            ModelPhong ql = new ModelPhong();
-            ql.updateTT3(p);
-         
-            
-            
-            
-            loaddulieu1();
-        } catch (Exception e) {
-            //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            JOptionPane.showMessageDialog(this, "Mã phiếu thuê phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
-            e.printStackTrace();
-        }
-
-    }//GEN-LAST:event_btnEditActionPerformed
-
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         // TODO add your handling code here:
-
-        Date selectedDate = jDateChooserngaythuephong.getDate();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDate);
-
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String ngaythue = year + "-" + month + "-" + day;
-
-        StringBuilder sb = new StringBuilder();
-        if (txtMaphieuthuephong.getText().equals("")) {
-            sb.append("Mã phiếu thuê phòng không được để trống");
-            txtMaphieuthuephong.setBackground(Color.red);
-
-        } else {
-            txtMaphieuthuephong.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        
-        
-        String Madatphong = cmbmaphieudatphong.getSelectedItem().toString();
-        
-        try {
-            ModelCheckInv2 ci = new ModelCheckInv2();
-            ci.setMaPhieuThuePhong(txtMaphieuthuephong.getText());
-            ci.setNgayThuePhong(ngaythue);
-            ci.setMaPhieuDatPhong(Madatphong);
-            
-
-            ModelCheckIn ql1 = new ModelCheckIn();
-            ql1.insert(ci);
-
-            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-            
-            
-            ModelPhongv2 p = new ModelPhongv2();
-            p.setMaPhong(txtMaPhong.getText());
-
-            ModelPhong ql = new ModelPhong();
-            ql.updateTT3(p);
-            
-            
-            loaddulieu1();
-        } catch (Exception e) {
-            //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            JOptionPane.showMessageDialog(this, "Mã phiếu thuê phòng này đã tồn tại, nếu muốn thêm với mã phiếu thuê phòng này vui lòng xóa phiếu đặt phòng trong db");
-            e.printStackTrace();
-        }
-
-    }//GEN-LAST:event_btnAddActionPerformed
-
-    private void bthDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bthDeleteActionPerformed
-        // TODO add your handling code here:
-
-        StringBuilder sb = new StringBuilder();
-        if (txtMaphieuthuephong.getText().equals("")) {
-            sb.append("Mã phiếu thuê phòng không được để trống");
-            txtMaphieuthuephong.setBackground(Color.red);
-
-        } else {
-            txtMaphieuthuephong.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-
-        try {
-            ModelCheckInv2 ci = new ModelCheckInv2();
-            ci.setMaPhieuThuePhong(txtMaphieuthuephong.getText());
-
-            ModelCheckIn ql1 = new ModelCheckIn();
-            ql1.deletecomeroot(ci);
-
-            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-            
-            
-            int row = TBRent.getSelectedRow();
-            if (row >= 0) {
-                String maphong = TBRent.getValueAt(row, 5).toString();
-                
-                ModelPhongv2 p = new ModelPhongv2();
-                p.setMaPhong(maphong);
-
-                ModelPhong ql = new ModelPhong();
-                ql.updateTT2(p);
-                
-  
-            }
-            
-            
-            loaddulieu1();
-        } catch (Exception e) {
-            //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
-            e.printStackTrace();
-        }
-
-    }//GEN-LAST:event_bthDeleteActionPerformed
-
-    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_btnRefreshActionPerformed
-
-    private void TBRentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TBRentMouseClicked
-        // TODO add your handling code here:
-        int row = TBRent.getSelectedRow();
+        int row = table.getSelectedRow();
 
         if (row >= 0) {
-            txtMaphieuthuephong.setText(TBRent.getValueAt(row, 0).toString());
-
-            String maphieudatphong = TBRent.getValueAt(row, 1).toString();
-            System.out.println("" + maphieudatphong);
-            cmbmaphieudatphong.setSelectedItem(maphieudatphong);
-
-            txtMaKH.setText(TBRent.getValueAt(row, 3).toString());
-            
-
-            txtTenKH.setText(TBRent.getValueAt(row, 4).toString());
-            txtMaPhong.setText(TBRent.getValueAt(row, 5).toString());
-            txtTenPhong.setText(TBRent.getValueAt(row, 6).toString());
-            txtloaiphong.setText(TBRent.getValueAt(row, 7).toString());
-        
-            
-            ModelCheckInv2 ms =new ModelCheckInv2();
-            BigDecimal x = (BigDecimal) TBRent.getValueAt(row, 8);
-
-            ms.setGia(x);
-
-            String formattedDonGia = ms.getFormattedGia();
-            System.out.println(formattedDonGia);
-            txtGiaPhong.setText(formattedDonGia);
-            
-            
-            String ngaythuephong = TBRent.getValueAt(row, 9).toString();
-
-            try {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
-                Date selectedDate = dateFormat.parse(ngaythuephong); // Phân tích chuỗi thành đối tượng Date
-                jDateChooserngaythuephong.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-           
-
+            txtMaphieudatphong.setText(table.getValueAt(row, 0).toString());
         }
-    }//GEN-LAST:event_TBRentMouseClicked
+    }//GEN-LAST:event_tableMouseClicked
 
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+    private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
+        // TODO add your handling code here:
+       if (ckMaPhong.isSelected() == true && ckNgay.isSelected() == false && ckHoTen.isSelected() == false){
+            System.out.println("mã phòng");
+            ma();
+            
+        }else if(ckMaPhong.isSelected() == false && ckNgay.isSelected() == true && ckHoTen.isSelected() == false){
+            System.out.println("ngày");
+            ngay();
+        }else if (ckMaPhong.isSelected() == false && ckNgay.isSelected() == false && ckHoTen.isSelected() == true){
+            System.out.println("hoten");
+            hoten();
+        }else if (ckMaPhong.isSelected() == true && ckNgay.isSelected() == true && ckHoTen.isSelected() == false){
+            System.out.println("mã ngày");
+            mangay();
+        }else if (ckMaPhong.isSelected() == true && ckNgay.isSelected() == false && ckHoTen.isSelected() == true){
+            System.out.println("mã họ tên");
+            mahoten();
+        }else if (ckMaPhong.isSelected() == true && ckNgay.isSelected() == true && ckHoTen.isSelected() == true){
+            System.out.println("all true");
+            all();
+        }else if (ckMaPhong.isSelected() == false && ckNgay.isSelected() == true && ckHoTen.isSelected() == true){
+            System.out.println("ngày họ tên");
+            ngayHoten();
+        }
+        else if (ckMaPhong.isSelected() == false && ckNgay.isSelected() == false && ckHoTen.isSelected() == false){
+            System.out.println("chọn lọc");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn phương thức lọc");
+        }
+    }//GEN-LAST:event_btnLocActionPerformed
+
+    private void btnThuePhongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThuePhongActionPerformed
+        // TODO add your handling code here:
+        String madatphong = txtMaphieudatphong.getText();
+        updateDataFromSQL(madatphong);
+        
+        Checkin();
+    }//GEN-LAST:event_btnThuePhongActionPerformed
+
+    private void jDateChooserngaydkthuePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserngaydkthuePropertyChange
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_btnSearchActionPerformed
+    }//GEN-LAST:event_jDateChooserngaydkthuePropertyChange
+
+    private void jDateChooserngaydukientraPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserngaydukientraPropertyChange
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jDateChooserngaydukientraPropertyChange
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
-
+        Checkin();
     }//GEN-LAST:event_btnViewActionPerformed
-
-    private void cmbmaphieudatphongItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmaphieudatphongItemStateChanged
-        // TODO add your handling code here:
-        String Mapdp = cmbmaphieudatphong.getSelectedItem().toString();
-        try {
-            ModelRent ql = new ModelRent();
-
-            model.ModelRentv2 ttp = ql.findByID(Mapdp);
-            if (ttp != null) {
-
-                String ngaydatphong = ttp.getNgayDatPhong();
-
-                try {
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
-                    Date selectedDatee = dateFormat.parse(ngaydatphong); // Phân tích chuỗi thành đối tượng Date
-                    jDateChooserngaydatphong.setDate(selectedDatee); // Đặt giá trị ngày cho JDateChooser
-                 
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                
-                txtMaKH.setText(ttp.getMaKH());
-                txtTenKH.setText(ttp.getTenKH());
-                txtMaPhong.setText(ttp.getMaPhong());
-                txtTenPhong.setText(ttp.getTenPhong());
-                txtloaiphong.setText(ttp.getLoaiPhong());
-                txtGiaPhong.setText(ttp.getFormattedGia());
-               
-                
-            } else {
-                JOptionPane.showMessageDialog(this, "Không tim thấy mã khách hàng");
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_cmbmaphieudatphongItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TBRent;
-    private swing.Button bthDelete;
-    private swing.Button btnAdd;
-    private swing.Button btnEdit;
-    private swing.Button btnRefresh;
-    private swing.Button btnSearch;
+    private swing.Button btnLoc;
+    private javax.swing.JButton btnThuePhong;
     private swing.Button btnView;
-    private javax.swing.JComboBox<String> cmbmaphieudatphong;
-    private com.toedter.calendar.JDateChooser jDateChooserTim;
-    private com.toedter.calendar.JDateChooser jDateChooserngaydatphong;
-    private com.toedter.calendar.JDateChooser jDateChooserngaythuephong;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JCheckBox ckHoTen;
+    private javax.swing.JCheckBox ckMaPhong;
+    private javax.swing.JCheckBox ckNgay;
+    private com.toedter.calendar.JDateChooser jDateChooserngaydkthue;
+    private com.toedter.calendar.JDateChooser jDateChooserngaydukientra;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
-    private swing.PanelBorder panelBorder2;
-    private javax.swing.JRadioButton rbMAKH1;
-    private javax.swing.JRadioButton rbsearchngaydat;
+    private swing.PanelBorder panelBorder5;
     private swing.RoundPanel roundPanel5;
-    private component.TextField txtGiaPhong;
-    private component.TextField txtMaKH;
-    private component.TextField txtMaPhong;
-    private component.TextField txtMaphieuthuephong;
-    private javax.swing.JTextField txtSEARCHMAKH;
-    private component.TextField txtTenKH;
-    private component.TextField txtTenPhong;
-    private component.TextField txtloaiphong;
+    private javax.swing.JTable table;
+    private component.TextField txtHotenKH;
+    private component.TextField txtMaphieudatphong;
+    private component.TextField txtMaphong;
     // End of variables declaration//GEN-END:variables
 }

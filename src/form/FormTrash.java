@@ -98,6 +98,9 @@ public class FormTrash extends javax.swing.JPanel {
                 }
                 
             }
+
+            
+            
         };
 
         // Thiết lập renderer và editor cho cột Action
@@ -336,6 +339,8 @@ public class FormTrash extends javax.swing.JPanel {
                 }
                 
             }
+
+           
         };
 
         // Thiết lập renderer và editor cho cột Action
@@ -518,6 +523,8 @@ public class FormTrash extends javax.swing.JPanel {
                 }
                 
             }
+
+         
         };
 
         // Thiết lập renderer và editor cho cột Action
@@ -684,6 +691,9 @@ public class FormTrash extends javax.swing.JPanel {
                 }
                 
             }
+
+            
+            
         };
 
         // Thiết lập renderer và editor cho cột Action
@@ -854,6 +864,9 @@ public class FormTrash extends javax.swing.JPanel {
                 }
                 
             }
+
+           
+            
         };
 
         // Thiết lập renderer và editor cho cột Action
@@ -1020,6 +1033,9 @@ public class FormTrash extends javax.swing.JPanel {
                 }
                 
             }
+
+           
+            
         };
 
         // Thiết lập renderer và editor cho cột Action
@@ -1196,6 +1212,9 @@ public class FormTrash extends javax.swing.JPanel {
                 }
                 
             }
+
+         
+            
         };
 
         // Thiết lập renderer và editor cho cột Action

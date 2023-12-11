@@ -20,11 +20,12 @@ public class ModelCheckOut {
     Connection conn;
     
     public ArrayList<ModelCheckOutv2> findALL() throws Exception {
-        String sql = "select MaHoaDonPhong, ptp.MaPhieuThuePhong, NgayThuePhong, NgayDatPhong, p.MaPhong, TenPhong, lp.TenLoaiPhong,"
-                + " Tien,((DATEDIFF(DAY, NgayThuePhong, NgayLapHoaDon)) *Tien) * 0.1 as VAT, ((DATEDIFF(DAY, NgayThuePhong, NgayLapHoaDon)) *Tien) + (((DATEDIFF(DAY, NgayThuePhong, NgayLapHoaDon)) *Tien) * 0.1) AS GiaHD,NgayLapHoaDon "
-                + "from HoaDonPhong hdp join PhieuThuePhong ptp on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong "
-                + "join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong join phong p "
-                + "on p.MaPhong = pdp.MaPhong join LOAIPHONG lp on p.MaLoaiPhong = lp.MaLoaiPhong where hdp.isvisible = '1' ";
+        String sql = "select MaHoaDonPhong, ptp.MaPhieuThuePhong, NgayThuePhong, NgayDatPhong, p.MaPhong, TenPhong, lp.TenLoaiPhong,\n" +
+" DonGia,((DATEDIFF(DAY, NgayThuePhong, NgayLapHoaDon)) *DonGia) * 0.1 as VAT, ((DATEDIFF(DAY, NgayThuePhong, NgayLapHoaDon)) *DonGia) + (((DATEDIFF(DAY, NgayThuePhong, NgayLapHoaDon)) *DonGia) * 0.1) AS GiaHD,NgayLapHoaDon \n" +
+"from HoaDonPhong hdp join PhieuThuePhong ptp on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong \n" +
+"join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong join phong p \n" +
+"on p.MaPhong = pdp.MaPhong join LOAIPHONG lp on p.MaLoaiPhong = lp.MaLoaiPhong join DonGiaPhong dgp on p.MaDonGiaPhong = dgp.MaDonGiaPhong\n" +
+"where hdp.isvisible = '1'  ";
         conn = cn.getConnection();//where ptp.isvisible = '1' 
         PreparedStatement pstmt = conn.prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
@@ -39,7 +40,7 @@ public class ModelCheckOut {
             co.setTenPhong(rs.getString("TenPhong"));
             co.setLoaiPhong(rs.getString("TenLoaiPhong"));
     
-            co.setGia(rs.getBigDecimal("Tien"));
+            co.setGia(rs.getBigDecimal("DonGia"));
             co.setVAT(rs.getBigDecimal("VAT"));
             co.setGiaHD(rs.getBigDecimal("GiaHD"));
             co.setNgayLapHoaDon(rs.getString("NgayLapHoaDon"));

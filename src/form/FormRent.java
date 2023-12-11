@@ -125,11 +125,33 @@ public class FormRent extends javax.swing.JPanel {
     
     private void initCombobox_maphong() {
         try {
+            
+            Date selectedDate = jDateChooserngaydkthue.getDate();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(selectedDate);
+
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            String ngaythue = year + "-" + month + "-" + day;
+
+            Date selectedDate1 = jDateChooserngaydukientra.getDate();
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.setTime(selectedDate1);
+
+            int year1 = calendar1.get(Calendar.YEAR);
+            int month1 = calendar1.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+            int day1 = calendar1.get(Calendar.DAY_OF_MONTH);
+            String ngaytra = year1 + "-" + month1 + "-" + day1;
+            
+            
             conn = cn.getConnection();
-            String sql = "Select maphong from Phong where isvisible = '1' and MaTinhtrangphong = 'TT2' ";//
+            String sql = "select distinct maphong from phong where MaTinhtrangphong = 'TT2' and isvisible = '1' and MaPhong not in (select distinct MaPhong from PhieuDatPhong where booked_status = 0 \n" +
+"and (NgayDuKienThue between '" + ngaythue+ "' AND '" + ngaytra+ "' or  NgayDuKienTra between '" + ngaythue+"' AND '" + ngaytra+"' )  )  ";//
             PreparedStatement pstmt = conn.prepareStatement(sql);
+ 
             ResultSet rs = pstmt.executeQuery();
-            cmbmaphon.removeAllItems();
+
             cmbmaphon.removeAllItems();
             while (rs.next()) {
                 cmbmaphon.addItem(rs.getString("maphong"));
@@ -140,6 +162,7 @@ public class FormRent extends javax.swing.JPanel {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
             e.printStackTrace();
+            System.out.println("lỗi");
         }
     }
     
@@ -167,7 +190,7 @@ public class FormRent extends javax.swing.JPanel {
         txtTenPhong = new component.TextField();
         txtMaNV = new component.TextField();
         jLabel14 = new javax.swing.JLabel();
-        txtTENkh1 = new component.TextField();
+        txtTENkh = new component.TextField();
         txtloaiphong = new component.TextField();
         txtGiaPhong = new component.TextField();
         jLabel16 = new javax.swing.JLabel();
@@ -234,6 +257,11 @@ public class FormRent extends javax.swing.JPanel {
                 cmbmaphonItemStateChanged(evt);
             }
         });
+        cmbmaphon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                cmbmaphonMousePressed(evt);
+            }
+        });
 
         txtMaphieudatphong.setLabelText("Mã phiếu đặt phòng");
 
@@ -252,8 +280,8 @@ public class FormRent extends javax.swing.JPanel {
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Mã phòng:");
 
-        txtTENkh1.setEditable(false);
-        txtTENkh1.setLabelText("Tên khách hàng");
+        txtTENkh.setEditable(false);
+        txtTENkh.setLabelText("Tên khách hàng");
 
         txtloaiphong.setEditable(false);
         txtloaiphong.setLabelText("Loại phòng");
@@ -275,9 +303,21 @@ public class FormRent extends javax.swing.JPanel {
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Ngày thuê phòng:");
 
+        jDateChooserngaydkthue.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooserngaydkthuePropertyChange(evt);
+            }
+        });
+
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("Ngày trả phòng:");
+
+        jDateChooserngaydukientra.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooserngaydukientraPropertyChange(evt);
+            }
+        });
 
         txtTenNV.setEditable(false);
         txtTenNV.setLabelText("Tên nhân viên");
@@ -305,6 +345,7 @@ public class FormRent extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(255, 51, 0));
         jLabel5.setText("*");
 
+        jButton1.setBackground(new java.awt.Color(255, 153, 153));
         jButton1.setText("Xem HT phòng");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -312,6 +353,7 @@ public class FormRent extends javax.swing.JPanel {
             }
         });
 
+        btnThemKH.setBackground(new java.awt.Color(255, 102, 102));
         btnThemKH.setText("Thêm khách hàng");
         btnThemKH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -334,7 +376,7 @@ public class FormRent extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createSequentialGroup()
-                        .addComponent(txtTENkh1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtTENkh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnThemKH))
                     .addComponent(txtTenNV, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -381,11 +423,12 @@ public class FormRent extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel16)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jDateChooserngaydkthue, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jDateChooserngaydkthue, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(19, 19, 19)))))
                 .addGap(50, 50, 50))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createSequentialGroup()
-                .addGap(291, 291, 291)
+                .addGap(75, 75, 75)
                 .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -393,9 +436,7 @@ public class FormRent extends javax.swing.JPanel {
                 .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(89, 89, 89))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         roundPanel5Layout.setVerticalGroup(
             roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -423,7 +464,7 @@ public class FormRent extends javax.swing.JPanel {
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnThemKH, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtloaiphong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTENkh1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTENkh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtGiaPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -444,17 +485,15 @@ public class FormRent extends javax.swing.JPanel {
                         .addComponent(jDateChooserngaydkthue, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jDateChooserngaydukientra, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(roundPanel5Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         TBRent.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -505,136 +544,141 @@ public class FormRent extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
                 .addGap(9, 9, 9))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-//        Date selectedDate = jDateChooserngaydatphong.getDate();
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(selectedDate);
-//
-//        int year = calendar.get(Calendar.YEAR);
-//        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-//        int day = calendar.get(Calendar.DAY_OF_MONTH);
-//        String ngaysinh = year + "-" + month + "-" + day;
-//
-//
-//        StringBuilder sb = new StringBuilder();
-//        if (txtMaphieudatphong.getText().equals("")) {
-//            sb.append("Mã phiếu đặt phòng không được để trống");
-//            txtMaphieudatphong.setBackground(Color.red);
-//
-//        } else {
-//            txtMaphieudatphong.setBackground(Color.white);
-//        }
-//        if (sb.length() > 0) {
-//            JOptionPane.showMessageDialog(this, sb);
-//        }
-//        String MaKH = cmbmakh.getSelectedItem().toString();
-//        String MaNV = cmbmanv.getSelectedItem().toString();
-//        String MaPhong = cmbmaphon.getSelectedItem().toString();
-//        
-//        try {
-//            ModelRentv2 nv = new ModelRentv2();
-//            nv.setMaPhieuDatPhong(txtMaphieudatphong.getText());
-//            nv.setNgayDatPhong(ngaysinh);
-//            nv.setMaPhong(MaPhong);
-//            nv.setMaKH(MaKH);
-//            nv.setMaNV(MaNV);
-//
-//            ModelRent ql1 = new ModelRent();
-//            ql1.update(nv);
-//
-//            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-//            
-//            int row = TBRent.getSelectedRow();
-//            if (row >= 0) {
-//                String maphong = TBRent.getValueAt(row, 5).toString();
-//                
-//                ModelPhongv2 p = new ModelPhongv2();
-//                p.setMaPhong(maphong);
-//
-//                ModelPhong ql = new ModelPhong();
-//                ql.updateTT1(p);
-//                
-//                
-//                
-//            }
-//            ModelPhongv2 p = new ModelPhongv2();
-//            p.setMaPhong(MaPhong);
-//
-//            ModelPhong ql = new ModelPhong();
-//            ql.updateTT2(p);
-//            
-//            loaddulieu1();
-//        } catch (Exception e) {
-////            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-//             JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
-//            e.printStackTrace();
-//        }
+         Date selectedDate = jDateChooserngaydkthue.getDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDate);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String ngaythue = year + "-" + month + "-" + day;
+        
+        
+        Date selectedDate1 = jDateChooserngaydukientra.getDate();
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(selectedDate1);
+
+        int year1 = calendar1.get(Calendar.YEAR);
+        int month1 = calendar1.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day1 = calendar1.get(Calendar.DAY_OF_MONTH);
+        String ngaytra = year1 + "-" + month1 + "-" + day1;
+
+
+        StringBuilder sb = new StringBuilder();
+        if (txtMaphieudatphong.getText().equals("")) {
+            sb.append("Mã phiếu đặt phòng không được để trống");
+            txtMaphieudatphong.setBackground(Color.red);
+
+        } else {
+            txtMaphieudatphong.setBackground(Color.white);
+        }
+        if (sb.length() > 0) {
+            JOptionPane.showMessageDialog(this, sb);
+        }
+        String MaKH = cmbmakh.getSelectedItem().toString();
+        String MaPhong = cmbmaphon.getSelectedItem().toString();
+        
+        try {
+
+            ModelRentv2 nv = new ModelRentv2();
+            nv.setMaPhieuDatPhong(txtMaphieudatphong.getText());
+            nv.setNgayDatPhong(txtNgayDatPhong.getText());
+            nv.setNgayDuKienThue(ngaythue);
+            nv.setNgayDuKienTra(ngaytra);
+            nv.setMaPhong(MaPhong);
+            nv.setMaKH(MaKH);
+            nv.setMaNV(txtMaNV.getText());
+
+            ModelRent ql1 = new ModelRent();
+            ql1.update(nv);
+
+            JOptionPane.showMessageDialog(this, "Sửa thành công!!!");
+            
+            
+            loaddulieu1();
+        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+             JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
+            e.printStackTrace();
+        }
         
    
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-//        String manv ;
-//        this.MaNV = manv;
-//        System.out.println(manv);
-//        Date selectedDate = jDateChooserngaydatphong.getDate();
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(selectedDate);
-//
-//        int year = calendar.get(Calendar.YEAR);
-//        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-//        int day = calendar.get(Calendar.DAY_OF_MONTH);
-//        String ngaysinh = year + "-" + month + "-" + day;
-//
-//
-//        StringBuilder sb = new StringBuilder();
-//        if (txtMaphieudatphong.getText().equals("")) {
-//            sb.append("Mã phiếu đặt phòng không được để trống");
-//            txtMaphieudatphong.setBackground(Color.red);
-//
-//        } else {
-//            txtMaphieudatphong.setBackground(Color.white);
-//        }
-//        if (sb.length() > 0) {
-//            JOptionPane.showMessageDialog(this, sb);
-//        }
-//        String MaKH = cmbmakh.getSelectedItem().toString();
-//        String MaNV = cmbmanv.getSelectedItem().toString();
-//        String MaPhong = cmbmaphon.getSelectedItem().toString();
-//        try {
-//            ModelRentv2 nv = new ModelRentv2();
-//            nv.setMaPhieuDatPhong(txtMaphieudatphong.getText());
-//            nv.setNgayDatPhong(ngaysinh);
-//            nv.setMaPhong(MaPhong);
-//            nv.setMaKH(MaKH);
-//            nv.setMaNV(MaNV);
-//          
-//            ModelRent ql1 = new ModelRent();
-//            ql1.insert(nv);
-////            ql1.updatettp_khiadd(nv);
-//
-//            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-//            
+        
+        Date selectedDate = jDateChooserngaydkthue.getDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDate);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String ngaythue = year + "-" + month + "-" + day;
+        
+        
+        Date selectedDate1 = jDateChooserngaydukientra.getDate();
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(selectedDate1);
+
+        int year1 = calendar1.get(Calendar.YEAR);
+        int month1 = calendar1.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day1 = calendar1.get(Calendar.DAY_OF_MONTH);
+        String ngaytra = year1 + "-" + month1 + "-" + day1;
+        
+
+
+        StringBuilder sb = new StringBuilder();
+        if (txtMaphieudatphong.getText().equals("")) {
+            sb.append("Mã phiếu đặt phòng không được để trống");
+            txtMaphieudatphong.setBackground(Color.red);
+
+        } else {
+            txtMaphieudatphong.setBackground(Color.white);
+        }
+        if (sb.length() > 0) {
+            JOptionPane.showMessageDialog(this, sb);
+        }
+        String MaKH = cmbmakh.getSelectedItem().toString();
+        String MaPhong = cmbmaphon.getSelectedItem().toString();
+        
+        try {
+            ModelRentv2 nv = new ModelRentv2();
+            nv.setMaPhieuDatPhong(txtMaphieudatphong.getText());
+            nv.setNgayDatPhong(txtNgayDatPhong.getText());
+            nv.setNgayDuKienThue(ngaythue);
+            nv.setNgayDuKienTra(ngaytra);
+            nv.setMaPhong(MaPhong);
+            nv.setMaKH(MaKH);
+            nv.setMaNV(txtMaNV.getText());
+          
+            ModelRent ql1 = new ModelRent();
+            ql1.insert(nv);
+//            ql1.updatettp_khiadd(nv);
+
+            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+            
 //            ModelPhongv2 p = new ModelPhongv2();
 //            p.setMaPhong(MaPhong);
 //
 //            ModelPhong ql = new ModelPhong();
 //            ql.updateTT2(p);
-//            
-//            
-//            loaddulieu1();
-//        } catch (Exception e) {
-////            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-//             JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
-//            e.printStackTrace();
-//        }
+            
+            
+            loaddulieu1();
+        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+             JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
+            e.printStackTrace();
+        }
       
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -691,6 +735,14 @@ public class FormRent extends javax.swing.JPanel {
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
+        txtMaphieudatphong.setText("");
+        txtTENkh.setText("");
+        txtMaNV.setText("");
+        txtTenNV.setText("");
+        txtNgayDatPhong.setText("");
+        txtTenPhong.setText("");
+        txtloaiphong.setText("");
+        txtGiaPhong.setText("");
         
     }//GEN-LAST:event_btnRefreshActionPerformed
 
@@ -702,7 +754,7 @@ public class FormRent extends javax.swing.JPanel {
 
             model.ModelCustomersv2 ttp = ql.findByID(Makh);
             if (ttp != null) {
-                txtTENkh1.setText(ttp.getHoKH() +" "+ ttp.getTenKH());
+                txtTENkh.setText(ttp.getHoKH() +" "+ ttp.getTenKH());
 
             } else {
                 JOptionPane.showMessageDialog(this, "Không tim thấy mã khách hàng");
@@ -717,6 +769,7 @@ public class FormRent extends javax.swing.JPanel {
 
     private void cmbmaphonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmaphonItemStateChanged
         // TODO add your handling code here:
+         
         String MaPhong = cmbmaphon.getSelectedItem().toString();
         try {
             ModelRoom ql = new ModelRoom();
@@ -748,7 +801,7 @@ public class FormRent extends javax.swing.JPanel {
             System.out.println("" + makh);
             cmbmakh.setSelectedItem(makh);
             
-            txtTENkh1.setText(TBRent.getValueAt(row, 2).toString());
+            txtTENkh.setText(TBRent.getValueAt(row, 2).toString());
             
             txtMaNV.setText(TBRent.getValueAt(row, 3).toString());
             txtTenNV.setText(TBRent.getValueAt(row, 4).toString());
@@ -815,7 +868,7 @@ public class FormRent extends javax.swing.JPanel {
                 txtTenNV.setText(ttp.getHoNV() + " "+ ttp.getTenNV());
 
             } else {
-                JOptionPane.showMessageDialog(this, "Không tim thấy mã nhân viên");
+//                JOptionPane.showMessageDialog(this, "Không tim thấy mã nhân viên");
             }
 
         } catch (Exception e) {
@@ -826,7 +879,10 @@ public class FormRent extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
+       
         try{
+            
+            
             Date selectedDate = jDateChooserngaydkthue.getDate();
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(selectedDate);
@@ -850,9 +906,19 @@ public class FormRent extends javax.swing.JPanel {
             FormcheckRoom l = new FormcheckRoom(username, password, DisplayName,quyen, ngaythue, ngaytra);
             l.setVisible(true);
             l.setLocationRelativeTo(null);
-            initCombobox_maphong();
+//            initCombobox_maphong();
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày thuê phòng, ngày trả phòng" );
+        }
+        
+        try {
+            cmbmaphon.removeAllItems();
+            txtTenPhong.setText("");
+            txtloaiphong.setText("");
+            txtGiaPhong.setText("");
+            initCombobox_maphong();
+        }catch(Exception e){
+            
         }
         
         
@@ -865,6 +931,22 @@ public class FormRent extends javax.swing.JPanel {
         l.setVisible(true);
         l.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnThemKHActionPerformed
+
+    private void jDateChooserngaydukientraPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserngaydukientraPropertyChange
+        // TODO add your handling code here:
+         
+        
+    }//GEN-LAST:event_jDateChooserngaydukientraPropertyChange
+
+    private void jDateChooserngaydkthuePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserngaydkthuePropertyChange
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_jDateChooserngaydkthuePropertyChange
+
+    private void cmbmaphonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbmaphonMousePressed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_cmbmaphonMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -897,7 +979,7 @@ public class FormRent extends javax.swing.JPanel {
     private component.TextField txtMaNV;
     private component.TextField txtMaphieudatphong;
     private component.TextField txtNgayDatPhong;
-    private component.TextField txtTENkh1;
+    private component.TextField txtTENkh;
     private component.TextField txtTenNV;
     private component.TextField txtTenPhong;
     private component.TextField txtloaiphong;

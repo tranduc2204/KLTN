@@ -15,11 +15,12 @@ import java.text.DecimalFormat;
 public class ModelRentv2 {
     String MaPhieuDatPhong, MaKH,HoKH, TenKH,MaNV,HoNV, TenNV, MaPhong, TenPhong, LoaiPhong, NgayDatPhong, NgayDuKienThue, NgayDuKienTra;
     BigDecimal Gia;
+    int booked_status;
 
     public ModelRentv2() {
     }
 
-    public ModelRentv2(String MaPhieuDatPhong, String MaKH, String HoKH, String TenKH, String MaNV, String HoNV, String TenNV, String MaPhong, String TenPhong, String LoaiPhong, String NgayDatPhong, String NgayDuKienThue, String NgayDuKienTra, BigDecimal Gia) {
+    public ModelRentv2(String MaPhieuDatPhong, String MaKH, String HoKH, String TenKH, String MaNV, String HoNV, String TenNV, String MaPhong, String TenPhong, String LoaiPhong, String NgayDatPhong, String NgayDuKienThue, String NgayDuKienTra, BigDecimal Gia, int booked_status) {
         this.MaPhieuDatPhong = MaPhieuDatPhong;
         this.MaKH = MaKH;
         this.HoKH = HoKH;
@@ -34,6 +35,7 @@ public class ModelRentv2 {
         this.NgayDuKienThue = NgayDuKienThue;
         this.NgayDuKienTra = NgayDuKienTra;
         this.Gia = Gia;
+        this.booked_status = booked_status;
     }
 
     public String getMaPhieuDatPhong() {
@@ -147,6 +149,16 @@ public class ModelRentv2 {
     public void setGia(BigDecimal Gia) {
         this.Gia = Gia;
     }
+
+    public int getBooked_status() {
+        return booked_status;
+    }
+
+    public void setBooked_status(int booked_status) {
+        this.booked_status = booked_status;
+    }
+
+    
 
     
 

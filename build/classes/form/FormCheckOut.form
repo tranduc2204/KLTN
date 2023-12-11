@@ -214,7 +214,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="M&#xe3; phi&#x1ebf;u thu&#xea; ph&#xf2;ng:"/>
+            <Property name="text" type="java.lang.String" value="M&#xe3; phi&#x1ebf;u &#x111;&#x1eb7;t ph&#xf2;ng:"/>
           </Properties>
         </Component>
         <Component class="swing.Button" name="btnEdit">

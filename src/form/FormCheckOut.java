@@ -67,7 +67,7 @@ public class FormCheckOut extends javax.swing.JPanel {
         this.quyen = quyen;
         
         
-        initCombobox_maphieuthuephong();
+        initCombobox_maphieudathong();
   
        
 
@@ -101,16 +101,16 @@ public class FormCheckOut extends javax.swing.JPanel {
 
     }
      
-    private void initCombobox_maphieuthuephong() {
+    private void initCombobox_maphieudathong() {
         try {
             conn = cn.getConnection();
-            String sql = "Select maphieuthuephong from PhieuThuePhong where isvisible = '1' ";
+            String sql = "select MaPhieuDatPhong from phieudatphong where booked_status = 1 and isvisible = 1 ";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
             cmbmaphieuthuephong.removeAllItems();
           
             while (rs.next()) {
-                cmbmaphieuthuephong.addItem(rs.getString("maphieuthuephong"));
+                cmbmaphieuthuephong.addItem(rs.getString("MaPhieuDatPhong"));
             }
             rs.close();
             pstmt.close();
@@ -169,7 +169,7 @@ public class FormCheckOut extends javax.swing.JPanel {
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Mã phiếu thuê phòng:");
+        jLabel10.setText("Mã phiếu đặt phòng:");
 
         btnEdit.setText("Sửa");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
@@ -695,49 +695,49 @@ public class FormCheckOut extends javax.swing.JPanel {
 
     private void cmbmaphieuthuephongItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmaphieuthuephongItemStateChanged
         // TODO add your handling code here:
-        String Mapdp = cmbmaphieuthuephong.getSelectedItem().toString();
-        try {
-            ModelCheckIn ql = new ModelCheckIn();
-
-            ModelCheckInv2 ttp = ql.findByID(Mapdp);
-            if (ttp != null) {
-
-                String ngaythuephong = ttp.getNgayThuePhong();
-
-                try {
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
-                    Date selectedDatee = dateFormat.parse(ngaythuephong); // Phân tích chuỗi thành đối tượng Date
-                    jDateChooserngaythuephong.setDate(selectedDatee); // Đặt giá trị ngày cho JDateChooser
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                
-                String Ngaydatphong = ttp.getNgayDatPhong();
-                try {
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
-                    Date selectedDatee = dateFormat.parse(ngaythuephong); // Phân tích chuỗi thành đối tượng Date
-                    jDateChooserngaydatphong.setDate(selectedDatee); // Đặt giá trị ngày cho JDateChooser
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                
-                txtMaPhong.setText(ttp.getMaPhong());
-                txtTenPhong.setText(ttp.getTenPhong());
-                txtloaiphong.setText(ttp.getTenPhong());
-                txtloaiphong.setText(ttp.getLoaiPhong());
-                txtGiaPhong.setText(ttp.getFormattedGia());
-//                txtGiahd.setText(ttp.get);
-                
-                
-                
-            } else {
-                JOptionPane.showMessageDialog(this, "Không tim thấy mã khách hàng");
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
-        }
+//        String Mapdp = cmbmaphieuthuephong.getSelectedItem().toString();
+//        try {
+//            ModelCheckIn ql = new ModelCheckIn();
+//
+//            ModelCheckInv2 ttp = ql.findByID(Mapdp);
+//            if (ttp != null) {
+//
+//                String ngaythuephong = ttp.getNgayThuePhong();
+//
+//                try {
+//                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
+//                    Date selectedDatee = dateFormat.parse(ngaythuephong); // Phân tích chuỗi thành đối tượng Date
+//                    jDateChooserngaythuephong.setDate(selectedDatee); // Đặt giá trị ngày cho JDateChooser
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+//                
+//                String Ngaydatphong = ttp.getNgayDatPhong();
+//                try {
+//                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
+//                    Date selectedDatee = dateFormat.parse(ngaythuephong); // Phân tích chuỗi thành đối tượng Date
+//                    jDateChooserngaydatphong.setDate(selectedDatee); // Đặt giá trị ngày cho JDateChooser
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+//                
+//                txtMaPhong.setText(ttp.getMaPhong());
+//                txtTenPhong.setText(ttp.getTenPhong());
+//                txtloaiphong.setText(ttp.getTenPhong());
+//                txtloaiphong.setText(ttp.getLoaiPhong());
+//                txtGiaPhong.setText(ttp.getFormattedGia());
+////                txtGiahd.setText(ttp.get);
+//                
+//                
+//                
+//            } else {
+//                JOptionPane.showMessageDialog(this, "Không tim thấy mã khách hàng");
+//            }
+//
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+//            e.printStackTrace();
+//        }
     }//GEN-LAST:event_cmbmaphieuthuephongItemStateChanged
 
     private void TBcheckoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TBcheckoutMouseClicked
