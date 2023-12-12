@@ -424,50 +424,183 @@ public class FormQLBillOfService extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+    private void TBServiceRentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TBServiceRentMouseClicked
         // TODO add your handling code here:
-        Date selectedDate = jDateChooserngaylaphoadon.getDate();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDate);
+        int row = TBServiceRent.getSelectedRow();
 
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String ngayhd = year + "-" + month + "-" + day;
+        if (row >= 0) {
+
+            String madv = TBServiceRent.getValueAt(row, 0).toString();
+            System.out.println("" + madv);
+            cmbmadichvu.setSelectedItem(madv);
+
+            txtTenDichVu.setText(TBServiceRent.getValueAt(row, 1).toString());
+
+            String manv = TBServiceRent.getValueAt(row, 2).toString();
+            System.out.println("" + manv);
+            cmbMaNhanvien.setSelectedItem(manv);
+
+            txtTenNhanVien.setText(TBServiceRent.getValueAt(row, 3).toString());
+
+            String makh = TBServiceRent.getValueAt(row, 4).toString();
+            System.out.println("" + makh);
+            cmbmakhachhang.setSelectedItem(makh);
+
+            txtTenKH.setText(TBServiceRent.getValueAt(row, 5).toString());
+
+            String ngaylaphd = TBServiceRent.getValueAt(row, 6).toString();
+
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
+                Date selectedDate = dateFormat.parse(ngaylaphd); // Phân tích chuỗi thành đối tượng Date
+                jDateChooserngaylaphoadon.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            txtGiaDichvu.setText(TBServiceRent.getValueAt(row, 7).toString());
+
+            Object sl = TBServiceRent.getValueAt(row, 8);
+            spSL.setValue(sl);
+            txtGiahd.setText(TBServiceRent.getValueAt(row, 9).toString());
+
+        }
+    }//GEN-LAST:event_TBServiceRentMouseClicked
+
+    private void txtGIAMGIAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGIAMGIAActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtGIAMGIAActionPerformed
+
+    private void cmbmadichvuItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmadichvuItemStateChanged
+        // TODO add your handling code here:
+        String Mapdp = cmbmadichvu.getSelectedItem().toString();
+        try {
+            ModelServiceRent ql = new ModelServiceRent();
+
+            ModelServiceRentv2 ttp = ql.findByID_MADV(Mapdp);
+            if (ttp != null) {
+
+                txtTenDichVu.setText(ttp.getTenDichVu());
+                txtGiaDichvu.setText(ttp.getFormattedGia());
+                txtGIAMGIA.setText(ttp.getFormattedPercentage());
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tim thấy dịch vụ");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_cmbmadichvuItemStateChanged
+
+    private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
+        // TODO add your handling code here:
+        // Lấy giá trị hiện tại của JSpinner
+        Object selectedValue = spSL.getValue();
+
+        // lấy giá trị kiểu int cho sốluongwj
+        int spinnerValue = (int) selectedValue;
+
+        String tmp = txtGiaDichvu.getText();
+
+        DecimalFormat decimalFormat = new DecimalFormat("#,### VND");
+
+        try {
+            Number giaNumber = decimalFormat.parse(tmp);
+            // Lấy giá trị số từ đối tượng Number
+            Float gia = giaNumber.floatValue();
+
+            System.out.println(gia);
+
+            Float tmp2;
+
+            if (spinnerValue > 0){
+                tmp2 = (float) ((float)spinnerValue * gia);
+                BigDecimal giahd = BigDecimal.valueOf(tmp2);
+
+                ModelServiceRentv2 sr = new ModelServiceRentv2();
+                sr.setGiaHD(giahd);
+                String formattedhoadon = sr.getFormattedGiahd();
+                txtGiahd.setText(formattedhoadon);
+            }else {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn số lượng dịch vụ lớn hơn 0");
+            }
+
+        } catch (ParseException ex) {
+            Logger.getLogger(FormServiceRent.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnPayActionPerformed
+
+    private void cmbmakhachhangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmakhachhangItemStateChanged
+        // TODO add your handling code here:
+        String MaKH = cmbmakhachhang.getSelectedItem().toString();
+        try {
+            ModelServiceRent ql = new ModelServiceRent();
+
+            ModelServiceRentv2 ttp = ql.findByID_MAKH(MaKH);
+            if (ttp != null) {
+
+                txtTenKH.setText(ttp.getTenKH());
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tim thấy khách hàng");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_cmbmakhachhangItemStateChanged
+
+    private void cmbMaNhanvienItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMaNhanvienItemStateChanged
+        // TODO add your handling code here:
+        String MaNV = cmbMaNhanvien.getSelectedItem().toString();
+        try {
+            ModelServiceRent ql = new ModelServiceRent();
+
+            ModelServiceRentv2 ttp = ql.findByID_MANV(MaNV);
+            if (ttp != null) {
+
+                txtTenNhanVien.setText(ttp.getTenNhanVien());
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tim thấy nhân viên");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_cmbMaNhanvienItemStateChanged
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void bthDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bthDeleteActionPerformed
+        // TODO add your handling code here:
 
         String MaDichvu = cmbmadichvu.getSelectedItem().toString();
         String MaNV = cmbMaNhanvien.getSelectedItem().toString();
         String MaKH = cmbmakhachhang.getSelectedItem().toString();
 
-        // Lấy giá trị hiện tại của JSpinner
-        Object selectedValue = spSL.getValue();
+        try {
+            ModelServiceRentv2 ci = new ModelServiceRentv2();
+            ci.setMaDV(MaDichvu);
+            ci.setMaNV(MaNV);
+            ci.setMaKH(MaKH);
 
-        int spinnerValue = (int) selectedValue;
+            ModelServiceRent ql1 = new ModelServiceRent();
+            ql1.deletecomeroot(ci);
 
-        if (spinnerValue > 0){
-            try {
-                ModelServiceRentv2 ci = new ModelServiceRentv2();
-                ci.setMaDV(MaDichvu);
-                ci.setMaNV(MaNV);
-                ci.setMaKH(MaKH);
-                ci.setNgayLapHD(ngayhd);
-                ci.setSL(spinnerValue);
+            JOptionPane.showMessageDialog(this, "Xóa thành công!!!");
 
-                ModelServiceRent ql1 = new ModelServiceRent();
-                ql1.update(ci);
-
-                JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-
-                loaddulieu1();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "");
-                e.printStackTrace();
-            }
-        }else {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn số lượng dịch vụ lớn hơn 0");
-
+            loaddulieu1();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "");
+            e.printStackTrace();
         }
-    }//GEN-LAST:event_btnEditActionPerformed
+    }//GEN-LAST:event_bthDeleteActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
@@ -516,189 +649,52 @@ public class FormQLBillOfService extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn số lượng dịch vụ lớn hơn 0");
 
         }
-
     }//GEN-LAST:event_btnAddActionPerformed
 
-    private void bthDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bthDeleteActionPerformed
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
+        Date selectedDate = jDateChooserngaylaphoadon.getDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDate);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String ngayhd = year + "-" + month + "-" + day;
 
         String MaDichvu = cmbmadichvu.getSelectedItem().toString();
         String MaNV = cmbMaNhanvien.getSelectedItem().toString();
         String MaKH = cmbmakhachhang.getSelectedItem().toString();
 
-        try {
-            ModelServiceRentv2 ci = new ModelServiceRentv2();
-            ci.setMaDV(MaDichvu);
-            ci.setMaNV(MaNV);
-            ci.setMaKH(MaKH);
-
-            ModelServiceRent ql1 = new ModelServiceRent();
-            ql1.deletecomeroot(ci);
-
-            JOptionPane.showMessageDialog(this, "Xóa thành công!!!");
-
-            loaddulieu1();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "");
-            e.printStackTrace();
-        }
-
-    }//GEN-LAST:event_bthDeleteActionPerformed
-
-    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_btnRefreshActionPerformed
-
-    private void cmbmadichvuItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmadichvuItemStateChanged
-        // TODO add your handling code here:
-        String Mapdp = cmbmadichvu.getSelectedItem().toString();
-        try {
-            ModelServiceRent ql = new ModelServiceRent();
-
-            ModelServiceRentv2 ttp = ql.findByID_MADV(Mapdp);
-            if (ttp != null) {
-
-                txtTenDichVu.setText(ttp.getTenDichVu());
-                txtGiaDichvu.setText(ttp.getFormattedGia());
-                txtGIAMGIA.setText(ttp.getFormattedPercentage());
-            } else {
-                JOptionPane.showMessageDialog(this, "Không tim thấy dịch vụ");
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_cmbmadichvuItemStateChanged
-
-    private void cmbMaNhanvienItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMaNhanvienItemStateChanged
-        // TODO add your handling code here:
-        String MaNV = cmbMaNhanvien.getSelectedItem().toString();
-        try {
-            ModelServiceRent ql = new ModelServiceRent();
-
-            ModelServiceRentv2 ttp = ql.findByID_MANV(MaNV);
-            if (ttp != null) {
-
-                txtTenNhanVien.setText(ttp.getTenNhanVien());
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Không tim thấy nhân viên");
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
-        }
-
-    }//GEN-LAST:event_cmbMaNhanvienItemStateChanged
-
-    private void cmbmakhachhangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmakhachhangItemStateChanged
-        // TODO add your handling code here:
-        String MaKH = cmbmakhachhang.getSelectedItem().toString();
-        try {
-            ModelServiceRent ql = new ModelServiceRent();
-
-            ModelServiceRentv2 ttp = ql.findByID_MAKH(MaKH);
-            if (ttp != null) {
-
-                txtTenKH.setText(ttp.getTenKH());
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Không tim thấy khách hàng");
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_cmbmakhachhangItemStateChanged
-
-    private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
-        // TODO add your handling code here:
         // Lấy giá trị hiện tại của JSpinner
         Object selectedValue = spSL.getValue();
 
-        // lấy giá trị kiểu int cho sốluongwj
         int spinnerValue = (int) selectedValue;
 
-        String tmp = txtGiaDichvu.getText();
-
-        DecimalFormat decimalFormat = new DecimalFormat("#,### VND");
-
-        try {
-            Number giaNumber = decimalFormat.parse(tmp);
-            // Lấy giá trị số từ đối tượng Number
-            Float gia = giaNumber.floatValue();
-
-            System.out.println(gia);
-
-            Float tmp2;
-
-            if (spinnerValue > 0){
-                tmp2 = (float) ((float)spinnerValue * gia);
-                BigDecimal giahd = BigDecimal.valueOf(tmp2);
-
-                ModelServiceRentv2 sr = new ModelServiceRentv2();
-                sr.setGiaHD(giahd);
-                String formattedhoadon = sr.getFormattedGiahd();
-                txtGiahd.setText(formattedhoadon);
-            }else {
-                JOptionPane.showMessageDialog(this, "Vui lòng chọn số lượng dịch vụ lớn hơn 0");
-            }
-
-        } catch (ParseException ex) {
-            Logger.getLogger(FormServiceRent.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnPayActionPerformed
-
-    private void TBServiceRentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TBServiceRentMouseClicked
-        // TODO add your handling code here:
-        int row = TBServiceRent.getSelectedRow();
-
-        if (row >= 0) {
-
-            String madv = TBServiceRent.getValueAt(row, 0).toString();
-            System.out.println("" + madv);
-            cmbmadichvu.setSelectedItem(madv);
-
-            txtTenDichVu.setText(TBServiceRent.getValueAt(row, 1).toString());
-
-            String manv = TBServiceRent.getValueAt(row, 2).toString();
-            System.out.println("" + manv);
-            cmbMaNhanvien.setSelectedItem(manv);
-
-            txtTenNhanVien.setText(TBServiceRent.getValueAt(row, 3).toString());
-
-            String makh = TBServiceRent.getValueAt(row, 4).toString();
-            System.out.println("" + makh);
-            cmbmakhachhang.setSelectedItem(makh);
-
-            txtTenKH.setText(TBServiceRent.getValueAt(row, 5).toString());
-
-            String ngaylaphd = TBServiceRent.getValueAt(row, 6).toString();
-
+        if (spinnerValue > 0){
             try {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng của chuỗi ngày
-                Date selectedDate = dateFormat.parse(ngaylaphd); // Phân tích chuỗi thành đối tượng Date
-                jDateChooserngaylaphoadon.setDate(selectedDate); // Đặt giá trị ngày cho JDateChooser
-            } catch (ParseException e) {
+                ModelServiceRentv2 ci = new ModelServiceRentv2();
+                ci.setMaDV(MaDichvu);
+                ci.setMaNV(MaNV);
+                ci.setMaKH(MaKH);
+                ci.setNgayLapHD(ngayhd);
+                ci.setSL(spinnerValue);
+
+                ModelServiceRent ql1 = new ModelServiceRent();
+                ql1.update(ci);
+
+                JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+
+                loaddulieu1();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "");
                 e.printStackTrace();
             }
-
-            txtGiaDichvu.setText(TBServiceRent.getValueAt(row, 7).toString());
-
-            Object sl = TBServiceRent.getValueAt(row, 8);
-            spSL.setValue(sl);
-            txtGiahd.setText(TBServiceRent.getValueAt(row, 9).toString());
+        }else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn số lượng dịch vụ lớn hơn 0");
 
         }
-    }//GEN-LAST:event_TBServiceRentMouseClicked
-
-    private void txtGIAMGIAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGIAMGIAActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtGIAMGIAActionPerformed
+    }//GEN-LAST:event_btnEditActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -44,13 +44,6 @@
                   </Group>
               </Group>
           </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="button1" min="-2" pref="170" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
-              <Component id="button2" min="-2" pref="170" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="596" max="-2" attributes="0"/>
-          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -58,16 +51,11 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="roundPanel5" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="button1" alignment="3" min="-2" pref="72" max="-2" attributes="0"/>
-                  <Component id="button2" alignment="3" min="-2" pref="72" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="12" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="203" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="321" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -103,20 +91,24 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                                  <Component id="cmbmadichvu" min="-2" pref="274" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="txtTenDichVu" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtTenNhanVien" alignment="0" pref="401" max="32767" attributes="0"/>
+                              <Component id="txtMaNV" max="32767" attributes="0"/>
+                              <Component id="spSL" alignment="1" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtTenNhanVien" alignment="0" pref="401" max="32767" attributes="0"/>
-                              <Component id="txtMaNV" max="32767" attributes="0"/>
-                              <Component id="spSL" alignment="1" max="32767" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="txtTenDichVu" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnThemKH1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                                  <Component id="cmbmadichvu" min="-2" pref="274" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
@@ -129,14 +121,6 @@
                               <Component id="cmbmakhachhang" min="-2" pref="273" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jDateChooserngaylaphoadon" max="32767" attributes="0"/>
-                              </Group>
-                              <Component id="txtTenKH" alignment="0" min="-2" pref="427" max="-2" attributes="0"/>
-                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="txtVAT" min="-2" pref="147" max="-2" attributes="0"/>
@@ -148,9 +132,21 @@
                                   <Component id="txtGiahd" pref="254" max="32767" attributes="0"/>
                               </Group>
                           </Group>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="txtTenKH" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnThemKH" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jDateChooserngaylaphoadon" min="-2" pref="270" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="bthDelete" min="-2" pref="103" max="-2" attributes="0"/>
+                          <Component id="btnDelete" min="-2" pref="103" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Component id="btnRefresh" min="-2" pref="103" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
@@ -178,9 +174,13 @@
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtTenDichVu" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtTenKH" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txtTenDichVu" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtTenKH" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="btnThemKH" alignment="0" min="-2" pref="44" max="-2" attributes="0"/>
+                      <Component id="btnThemKH1" alignment="0" min="-2" pref="44" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
@@ -200,7 +200,7 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnAdd" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                               <Component id="btnEdit" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
-                              <Component id="bthDelete" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
+                              <Component id="btnDelete" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                               <Component id="btnRefresh" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                               <Component id="btnPay" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                               <Component id="btnReport" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
@@ -225,6 +225,7 @@
         <Component class="swing.Button" name="btnEdit">
           <Properties>
             <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditActionPerformed"/>
@@ -233,22 +234,25 @@
         <Component class="swing.Button" name="btnAdd">
           <Properties>
             <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddActionPerformed"/>
           </Events>
         </Component>
-        <Component class="swing.Button" name="bthDelete">
+        <Component class="swing.Button" name="btnDelete">
           <Properties>
             <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bthDeleteActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteActionPerformed"/>
           </Events>
         </Component>
         <Component class="swing.Button" name="btnRefresh">
           <Properties>
             <Property name="text" type="java.lang.String" value="L&#xe0;m m&#x1edb;i"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRefreshActionPerformed"/>
@@ -332,6 +336,7 @@
               <Color blue="4c" green="63" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="In Report"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReportActionPerformed"/>
@@ -399,6 +404,28 @@
             <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="txtMaNVPropertyChange"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JButton" name="btnThemKH">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="66" green="66" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Th&#xea;m kh&#xe1;ch h&#xe0;ng"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemKHActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnThemKH1">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="66" green="66" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Xem d&#x1ecb;ch v&#x1ee5;"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemKH1ActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel8">
@@ -438,33 +465,5 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="swing.Button" name="button1">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="9d" green="57" red="24" type="rgb"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Th&#xea;m kh&#xe1;ch h&#xe0;ng"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button1ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="swing.Button" name="button2">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="9d" green="57" red="24" type="rgb"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Xem d&#x1ecb;ch v&#x1ee5;"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button2ActionPerformed"/>
-      </Events>
-    </Component>
   </SubComponents>
 </Form>

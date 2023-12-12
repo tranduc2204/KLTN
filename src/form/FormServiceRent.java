@@ -170,7 +170,7 @@ public class FormServiceRent extends javax.swing.JPanel {
         roundPanel5 = new swing.RoundPanel();
         btnEdit = new swing.Button();
         btnAdd = new swing.Button();
-        bthDelete = new swing.Button();
+        btnDelete = new swing.Button();
         btnRefresh = new swing.Button();
         jLabel11 = new javax.swing.JLabel();
         cmbmadichvu = new javax.swing.JComboBox<>();
@@ -189,12 +189,12 @@ public class FormServiceRent extends javax.swing.JPanel {
         txtVAT = new component.TextField();
         txtGiamGia = new component.TextField();
         txtMaNV = new component.TextField();
+        btnThemKH = new javax.swing.JButton();
+        btnThemKH1 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         TBServiceRent = new javax.swing.JTable();
-        button1 = new swing.Button();
-        button2 = new swing.Button();
 
         txtloaiphong.setEnabled(false);
 
@@ -202,6 +202,7 @@ public class FormServiceRent extends javax.swing.JPanel {
         roundPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin thuê dịch vụ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
         btnEdit.setText("Sửa");
+        btnEdit.setEnabled(false);
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditActionPerformed(evt);
@@ -209,20 +210,23 @@ public class FormServiceRent extends javax.swing.JPanel {
         });
 
         btnAdd.setText("Thêm");
+        btnAdd.setEnabled(false);
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddActionPerformed(evt);
             }
         });
 
-        bthDelete.setText("Xóa");
-        bthDelete.addActionListener(new java.awt.event.ActionListener() {
+        btnDelete.setText("Xóa");
+        btnDelete.setEnabled(false);
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bthDeleteActionPerformed(evt);
+                btnDeleteActionPerformed(evt);
             }
         });
 
         btnRefresh.setText("Làm mới");
+        btnRefresh.setEnabled(false);
         btnRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefreshActionPerformed(evt);
@@ -263,6 +267,7 @@ public class FormServiceRent extends javax.swing.JPanel {
 
         btnReport.setBackground(new java.awt.Color(255, 99, 76));
         btnReport.setText("In Report");
+        btnReport.setEnabled(false);
         btnReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReportActionPerformed(evt);
@@ -310,6 +315,22 @@ public class FormServiceRent extends javax.swing.JPanel {
             }
         });
 
+        btnThemKH.setBackground(new java.awt.Color(255, 102, 102));
+        btnThemKH.setText("Thêm khách hàng");
+        btnThemKH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemKHActionPerformed(evt);
+            }
+        });
+
+        btnThemKH1.setBackground(new java.awt.Color(255, 102, 102));
+        btnThemKH1.setText("Xem dịch vụ");
+        btnThemKH1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemKH1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout roundPanel5Layout = new javax.swing.GroupLayout(roundPanel5);
         roundPanel5.setLayout(roundPanel5Layout);
         roundPanel5Layout.setHorizontalGroup(
@@ -324,17 +345,20 @@ public class FormServiceRent extends javax.swing.JPanel {
                     .addGroup(roundPanel5Layout.createSequentialGroup()
                         .addGap(65, 65, 65)
                         .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(roundPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addGap(35, 35, 35)
-                                .addComponent(cmbmadichvu, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtTenDichVu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(txtTenNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
+                            .addComponent(txtMaNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(spSL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(roundPanel5Layout.createSequentialGroup()
                         .addGap(65, 65, 65)
                         .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtTenNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
-                            .addComponent(txtMaNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(spSL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createSequentialGroup()
+                                .addComponent(txtTenDichVu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnThemKH1))
+                            .addGroup(roundPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(35, 35, 35)
+                                .addComponent(cmbmadichvu, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -343,12 +367,6 @@ public class FormServiceRent extends javax.swing.JPanel {
                             .addGap(26, 26, 26)
                             .addComponent(cmbmakhachhang, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(6, 6, 6))
-                        .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, roundPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel19)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jDateChooserngaylaphoadon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(txtTenKH, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(roundPanel5Layout.createSequentialGroup()
                             .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtVAT, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -356,9 +374,18 @@ public class FormServiceRent extends javax.swing.JPanel {
                             .addGap(26, 26, 26)
                             .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtGiaDichvu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtGiahd, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))))
+                                .addComponent(txtGiahd, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)))
+                        .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(roundPanel5Layout.createSequentialGroup()
+                                .addComponent(txtTenKH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnThemKH))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, roundPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jDateChooserngaylaphoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(roundPanel5Layout.createSequentialGroup()
-                        .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)
                         .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
@@ -379,9 +406,12 @@ public class FormServiceRent extends javax.swing.JPanel {
                         .addComponent(cmbmadichvu, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel11)))
                 .addGap(18, 18, 18)
-                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTenDichVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtTenDichVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnThemKH, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnThemKH1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel19)
@@ -398,7 +428,7 @@ public class FormServiceRent extends javax.swing.JPanel {
                         .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -434,24 +464,6 @@ public class FormServiceRent extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(TBServiceRent);
 
-        button1.setBackground(new java.awt.Color(36, 87, 157));
-        button1.setForeground(new java.awt.Color(255, 255, 255));
-        button1.setText("Thêm khách hàng");
-        button1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
-            }
-        });
-
-        button2.setBackground(new java.awt.Color(36, 87, 157));
-        button2.setForeground(new java.awt.Color(255, 255, 255));
-        button2.setText("Xem dịch vụ");
-        button2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -471,27 +483,17 @@ public class FormServiceRent extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
-                .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(596, 596, 596))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(roundPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -597,7 +599,7 @@ public class FormServiceRent extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnAddActionPerformed
 
-    private void bthDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bthDeleteActionPerformed
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
 
         String MaDichvu = cmbmadichvu.getSelectedItem().toString();
@@ -625,7 +627,7 @@ public class FormServiceRent extends javax.swing.JPanel {
         }
         
 
-    }//GEN-LAST:event_bthDeleteActionPerformed
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
@@ -726,6 +728,13 @@ public class FormServiceRent extends javax.swing.JPanel {
 
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
         // TODO add your handling code here:
+        
+        btnAdd.setEnabled(true);
+        btnEdit.setEnabled(true);
+        btnDelete.setEnabled(true);
+        btnRefresh.setEnabled(true);
+        btnReport.setEnabled(true);
+        
         // Lấy giá trị hiện tại của JSpinner
         Object selectedValue = spSL.getValue();
 
@@ -781,20 +790,6 @@ public class FormServiceRent extends javax.swing.JPanel {
             Logger.getLogger(FormServiceRent.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnPayActionPerformed
-
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        // TODO add your handling code here:
-        FormaddKH l = new FormaddKH(username, password, DisplayName,quyen);
-        l.setVisible(true);
-        l.setLocationRelativeTo(null);
-    }//GEN-LAST:event_button1ActionPerformed
-
-    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-        // TODO add your handling code here:
-        FormViewService l = new FormViewService(username, password, DisplayName,quyen);
-        l.setVisible(true);
-        l.setLocationRelativeTo(null);
-    }//GEN-LAST:event_button2ActionPerformed
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
         // TODO add your handling code here:
@@ -856,17 +851,31 @@ public class FormServiceRent extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtMaNVPropertyChange
 
+    private void btnThemKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKHActionPerformed
+        // TODO add your handling code here:
+        FormaddKH l = new FormaddKH(username, password, DisplayName,quyen);
+        l.setVisible(true);
+        l.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnThemKHActionPerformed
+
+    private void btnThemKH1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKH1ActionPerformed
+        // TODO add your handling code here:
+        FormViewService l = new FormViewService(username, password, DisplayName,quyen);
+        l.setVisible(true);
+        l.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnThemKH1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TBServiceRent;
-    private swing.Button bthDelete;
     private swing.Button btnAdd;
+    private swing.Button btnDelete;
     private swing.Button btnEdit;
     private javax.swing.JButton btnPay;
     private swing.Button btnRefresh;
     private javax.swing.JButton btnReport;
-    private swing.Button button1;
-    private swing.Button button2;
+    private javax.swing.JButton btnThemKH;
+    private javax.swing.JButton btnThemKH1;
     private javax.swing.JComboBox<String> cmbmadichvu;
     private javax.swing.JComboBox<String> cmbmakhachhang;
     private com.toedter.calendar.JDateChooser jDateChooserngaylaphoadon;
