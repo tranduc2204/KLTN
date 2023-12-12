@@ -20,26 +20,25 @@ public class ModelCheckOut {
     Connection conn;
     
     public ArrayList<ModelCheckOutv2> findALL() throws Exception {
-        String sql = "select MaHoaDonPhong, ptp.MaPhieuThuePhong, NgayThuePhong, NgayDatPhong, p.MaPhong, TenPhong, lp.TenLoaiPhong,\n" +
-" DonGia,((DATEDIFF(DAY, NgayThuePhong, NgayLapHoaDon)) *DonGia) * 0.1 as VAT, ((DATEDIFF(DAY, NgayThuePhong, NgayLapHoaDon)) *DonGia) + (((DATEDIFF(DAY, NgayThuePhong, NgayLapHoaDon)) *DonGia) * 0.1) AS GiaHD,NgayLapHoaDon \n" +
-"from HoaDonPhong hdp join PhieuThuePhong ptp on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong \n" +
-"join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong join phong p \n" +
-"on p.MaPhong = pdp.MaPhong join LOAIPHONG lp on p.MaLoaiPhong = lp.MaLoaiPhong join DonGiaPhong dgp on p.MaDonGiaPhong = dgp.MaDonGiaPhong\n" +
-"where hdp.isvisible = '1'  ";
-        conn = cn.getConnection();//where ptp.isvisible = '1' 
+        String sql = "select MaHoaDonPhong, pdp.MaPhieuDatPhong, NgayDuKienThue, NgayDuKienTra, p.MaPhong, TenPhong, TenLoaiPhong, DonGia,GiamGia, \n" +
+"((DATEDIFF(DAY, NgayDuKienThue, NgayDuKienTra)) *DonGia) * 0.1 as VAT, ((DATEDIFF(DAY, NgayDuKienThue, NgayDuKienTra)) *DonGia)  +  (((DATEDIFF(DAY, NgayDuKienThue, NgayDuKienTra)) *DonGia) * 0.1) - (((DATEDIFF(DAY, NgayDuKienThue, NgayDuKienTra)) *DonGia) *GiamGia /100) AS GiaHD, NgayLapHoaDon\n" +
+"from HoaDonPhong hdp join PhieuDatPhong pdp on hdp.MaPhieuDatPhong = pdp.MaPhieuDatPhong join phong p on p.MaPhong = pdp.MaPhong\n" +
+"join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong join LOAIPHONG lp on lp.MaLoaiPhong = p.MaLoaiPhong\n" +
+"where hdp.isvisible = '1' ";
+        conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
         ArrayList<ModelCheckOutv2> list = new ArrayList<>();
         while (rs.next()) {
             ModelCheckOutv2 co = new ModelCheckOutv2();
             co.setMaHoaDonPhong(rs.getString("MaHoaDonPhong"));
-            co.setMaPhieuThuePhong(rs.getString("MaPhieuThuePhong"));
-            co.setNgayThuePhong(rs.getString("NgayThuePhong"));
-            co.setNgayDatPhong(rs.getString("NgayDatPhong"));
+            co.setMaPhieuDatPhong(rs.getString("MaPhieuDatPhong"));
+            co.setNgayThuePhong(rs.getString("NgayDuKienThue"));
+            co.setNgayTraPhong(rs.getString("NgayDuKienTra"));
             co.setMaPhong(rs.getString("MaPhong"));
             co.setTenPhong(rs.getString("TenPhong"));
             co.setLoaiPhong(rs.getString("TenLoaiPhong"));
-    
+            co.setGiamGia(rs.getInt("GiamGia"));
             co.setGia(rs.getBigDecimal("DonGia"));
             co.setVAT(rs.getBigDecimal("VAT"));
             co.setGiaHD(rs.getBigDecimal("GiaHD"));
@@ -49,23 +48,54 @@ public class ModelCheckOut {
         return list;
     }
     
+    public ModelCheckOutv2 findByID(String Maphieudatphong) throws Exception {
+        String sql = "select MaPhieuDatPhong, NgayDuKienThue, NgayDuKienTra, p.MaPhong, TenPhong, TenLoaiPhong, DonGia, GiamGia from PhieuDatPhong pdp join phong p on p.MaPhong = pdp.MaPhong\n" +
+"join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong join LOAIPHONG lp on lp.MaLoaiPhong = p.MaLoaiPhong"
+                + " where MaPhieuDatPhong =? ";
+
+        conn = cn.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+
+        pstmt.setString(1, Maphieudatphong);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            ModelCheckOutv2 ci = new ModelCheckOutv2();
+            ci.setMaPhieuDatPhong(rs.getString("MaPhieuDatPhong"));
+            ci.setNgayThuePhong(rs.getString("NgayDuKienThue"));
+            ci.setNgayTraPhong(rs.getString("NgayDuKienTra"));
+ 
+            ci.setMaPhong(rs.getString("MaPhong"));
+            ci.setTenPhong(rs.getString("TenPhong"));
+            ci.setLoaiPhong(rs.getString("TenLoaiPhong"));
+    
+            ci.setGia(rs.getBigDecimal("DonGia"));
+            ci.setGiamGia(rs.getInt("GiamGia"));
+//            ci.setNgayThuePhong(rs.getString("NgayThuePhong"));
+
+            return ci;
+        }
+        return null;
+    }
+    
+    
 
 //    
     public boolean insert(ModelCheckOutv2 rt) throws Exception {
-        String sql = "insert into HoaDonPhong (MaHoaDonPhong, NgayLapHoaDon, MaPhieuThuePhong) values (?,?,?)";
+        String sql = "insert into HoaDonPhong (MaHoaDonPhong, NgayLapHoaDon, MaPhieuDatPhong) values (?,?,?)";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
         
         pstmt.setString(1, rt.getMaHoaDonPhong());
         pstmt.setString(2, rt.getNgayLapHoaDon());
-        pstmt.setString(3, rt.getMaPhieuThuePhong());
+        pstmt.setString(3, rt.getMaPhieuDatPhong());
 
         return pstmt.executeUpdate() > 0;
 
     }
     public boolean update(ModelCheckOutv2 rt) throws Exception {
-        String sql = "update HoaDonPhong set NgayLapHoaDon = ? , MaPhieuThuePhong= ?  where MaHoaDonPhong = ? ";
+        String sql = "update HoaDonPhong set NgayLapHoaDon = ? , MaPhieuDatPhong= ?  where MaHoaDonPhong = ? ";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -73,7 +103,7 @@ public class ModelCheckOut {
         
         pstmt.setString(3, rt.getMaHoaDonPhong());
         pstmt.setString(1, rt.getNgayLapHoaDon());
-        pstmt.setString(2, rt.getMaPhieuThuePhong());
+        pstmt.setString(2, rt.getMaPhieuDatPhong());
 
         return pstmt.executeUpdate() > 0;
   

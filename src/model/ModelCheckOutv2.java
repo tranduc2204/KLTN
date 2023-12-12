@@ -13,10 +13,26 @@ import java.text.DecimalFormat;
  * @author TeeDee
  */
 public class ModelCheckOutv2 {
-    String MaHoaDonPhong ,MaPhieuThuePhong, NgayThuePhong, NgayDatPhong, MaPhong,TenPhong, LoaiPhong, NgayLapHoaDon;
+    String MaHoaDonPhong ,MaPhieuDatPhong, NgayThuePhong, NgayTraPhong, MaPhong,TenPhong, LoaiPhong, NgayLapHoaDon;
     BigDecimal Gia, GiaHD, VAT;
+    int GiamGia;
 
     public ModelCheckOutv2() {
+    }
+
+    public ModelCheckOutv2(String MaHoaDonPhong, String MaPhieuDatPhong, String NgayThuePhong, String NgayTraPhong, String MaPhong, String TenPhong, String LoaiPhong, String NgayLapHoaDon, BigDecimal Gia, BigDecimal GiaHD, BigDecimal VAT, int GiamGia) {
+        this.MaHoaDonPhong = MaHoaDonPhong;
+        this.MaPhieuDatPhong = MaPhieuDatPhong;
+        this.NgayThuePhong = NgayThuePhong;
+        this.NgayTraPhong = NgayTraPhong;
+        this.MaPhong = MaPhong;
+        this.TenPhong = TenPhong;
+        this.LoaiPhong = LoaiPhong;
+        this.NgayLapHoaDon = NgayLapHoaDon;
+        this.Gia = Gia;
+        this.GiaHD = GiaHD;
+        this.VAT = VAT;
+        this.GiamGia = GiamGia;
     }
 
     public String getMaHoaDonPhong() {
@@ -27,12 +43,12 @@ public class ModelCheckOutv2 {
         this.MaHoaDonPhong = MaHoaDonPhong;
     }
 
-    public String getMaPhieuThuePhong() {
-        return MaPhieuThuePhong;
+    public String getMaPhieuDatPhong() {
+        return MaPhieuDatPhong;
     }
 
-    public void setMaPhieuThuePhong(String MaPhieuThuePhong) {
-        this.MaPhieuThuePhong = MaPhieuThuePhong;
+    public void setMaPhieuDatPhong(String MaPhieuDatPhong) {
+        this.MaPhieuDatPhong = MaPhieuDatPhong;
     }
 
     public String getNgayThuePhong() {
@@ -43,12 +59,12 @@ public class ModelCheckOutv2 {
         this.NgayThuePhong = NgayThuePhong;
     }
 
-    public String getNgayDatPhong() {
-        return NgayDatPhong;
+    public String getNgayTraPhong() {
+        return NgayTraPhong;
     }
 
-    public void setNgayDatPhong(String NgayDatPhong) {
-        this.NgayDatPhong = NgayDatPhong;
+    public void setNgayTraPhong(String NgayTraPhong) {
+        this.NgayTraPhong = NgayTraPhong;
     }
 
     public String getMaPhong() {
@@ -106,25 +122,17 @@ public class ModelCheckOutv2 {
     public void setVAT(BigDecimal VAT) {
         this.VAT = VAT;
     }
+
     
 
-    public ModelCheckOutv2(String MaHoaDonPhong, String MaPhieuThuePhong, String NgayThuePhong, String NgayDatPhong, String MaPhong, String TenPhong, String LoaiPhong, String NgayLapHoaDon, BigDecimal Gia, BigDecimal VAT,BigDecimal GiaHD) {
-        this.MaHoaDonPhong = MaHoaDonPhong;
-        this.MaPhieuThuePhong = MaPhieuThuePhong;
-        this.NgayThuePhong = NgayThuePhong;
-        this.NgayDatPhong = NgayDatPhong;
-        this.MaPhong = MaPhong;
-        this.TenPhong = TenPhong;
-        this.LoaiPhong = LoaiPhong;
-        this.NgayLapHoaDon = NgayLapHoaDon;
-        this.Gia = Gia;
-        this.VAT = VAT;
-        this.GiaHD = GiaHD;
+    public void setGiamGia(int GiamGia) {
+        this.GiamGia = GiamGia;
     }
-
     
-
-    
+    public String getFormattedPercentage(){
+        DecimalFormat decimalFormat = new DecimalFormat("0%");
+        return decimalFormat.format((double) GiamGia / 100); // Chia cho 100 để đưa về dạng phần trăm
+    }
     
     public String getFormattedGia() {
         DecimalFormat decimalFormat = new DecimalFormat("#,### VND");

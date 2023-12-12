@@ -93,7 +93,7 @@ public class FormServiceRent extends javax.swing.JPanel {
     private void inittable() {
         tbmodel = new DefaultTableModel();
         tbmodel.setColumnIdentifiers(new String[]{"Mã dịch vụ", "Tên dịch vụ", "Mã nhân viên",  "Họ tên nhân viên",
-            "Mã khách hàng", "Họ tên khách hàng", "Ngày lập hóa đơn", "Đơn giá",  "Số lượng","VAT", "Giá hóa đơn"});
+            "Mã khách hàng", "Họ tên khách hàng", "Ngày lập hóa đơn", "Đơn giá","Giảm giá",  "Số lượng","VAT", "Giá hóa đơn"});
         TBServiceRent.setModel(tbmodel);
     }
     
@@ -104,7 +104,7 @@ public class FormServiceRent extends javax.swing.JPanel {
             tbmodel.setRowCount(0);
             for (ModelServiceRentv2 p : list) {
                 tbmodel.addRow(new Object[]{
-                    p.getMaDV(), p.getTenDichVu(), p.getMaNV(), p.getTenNhanVien(), p.getMaKH(),p.getHoKH()+" "+ p.getTenKH(),p.getNgayLapHD(), p.getFormattedGia(),  p.getSL(),p.getFormattedVAT(),p.getFormattedGiahd()
+                    p.getMaDV(), p.getTenDichVu(), p.getMaNV(), p.getTenNhanVien(), p.getMaKH(),p.getHoKH()+" "+ p.getTenKH(),p.getNgayLapHD(), p.getFormattedGia(),p.getFormattedPercentage(),  p.getSL(),p.getFormattedVAT(),p.getFormattedGiahd()
                 });
             }
             tbmodel.fireTableDataChanged();
@@ -246,8 +246,6 @@ public class FormServiceRent extends javax.swing.JPanel {
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("Ngày lập hóa đơn:");
-
-        jDateChooserngaylaphoadon.setEnabled(false);
 
         cmbmakhachhang.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
