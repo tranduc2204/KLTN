@@ -99,11 +99,11 @@ public class FormStatistic1 extends javax.swing.JPanel {
         
         try {
             conn = cn.getConnection();
-            String sqlQuery = "select sum(Tien) as doanhthu, month(NgayLapHoaDon) as thang, year(NgayLapHoaDon) as nam from HoaDonPhong hdp join PhieuThuePhong ptp on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong \n" +
-"join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong join PHONG p on p.MaPhong = pdp.MaPhong \n" +
-"join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH \n" +
+            String sqlQuery = "select sum(DonGia) as doanhthu,  month(NgayLapHoaDon) as thang, year(NgayLapHoaDon) as nam\n" +
+"from HoaDonPhong hdp join PhieuDatPhong pdp on hdp.MaPhieuDatPhong = pdp.MaPhieuDatPhong join PHONG p  on p.MaPhong = pdp.MaPhong join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong\n" +
+"join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH\n" +
 "group by month(NgayLapHoaDon), year(NgayLapHoaDon)\n" +
-"having month(NgayLapHoaDon) = ? and YEAR (NgayLapHoaDon) = ? ";
+"having month(NgayLapHoaDon) = ? and YEAR (NgayLapHoaDon) = ?  ";
 
             PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
 
@@ -134,9 +134,9 @@ public class FormStatistic1 extends javax.swing.JPanel {
                                                                                                                                                                                                                                                                                                                                      
         try {
             conn = cn.getConnection();
-            String sqlQuery = "select MaHoaDonPhong, TenNV, TenKH,TenPhong, NgayLapHoaDon, Tien  from HoaDonPhong hdp join PhieuThuePhong ptp \n" +
-"on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong  join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong \n" +
-"join PHONG p on p.MaPhong = pdp.MaPhong join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH \n" +
+            String sqlQuery = "select MaHoaDonPhong, TenNV, TenKH, TenPhong, NgayLapHoaDon,CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia \n" +
+"from HoaDonPhong hdp join PhieuDatPhong pdp on hdp.MaPhieuDatPhong = pdp.MaPhieuDatPhong join PHONG p  on p.MaPhong = pdp.MaPhong join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong\n" +
+"join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH \n" +
 "where month(NgayLapHoaDon) = ? and YEAR (NgayLapHoaDon) = ? ";
 
             PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
@@ -154,7 +154,7 @@ public class FormStatistic1 extends javax.swing.JPanel {
                         resultSet.getObject("TenKH"),
                         resultSet.getObject("TenPhong"),
                         resultSet.getObject("NgayLapHoaDon"),
-                        resultSet.getObject("Tien"),
+                        resultSet.getObject("DonGia"),
                 };
                 tableModel.addRow(rowData);
             }
@@ -171,11 +171,11 @@ public class FormStatistic1 extends javax.swing.JPanel {
         String nam = cmbNam2.getSelectedItem().toString();
         try {
             conn = cn.getConnection();
-            String sqlQuery = "select sum(Tien) as doanhthu,  year(NgayLapHoaDon) as nam from HoaDonPhong hdp join PhieuThuePhong ptp on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong \n" +
-"join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong join PHONG p on p.MaPhong = pdp.MaPhong \n" +
-"join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH \n" +
+            String sqlQuery = "select sum(DonGia) as doanhthu ,  year(NgayLapHoaDon) as nam\n" +
+"from HoaDonPhong hdp join PhieuDatPhong pdp on hdp.MaPhieuDatPhong = pdp.MaPhieuDatPhong join PHONG p  on p.MaPhong = pdp.MaPhong join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong\n" +
+"join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH\n" +
 "group by  year(NgayLapHoaDon)\n" +
-"having year(NgayLapHoaDon) = ? ";
+"having  YEAR (NgayLapHoaDon) = ? ";
 
             PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
 
@@ -206,9 +206,9 @@ public class FormStatistic1 extends javax.swing.JPanel {
                                                                                                                                                                                                                                                                                                                                      
         try {
             conn = cn.getConnection();
-            String sqlQuery = "select MaHoaDonPhong, TenNV, TenKH,TenPhong, NgayLapHoaDon, Tien  from HoaDonPhong hdp join PhieuThuePhong ptp \n" +
-"on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong  join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong \n" +
-"join PHONG p on p.MaPhong = pdp.MaPhong join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH \n" +
+            String sqlQuery = "select MaHoaDonPhong, TenNV, TenKH, TenPhong, NgayLapHoaDon,CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia\n" +
+"from HoaDonPhong hdp join PhieuDatPhong pdp on hdp.MaPhieuDatPhong = pdp.MaPhieuDatPhong join PHONG p  on p.MaPhong = pdp.MaPhong join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong\n" +
+"join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH \n" +
 "where YEAR (NgayLapHoaDon) = ? ";
 
             PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
@@ -226,7 +226,7 @@ public class FormStatistic1 extends javax.swing.JPanel {
                         resultSet.getObject("TenKH"),
                         resultSet.getObject("TenPhong"),
                         resultSet.getObject("NgayLapHoaDon"),
-                        resultSet.getObject("Tien"),
+                        resultSet.getObject("DonGia"),
                 };
                 tableModel.addRow(rowData);
             }
@@ -241,7 +241,9 @@ public class FormStatistic1 extends javax.swing.JPanel {
         conn = cn.getConnection();
 
         // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
-        String sqlQuery = "select MaHoaDonPhong, TenNV, TenKH,TenPhong, NgayLapHoaDon, Tien  from HoaDonPhong hdp join PhieuThuePhong ptp on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong  join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong join PHONG p on p.MaPhong = pdp.MaPhong join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH  ";
+        String sqlQuery = "select MaHoaDonPhong, TenNV, TenKH, TenPhong, NgayLapHoaDon,CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia \n" +
+"from HoaDonPhong hdp join PhieuDatPhong pdp on hdp.MaPhieuDatPhong = pdp.MaPhieuDatPhong join PHONG p  on p.MaPhong = pdp.MaPhong join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong\n" +
+"join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH ";
         //where NgayLapHoaDon between ? and ?
 
         try {
@@ -258,23 +260,14 @@ public class FormStatistic1 extends javax.swing.JPanel {
                         resultSet.getObject("TenKH"),
                         resultSet.getObject("TenPhong"),
                         resultSet.getObject("NgayLapHoaDon"),
-                        resultSet.getObject("Tien"),
-
-
-//                            "Action" // Cần thay thế "Action" bằng cột thực tế bạn muốn hiển thị hoặc xử lý
-
+                        resultSet.getObject("DonGia"),
                 };
                 tableModel.addRow(rowData);
             }
         }catch(Exception e){
-
         }
-        
     }
-    
-    
-    
-    
+
     private void report_monthofyear() { 
 
         String thang = cmbThang1.getSelectedItem().toString();
@@ -332,11 +325,11 @@ public class FormStatistic1 extends javax.swing.JPanel {
         panelBorder2 = new swing.PanelBorder();
         rbThangofNam = new javax.swing.JRadioButton();
         rbNam = new javax.swing.JRadioButton();
-        btnRefresh1 = new swing.Button();
-        btnStatistic = new swing.Button();
         cmbThang1 = new javax.swing.JComboBox<>();
         cmbNam1 = new javax.swing.JComboBox<>();
         cmbNam2 = new javax.swing.JComboBox<>();
+        btnRefresh = new javax.swing.JButton();
+        btnStatistic = new javax.swing.JButton();
 
         roundPanel2.setBackground(new java.awt.Color(36, 87, 157));
         roundPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thống kê doanh thu hóa đơn phòng:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -376,26 +369,27 @@ public class FormStatistic1 extends javax.swing.JPanel {
             }
         });
 
-        panelBorder2.setBackground(new java.awt.Color(36, 87, 157));
-        panelBorder2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tiêu chí thống kê", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
+        panelBorder2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tiêu chí thống kê", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20))); // NOI18N
         panelBorder2.setForeground(new java.awt.Color(255, 255, 255));
 
-        rbThangofNam.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroup1.add(rbThangofNam);
         rbThangofNam.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        rbThangofNam.setForeground(new java.awt.Color(255, 255, 255));
         rbThangofNam.setText("Thống kê theo tháng của năm");
 
-        rbNam.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroup1.add(rbNam);
         rbNam.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        rbNam.setForeground(new java.awt.Color(255, 255, 255));
         rbNam.setText("Thống kê theo năm");
 
-        btnRefresh1.setText("Xem");
-        btnRefresh1.addActionListener(new java.awt.event.ActionListener() {
+        cmbThang1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbNam1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbNam2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnRefresh.setText("Xem");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRefresh1ActionPerformed(evt);
+                btnRefreshActionPerformed(evt);
             }
         });
 
@@ -406,55 +400,51 @@ public class FormStatistic1 extends javax.swing.JPanel {
             }
         });
 
-        cmbThang1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cmbNam1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cmbNam2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout panelBorder2Layout = new javax.swing.GroupLayout(panelBorder2);
         panelBorder2.setLayout(panelBorder2Layout);
         panelBorder2Layout.setHorizontalGroup(
             panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBorder2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(panelBorder2Layout.createSequentialGroup()
-                        .addComponent(rbNam)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmbNam2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelBorder2Layout.createSequentialGroup()
-                        .addComponent(rbThangofNam)
-                        .addGap(169, 169, 169)
-                        .addComponent(cmbThang1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(cmbNam1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(430, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnRefresh1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
-                .addComponent(btnStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(155, 155, 155))
+                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelBorder2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(btnStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelBorder2Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(panelBorder2Layout.createSequentialGroup()
+                                .addComponent(rbNam)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cmbNam2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelBorder2Layout.createSequentialGroup()
+                                .addComponent(rbThangofNam)
+                                .addGap(169, 169, 169)
+                                .addComponent(cmbThang1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbNam1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 302, Short.MAX_VALUE)))
+                .addGap(128, 128, 128))
         );
         panelBorder2Layout.setVerticalGroup(
             panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder2Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(10, 10, 10)
                 .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rbThangofNam)
                     .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cmbThang1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cmbNam1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(33, 33, 33)
+                .addGap(36, 36, 36)
                 .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rbNam)
                     .addComponent(cmbNam2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGap(46, 46, 46)
                 .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRefresh1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29))
+                    .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout roundPanel2Layout = new javax.swing.GroupLayout(roundPanel2);
@@ -512,30 +502,6 @@ public class FormStatistic1 extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnStatisticActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatisticActionPerformed
-        // TODO add your handling code here:
-        
-        txtDoanhThu.setText("");
-        tableModel.setRowCount(0);
-        
-        if (rbThangofNam.isSelected() ==true){
-            loaddoanhthuthangofnam();
-            loadDataFromSQLthangofnam();
-        }else if(rbNam.isSelected() == true){
-            loaddoanhthuofnam();
-            loadDataFromSQLofnam();
-        }else {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày");
-        }
-    }//GEN-LAST:event_btnStatisticActionPerformed
-
-    private void btnRefresh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefresh1ActionPerformed
-        // TODO add your handling code here:
-        tableModel.setRowCount(0);
-        txtDoanhThu.setText("");
-        loadDataFromSQL();
-    }//GEN-LAST:event_btnRefresh1ActionPerformed
-
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
         // TODO add your handling code here:
         
@@ -551,11 +517,34 @@ public class FormStatistic1 extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnReportActionPerformed
 
+    private void btnStatisticActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatisticActionPerformed
+        // TODO add your handling code here:
+        txtDoanhThu.setText("");
+        tableModel.setRowCount(0);
+        
+        if (rbThangofNam.isSelected() ==true){
+            loaddoanhthuthangofnam();
+            loadDataFromSQLthangofnam();
+        }else if(rbNam.isSelected() == true){
+            loaddoanhthuofnam();
+            loadDataFromSQLofnam();
+        }else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày");
+        }
+    }//GEN-LAST:event_btnStatisticActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+        tableModel.setRowCount(0);
+        txtDoanhThu.setText("");
+        loadDataFromSQL();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private swing.Button btnRefresh1;
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnReport;
-    private swing.Button btnStatistic;
+    private javax.swing.JButton btnStatistic;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cmbNam1;
     private javax.swing.JComboBox<String> cmbNam2;

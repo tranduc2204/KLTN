@@ -20,7 +20,8 @@ public class ModelService {
     Connection conn;
     
     public ArrayList<ModelServicev2> findALL() throws Exception {
-        String sql = "select MaDV, TenDichVu,dgdv.MaDonGiaDV,GiamGia, DonGia  from DICHVU dv join DonGiaDV dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV where isvisible = '1' ";
+        String sql = "select MaDV, TenDichVu,dgdv.MaDonGiaDV,GiamGia, DonGia  from DICHVU dv "
+                + "join DonGiaDV dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV where isvisible = '1' ";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -60,9 +61,7 @@ public class ModelService {
         return null;
     }
     
-    
-    
-    
+  
     public boolean insert(ModelServicev2 dv) throws Exception {
         String sql = "insert into dichvu (MaDV, tendichvu,madongiadv,GiamGia) values (?,?,?,?)";
 
@@ -79,7 +78,7 @@ public class ModelService {
     }
     
     public boolean update(ModelServicev2 dv) throws Exception {
-        String sql = "update dichvu set tendichvu =?,madongiadv=?, GiamGia = ?  where MaDV = ?";
+        String sql = "update dichvu set tendichvu =?,madongiadv=?, GiamGia = ?  where MaDV = ? ";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);

@@ -197,14 +197,14 @@ public class FormQLStaff extends javax.swing.JPanel {
                         .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(roundPanel2Layout.createSequentialGroup()
                                 .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(70, 70, 70)
-                                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(69, 69, 69)
+                                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(44, 44, 44))
                             .addGroup(roundPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel44)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jDateChooserNgaySInh, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(11, 11, 11)))
-                        .addGap(42, 42, 42))
+                                .addGap(53, 53, 53))))
                     .addGroup(roundPanel2Layout.createSequentialGroup()
                         .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(roundPanel2Layout.createSequentialGroup()
@@ -219,24 +219,24 @@ public class FormQLStaff extends javax.swing.JPanel {
                                     .addComponent(txtMANHANVIEN, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtTENNHANVIEN, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(53, 53, 53)))
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtEMAIL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtNOISINH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtDIACHI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtSODIENTHOAI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(roundPanel2Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59)
-                        .addComponent(btnAdd3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(172, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel2Layout.createSequentialGroup()
-                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(roundPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jDateChooserNgayVaoLam, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE))
-                            .addComponent(txtEMAIL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtNOISINH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtDIACHI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtSODIENTHOAI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(54, 54, 54))))
+                                .addComponent(jDateChooserNgayVaoLam, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE))
+                            .addGroup(roundPanel2Layout.createSequentialGroup()
+                                .addGap(70, 70, 70)
+                                .addComponent(btnAdd3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)))))
+                .addGap(54, 54, 54))
         );
         roundPanel2Layout.setVerticalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,31 +253,35 @@ public class FormQLStaff extends javax.swing.JPanel {
                 .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTENNHANVIEN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNOISINH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(RBNNam)
-                    .addComponent(txtDIACHI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(RBNNNU))
-                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(roundPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(RBNNam)
+                            .addComponent(txtDIACHI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(RBNNNU))
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel2Layout.createSequentialGroup()
+                                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jDateChooserNgaySInh, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(roundPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel44)
+                                        .addGap(11, 11, 11)))
+                                .addGap(2, 2, 2))
+                            .addComponent(jDateChooserNgayVaoLam, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel48)
+                                .addGap(12, 12, 12)))
+                        .addGap(86, 86, 86))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel2Layout.createSequentialGroup()
-                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jDateChooserNgaySInh, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(roundPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel44)
-                                .addGap(11, 11, 11)))
-                        .addGap(2, 2, 2))
-                    .addComponent(jDateChooserNgayVaoLam, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel48)
-                        .addGap(12, 12, 12)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAdd3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAdd3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
 
         tbNHANVIEN.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -412,7 +416,7 @@ public class FormQLStaff extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -429,37 +433,6 @@ public class FormQLStaff extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
-        Date selectedDate = jDateChooserNgaySInh.getDate();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDate);
-
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String ngaysinh = year + "-" + month + "-" + day;
-        
-        
-//        String ngay = cmbNGAY1.getSelectedItem().toString();
-//        String thang = cmbTHANG1.getSelectedItem().toString();
-//        String nam = cmbNAM1.getSelectedItem().toString();
-//        String ngaysinh = nam + "-" + thang + "-" + ngay;
-       
-        Date selectedDate1 = jDateChooserNgayVaoLam.getDate();
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.setTime(selectedDate1);
-        
-        int year1 = calendar1.get(Calendar.YEAR);
-        int month1 = calendar1.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-        int day1 = calendar1.get(Calendar.DAY_OF_MONTH);
-        String ngaysinh1 = year1 + "-" + month1 + "-" + day1;
-
-    
-//        String ngay1 = cmbNGAY2.getSelectedItem().toString();
-//        String thang1 = cmbTHANG2.getSelectedItem().toString();
-//        String nam1 = cmbNAM2.getSelectedItem().toString();
-//        String ngaysinh1 = nam1 + "-" + thang1 + "-" + ngay1;
-       
 
         StringBuilder sb = new StringBuilder();
         if (txtMANHANVIEN.getText().equals("")) {
@@ -468,60 +441,62 @@ public class FormQLStaff extends javax.swing.JPanel {
 
         } else {
             txtMANHANVIEN.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        try {
-            ModelStaffv2 nv = new ModelStaffv2();
-            nv.setMaNV(txtMANHANVIEN.getText());
-            nv.setHoNV(txtHONHANVIEN.getText());
-            nv.setTenNV(txtTENNHANVIEN.getText());
-            nv.setGioitinh(RBNNam.isSelected() ? 1 : 0);
-            nv.setDiaChi(txtDIACHI.getText());
-            nv.setNgaySinh(ngaysinh);
-            nv.setDienThoai(txtSODIENTHOAI.getText());
-            nv.setEmail(txtEMAIL.getText());
-            nv.setNoiSinh(txtNOISINH.getText());
-            nv.setNgayVaoLam(ngaysinh1);
-            ModelStaff ql1 = new ModelStaff();
-            ql1.insert(nv);
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb);
+            }
+            try {
+                Date selectedDate = jDateChooserNgaySInh.getDate();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(selectedDate);
 
-            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-            loadthongtinnhanvien();
-        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-             JOptionPane.showMessageDialog(this, "Mã nhân viên này đã tồn tại, nếu muốn thêm với mã nhân viên này vui lòng xóa nhân viên trong db");
-            e.printStackTrace();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                String ngaysinh = year + "-" + month + "-" + day;
+
+
+                Date selectedDate1 = jDateChooserNgayVaoLam.getDate();
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.setTime(selectedDate1);
+
+                int year1 = calendar1.get(Calendar.YEAR);
+                int month1 = calendar1.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+                int day1 = calendar1.get(Calendar.DAY_OF_MONTH);
+                String ngaysinh1 = year1 + "-" + month1 + "-" + day1;
+
+                String gioitinh;
+                if (RBNNam.isSelected() == true){
+                    gioitinh = "0";
+                }else {
+                    gioitinh ="1";
+                }
+
+                ModelStaffv2 nv = new ModelStaffv2();
+                nv.setMaNV(txtMANHANVIEN.getText());
+                nv.setHoNV(txtHONHANVIEN.getText());
+                nv.setTenNV(txtTENNHANVIEN.getText());
+                nv.setGioitinh(gioitinh);
+                nv.setDiaChi(txtDIACHI.getText());
+                nv.setNgaySinh(ngaysinh);
+                nv.setDienThoai(txtSODIENTHOAI.getText());
+                nv.setEmail(txtEMAIL.getText());
+                nv.setNoiSinh(txtNOISINH.getText());
+                nv.setNgayVaoLam(ngaysinh1);
+                ModelStaff ql1 = new ModelStaff();
+                ql1.insert(nv);
+
+                JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+                loadthongtinnhanvien();
+            } catch (Exception e) {
+                 JOptionPane.showMessageDialog(this, "Mã nhân viên này đã tồn tại, nếu muốn thêm với mã nhân viên này vui lòng xóa nhân viên trong db");
+                e.printStackTrace();
+            }
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-        Date selectedDate = jDateChooserNgaySInh.getDate();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDate);
-
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String ngaysinh = year + "-" + month + "-" + day;
         
-        
-//        String ngay = cmbNGAY1.getSelectedItem().toString();
-//        String thang = cmbTHANG1.getSelectedItem().toString();
-//        String nam = cmbNAM1.getSelectedItem().toString();
-//        String ngaysinh = nam + "-" + thang + "-" + ngay;
-       
-        Date selectedDate1 = jDateChooserNgayVaoLam.getDate();
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.setTime(selectedDate1);
-        
-        int year1 = calendar1.get(Calendar.YEAR);
-        int month1 = calendar1.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-        int day1 = calendar1.get(Calendar.DAY_OF_MONTH);
-        String ngaysinh1 = year1 + "-" + month1 + "-" + day1;
-     
 
         StringBuilder sb = new StringBuilder();
         if (txtMANHANVIEN.getText().equals("")) {
@@ -530,36 +505,66 @@ public class FormQLStaff extends javax.swing.JPanel {
 
         } else {
             txtMANHANVIEN.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        if (JOptionPane.showConfirmDialog(this, "bạn có muốn sửa nhân viên không??") == JOptionPane.NO_OPTION) {
-            return;
-        }
-        try {
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb);
+            }
+            if (JOptionPane.showConfirmDialog(this, "bạn có muốn sửa nhân viên không??") == JOptionPane.YES_OPTION) {
+                try {
 
-            ModelStaffv2 nv = new ModelStaffv2();
-            nv.setMaNV(txtMANHANVIEN.getText());
-            nv.setHoNV(txtHONHANVIEN.getText());
-            nv.setTenNV(txtTENNHANVIEN.getText());
-            nv.setGioitinh(RBNNam.isSelected() ? 1 : 0);
-            nv.setDiaChi(txtDIACHI.getText());
-            nv.setNgaySinh(ngaysinh);
-            nv.setDienThoai(txtSODIENTHOAI.getText());
-            nv.setEmail(txtEMAIL.getText());
-            nv.setNoiSinh(txtNOISINH.getText());
-            nv.setNgayVaoLam(ngaysinh1);
+                    Date selectedDate = jDateChooserNgaySInh.getDate();
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(selectedDate);
 
-            ModelStaff ql1 = new ModelStaff();
-            ql1.update(nv);
+                    int year = calendar.get(Calendar.YEAR);
+                    int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+                    int day = calendar.get(Calendar.DAY_OF_MONTH);
+                    String ngaysinh = year + "-" + month + "-" + day;
 
-            JOptionPane.showMessageDialog(this, "Sửa thành công!!! ");
-            loadthongtinnhanvien();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
+                    Date selectedDate1 = jDateChooserNgayVaoLam.getDate();
+                    Calendar calendar1 = Calendar.getInstance();
+                    calendar1.setTime(selectedDate1);
+
+                    int year1 = calendar1.get(Calendar.YEAR);
+                    int month1 = calendar1.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+                    int day1 = calendar1.get(Calendar.DAY_OF_MONTH);
+                    String ngaysinh1 = year1 + "-" + month1 + "-" + day1;
+
+                    String gioitinh;
+                    if (RBNNam.isSelected() == true){
+                        gioitinh = "0";
+                    }else {
+                        gioitinh ="1";
+                    }
+
+
+                    ModelStaffv2 nv = new ModelStaffv2();
+                    nv.setMaNV(txtMANHANVIEN.getText());
+                    nv.setHoNV(txtHONHANVIEN.getText());
+                    nv.setTenNV(txtTENNHANVIEN.getText());
+                    nv.setGioitinh(gioitinh);
+                    nv.setDiaChi(txtDIACHI.getText());
+                    nv.setNgaySinh(ngaysinh);
+                    nv.setDienThoai(txtSODIENTHOAI.getText());
+                    nv.setEmail(txtEMAIL.getText());
+                    nv.setNoiSinh(txtNOISINH.getText());
+                    nv.setNgayVaoLam(ngaysinh1);
+
+                    ModelStaff ql1 = new ModelStaff();
+                    ql1.update(nv);
+
+                    JOptionPane.showMessageDialog(this, "Sửa thành công!!! ");
+                    loadthongtinnhanvien();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }else {
+                return;
+            }
+            
         }
+        
+        
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void bthDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bthDeleteActionPerformed
@@ -571,30 +576,43 @@ public class FormQLStaff extends javax.swing.JPanel {
 
         } else {
             txtMANHANVIEN.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        if (JOptionPane.showConfirmDialog(this, "bạn có muốn xóa nhân viên không??") == JOptionPane.NO_OPTION) {
-            return;
-        }
-        try {
-            ModelStaffv2 nvv = new ModelStaffv2();
-            nvv.setMaNV(txtMANHANVIEN.getText());
-            ModelStaff ql = new ModelStaff();
-             
-            ql.deletecomeroot(nvv);
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb);
+            }
+            if (JOptionPane.showConfirmDialog(this, "bạn có muốn xóa nhân viên không??") == JOptionPane.YES_OPTION) {
+                try {
+                    ModelStaffv2 nvv = new ModelStaffv2();
+                    nvv.setMaNV(txtMANHANVIEN.getText());
+                    ModelStaff ql = new ModelStaff();
 
-            JOptionPane.showMessageDialog(this, "Xóa thành công!!! ");
-            loadthongtinnhanvien();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
+                    ql.deletecomeroot(nvv);
+
+                    JOptionPane.showMessageDialog(this, "Xóa thành công!!! ");
+                    loadthongtinnhanvien();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }else {
+                return;
+            }
         }
+        
+        
     }//GEN-LAST:event_bthDeleteActionPerformed
 
     private void btnAdd3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd3ActionPerformed
         // TODO add your handling code here:
+        txtMANHANVIEN.setText("");
+        txtHONHANVIEN.setText("");
+        txtTENNHANVIEN.setText("");
+        txtSODIENTHOAI.setText("");
+        txtEMAIL.setText("");
+        txtNOISINH.setText("");
+        txtDIACHI.setText("");
+        txtSEARCHMANV.setText("");
+        txtsearchsdt.setText("");
+        txtsearchtennv.setText("");
     }//GEN-LAST:event_btnAdd3ActionPerformed
 
     private void tbNHANVIENMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbNHANVIENMouseClicked
@@ -606,7 +624,7 @@ public class FormQLStaff extends javax.swing.JPanel {
             txtHONHANVIEN.setText(tbNHANVIEN.getValueAt(row, 1).toString());
             txtTENNHANVIEN.setText(tbNHANVIEN.getValueAt(row, 2).toString());
             String gioitinh = tbNHANVIEN.getValueAt(row, 3).toString();
-            if (gioitinh.equals("1")) {
+            if (gioitinh.equals("Nam")) {
                 RBNNam.setSelected(true);
                 RBNNNU.setSelected(false);
             } else {
@@ -652,7 +670,8 @@ public class FormQLStaff extends javax.swing.JPanel {
 
             try {
 
-                String sql = "select * from nhanvien where manv = ? and isvisible = '1' ";
+                String sql = "select MaNV, HoNV, TenNV, case when GioiTinh = 0 then 'Nam' when GioiTinh = 1 then N'Nữ' end as GioiTinh, DiaChi, NgaySinh, DienThoai, Email, NoiSinh, NgayVaoLam from NHANVIEN"
+                        + " where manv = ? and isvisible = '1' ";
                 conn = cn.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -675,7 +694,8 @@ public class FormQLStaff extends javax.swing.JPanel {
         } else if (rbSDT.isSelected() == true) {
             try {
 
-                String sql = "select * from nhanvien where dienthoai = ? and isvisible = '1' ";
+                String sql = "select MaNV, HoNV, TenNV, case when GioiTinh = 0 then 'Nam' when GioiTinh = 1 then N'Nữ' end as GioiTinh, DiaChi, NgaySinh, DienThoai, Email, NoiSinh, NgayVaoLam from NHANVIEN"
+                        + " where dienthoai = ? and isvisible = '1' ";
                 conn = cn.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -697,7 +717,8 @@ public class FormQLStaff extends javax.swing.JPanel {
         } else if (rbTENNHANVIEN.isSelected() == true) {
          try {
 
-                String sql = "select * from nhanvien where tennv = ? and isvisible = '1'  ";
+                String sql = "select MaNV, HoNV, TenNV, case when GioiTinh = 0 then 'Nam' when GioiTinh = 1 then N'Nữ' end as GioiTinh, DiaChi, NgaySinh, DienThoai, Email, NoiSinh, NgayVaoLam from NHANVIEN"
+                        + " where tennv = ? and isvisible = '1'  ";
                 conn = cn.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql);
 

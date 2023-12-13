@@ -503,27 +503,28 @@ public class FormCheckOut extends javax.swing.JPanel {
         if (sb.length() > 0) {
             JOptionPane.showMessageDialog(this, sb);
         }
-        String Maphieudatphong = cmbmaphieudatphong.getSelectedItem().toString();
+        if (JOptionPane.showConfirmDialog(this, "bạn có muốn sửa hóa đơn không??") == JOptionPane.YES_OPTION) {
+            try {
+                ModelCheckOutv2 ci = new ModelCheckOutv2();
+                ci.setMaHoaDonPhong(txtMaphieutraphong.getText());
+                ci.setNgayLapHoaDon(ngayhd);
 
-        try {
-            ModelCheckOutv2 ci = new ModelCheckOutv2();
-            ci.setMaHoaDonPhong(txtMaphieutraphong.getText());
-            ci.setNgayLapHoaDon(ngayhd);
-            ci.setMaPhieuDatPhong(Maphieudatphong);
 
-            ModelCheckOut ql1 = new ModelCheckOut();
-            ql1.update(ci);
+                ModelCheckOut ql1 = new ModelCheckOut();
+                ql1.update(ci);
 
-            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-            
-            
-            loaddulieu1();
-        } catch (Exception e) {
-            //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            JOptionPane.showMessageDialog(this, "Mã hóa đơn phòng này đã tồn tại, nếu muốn thêm với mã hóa đơn phòng này vui lòng xóa phiếu đặt phòng trong db");
-            e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+
+
+                loaddulieu1();
+            } catch (Exception e) {
+                //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                JOptionPane.showMessageDialog(this, "Mã hóa đơn phòng này đã tồn tại, nếu muốn thêm với mã hóa đơn phòng này vui lòng xóa phiếu đặt phòng trong db");
+                e.printStackTrace();
+            }
+        }else {
+            return;
         }
-        
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -564,14 +565,12 @@ public class FormCheckOut extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Mã hóa đơn phòng này đã tồn tại, nếu muốn thêm với mã hóa đơn phòng này vui lòng xóa phiếu đặt phòng trong db");
                 e.printStackTrace();
             }
-            
-            
+           
         }
         if (sb.length() > 0) {
             JOptionPane.showMessageDialog(this, sb);
         }
 
-        
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -588,43 +587,43 @@ public class FormCheckOut extends javax.swing.JPanel {
         if (sb.length() > 0) {
             JOptionPane.showMessageDialog(this, sb);
         }
-        try {
-            ModelCheckOutv2 ci = new ModelCheckOutv2();//MaHoaDonPhong
-            ci.setMaHoaDonPhong(txtMaphieutraphong.getText());
+        if (JOptionPane.showConfirmDialog(this, "bạn có muốn xóa hóa đơn không??") == JOptionPane.YES_OPTION) {
+            try {
+                ModelCheckOutv2 ci = new ModelCheckOutv2();//MaHoaDonPhong
+                ci.setMaHoaDonPhong(txtMaphieutraphong.getText());
 
-            ModelCheckOut ql1 = new ModelCheckOut();
-            ql1.deletecomeroot(ci);
+                ModelCheckOut ql1 = new ModelCheckOut();
+                ql1.deletecomeroot(ci);
 
-            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-            
-            
-            int row = TBcheckout.getSelectedRow();
-            if (row >= 0) {
-                String maphong = TBcheckout.getValueAt(row, 5).toString();
-                
-                ModelPhongv2 p = new ModelPhongv2();
-                p.setMaPhong(maphong);
+                JOptionPane.showMessageDialog(this, "xóa thành công!!!");
 
-                ModelPhong ql = new ModelPhong();
-                ql.updateTT3(p);
-                
-  
+
+                int row = TBcheckout.getSelectedRow();
+                if (row >= 0) {
+                    String maphong = TBcheckout.getValueAt(row, 5).toString();
+
+                    ModelPhongv2 p = new ModelPhongv2();
+                    p.setMaPhong(maphong);
+
+                    ModelPhong ql = new ModelPhong();
+                    ql.updateTT3(p);
+                }
+                loaddulieu1();
+            } catch (Exception e) {
+                //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
+                e.printStackTrace();
             }
-            
-            
-            loaddulieu1();
-        } catch (Exception e) {
-            //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
-            e.printStackTrace();
+        }else {
+            return;
         }
-
-        
-        
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
+        txtMaphieutraphong.setText("");
+        txtVAT.setText("");
+        txtGiahd.setText("");
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void cmbmaphieudatphongItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmaphieudatphongItemStateChanged

@@ -339,8 +339,8 @@ public class FormStatistic2 extends javax.swing.JPanel {
         cmbThang1 = new javax.swing.JComboBox<>();
         cmbNam1 = new javax.swing.JComboBox<>();
         cmbNam2 = new javax.swing.JComboBox<>();
-        btnRefresh1 = new swing.Button();
-        btnStatistic = new swing.Button();
+        btnRefresh = new javax.swing.JButton();
+        btnStatistic1 = new javax.swing.JButton();
 
         roundPanel2.setBackground(new java.awt.Color(36, 87, 157));
         roundPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thống kê doanh thu hóa đơn dịch vụ:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -380,20 +380,14 @@ public class FormStatistic2 extends javax.swing.JPanel {
             }
         });
 
-        panelBorder2.setBackground(new java.awt.Color(36, 87, 157));
-        panelBorder2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tiêu chí thống kê", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
-        panelBorder2.setForeground(new java.awt.Color(255, 255, 255));
+        panelBorder2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tiêu chí thống kê", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20))); // NOI18N
 
-        rbThangofNam.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroup1.add(rbThangofNam);
         rbThangofNam.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        rbThangofNam.setForeground(new java.awt.Color(255, 255, 255));
         rbThangofNam.setText("Thống kê theo tháng của năm");
 
-        rbNam.setBackground(new java.awt.Color(36, 87, 157));
         buttonGroup1.add(rbNam);
         rbNam.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        rbNam.setForeground(new java.awt.Color(255, 255, 255));
         rbNam.setText("Thống kê theo năm");
 
         cmbThang1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -402,17 +396,17 @@ public class FormStatistic2 extends javax.swing.JPanel {
 
         cmbNam2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btnRefresh1.setText("Xem");
-        btnRefresh1.addActionListener(new java.awt.event.ActionListener() {
+        btnRefresh.setText("Xem");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRefresh1ActionPerformed(evt);
+                btnRefreshActionPerformed(evt);
             }
         });
 
-        btnStatistic.setText("Thống kê");
-        btnStatistic.addActionListener(new java.awt.event.ActionListener() {
+        btnStatistic1.setText("Thống kê");
+        btnStatistic1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStatisticActionPerformed(evt);
+                btnStatistic1ActionPerformed(evt);
             }
         });
 
@@ -431,15 +425,12 @@ public class FormStatistic2 extends javax.swing.JPanel {
                         .addComponent(rbThangofNam)
                         .addGap(169, 169, 169)
                         .addComponent(cmbThang1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelBorder2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbNam1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelBorder2Layout.createSequentialGroup()
-                        .addGap(119, 119, 119)
-                        .addComponent(btnRefresh1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52)
-                        .addComponent(btnStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(cmbNam1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77)
+                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(btnStatistic1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelBorder2Layout.setVerticalGroup(
@@ -447,22 +438,19 @@ public class FormStatistic2 extends javax.swing.JPanel {
             .addGroup(panelBorder2Layout.createSequentialGroup()
                 .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder2Layout.createSequentialGroup()
-                        .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rbThangofNam)
-                            .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(cmbThang1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cmbNam1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(33, 33, 33)
-                        .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(rbNam)
-                            .addComponent(cmbNam2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(67, 67, 67))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder2Layout.createSequentialGroup()
-                        .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnRefresh1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())))
+                    .addComponent(rbThangofNam)
+                    .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cmbThang1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbNam1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(36, 36, 36)
+                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbNam)
+                    .addComponent(cmbNam2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnStatistic1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14))
         );
 
         javax.swing.GroupLayout roundPanel2Layout = new javax.swing.GroupLayout(roundPanel2);
@@ -531,17 +519,16 @@ public class FormStatistic2 extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnReportActionPerformed
 
-    private void btnRefresh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefresh1ActionPerformed
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
         tableModel.setRowCount(0);
         txtDoanhThu.setText("");
         loadDataFromSQL();
-    }//GEN-LAST:event_btnRefresh1ActionPerformed
+    }//GEN-LAST:event_btnRefreshActionPerformed
 
-    private void btnStatisticActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatisticActionPerformed
+    private void btnStatistic1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatistic1ActionPerformed
         // TODO add your handling code here:
-
-        txtDoanhThu.setText("");
+       txtDoanhThu.setText("");
         tableModel.setRowCount(0);
 
         if (rbThangofNam.isSelected() ==true){
@@ -553,13 +540,13 @@ public class FormStatistic2 extends javax.swing.JPanel {
         }else {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày");
         }
-    }//GEN-LAST:event_btnStatisticActionPerformed
+    }//GEN-LAST:event_btnStatistic1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private swing.Button btnRefresh1;
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnReport;
-    private swing.Button btnStatistic;
+    private javax.swing.JButton btnStatistic1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cmbNam1;
     private javax.swing.JComboBox<String> cmbNam2;

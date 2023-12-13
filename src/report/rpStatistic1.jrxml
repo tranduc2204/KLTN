@@ -16,9 +16,9 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select MaHoaDonPhong, TenNV, TenKH,TenPhong, NgayLapHoaDon, Tien, CONCAT(FORMAT(Tien, 'N0'),' VND') as Tien1  from HoaDonPhong hdp join PhieuThuePhong ptp 
-on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong  join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong 
-join PHONG p on p.MaPhong = pdp.MaPhong join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH
+		<![CDATA[select MaHoaDonPhong, TenNV, TenKH,TenPhong, NgayLapHoaDon, DonGia, CONCAT(FORMAT(DonGia, 'N0'),' VND') as Tien1 
+from HoaDonPhong hdp join PhieuDatPhong pdp on hdp.MaPhieuDatPhong = pdp.MaPhieuDatPhong join PHONG p on p.MaPhong = pdp.MaPhong join NHANVIEN nv on nv.MaNV = pdp.MaNV
+join KHACHHANG kh on kh.MaKH = pdp.MaKH join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong
 where month(NgayLapHoaDon) = $P{thang} and YEAR (NgayLapHoaDon) = $P{nam}]]>
 	</queryString>
 	<field name="MaHoaDonPhong" class="java.lang.String"/>
@@ -26,10 +26,10 @@ where month(NgayLapHoaDon) = $P{thang} and YEAR (NgayLapHoaDon) = $P{nam}]]>
 	<field name="TenKH" class="java.lang.String"/>
 	<field name="TenPhong" class="java.lang.String"/>
 	<field name="NgayLapHoaDon" class="java.sql.Date"/>
-	<field name="Tien" class="java.math.BigDecimal"/>
+	<field name="DonGia" class="java.math.BigDecimal"/>
 	<field name="Tien1" class="java.lang.String"/>
 	<variable name="Tien_SUM" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{Tien}]]></variableExpression>
+		<variableExpression><![CDATA[$F{DonGia}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>

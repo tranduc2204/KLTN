@@ -270,48 +270,48 @@ public class FormQLRoom extends javax.swing.JPanel {
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel2Layout.createSequentialGroup()
                 .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txtTENPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(roundPanel2Layout.createSequentialGroup()
                         .addGap(68, 68, 68)
                         .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtMAPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTTPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(roundPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel41)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cmbMATINHTRANGPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(roundPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtTLP, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel2Layout.createSequentialGroup()
-                                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel40)
-                                    .addComponent(txtGIAMGIA, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(5, 6, Short.MAX_VALUE)
                                 .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtDONGIA, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
-                                    .addComponent(cmbMADongia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                    .addGroup(roundPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel41)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cmbMATINHTRANGPHONG, 0, 241, Short.MAX_VALUE))
+                                    .addComponent(txtTENPHONG, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtTTPHONG, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(85, 85, 85)
+                                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(roundPanel2Layout.createSequentialGroup()
+                                        .addComponent(txtTLP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(1, 1, 1))
+                                    .addGroup(roundPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel42)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(roundPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel40)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cmbMADongia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(roundPanel2Layout.createSequentialGroup()
+                                .addComponent(txtMAPHONG, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(208, 208, 208)
+                                .addComponent(cmbMALOAIIPHONGa, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(roundPanel2Layout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addComponent(jLabel42)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbMALOAIIPHONGa, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 1, Short.MAX_VALUE)))
+                        .addGap(333, 333, 333)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtGIAMGIA, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(9, 9, 9)
+                        .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDONGIA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(70, 70, 70))
-            .addGroup(roundPanel2Layout.createSequentialGroup()
-                .addGap(333, 333, 333)
-                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         roundPanel2Layout.setVerticalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -544,9 +544,7 @@ public class FormQLRoom extends javax.swing.JPanel {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
         
-        String giamgia = txtGIAMGIA.getText();
-        String giamgianotpercent = giamgia.replace("%", "");
-        int giam = Integer.parseInt(giamgianotpercent); 
+        
         
         StringBuilder sb = new StringBuilder();
         if (txtMAPHONG.getText().equals("")) {
@@ -555,46 +553,47 @@ public class FormQLRoom extends javax.swing.JPanel {
 
         } else {
             txtMAPHONG.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        if (JOptionPane.showConfirmDialog(this, "bạn có muốn thêm phòng không??") == JOptionPane.NO_OPTION) {
-            return;
-        }
-        try {
-           
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb);
+            }
+            if (JOptionPane.showConfirmDialog(this, "bạn có muốn thêm phòng không??") == JOptionPane.YES_OPTION) {
+                try {
+                    String giamgia = txtGIAMGIA.getText();
+                    String giamgianotpercent = giamgia.replace("%", "");
+                    int giam = Integer.parseInt(giamgianotpercent); 
 
+                    String matinhtrangphong = cmbMATINHTRANGPHONG.getSelectedItem().toString();
+                    String maloaiphong = cmbMALOAIIPHONGa.getSelectedItem().toString();
+                    String madongia = cmbMADongia.getSelectedItem().toString();
+
+                    ModelRoomv2 p = new ModelRoomv2();
+                    p.setMaPhong(txtMAPHONG.getText());
+                    p.setTenPhong(txtTENPHONG.getText());
+                    p.setMaTinhTrangPhong(matinhtrangphong);
+                    p.setMaLoaiPhong(maloaiphong);
+
+                    p.setMaDonGiaPhong(madongia);
+                    p.setGiamGia(giam);
+
+                    ModelRoom ql = new ModelRoom();
+                    ql.insert(p);
+
+                    JOptionPane.showMessageDialog(this, "Lưu thành công");
+                    loaddulieu1();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }else {
+                return;
+            }
             
-            String matinhtrangphong = cmbMATINHTRANGPHONG.getSelectedItem().toString();
-            String maloaiphong = cmbMALOAIIPHONGa.getSelectedItem().toString();
-            String madongia = cmbMADongia.getSelectedItem().toString();
-
-            ModelRoomv2 p = new ModelRoomv2();
-            p.setMaPhong(txtMAPHONG.getText());
-            p.setTenPhong(txtTENPHONG.getText());
-            p.setMaTinhTrangPhong(matinhtrangphong);
-            p.setMaLoaiPhong(maloaiphong);
-           
-            p.setMaDonGiaPhong(madongia);
-            p.setGiamGia(giam);
-
-            ModelRoom ql = new ModelRoom();
-            ql.insert(p);
-
-            JOptionPane.showMessageDialog(this, "Lưu thành công!!! Vui lòng đăng nhập lại để cập nhật dữ liệu mới nhất");
-            loaddulieu1();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
         }
+        
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-        
-        
-        
         StringBuilder sb = new StringBuilder();
         if (txtMAPHONG.getText().equals("")) {
             sb.append("mã phòng không được để trống");
@@ -602,41 +601,43 @@ public class FormQLRoom extends javax.swing.JPanel {
 
         } else {
             txtMAPHONG.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        if (JOptionPane.showConfirmDialog(this, "bạn có muốn sửa phòng không??") == JOptionPane.NO_OPTION) {
-            return;
-        }
-        try {
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb);
+            }
+            if (JOptionPane.showConfirmDialog(this, "bạn có muốn sửa phòng không??") == JOptionPane.YES_OPTION) {
+                try {
+                    String matinhtrangphong = cmbMATINHTRANGPHONG.getSelectedItem().toString();
+                    String maloaiphong = cmbMALOAIIPHONGa.getSelectedItem().toString();
+                    String madongia = cmbMADongia.getSelectedItem().toString();
 
-            String matinhtrangphong = cmbMATINHTRANGPHONG.getSelectedItem().toString();
-            String maloaiphong = cmbMALOAIIPHONGa.getSelectedItem().toString();
-            String madongia = cmbMADongia.getSelectedItem().toString();
-            
-            String giamgia = txtGIAMGIA.getText();
-            String giamgianotpercent = giamgia.replace("%", "");
-            int giam = Integer.parseInt(giamgianotpercent); 
-            
-            ModelRoomv2 p = new ModelRoomv2();
-            p.setMaPhong(txtMAPHONG.getText());
-            p.setTenPhong(txtTENPHONG.getText());
-            p.setMaTinhTrangPhong(matinhtrangphong);
-            p.setMaLoaiPhong(maloaiphong);
-           
-            p.setMaDonGiaPhong(madongia);
-            p.setGiamGia(giam);
+                    String giamgia = txtGIAMGIA.getText();
+                    String giamgianotpercent = giamgia.replace("%", "");
+                    int giam = Integer.parseInt(giamgianotpercent); 
 
-            ModelRoom ql = new ModelRoom();
-            ql.update(p);
+                    ModelRoomv2 p = new ModelRoomv2();
+                    p.setMaPhong(txtMAPHONG.getText());
+                    p.setTenPhong(txtTENPHONG.getText());
+                    p.setMaTinhTrangPhong(matinhtrangphong);
+                    p.setMaLoaiPhong(maloaiphong);
 
-            JOptionPane.showMessageDialog(this, "Sửa thành công!!! Vui lòng đăng nhập lại để cập nhật dữ liệu mới nhất");
-            loaddulieu1();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
+                    p.setMaDonGiaPhong(madongia);
+                    p.setGiamGia(giam);
+
+                    ModelRoom ql = new ModelRoom();
+                    ql.update(p);
+
+                    JOptionPane.showMessageDialog(this, "Sửa thành công");
+                    loaddulieu1();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }else {
+                return;
+            }
         }
+        
+        
     }//GEN-LAST:event_btnEditActionPerformed
    
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -648,33 +649,38 @@ public class FormQLRoom extends javax.swing.JPanel {
 
         } else {
             txtMAPHONG.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        if (JOptionPane.showConfirmDialog(this, "bạn có muốn xóa phòng không??") == JOptionPane.NO_OPTION) {
-            return;
-        }
-        try {
-            
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb);
+            }
+            if (JOptionPane.showConfirmDialog(this, "bạn có muốn xóa phòng không??") == JOptionPane.YES_OPTION) {
+                try {
+                    ModelPhongv2 qll = new ModelPhongv2();
+                    qll.setMaPhong(txtMAPHONG.getText());
 
-            ModelPhongv2 qll = new ModelPhongv2();
-            qll.setMaPhong(txtMAPHONG.getText());
-            
-            ModelPhong ql = new ModelPhong();
-            ql.deletecomeroot(qll);
+                    ModelPhong ql = new ModelPhong();
+                    ql.deletecomeroot(qll);
 
-            JOptionPane.showMessageDialog(this, "Xóa thành công!!! Vui lòng đăng nhập lại để cập nhật dữ liệu mới nhất");
-            loaddulieu1();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Xóa thành công");
+                    loaddulieu1();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }else{
+                return;
+            }
         }
+  
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
-
+        txtMAPHONG.setText("");
+        txtTENPHONG.setText("");
+        txtGIAMGIA.setText("");
+        txtsearchmaphong.setText("");
+        txttugia.setText("");
+        txtdengia.setText("");
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -685,8 +691,9 @@ public class FormQLRoom extends javax.swing.JPanel {
 
             try {
 
-                String sql = "select MaPhong,TenPhong, TinhTrangPhong.MaTinhtrangphong, TinhTrangPhong, LoaiPhong.MaLoaiPhong, TenLoaiPhong, Tien from phong "
-                + "join LOAIPHONG on PHONG.MaLoaiPhong = LOAIPHONG.MaLoaiPhong join TINHTRANGPHONG on TinhTrangPhong.MaTinhTrangPhong = PHONG.MaTinhtrangphong where maphong =? and isvisible = '1' ";
+                String sql = "select MaPhong,TenPhong, TinhTrangPhong.MaTinhtrangphong, TinhTrangPhong, LoaiPhong.MaLoaiPhong, TenLoaiPhong, dgp.MaDonGiaPhong, Concat(GiamGia,'%') as GiamGia ,  CONCAT(FORMAT(dgp.DonGia, 'N0'),' VND') as DonGia from phong \n" +
+"join LOAIPHONG on PHONG.MaLoaiPhong = LOAIPHONG.MaLoaiPhong join TINHTRANGPHONG on TinhTrangPhong.MaTinhTrangPhong = PHONG.MaTinhtrangphong \n" +
+"join DonGiaPhong dgp on dgp.MaDonGiaPhong = phong.MaDonGiaPhong where maphong =? and isvisible = '1' ";
                 conn = cn.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -695,7 +702,7 @@ public class FormQLRoom extends javax.swing.JPanel {
                 tbmodel.setRowCount(0);
                 while (rs.next()) {
                     tbmodel.addRow(new Object[]{
-                        rs.getString("maphong"), rs.getString("tenphong"), rs.getString("matinhtrangphong"), rs.getString("tinhtrangphong"), rs.getString("maloaiphong"), rs.getString("tenloaiphong"),  rs.getDouble("tien")
+                        rs.getString("maphong"), rs.getString("tenphong"), rs.getString("matinhtrangphong"), rs.getString("tinhtrangphong"), rs.getString("maloaiphong"), rs.getString("tenloaiphong"),rs.getString("MaDonGiaPhong"), rs.getString("GiamGia"),  rs.getString("DonGia")
 
                     });
                 }
@@ -710,8 +717,9 @@ public class FormQLRoom extends javax.swing.JPanel {
         } else if (rbDONGIA.isSelected() == true) {
             try {
 
-                String sql = "select MaPhong,TenPhong, TinhTrangPhong.MaTinhtrangphong, TinhTrangPhong, LoaiPhong.MaLoaiPhong, TenLoaiPhong, Tien from phong "
-                + "join LOAIPHONG on PHONG.MaLoaiPhong = LOAIPHONG.MaLoaiPhong join TINHTRANGPHONG on TinhTrangPhong.MaTinhTrangPhong = PHONG.MaTinhtrangphong where isvisible = '1' and tien between ? and ? ";
+                String sql = "select MaPhong,TenPhong, TinhTrangPhong.MaTinhtrangphong, TinhTrangPhong, LoaiPhong.MaLoaiPhong, TenLoaiPhong, dgp.MaDonGiaPhong, Concat(GiamGia,'%') as GiamGia ,  CONCAT(FORMAT(dgp.DonGia, 'N0'),' VND') as DonGia from phong \n" +
+"join LOAIPHONG on PHONG.MaLoaiPhong = LOAIPHONG.MaLoaiPhong join TINHTRANGPHONG on TinhTrangPhong.MaTinhTrangPhong = PHONG.MaTinhtrangphong \n" +
+"join DonGiaPhong dgp on dgp.MaDonGiaPhong = phong.MaDonGiaPhong where isvisible = '1' and dgp.DonGia between ? and ? ";
                 conn = cn.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -721,7 +729,7 @@ public class FormQLRoom extends javax.swing.JPanel {
                 tbmodel.setRowCount(0);
                 while (rs.next()) {
                     tbmodel.addRow(new Object[]{
-                        rs.getString("maphong"), rs.getString("tenphong"), rs.getString("matinhtrangphong"), rs.getString("tinhtrangphong"), rs.getString("maloaiphong"), rs.getString("tenloaiphong"), rs.getInt("sogiuong"), rs.getDouble("tien")
+                        rs.getString("maphong"), rs.getString("tenphong"), rs.getString("matinhtrangphong"), rs.getString("tinhtrangphong"), rs.getString("maloaiphong"), rs.getString("tenloaiphong"),rs.getString("MaDonGiaPhong"), rs.getString("GiamGia"),  rs.getString("DonGia")
 
                     });
                 }

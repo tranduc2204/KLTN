@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="765ccb72-8d98-42c3-b07e-ab84eb74f379">
 	<property name="ireport.zoom" value="1.2100000000000009"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="802"/>
+	<property name="ireport.y" value="0"/>
 	<subDataset name="dataset1" uuid="b0e8862b-e7ef-4fe9-847b-6965b20af0ba"/>
 	<parameter name="mahoadonphong" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -99,10 +99,6 @@ where MaHoaDonPhong = $P{mahoadonphong}]]>
 				</textElement>
 				<text><![CDATA[Mã hóa đơn:]]></text>
 			</staticText>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="117" y="285" width="100" height="20" uuid="3947d108-33ea-42bc-9754-e2a373d1b506"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="0" y="285" width="117" height="20" uuid="163df32a-af07-4791-9498-52a079600a99"/>
 				<textElement>
@@ -128,6 +124,10 @@ where MaHoaDonPhong = $P{mahoadonphong}]]>
 				</textElement>
 				<text><![CDATA[HÓA ĐƠN THUÊ PHÒNG]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="117" y="285" width="100" height="20" uuid="f7b091c5-8f19-44b2-85ab-b02de2258843"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>

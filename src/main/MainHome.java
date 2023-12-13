@@ -125,7 +125,7 @@ public class MainHome extends javax.swing.JFrame {
                     main.showForm(new FormQLCustomers(username, password, DisplayName,quyen));
                 }else if (subMenuIndex == 2){
 //                    main.showForm(new FormBill(username, password, DisplayName,quyen));
-                    main.showForm(new FormCheckOut(username, password, DisplayName,quyen));
+                    main.showForm(new FormBill(username, password, DisplayName,quyen));
                 }
                 else if (subMenuIndex == 3){
                     main.showForm(new FormQLStaff(username, password, DisplayName,quyen));

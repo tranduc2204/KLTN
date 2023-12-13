@@ -88,7 +88,7 @@
                       <Group type="102" attributes="0">
                           <Component id="bthDelete" min="-2" pref="103" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnAdd3" min="-2" pref="103" max="-2" attributes="0"/>
+                          <Component id="btnrefresh" min="-2" pref="103" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="btnAdd" min="-2" pref="103" max="-2" attributes="0"/>
@@ -117,7 +117,7 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnAdd3" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
+                      <Component id="btnrefresh" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                       <Component id="bthDelete" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
@@ -134,12 +134,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bthDeleteActionPerformed"/>
           </Events>
         </Component>
-        <Component class="swing.Button" name="btnAdd3">
+        <Component class="swing.Button" name="btnrefresh">
           <Properties>
             <Property name="text" type="java.lang.String" value="L&#xe0;m m&#x1edb;i"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAdd3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnrefreshActionPerformed"/>
           </Events>
         </Component>
         <Component class="component.TextField" name="txtMAVatTu">

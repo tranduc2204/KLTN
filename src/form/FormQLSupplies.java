@@ -81,7 +81,7 @@ public class FormQLSupplies extends javax.swing.JPanel {
         buttonGroup1 = new javax.swing.ButtonGroup();
         roundPanel2 = new swing.RoundPanel();
         bthDelete = new swing.Button();
-        btnAdd3 = new swing.Button();
+        btnrefresh = new swing.Button();
         txtMAVatTu = new component.TextField();
         txtLoaiVatTu = new component.TextField();
         btnAdd = new swing.Button();
@@ -109,10 +109,10 @@ public class FormQLSupplies extends javax.swing.JPanel {
             }
         });
 
-        btnAdd3.setText("Làm mới");
-        btnAdd3.addActionListener(new java.awt.event.ActionListener() {
+        btnrefresh.setText("Làm mới");
+        btnrefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdd3ActionPerformed(evt);
+                btnrefreshActionPerformed(evt);
             }
         });
 
@@ -148,7 +148,7 @@ public class FormQLSupplies extends javax.swing.JPanel {
                     .addGroup(roundPanel2Layout.createSequentialGroup()
                         .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnAdd3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnrefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(roundPanel2Layout.createSequentialGroup()
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -170,7 +170,7 @@ public class FormQLSupplies extends javax.swing.JPanel {
                     .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnrefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bthDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28))
         );
@@ -300,9 +300,7 @@ public class FormQLSupplies extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
-        
-
+        // TODO add your handling code here:       
         StringBuilder sb = new StringBuilder();
         if (txtMAVatTu.getText().equals("")) {
             sb.append("Mã vật tư không được để trống");
@@ -310,24 +308,25 @@ public class FormQLSupplies extends javax.swing.JPanel {
 
         } else {
             txtMAVatTu.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        try {
-            ModelSuppliesv2 nv = new ModelSuppliesv2();
-            nv.setMaVatTu(txtMAVatTu.getText());
-            nv.setTenVatTu(txtLoaiVatTu.getText());
-            
-            ModelSupplies ql1 = new ModelSupplies();
-            ql1.insert(nv);
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb);
+            }
+            try {
+                ModelSuppliesv2 nv = new ModelSuppliesv2();
+                nv.setMaVatTu(txtMAVatTu.getText());
+                nv.setTenVatTu(txtLoaiVatTu.getText());
 
-            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-            loadthongtinSupplies();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
+                ModelSupplies ql1 = new ModelSupplies();
+                ql1.insert(nv);
+
+                JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+                loadthongtinSupplies();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                e.printStackTrace();
+            }
         }
+        
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -340,28 +339,30 @@ public class FormQLSupplies extends javax.swing.JPanel {
 
         } else {
             txtMAVatTu.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        if (JOptionPane.showConfirmDialog(this, "bạn có muốn sửa nhân viên không??") == JOptionPane.NO_OPTION) {
-            return;
-        }
-        try {
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb);
+            }
+            if (JOptionPane.showConfirmDialog(this, "bạn có muốn sửa nhân viên không??") == JOptionPane.YES_OPTION) {
+               try {
+                    ModelSuppliesv2 nv = new ModelSuppliesv2();
+                    nv.setMaVatTu(txtMAVatTu.getText());
+                    nv.setTenVatTu(txtLoaiVatTu.getText());
 
-            ModelSuppliesv2 nv = new ModelSuppliesv2();
-            nv.setMaVatTu(txtMAVatTu.getText());
-            nv.setTenVatTu(txtLoaiVatTu.getText());
+                    ModelSupplies ql1 = new ModelSupplies();
+                    ql1.update(nv);
 
-            ModelSupplies ql1 = new ModelSupplies();
-            ql1.update(nv);
-
-            JOptionPane.showMessageDialog(this, "Sửa thành công!!! ");
-            loadthongtinSupplies();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Sửa thành công!!! ");
+                    loadthongtinSupplies();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }else {
+                return;
+            }
         }
+        
+        
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void bthDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bthDeleteActionPerformed
@@ -373,32 +374,37 @@ public class FormQLSupplies extends javax.swing.JPanel {
 
         } else {
             txtMAVatTu.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        if (JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa vật tư không??") == JOptionPane.NO_OPTION) {
-            return;
-        }
-        try {
-            
-            ModelSuppliesv2 qll = new ModelSuppliesv2();
-            qll.setMaVatTu(txtMAVatTu.getText());
-            
-            ModelSupplies ql = new ModelSupplies();
-            ql.deletecomeroot(qll);
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb);
+            }
+            if (JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa vật tư không??") == JOptionPane.NO_OPTION) {
+                return;
+            }
+            try {
 
-            JOptionPane.showMessageDialog(this, "Xóa thành công!!! ");
-            loadthongtinSupplies();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
+                ModelSuppliesv2 qll = new ModelSuppliesv2();
+                qll.setMaVatTu(txtMAVatTu.getText());
+
+                ModelSupplies ql = new ModelSupplies();
+                ql.deletecomeroot(qll);
+
+                JOptionPane.showMessageDialog(this, "Xóa thành công!!! ");
+                loadthongtinSupplies();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                e.printStackTrace();
+            }
         }
+        
     }//GEN-LAST:event_bthDeleteActionPerformed
 
-    private void btnAdd3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd3ActionPerformed
+    private void btnrefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrefreshActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAdd3ActionPerformed
+        txtMAVatTu.setText("");
+        txtLoaiVatTu.setText("");
+        txtSearchMa.setText("");
+        txtSEARCHTen.setText("");
+    }//GEN-LAST:event_btnrefreshActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
@@ -481,10 +487,10 @@ public class FormQLSupplies extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.Button bthDelete;
     private swing.Button btnAdd;
-    private swing.Button btnAdd3;
     private swing.Button btnEdit;
     private swing.Button btnSearch;
     private swing.Button btnView;
+    private swing.Button btnrefresh;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;

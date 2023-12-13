@@ -10,10 +10,13 @@ package model;
  * @author TeeDee
  */
 public class ModelCustomersv2 {
-    private String MaKH, HoKH, TenKH,DiaChi,NgaySinh, SDT;
-    private int GioiTinh , isvisible;
+    private String MaKH, HoKH, TenKH,DiaChi,NgaySinh, SDT, GioiTinh;
+    private int  isvisible;
 
-    public ModelCustomersv2(String MaKH, String HoKH, String TenKH, String DiaChi, String NgaySinh, String SDT, int GioiTinh, int isvisible) {
+    public ModelCustomersv2() {
+    }
+
+    public ModelCustomersv2(String MaKH, String HoKH, String TenKH, String DiaChi, String NgaySinh, String SDT, String GioiTinh, int isvisible) {
         this.MaKH = MaKH;
         this.HoKH = HoKH;
         this.TenKH = TenKH;
@@ -22,9 +25,6 @@ public class ModelCustomersv2 {
         this.SDT = SDT;
         this.GioiTinh = GioiTinh;
         this.isvisible = isvisible;
-    }
-
-    public ModelCustomersv2() {
     }
 
     public String getMaKH() {
@@ -75,11 +75,11 @@ public class ModelCustomersv2 {
         this.SDT = SDT;
     }
 
-    public int getGioiTinh() {
+    public String getGioiTinh() {
         return GioiTinh;
     }
 
-    public void setGioiTinh(int GioiTinh) {
+    public void setGioiTinh(String GioiTinh) {
         this.GioiTinh = GioiTinh;
     }
 
@@ -91,5 +91,6 @@ public class ModelCustomersv2 {
         this.isvisible = isvisible;
     }
 
+    
     
 }

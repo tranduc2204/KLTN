@@ -60,6 +60,10 @@ public class FormBill extends javax.swing.JPanel {
         this.quyen = quyen;
       
        
+        initCombobox_maphieudathong();
+  
+       
+
         inittable();
         loaddulieu1();
     }
@@ -95,7 +99,7 @@ public class FormBill extends javax.swing.JPanel {
             conn = cn.getConnection();
             //select MaPhieuDatPhong from phieudatphong where booked_status = 1 and isvisible = 1
 
-            String sql = "select MaPhieuDatPhong from phieudatphong where booked_status = 1 and isvisible = 1  ";
+            String sql = "select MaPhieuDatPhong from phieudatphong where booked_status = 1 and isvisible = 1 and MaPhieuDatPhong not in (select MaPhieuDatPhong from HoaDonPhong) ";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
             cmbmaphieudatphong.removeAllItems();
@@ -130,7 +134,6 @@ public class FormBill extends javax.swing.JPanel {
         jLabel19 = new javax.swing.JLabel();
         jDateChooserngaylaphd = new com.toedter.calendar.JDateChooser();
         btnPay = new javax.swing.JButton();
-        btnReport = new javax.swing.JButton();
         txtMaphieutraphong = new component.TextField();
         txtMaPhong = new component.TextField();
         txtTenPhong = new component.TextField();
@@ -146,6 +149,8 @@ public class FormBill extends javax.swing.JPanel {
         txtGiamGia = new component.TextField();
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        jLabel9 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         TBcheckout = new javax.swing.JTable();
 
@@ -208,15 +213,6 @@ public class FormBill extends javax.swing.JPanel {
         btnPay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPayActionPerformed(evt);
-            }
-        });
-
-        btnReport.setBackground(new java.awt.Color(255, 99, 76));
-        btnReport.setText("In Report");
-        btnReport.setEnabled(false);
-        btnReport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReportActionPerformed(evt);
             }
         });
 
@@ -346,11 +342,9 @@ public class FormBill extends javax.swing.JPanel {
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                        .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel5Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
+                        .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(roundPanel5Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(roundPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtMaPhong, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
@@ -413,13 +407,15 @@ public class FormBill extends javax.swing.JPanel {
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel8.setText("Thông tin hóa đơn phòng:");
+        jLabel8.setText("Thông tin trả phòng:");
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel9.setText("Thông tin hóa đơn phòng:");
 
         TBcheckout.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         TBcheckout.setModel(new javax.swing.table.DefaultTableModel(
@@ -447,39 +443,51 @@ public class FormBill extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(roundPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(roundPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jSeparator1))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel8)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(roundPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel8)
+                .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel8)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-        Date selectedDate = jDateChooserngaylaphd.getDate();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDate);
-
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String ngayhd = year + "-" + month + "-" + day;
+        
 
         StringBuilder sb = new StringBuilder();
         if (txtMaphieutraphong.getText().equals("")) {
@@ -488,44 +496,44 @@ public class FormBill extends javax.swing.JPanel {
 
         } else {
             txtMaphieutraphong.setBackground(Color.white);
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb);
+            }
+            if (JOptionPane.showConfirmDialog(this, "bạn có muốn sửa hóa đơn không??") == JOptionPane.YES_OPTION) {
+                try {
 
+                    Date selectedDate = jDateChooserngaylaphd.getDate();
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(selectedDate);
+
+                    int year = calendar.get(Calendar.YEAR);
+                    int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+                    int day = calendar.get(Calendar.DAY_OF_MONTH);
+                    String ngayhd = year + "-" + month + "-" + day;
+
+                    ModelCheckOutv2 ci = new ModelCheckOutv2();
+                    ci.setMaHoaDonPhong(txtMaphieutraphong.getText());
+                    ci.setNgayLapHoaDon(ngayhd);
+
+                    ModelCheckOut ql1 = new ModelCheckOut();
+                    ql1.update(ci);
+
+                    JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+
+                    loaddulieu1();
+                } catch (Exception e) {
+                    //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                    JOptionPane.showMessageDialog(this, "Mã hóa đơn phòng này đã tồn tại, nếu muốn thêm với mã hóa đơn phòng này vui lòng xóa phiếu đặt phòng trong db");
+                    e.printStackTrace();
+                }
+            }else {
+                return;
+            }
         }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        String Maphieudatphong = cmbmaphieudatphong.getSelectedItem().toString();
-
-        try {
-            ModelCheckOutv2 ci = new ModelCheckOutv2();
-            ci.setMaHoaDonPhong(txtMaphieutraphong.getText());
-            ci.setNgayLapHoaDon(ngayhd);
-            ci.setMaPhieuDatPhong(Maphieudatphong);
-
-            ModelCheckOut ql1 = new ModelCheckOut();
-            ql1.update(ci);
-
-            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-
-            loaddulieu1();
-        } catch (Exception e) {
-            //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            JOptionPane.showMessageDialog(this, "Mã hóa đơn phòng này đã tồn tại, nếu muốn thêm với mã hóa đơn phòng này vui lòng xóa phiếu đặt phòng trong db");
-            e.printStackTrace();
-        }
-
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-
-        Date selectedDate = jDateChooserngaylaphd.getDate();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDate);
-
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String ngayhd = year + "-" + month + "-" + day;
 
         StringBuilder sb = new StringBuilder();
         if (txtMaphieutraphong.getText().equals("")) {
@@ -538,6 +546,14 @@ public class FormBill extends javax.swing.JPanel {
             String Maphieuthuephong = cmbmaphieudatphong.getSelectedItem().toString();
 
             try {
+                Date selectedDate = jDateChooserngaylaphd.getDate();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(selectedDate);
+
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                String ngayhd = year + "-" + month + "-" + day;
                 ModelCheckOutv2 ci = new ModelCheckOutv2();
                 ci.setMaHoaDonPhong(txtMaphieutraphong.getText());
                 ci.setNgayLapHoaDon(ngayhd);
@@ -558,7 +574,6 @@ public class FormBill extends javax.swing.JPanel {
         if (sb.length() > 0) {
             JOptionPane.showMessageDialog(this, sb);
         }
-
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -571,42 +586,47 @@ public class FormBill extends javax.swing.JPanel {
 
         } else {
             txtMaphieutraphong.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        try {
-            ModelCheckOutv2 ci = new ModelCheckOutv2();//MaHoaDonPhong
-            ci.setMaHoaDonPhong(txtMaphieutraphong.getText());
-
-            ModelCheckOut ql1 = new ModelCheckOut();
-            ql1.deletecomeroot(ci);
-
-            JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-
-            int row = TBcheckout.getSelectedRow();
-            if (row >= 0) {
-                String maphong = TBcheckout.getValueAt(row, 5).toString();
-
-                ModelPhongv2 p = new ModelPhongv2();
-                p.setMaPhong(maphong);
-
-                ModelPhong ql = new ModelPhong();
-                ql.updateTT3(p);
-
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb);
             }
+            if (JOptionPane.showConfirmDialog(this, "bạn có muốn xóa hóa đơn không??") == JOptionPane.YES_OPTION) {
+                try {
+                    ModelCheckOutv2 ci = new ModelCheckOutv2();//MaHoaDonPhong
+                    ci.setMaHoaDonPhong(txtMaphieutraphong.getText());
 
-            loaddulieu1();
-        } catch (Exception e) {
-            //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
-            e.printStackTrace();
+                    ModelCheckOut ql1 = new ModelCheckOut();
+                    ql1.deletecomeroot(ci);
+
+                    JOptionPane.showMessageDialog(this, "xóa thành công!!!");
+
+                    int row = TBcheckout.getSelectedRow();
+                    if (row >= 0) {
+                        String maphong = TBcheckout.getValueAt(row, 5).toString();
+
+                        ModelPhongv2 p = new ModelPhongv2();
+                        p.setMaPhong(maphong);
+
+                        ModelPhong ql = new ModelPhong();
+                        ql.updateTT3(p);
+                    }
+                    loaddulieu1();
+                } catch (Exception e) {
+                    //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                    JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
+                    e.printStackTrace();
+                }
+            }else {
+                return;
+            }
         }
-
+        
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
+        txtMaphieutraphong.setText("");
+        txtVAT.setText("");
+        txtGiahd.setText("");
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void cmbmaphieudatphongItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbmaphieudatphongItemStateChanged
@@ -645,7 +665,7 @@ public class FormBill extends javax.swing.JPanel {
         btnEdit.setEnabled(true);
         btnDelete.setEnabled(true);
         btnRefresh.setEnabled(true);
-        btnReport.setEnabled(true);
+      
 
         String tmp = txtGiaPhong.getText();
         DecimalFormat decimalFormat = new DecimalFormat("#,### VND");
@@ -703,25 +723,6 @@ public class FormBill extends javax.swing.JPanel {
             Logger.getLogger(FormServiceRent.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnPayActionPerformed
-
-    private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
-        // TODO add your handling code here:
-
-        if (txtMaphieutraphong.getText().equals("")==true) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn mã phiếu trả phòng");
-        } else {
-            try {
-                Map<String, Object> map = new HashMap<>();
-                JasperReport rpt = JasperCompileManager.compileReport("src/report/rpCheckOut.jrxml");
-                map.put("mahoadonphong", txtMaphieutraphong.getText());
-                conn = cn.getConnection();
-                JasperPrint p = JasperFillManager.fillReport(rpt, map, conn);
-                JasperViewer.viewReport(p, false);
-            } catch (JRException ex) {
-                JOptionPane.showMessageDialog(this, ex.toString());
-            }
-        }
-    }//GEN-LAST:event_btnReportActionPerformed
 
     private void txtMaphieutraphongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaphieutraphongActionPerformed
         // TODO add your handling code here:
@@ -807,7 +808,6 @@ public class FormBill extends javax.swing.JPanel {
     private swing.Button btnEdit;
     private javax.swing.JButton btnPay;
     private swing.Button btnRefresh;
-    private javax.swing.JButton btnReport;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cmbmaphieudatphong;
     private com.toedter.calendar.JDateChooser jDateChooserngaylaphd;
@@ -817,8 +817,10 @@ public class FormBill extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private swing.RoundPanel roundPanel5;
     private component.TextField txtGiaPhong;
     private component.TextField txtGiahd;

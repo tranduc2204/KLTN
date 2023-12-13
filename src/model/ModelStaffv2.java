@@ -10,13 +10,13 @@ package model;
  * @author TeeDee
  */
 public class ModelStaffv2 {
-    private String MaNV, HoNV, TenNV, DiaChi, NgaySinh, DienThoai, Email,NoiSinh, NgayVaoLam;
-    private int gioitinh, isvisible;
+    private String MaNV, HoNV, TenNV, DiaChi, NgaySinh, DienThoai, Email,NoiSinh, NgayVaoLam, gioitinh;
+    private int isvisible;
 
     public ModelStaffv2() {
     }
 
-    public ModelStaffv2(String MaNV, String HoNV, String TenNV, String DiaChi, String NgaySinh, String DienThoai, String Email, String NoiSinh, String NgayVaoLam, int gioitinh, int isvisible) {
+    public ModelStaffv2(String MaNV, String HoNV, String TenNV, String DiaChi, String NgaySinh, String DienThoai, String Email, String NoiSinh, String NgayVaoLam, String gioitinh, int isvisible) {
         this.MaNV = MaNV;
         this.HoNV = HoNV;
         this.TenNV = TenNV;
@@ -102,11 +102,11 @@ public class ModelStaffv2 {
         this.NgayVaoLam = NgayVaoLam;
     }
 
-    public int getGioitinh() {
+    public String getGioitinh() {
         return gioitinh;
     }
 
-    public void setGioitinh(int gioitinh) {
+    public void setGioitinh(String gioitinh) {
         this.gioitinh = gioitinh;
     }
 
@@ -117,6 +117,8 @@ public class ModelStaffv2 {
     public void setIsvisible(int isvisible) {
         this.isvisible = isvisible;
     }
+
+    
 
     
 }

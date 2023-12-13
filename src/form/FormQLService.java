@@ -391,16 +391,7 @@ public class FormQLService extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        
-        String madongia = cmbmadongia.getSelectedItem().toString();
-        
-        String giamgia = txtGIAMGIA.getText();
-        String giamgianotpercent = giamgia.replace("%", "");
-        int giam = Integer.parseInt(giamgianotpercent); 
-        
-        System.out.println(giam);
-        
-        
+
         StringBuilder sb = new StringBuilder();
         if (txtMADICHVU.getText().equals("")) {
             sb.append("mã dịch vụ không được để trống");
@@ -408,38 +399,40 @@ public class FormQLService extends javax.swing.JPanel {
 
         } else {
             txtMADICHVU.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        try {
- 
-            ModelServicev2 dv = new ModelServicev2();
-            dv.setMaDV(txtMADICHVU.getText());
-            dv.setTenDichVu(txtTENDICHVU.getText());
-            dv.setMaDonGiaDV(madongia);
-            dv.setGiamGia(giam);
-             
-            ModelService ql = new ModelService();
-            ql.insert(dv);
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb);
+            }
+            try {
 
-            JOptionPane.showMessageDialog(this, "Lưu thành công");
-            loaddichvu();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
+                String madongia = cmbmadongia.getSelectedItem().toString();
+
+                String giamgia = txtGIAMGIA.getText();
+                String giamgianotpercent = giamgia.replace("%", "");
+                int giam = Integer.parseInt(giamgianotpercent); 
+
+                System.out.println(giam);
+
+                ModelServicev2 dv = new ModelServicev2();
+                dv.setMaDV(txtMADICHVU.getText());
+                dv.setTenDichVu(txtTENDICHVU.getText());
+                dv.setMaDonGiaDV(madongia);
+                dv.setGiamGia(giam);
+
+                ModelService ql = new ModelService();
+                ql.insert(dv);
+
+                JOptionPane.showMessageDialog(this, "Lưu thành công");
+                loaddichvu();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                e.printStackTrace();
+            }
         }
+        
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        
-// TODO add your handling code here:
-        String madongia = cmbmadongia.getSelectedItem().toString();
-        
-        String giamgia = txtGIAMGIA.getText();
-        String giamgianotpercent = giamgia.replace("%", "");
-        int giam = Integer.parseInt(giamgianotpercent); 
-        
+     
         StringBuilder sb = new StringBuilder();
         if (txtMADICHVU.getText().equals("")) {
             sb.append("mã dịch vụ không được để trống");
@@ -447,31 +440,40 @@ public class FormQLService extends javax.swing.JPanel {
 
         } else {
             txtMADICHVU.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        if (JOptionPane.showConfirmDialog(this, "bạn có muốn sửa dịch vụ không??") == JOptionPane.NO_OPTION) {
-            return;
-        }
-        try {
-            
-            ModelServicev2 dv = new ModelServicev2();
-            dv.setMaDV(txtMADICHVU.getText());
-            dv.setTenDichVu(txtTENDICHVU.getText());
-            
-            dv.setMaDonGiaDV(madongia);
-            dv.setGiamGia(giam);
-            System.out.println(giam);
-            ModelService ql = new ModelService();
-            ql.update(dv);
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb);
+            }
+            if (JOptionPane.showConfirmDialog(this, "bạn có muốn sửa dịch vụ không??") == JOptionPane.YES_OPTION) {
+                try {
+                    
+                    String madongia = cmbmadongia.getSelectedItem().toString();
+        
+                    String giamgia = txtGIAMGIA.getText();
+                    String giamgianotpercent = giamgia.replace("%", "");
+                    int giam = Integer.parseInt(giamgianotpercent);
+                    
+                    ModelServicev2 dv = new ModelServicev2();
+                    dv.setMaDV(txtMADICHVU.getText());
+                    dv.setTenDichVu(txtTENDICHVU.getText());
 
-            JOptionPane.showMessageDialog(this, "sửa thành công");
-            loaddichvu();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
+                    dv.setMaDonGiaDV(madongia);
+                    dv.setGiamGia(giam);
+                    System.out.println(giam);
+                    ModelService ql = new ModelService();
+                    ql.update(dv);
+
+                    JOptionPane.showMessageDialog(this, "sửa thành công");
+                    loaddichvu();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }else {
+                return;
+            }
         }
+        
+        
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -483,36 +485,39 @@ public class FormQLService extends javax.swing.JPanel {
 
         } else {
             txtMADICHVU.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        if (JOptionPane.showConfirmDialog(this, "bạn có muốn xóa dịch vụ không??") == JOptionPane.NO_OPTION) {
-            return;
-        }
-        try {
-           
-            
-            ModelServicev2 qll = new ModelServicev2();
-            qll.setMaDV(txtMADICHVU.getText());
-            
-            ModelService ql = new ModelService();
-            ql.deletecomeroot(qll);
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb);
+            }
+            if (JOptionPane.showConfirmDialog(this, "bạn có muốn xóa dịch vụ không??") == JOptionPane.YES_OPTION) {
+                try {
 
-            JOptionPane.showMessageDialog(this, "xóa thành công");
-            loaddichvu();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-            e.printStackTrace();
+                    ModelServicev2 qll = new ModelServicev2();
+                    qll.setMaDV(txtMADICHVU.getText());
+
+                    ModelService ql = new ModelService();
+                    ql.deletecomeroot(qll);
+
+                    JOptionPane.showMessageDialog(this, "xóa thành công");
+                    loaddichvu();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }else {
+                return;
+            }
         }
+        
+        
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
        txtMADICHVU.setText("");
        txtTENDICHVU.setText("");
-       txtGIADICHVU.setText("");
        txtGIAMGIA.setText("");
+       txtSEARCHMADV.setText("");
+       txtSearchtendv.setText("");
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -524,7 +529,8 @@ public class FormQLService extends javax.swing.JPanel {
 
             try {
 
-                String sql = "select * from DICHVU where isvisible = '1' and MaDV = ?  ";
+                String sql = "select MaDV, TenDichVu,dgdv.MaDonGiaDV,Concat(GiamGia,'%') as GiamGia , CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia  from DICHVU dv \n" +
+"join DonGiaDV dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV where isvisible = '1' and MaDV = ?  ";
                 conn = cn.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -533,7 +539,7 @@ public class FormQLService extends javax.swing.JPanel {
                 tbmodel.setRowCount(0);
                 while (rs.next()) {
                     tbmodel.addRow(new Object[]{
-                        rs.getString("MaDV"), rs.getString("tendichvu"), rs.getString("dongia")
+                        rs.getString("MaDV"), rs.getString("tendichvu"), rs.getString("MaDonGiaDV"), rs.getString("GiamGia"), rs.getString("DonGia")
                     });
                 }
                 tbmodel.fireTableDataChanged();
@@ -547,7 +553,8 @@ public class FormQLService extends javax.swing.JPanel {
 
             try {
 
-                String sql = "select * from DICHVU where isvisible = '1' and TenDichVu like ?   ";
+                String sql = "select MaDV, TenDichVu,dgdv.MaDonGiaDV,Concat(GiamGia,'%') as GiamGia , CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia  from DICHVU dv \n" +
+"join DonGiaDV dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV where isvisible = '1' and TenDichVu like ?   ";
                 conn = cn.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -556,7 +563,7 @@ public class FormQLService extends javax.swing.JPanel {
                 tbmodel.setRowCount(0);
                 while (rs.next()) {
                     tbmodel.addRow(new Object[]{
-                        rs.getString("MaDV"), rs.getString("TenDichVu"), rs.getString("dongia")
+                        rs.getString("MaDV"), rs.getString("tendichvu"), rs.getString("MaDonGiaDV"), rs.getString("GiamGia"), rs.getString("DonGia")
                     });
                 }
                 tbmodel.fireTableDataChanged();

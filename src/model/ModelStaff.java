@@ -20,7 +20,8 @@ public class ModelStaff {
     Connection conn;
 
     public ArrayList<ModelStaffv2> findALL() throws Exception {
-        String sql = "select * from nhanvien where isvisible = '1' ";
+        String sql = "select MaNV, HoNV, TenNV, case when GioiTinh = 0 then 'Nam' when GioiTinh = 1 then N'Nữ' end as GioiTinh, DiaChi, NgaySinh, DienThoai, Email, NoiSinh, NgayVaoLam from NHANVIEN"
+                + " where isvisible = '1' ";
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
@@ -30,7 +31,7 @@ public class ModelStaff {
             nv.setMaNV(rs.getString("MaNV"));
             nv.setHoNV(rs.getString("HoNV"));
             nv.setTenNV(rs.getString("TenNV"));
-            nv.setGioitinh(rs.getInt("GioiTinh"));
+            nv.setGioitinh(rs.getString("GioiTinh"));
             nv.setDiaChi(rs.getString("DiaChi"));
             nv.setNgaySinh(rs.getString("NgaySinh"));
             nv.setDienThoai(rs.getString("DienThoai"));
@@ -52,7 +53,7 @@ public class ModelStaff {
         pstmt.setString(1, nv.getMaNV());
         pstmt.setString(2, nv.getHoNV());
         pstmt.setString(3, nv.getTenNV());
-        pstmt.setInt(4, nv.getGioitinh());
+        pstmt.setString(4, nv.getGioitinh());
         pstmt.setString(5, nv.getDiaChi());
         pstmt.setString(6, nv.getNgaySinh());
         pstmt.setString(7, nv.getDienThoai());
@@ -78,7 +79,7 @@ public class ModelStaff {
             nv.setMaNV(rs.getString("MaNV"));
             nv.setHoNV(rs.getString("HoNV"));
             nv.setTenNV(rs.getString("TenNV"));
-            nv.setGioitinh(rs.getInt("gioitinh"));
+            nv.setGioitinh(rs.getString("gioitinh"));
             nv.setDiaChi(rs.getString("diachi"));
             nv.setNgaySinh(rs.getString("ngaysinh"));
             nv.setDienThoai(rs.getString("dienthoai"));
@@ -101,7 +102,7 @@ public class ModelStaff {
         pstmt.setString(10, nv.getMaNV());
         pstmt.setString(1, nv.getHoNV());
         pstmt.setString(2, nv.getTenNV());
-        pstmt.setInt(3, nv.getGioitinh());
+        pstmt.setString(3, nv.getGioitinh());
         pstmt.setString(4, nv.getDiaChi());
         pstmt.setString(5, nv.getNgaySinh());
         pstmt.setString(6, nv.getDienThoai());
@@ -124,44 +125,20 @@ public class ModelStaff {
         return pstmt.executeUpdate() > 0;
 
     }
-    
-//    public boolean deletecomeroot (ModelStaffv2 nv) throws Exception {
-//        String sql = "update nhanvien set isvisible = '0' where manv = ?";
-//
-//        conn = cn.getConnection();
-//        PreparedStatement pstmt = conn.prepareStatement(sql);
-//
-//        pstmt.setString(1, nv.getMaNV());
-//
-//        return pstmt.executeUpdate() > 0;
-//
-//    }
+
     public boolean deletecomeroot(ModelStaffv2 nv) throws Exception {
-        String sql1 = "update HoaDonDV set isvisible = '0' where manv = ? ";
-        String sql2 = "update PhieuDatPhong set isvisible = '0' where manv = ? ";
         String sql = "update nhanvien set isvisible = '0' where manv = ? ";
 
         conn = cn.getConnection();
         conn.setAutoCommit(false); // Tắt chế độ tự động commit
 
         try {
-            PreparedStatement pstmt1 = conn.prepareStatement(sql1);
-            pstmt1.setString(1, nv.getMaNV());
-
-            int rowsAffected1 = pstmt1.executeUpdate(); // Số dòng bị ảnh hưởng bởi lệnh sql1
-            
-            PreparedStatement pstmt2 = conn.prepareStatement(sql2);
-            pstmt2.setString(1, nv.getMaNV());
-
-            int rowsAffected2 = pstmt2.executeUpdate(); // Số dòng bị ảnh hưởng bởi lệnh sql1
-            
-
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, nv.getMaNV());
 
             int rowsAffected = pstmt.executeUpdate(); // Số dòng bị ảnh hưởng bởi lệnh sql
 
-            if (rowsAffected1 > 0 || rowsAffected > 0 || rowsAffected2 > 0 ) {
+            if ( rowsAffected > 0) {
                 conn.commit(); // Commit thay đổi nếu cả hai lệnh thành công
                 System.out.println("ok");
                 return true;

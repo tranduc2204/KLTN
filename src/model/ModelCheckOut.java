@@ -95,15 +95,14 @@ public class ModelCheckOut {
 
     }
     public boolean update(ModelCheckOutv2 rt) throws Exception {
-        String sql = "update HoaDonPhong set NgayLapHoaDon = ? , MaPhieuDatPhong= ?  where MaHoaDonPhong = ? ";
+        String sql = "update HoaDonPhong set NgayLapHoaDon = ?  where MaHoaDonPhong = ? ";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
 
         
-        pstmt.setString(3, rt.getMaHoaDonPhong());
+        pstmt.setString(2, rt.getMaHoaDonPhong());
         pstmt.setString(1, rt.getNgayLapHoaDon());
-        pstmt.setString(2, rt.getMaPhieuDatPhong());
 
         return pstmt.executeUpdate() > 0;
   
@@ -112,11 +111,8 @@ public class ModelCheckOut {
     public boolean deletecomeroot(ModelCheckOutv2 rt) throws Exception {
        
         String sql = "update HoaDonPhong set isvisible = '0' where MaHoaDonPhong = ? ";
-        
-
         conn = cn.getConnection();
         conn.setAutoCommit(false); // Tắt chế độ tự động commit
-
         try {
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
