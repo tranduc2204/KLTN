@@ -263,7 +263,7 @@
             </Component>
             <Component class="component.TextField" name="txtHotenKH">
               <Properties>
-                <Property name="labelText" type="java.lang.String" value="M&#xe3; phi&#x1ebf;u &#x111;&#x1eb7;t ph&#xf2;ng"/>
+                <Property name="labelText" type="java.lang.String" value="H&#x1ecd; t&#xea;n kh&#xe1;ch h&#xe0;ng"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel16">

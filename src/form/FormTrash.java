@@ -45,11 +45,13 @@ public class FormTrash extends javax.swing.JPanel {
     private void TrashAccount(){
         // Khởi tạo model và đặt tên cột
         tableModel = new DefaultTableModel();
-        tableModel.addColumn("User Name");
-        tableModel.addColumn("Display Name");
-        tableModel.addColumn("Password");
-        tableModel.addColumn("Type Account");
-        tableModel.addColumn("Action");
+        tableModel.addColumn("Tên đăng nhập");
+        tableModel.addColumn("Tên hiển thị");
+        tableModel.addColumn("Mật khẩu");
+        tableModel.addColumn("Loại tài khoản");
+        tableModel.addColumn("Mã nhân viên");
+        tableModel.addColumn("Họ tên nhân viên");
+        tableModel.addColumn("");
         
         // Thiết lập tableModel cho JTable
         table.setModel(tableModel);
@@ -96,16 +98,12 @@ public class FormTrash extends javax.swing.JPanel {
                     // Xóa dòng trong JTable
                     tableModel.removeRow(row);
                 }
-                
             }
-
-            
-            
         };
 
         // Thiết lập renderer và editor cho cột Action
-        table.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRender());
-        table.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditor(deleteEvent));
+        table.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRender());
+        table.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditor(deleteEvent));
     }
     
     private int showDeleteConfirmationDialog(String userName) {
@@ -137,17 +135,21 @@ public class FormTrash extends javax.swing.JPanel {
             connection = DriverManager.getConnection(jdbcUrl);
             
             // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
-            String sqlQuery = "SELECT UserName, DisplayName, PassWorrd, Typpe FROM Account where isvisible = '0' and ( Typpe = 'Admin' or Typpe = 'User')   ";
+            String sqlQuery = "select UserName, DisplayName, PassWorrd, Typpe, NV.MaNV, HoNV +' '+ TenNV as hotennv \n" +
+"from Account join NHANVIEN nv on Account.MaNV = nv.MaNV  where account.isvisible = '0' and ( Typpe = 'Admin' or Typpe = 'User')   ";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
                 ResultSet resultSet = preparedStatement.executeQuery()) {
 
                 // Lặp qua kết quả và thêm vào model
                 while (resultSet.next()) {
                     Object[] rowData = {
-                            resultSet.getObject("UserName"),
-                            resultSet.getObject("DisplayName"),
-                            resultSet.getObject("PassWorrd"),
-                            resultSet.getObject("Typpe"),
+                        resultSet.getObject("UserName"),
+                        resultSet.getObject("DisplayName"),
+                        resultSet.getObject("PassWorrd"),
+                        resultSet.getObject("Typpe"),
+                        resultSet.getObject("MaNV"),
+                        resultSet.getObject("hotennv"),
+                        resultSet.getObject("Typpe"),
 //                            "Action" // Cần thay thế "Action" bằng cột thực tế bạn muốn hiển thị hoặc xử lý
                             
                     };
@@ -234,14 +236,14 @@ public class FormTrash extends javax.swing.JPanel {
     private void TrashCustomers(){
         // Khởi tạo model và đặt tên cột
         tableModel = new DefaultTableModel();
-        tableModel.addColumn("MaKH");
-        tableModel.addColumn("HoKH");
-        tableModel.addColumn("TenKH");
-        tableModel.addColumn("GioiTinh");
-        tableModel.addColumn("DiaChi");
-        tableModel.addColumn("NgaySinh");
-        tableModel.addColumn("SoDT");
-        tableModel.addColumn("Action");
+        tableModel.addColumn("Mã khách hàng");
+        tableModel.addColumn("Họ khách hàng");
+        tableModel.addColumn("Tên khách hàng");
+        tableModel.addColumn("Giới tính");
+        tableModel.addColumn("Địa chỉ");
+        tableModel.addColumn("Ngày sinh");
+        tableModel.addColumn("Số điện thoại");
+        tableModel.addColumn("");
         // Thiết lập tableModel cho JTable
         table.setModel(tableModel);
         
@@ -265,7 +267,7 @@ public class FormTrash extends javax.swing.JPanel {
             connection = DriverManager.getConnection(jdbcUrl);
             
             // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
-            String sqlQuery = "select * from khachhang where isvisible = '0' ";
+            String sqlQuery = "select MaKH, HoKH, TenKH, case when GioiTinh = 0 then 'Nam' when GioiTinh = 1 then N'Nữ' end as GioiTinh, DiaChi, NgaySinh,SoDT from KHACHHANG where isvisible = '0' ";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
                 ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -370,12 +372,12 @@ public class FormTrash extends javax.swing.JPanel {
                 if (rowsAffected > 0) {
                     System.out.println("Customer deleted successfully.");
                 } else {
-                    System.out.println("No account found with User Name: " + MaKH);
+                    System.out.println("No Customer found with Mã nhân viên: " + MaKH);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error deleting account: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error deleting Customer: " + e.getMessage());
         }
     }
     private void updateDataCustomerFromSQL(String MaKH) {
@@ -398,9 +400,9 @@ public class FormTrash extends javax.swing.JPanel {
                 int rowsAffected = preparedStatement.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    System.out.println("Account update successfully.");
+                    System.out.println("Customer update successfully.");
                 } else {
-                    System.out.println("No account found with MaKH: " + MaKH);
+                    System.out.println("No Customer found with MaKH: " + MaKH);
                 }
             }
         } catch (SQLException e) {
@@ -413,17 +415,17 @@ public class FormTrash extends javax.swing.JPanel {
     private void TrashStaff(){
         // Khởi tạo model và đặt tên cột
         tableModel = new DefaultTableModel();
-        tableModel.addColumn("MaNV");
-        tableModel.addColumn("HoNV");
-        tableModel.addColumn("TenNV");
-        tableModel.addColumn("GioiTinh");
-        tableModel.addColumn("DiaChi");
-        tableModel.addColumn("NgaySinh");
-        tableModel.addColumn("DienThoai");
+        tableModel.addColumn("Mã nhân viên");
+        tableModel.addColumn("Họ nhân viên");
+        tableModel.addColumn("Tên nhân viên");
+        tableModel.addColumn("Giới tính");
+        tableModel.addColumn("Địa chỉ");
+        tableModel.addColumn("Ngày sinh");
+        tableModel.addColumn("Điện thoại");
         tableModel.addColumn("Email");
-        tableModel.addColumn("NoiSinh");
-        tableModel.addColumn("NgayVaoLam");
-        tableModel.addColumn("Action");
+        tableModel.addColumn("Nơi sinh");
+        tableModel.addColumn("Ngày vào làm");
+        tableModel.addColumn("");
         // Thiết lập tableModel cho JTable
         table.setModel(tableModel);
         
@@ -448,7 +450,8 @@ public class FormTrash extends javax.swing.JPanel {
             connection = DriverManager.getConnection(jdbcUrl);
             
             // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
-            String sqlQuery = "select * from nhanvien where isvisible = '0' ";
+            String sqlQuery = "select MaNV, HoNV, TenNV, case when GioiTinh = 0 then 'Nam' when GioiTinh = 1 then N'Nữ' end as GioiTinh, DiaChi, NgaySinh, DienThoai, Email, NoiSinh, NgayVaoLam from NHANVIEN"
+                    + " where isvisible = '0' ";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
                 ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -596,10 +599,12 @@ public class FormTrash extends javax.swing.JPanel {
     private void TrashService(){
         // Khởi tạo model và đặt tên cột
         tableModel = new DefaultTableModel();
-        tableModel.addColumn("MaDV");
-        tableModel.addColumn("TenDichVu");
-        tableModel.addColumn("DonGia");
-        tableModel.addColumn("Action");
+        tableModel.addColumn("Mã dịch vụ ");
+        tableModel.addColumn("Tên dịch vụ");
+        tableModel.addColumn("Mã đơn giá dịch vụ");
+        tableModel.addColumn("Giảm giá");
+        tableModel.addColumn("Đơn giá");
+        tableModel.addColumn("");
         // Thiết lập tableModel cho JTable
         table.setModel(tableModel);
         
@@ -624,7 +629,8 @@ public class FormTrash extends javax.swing.JPanel {
             connection = DriverManager.getConnection(jdbcUrl);
             
             // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
-            String sqlQuery = "select * from dichvu where isvisible = '0' ";
+            String sqlQuery = "select MaDV, TenDichVu,dgdv.MaDonGiaDV,Concat(GiamGia,'%') as GiamGia, CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia  from DICHVU dv \n" +
+"join DonGiaDV dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV where isvisible = '0' ";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
                 ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -633,6 +639,8 @@ public class FormTrash extends javax.swing.JPanel {
                     Object[] rowData = {
                     resultSet.getObject("MaDV"),
                     resultSet.getObject("TenDichVu"),
+                    resultSet.getObject("MaDonGiaDV"),
+                    resultSet.getObject("GiamGia"),
                     resultSet.getObject("DonGia"),
                     };
                     tableModel.addRow(rowData);
@@ -697,8 +705,8 @@ public class FormTrash extends javax.swing.JPanel {
         };
 
         // Thiết lập renderer và editor cho cột Action
-        table.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRender());
-        table.getColumnModel().getColumn(3).setCellEditor(new TableActionCellEditor(deleteEvent));
+        table.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
+        table.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(deleteEvent));
     }
     
     private void deleteDataServiceFromSQL(String MaDV) {
@@ -765,12 +773,16 @@ public class FormTrash extends javax.swing.JPanel {
     private void TrashRoom(){
         // Khởi tạo model và đặt tên cột
         tableModel = new DefaultTableModel();
-        tableModel.addColumn("MaPhong");
-        tableModel.addColumn("TenPhong");
-        tableModel.addColumn("Tien");
-        tableModel.addColumn("MaTinhtrangphong");
-        tableModel.addColumn("MaLoaiPhong");
-        tableModel.addColumn("Action");
+        tableModel.addColumn("Mã phòng");
+        tableModel.addColumn("Tên phòng");
+        tableModel.addColumn("Mã tình trạng phòng");
+        tableModel.addColumn("Tình trạng phòng");
+        tableModel.addColumn("Mã loại phòng");
+        tableModel.addColumn("Tên loại phòng");
+        tableModel.addColumn("Mã đơn giá");
+        tableModel.addColumn("Giảm giá");
+        tableModel.addColumn("Giá phòng");
+        tableModel.addColumn("");
         // Thiết lập tableModel cho JTable
         table.setModel(tableModel);
         
@@ -795,7 +807,9 @@ public class FormTrash extends javax.swing.JPanel {
             connection = DriverManager.getConnection(jdbcUrl);
             
             // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
-            String sqlQuery = "select * from phong where isvisible = '0' ";
+            String sqlQuery = " select MaPhong,TenPhong, TinhTrangPhong.MaTinhtrangphong, TinhTrangPhong, LoaiPhong.MaLoaiPhong, TenLoaiPhong, dgp.MaDonGiaPhong, Concat(GiamGia,'%') as GiamGia,  CONCAT(FORMAT(dgp.DonGia, 'N0'),' VND') as DonGia from phong \n" +
+"join LOAIPHONG on PHONG.MaLoaiPhong = LOAIPHONG.MaLoaiPhong join TINHTRANGPHONG on TinhTrangPhong.MaTinhTrangPhong = PHONG.MaTinhtrangphong \n" +
+"join DonGiaPhong dgp on dgp.MaDonGiaPhong = phong.MaDonGiaPhong where isvisible = '0' ";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
                 ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -804,9 +818,13 @@ public class FormTrash extends javax.swing.JPanel {
                     Object[] rowData = {
                     resultSet.getObject("MaPhong"),
                     resultSet.getObject("TenPhong"),
-                    resultSet.getObject("Tien"),
                     resultSet.getObject("MaTinhtrangphong"),
+                    resultSet.getObject("TinhTrangPhong"),
                     resultSet.getObject("MaLoaiPhong"),
+                    resultSet.getObject("TenLoaiPhong"),
+                    resultSet.getObject("MaDonGiaPhong"),
+                    resultSet.getObject("GiamGia"),
+                    resultSet.getObject("DonGia"),
                     };
                     tableModel.addRow(rowData);
                 }
@@ -870,8 +888,8 @@ public class FormTrash extends javax.swing.JPanel {
         };
 
         // Thiết lập renderer và editor cho cột Action
-        table.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
-        table.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(deleteEvent));
+        table.getColumnModel().getColumn(9).setCellRenderer(new TableActionCellRender());
+        table.getColumnModel().getColumn(9).setCellEditor(new TableActionCellEditor(deleteEvent));
     }
     
     private void deleteDataRoomFromSQL(String MaPhong) {
@@ -938,9 +956,9 @@ public class FormTrash extends javax.swing.JPanel {
     private void TrashSupplies(){
         // Khởi tạo model và đặt tên cột
         tableModel = new DefaultTableModel();
-        tableModel.addColumn("MaVatTu");
-        tableModel.addColumn("TenVatTu");
-        tableModel.addColumn("Action");
+        tableModel.addColumn("Mã vật tư");
+        tableModel.addColumn("Tên vật tư");
+        tableModel.addColumn("");
         // Thiết lập tableModel cho JTable
         table.setModel(tableModel);
         
@@ -1108,12 +1126,12 @@ public class FormTrash extends javax.swing.JPanel {
     private void TrashRoomSupplies(){
         // Khởi tạo model và đặt tên cột
         tableModel = new DefaultTableModel();
-        tableModel.addColumn("MaVatTu");
-        tableModel.addColumn("TenVatTu");
-        tableModel.addColumn("MaLoaiPhong");
-        tableModel.addColumn("TenLoaiPhong");
-        tableModel.addColumn("SoLuong");
-        tableModel.addColumn("Action");
+        tableModel.addColumn("Mã vật tư");
+        tableModel.addColumn("Tên vật tư");
+        tableModel.addColumn("Mã loại phòng");
+        tableModel.addColumn("Tên loại phòng");
+        tableModel.addColumn("Số lượng");
+        tableModel.addColumn("");
         // Thiết lập tableModel cho JTable
         table.setModel(tableModel);
         
@@ -1284,7 +1302,402 @@ public class FormTrash extends javax.swing.JPanel {
         }
     }
     
+    private void TrashBill(){
+        // Khởi tạo model và đặt tên cột
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Mã hóa đơn");
+        tableModel.addColumn("Mã phiếu đặt phòng");
+        tableModel.addColumn("Ngày thuê");
+        tableModel.addColumn("Ngày trả");
+        tableModel.addColumn("Mã phòng");
+        tableModel.addColumn("Tên phòng");
+        tableModel.addColumn("Tên loại phòng");
+        tableModel.addColumn("Đơn giá");
+        tableModel.addColumn("Giảm giá");
+        tableModel.addColumn("VAT");
+        tableModel.addColumn("Giá hóa đơn");
+        tableModel.addColumn("Ngày lập hóa đơn");
+        tableModel.addColumn("");
+        // Thiết lập tableModel cho JTable
+        table.setModel(tableModel);
+        
+        // Load dữ liệu từ SQL Server vào JTable
+        loadDataBillFromSQL();
+        setupDeleteBillAction();
+    }
+    
+    private void loadDataBillFromSQL() {
+        Connection connection = null;
+        try {
+             // Kết nối đến cơ sở dữ liệu SQL Server
 
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            
+            // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+            String sqlQuery = "select MaHoaDonPhong, pdp.MaPhieuDatPhong, NgayDuKienThue, NgayDuKienTra, p.MaPhong, TenPhong, TenLoaiPhong, CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia,Concat(GiamGia,'%') as GiamGia, \n" +
+"CONCAT(FORMAT( ((DATEDIFF(DAY, NgayDuKienThue, NgayDuKienTra)) *DonGia) * 0.1, 'N0'),' VND') as VAT,CONCAT(FORMAT(((DATEDIFF(DAY, NgayDuKienThue, NgayDuKienTra)) *DonGia)  +  (((DATEDIFF(DAY, NgayDuKienThue, NgayDuKienTra)) *DonGia) * 0.1) - (((DATEDIFF(DAY, NgayDuKienThue, NgayDuKienTra)) *DonGia) *GiamGia /100) , 'N0'),' VND') as GiaHD , NgayLapHoaDon\n" +
+"from HoaDonPhong hdp join PhieuDatPhong pdp on hdp.MaPhieuDatPhong = pdp.MaPhieuDatPhong join phong p on p.MaPhong = pdp.MaPhong\n" +
+"join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong join LOAIPHONG lp on lp.MaLoaiPhong = p.MaLoaiPhong\n" +
+" where hdp.isvisible = '0'  ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Lặp qua kết quả và thêm vào model
+                while (resultSet.next()) {
+                    Object[] rowData = {
+                        resultSet.getObject("MaHoaDonPhong"),
+                        resultSet.getObject("MaPhieuDatPhong"),
+                        resultSet.getObject("NgayDuKienThue"),
+                        resultSet.getObject("NgayDuKienTra"),
+                        resultSet.getObject("MaPhong"),
+                        resultSet.getObject("TenPhong"),
+                        resultSet.getObject("TenLoaiPhong"),
+                        resultSet.getObject("DonGia"),
+                        resultSet.getObject("GiamGia"),
+                        resultSet.getObject("VAT"),
+                        resultSet.getObject("GiaHD"),
+                        resultSet.getObject("NgayLapHoaDon"),
+                        
+                            
+//                            "Action" // Cần thay thế "Action" bằng cột thực tế bạn muốn hiển thị hoặc xử lý
+                            
+                    };
+                    tableModel.addRow(rowData);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    private void setupDeleteBillAction() {
+        
+        TableActionEvent deleteEvent = new TableActionEvent() {
+            
+            @Override
+            public void onDelete(int row) {
+                if (table.isEditing()) {
+                    table.getCellEditor().stopCellEditing();
+                }
+                // Lấy dữ liệu từ cột User Name để xóa trong cơ sở dữ liệu
+                String userNameToDelete = table.getValueAt(row, 0).toString();
+                 // Hiển thị hộp thoại xác nhận
+                int option = showDeleteConfirmationDialog(userNameToDelete);
+                if (option == JOptionPane.YES_OPTION) {
+                    // Nếu người dùng đồng ý, xóa dữ liệu từ cơ sở dữ liệu
+                    deleteDataBillFromSQL(userNameToDelete);
+                    // Xóa dòng trong JTable
+                    tableModel.removeRow(row);
+                }
+
+            }
+
+            @Override
+            public void onFresh(int row) {
+                if (table.isEditing()) {
+                    table.getCellEditor().stopCellEditing();
+                }
+                // Lấy dữ liệu từ cột User Name để khôi phục trong cơ sở dữ liệu
+                String userNameToUpdate = table.getValueAt(row, 0).toString();
+                 // Hiển thị hộp thoại xác nhận
+                int option = showUpdateConfirmationDialog(userNameToUpdate);
+                if (option == JOptionPane.YES_OPTION) {
+                    // Nếu người dùng đồng ý, khôi phục dữ liệu từ cơ sở dữ liệu
+                    updateDataBillFromSQL(userNameToUpdate);
+                    // Xóa dòng trong JTable
+                    tableModel.removeRow(row);
+                }
+                
+            }
+
+           
+        };
+
+        // Thiết lập renderer và editor cho cột Action
+        table.getColumnModel().getColumn(12).setCellRenderer(new TableActionCellRender());
+        table.getColumnModel().getColumn(12).setCellEditor(new TableActionCellEditor(deleteEvent));
+    }
+    
+    private void deleteDataBillFromSQL(String MaKH) {
+        // Thực hiện xóa dữ liệu từ SQL tại đây
+        Connection connection = null;
+        try  {
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            String deleteQuery = "DELETE FROM HoaDonPhong WHERE MaHoaDonPhong = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, MaKH);
+
+                // Thực hiện câu lệnh DELETE
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Bill deleted successfully.");
+                } else {
+                    System.out.println("No bill found with mã hóa đơn phòng: " + MaKH);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error deleting Customer: " + e.getMessage());
+        }
+    }
+    private void updateDataBillFromSQL(String MaKH) {
+        // Thực hiện xóa dữ liệu từ SQL tại đây
+        Connection connection = null;
+        try  {
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            String deleteQuery = "update HoaDonPhong set isvisible = '1' where MaHoaDonPhong = ? ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, MaKH);
+
+                // Thực hiện câu lệnh DELETE
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Customer update successfully.");
+                } else {
+                    System.out.println("No Customer found with MaKH: " + MaKH);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error deleting Customer: " + e.getMessage());
+        }
+    }
+    
+
+    private void TrashBillService(){
+        // Khởi tạo model và đặt tên cột
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Mã dịch vụ");
+        tableModel.addColumn("Tên dịch vụ");
+        tableModel.addColumn("Mã nhân viên");
+        tableModel.addColumn("Tên nhân viên");
+        tableModel.addColumn("Mã khách hàng");
+        tableModel.addColumn("Họ khách hàng");
+        tableModel.addColumn("Tên khách hàng");
+        tableModel.addColumn("Ngày lập hóa đơn");
+        tableModel.addColumn("Đơn giá");
+        tableModel.addColumn("Giảm giá");
+        tableModel.addColumn("Số lượng");
+        tableModel.addColumn("VAT");
+        tableModel.addColumn("Giá hóa đơn");
+        tableModel.addColumn("");
+        // Thiết lập tableModel cho JTable
+        table.setModel(tableModel);
+        
+        // Load dữ liệu từ SQL Server vào JTable
+        loadDataBillServiceFromSQL();
+        setupDeleteBillServiceAction();
+    }
+    
+    private void loadDataBillServiceFromSQL() {
+        Connection connection = null;
+        try {
+             // Kết nối đến cơ sở dữ liệu SQL Server
+
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            
+            // Thực hiện truy vấn SQL để lấy dữ liệu từ bảng
+            String sqlQuery = "select dv.MaDV, TenDichVu, nv.MaNV, TenNV, kh.MaKH,HoKH,  TenKH,NgayLapHD, CONCAT(FORMAT(DonGia, 'N0'),' VND') as DonGia,Concat(GiamGia,'%') as GiamGia, SL, \n" +
+"CONCAT(FORMAT(((DonGia*SL)*0.1), 'N0'),' VND') as VAT, CONCAT(FORMAT(((DonGia*SL) +  ((DonGia*SL)*0.1) - ((DonGia * SL)*GiamGia/100)), 'N0'),' VND') as GiaHD\n" +
+"from HoaDonDV hddv join NHANVIEN nv on hddv.MaNV = nv.MaNV join KHACHHANG kh on hddv.MaKH = kh.MaKH \n" +
+"join DICHVU dv on dv.MaDV = hddv.MaDV join dongiadv dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV \n" +
+"where hddv.isvisible = '0' ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Lặp qua kết quả và thêm vào model
+                while (resultSet.next()) {
+                    Object[] rowData = {
+                        resultSet.getObject("MaDV"),
+                        resultSet.getObject("TenDichVu"),
+                        resultSet.getObject("MaNV"),
+                        resultSet.getObject("TenNV"),
+                        resultSet.getObject("MaKH"),
+                        resultSet.getObject("HoKH"),
+                        resultSet.getObject("TenKH"),
+                        resultSet.getObject("NgayLapHD"),
+                        resultSet.getObject("DonGia"),
+                        resultSet.getObject("GiamGia"),
+                        resultSet.getObject("SL"),
+                        resultSet.getObject("VAT"),
+                        resultSet.getObject("GiaHD"),
+//                            "Action" // Cần thay thế "Action" bằng cột thực tế bạn muốn hiển thị hoặc xử lý
+                            
+                    };
+                    tableModel.addRow(rowData);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading data from SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    private void setupDeleteBillServiceAction() {
+        
+        TableActionEvent deleteEvent = new TableActionEvent() {
+            
+            @Override
+            public void onDelete(int row) {
+                if (table.isEditing()) {
+                    table.getCellEditor().stopCellEditing();
+                }
+                // Lấy dữ liệu từ cột User Name để xóa trong cơ sở dữ liệu
+                String madv = table.getValueAt(row, 0).toString();
+                String manv = table.getValueAt(row, 2).toString();
+                String makh = table.getValueAt(row, 4).toString();
+                 // Hiển thị hộp thoại xác nhận
+                int option = showDeleteConfirmationDialog(madv);
+                if (option == JOptionPane.YES_OPTION) {
+                    // Nếu người dùng đồng ý, xóa dữ liệu từ cơ sở dữ liệu
+                    deleteDataBillServiceFromSQL(madv, manv, makh);
+                    // Xóa dòng trong JTable
+                    tableModel.removeRow(row);
+                }
+
+            }
+
+            @Override
+            public void onFresh(int row) {
+                if (table.isEditing()) {
+                    table.getCellEditor().stopCellEditing();
+                }
+                // Lấy dữ liệu từ cột User Name để khôi phục trong cơ sở dữ liệu
+                String madv = table.getValueAt(row, 0).toString();
+                String manv = table.getValueAt(row, 2).toString();
+                String makh = table.getValueAt(row, 4).toString();
+                 // Hiển thị hộp thoại xác nhận
+                int option = showUpdateConfirmationDialog(madv);
+                if (option == JOptionPane.YES_OPTION) {
+                    // Nếu người dùng đồng ý, khôi phục dữ liệu từ cơ sở dữ liệu
+                    updateDataBillFromSQL(madv, manv,makh);
+                    // Xóa dòng trong JTable
+                    tableModel.removeRow(row);
+                }
+                
+            }
+
+           
+        };
+
+        // Thiết lập renderer và editor cho cột Action
+        table.getColumnModel().getColumn(13).setCellRenderer(new TableActionCellRender());
+        table.getColumnModel().getColumn(13).setCellEditor(new TableActionCellEditor(deleteEvent));
+    }
+    
+    private void deleteDataBillServiceFromSQL(String MaDV, String MaNV, String MaKH) {
+        // Thực hiện xóa dữ liệu từ SQL tại đây
+        Connection connection = null;
+        try  {
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            String deleteQuery = "DELETE FROM HoaDonDV WHERE MaDV = ? and MaNV = ? and MaKH = ? ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, MaDV);
+                preparedStatement.setString(2, MaNV);
+                preparedStatement.setString(3, MaKH);
+
+                // Thực hiện câu lệnh DELETE
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Bill service deleted successfully.");
+                } else {
+                    System.out.println("No bill service found with mã dịch vụ: " + MaDV +" mã nhân viên" + MaNV + " mã khách hàng " +MaKH);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error deleting bill service: " + e.getMessage());
+        }
+    }
+    private void updateDataBillFromSQL(String MaDV, String MaNV, String MaKH) {
+        // Thực hiện xóa dữ liệu từ SQL tại đây
+        Connection connection = null;
+        try  {
+            String server = "localhost";
+            String port = "1433";
+            String database = "KLTN";
+            String username = "sa";
+            String password = "sa";
+
+            String jdbcUrl = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database + ";user=" + username + ";password=" + password;
+            connection = DriverManager.getConnection(jdbcUrl);
+            String deleteQuery = "update HoaDonDV set isvisible = '1' WHERE MaDV = ? and MaNV = ? and MaKH = ? ";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setString(1, MaDV);
+                preparedStatement.setString(2, MaNV);
+                preparedStatement.setString(3, MaKH);
+
+                // Thực hiện câu lệnh DELETE
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Customer update successfully.");
+                } else {
+                    System.out.println("No Customer found with MaKH: " + MaKH);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error deleting Customer: " + e.getMessage());
+        }
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1341,8 +1754,8 @@ public class FormTrash extends javax.swing.JPanel {
                 .addGap(38, 38, 38)
                 .addGroup(panelBorder3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cmbLTK3, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1006, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(38, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1006, Short.MAX_VALUE))
+                .addGap(38, 38, 38))
         );
         panelBorder3Layout.setVerticalGroup(
             panelBorder3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1387,6 +1800,10 @@ public class FormTrash extends javax.swing.JPanel {
                 // Nếu là item 1, in chữ "Hello World" ra màn hình
                 System.out.println("Hello World");
                 TrashCustomers();
+            }else if (selectedIndex == 2) {
+                // Nếu là item 1, in chữ "Hello World" ra màn hình
+                System.out.println("Hello World");
+                TrashBill();
             }else if (selectedIndex == 3) {
                 // Nếu là item 1, in chữ "Hello World" ra màn hình
                 System.out.println("Hello World");
@@ -1407,6 +1824,10 @@ public class FormTrash extends javax.swing.JPanel {
                 // Nếu là item 1, in chữ "Hello World" ra màn hình
                 System.out.println("Hello World");
                 TrashRoomSupplies();
+            }else if (selectedIndex == 8) {
+                // Nếu là item 1, in chữ "Hello World" ra màn hình
+                System.out.println("Hello World");
+                TrashBillService();
             }
         }
     }//GEN-LAST:event_cmbLTK3ItemStateChanged

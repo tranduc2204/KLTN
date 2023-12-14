@@ -70,63 +70,58 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="btnAdd" min="-2" pref="103" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnEdit" min="-2" pref="103" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="txtNgaythuephong" min="-2" pref="444" max="-2" attributes="0"/>
-                      <Component id="txtNgayTraPhong" min="-2" pref="444" max="-2" attributes="0"/>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="cmbmaphieudatphong" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jDateChooserngaylaphd" min="-2" pref="328" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="txtMaphieutraphong" alignment="0" min="-2" pref="444" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnDelete" min="-2" pref="103" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnRefresh" min="-2" pref="103" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                          <Component id="btnPay" min="-2" pref="81" max="-2" attributes="0"/>
-                          <EmptySpace pref="49" max="32767" attributes="0"/>
-                          <Component id="btnReport" min="-2" pref="94" max="-2" attributes="0"/>
                       </Group>
+                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="cmbmaphieudatphong" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jDateChooserngaylaphd" min="-2" pref="328" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="txtMaphieutraphong" alignment="1" max="32767" attributes="0"/>
+                          <Component id="txtNgayTraPhong" alignment="1" max="32767" attributes="0"/>
+                          <Component id="txtNgaythuephong" alignment="1" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="txtMaPhong" pref="444" max="32767" attributes="0"/>
+                      <Component id="txtTenPhong" max="32767" attributes="0"/>
+                      <Component id="txtloaiphong" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="txtVAT" min="-2" pref="147" max="-2" attributes="0"/>
+                              <Component id="txtGiamGia" min="-2" pref="147" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtMaPhong" pref="444" max="32767" attributes="0"/>
-                              <Component id="txtTenPhong" max="32767" attributes="0"/>
-                              <Component id="txtloaiphong" max="32767" attributes="0"/>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txtVAT" min="-2" pref="147" max="-2" attributes="0"/>
-                                      <Component id="txtGiamGia" min="-2" pref="147" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="txtGiaPhong" alignment="1" max="32767" attributes="0"/>
-                                      <Component id="txtGiahd" alignment="1" pref="272" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="btnFind" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnPay" min="-2" pref="81" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnReport" min="-2" pref="94" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="txtGiaPhong" alignment="1" max="32767" attributes="0"/>
+                              <Component id="txtGiahd" alignment="1" pref="272" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -193,6 +188,7 @@
                           <Component id="btnRefresh" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                           <Component id="btnPay" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                           <Component id="btnReport" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
+                          <Component id="btnFind" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -418,6 +414,17 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtGiamGiaActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnFind">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="4c" green="63" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="T&#xec;m ki&#x1ebf;m"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFindActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

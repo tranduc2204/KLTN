@@ -59,9 +59,9 @@
                   <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="cmbLTK3" min="-2" pref="266" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="1006" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" pref="1006" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="38" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

@@ -251,6 +251,7 @@ public class FormCheckIn extends javax.swing.JPanel {
             }
         }
     }
+    
     //////////////////////////// ngay
     private void ngay(){
         // Khởi tạo model và đặt tên cột
@@ -899,7 +900,7 @@ public class FormCheckIn extends javax.swing.JPanel {
 
         txtMaphong.setLabelText("Mã phòng");
 
-        txtHotenKH.setLabelText("Mã phiếu đặt phòng");
+        txtHotenKH.setLabelText("Họ tên khách hàng");
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel16.setText("Ngày thuê phòng:");

@@ -48,7 +48,7 @@
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Trang t&#xec;m ki&#x1ebf;m phi&#x1ebf;u &#x111;&#x1eb7;t ph&#xf2;ng">
+            <TitledBorder title="Trang t&#xec;m ki&#x1ebf;m phi&#x1ebf;u tr&#x1ea3; ph&#xf2;ng">
               <Font PropertyName="font" name="Tahoma" size="24" style="1"/>
               <Color PropertyName="color" blue="ff" green="ff" red="ff" type="rgb"/>
             </TitledBorder>
@@ -62,7 +62,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" alignment="0" pref="1078" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" alignment="0" pref="1176" max="32767" attributes="0"/>
                       <Component id="panelBorder5" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -112,7 +112,7 @@
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Trang t&#xec;m ki&#x1ebf;m phi&#x1ebf;u &#x111;&#x1eb7;t ph&#xf2;ng">
+                <TitledBorder title="Trang t&#xec;m ki&#x1ebf;m phi&#x1ebf;u tr&#x1ea3; ph&#xf2;ng">
                   <Font PropertyName="font" name="Tahoma" size="20" style="1"/>
                 </TitledBorder>
               </Border>
@@ -125,45 +125,37 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="ckMaPhong" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="ckMaPhieuTraPhong" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="ckNgay" min="-2" max="-2" attributes="0"/>
+                              <Component id="ckNgaythuetra" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jDateChooserngaydukientra" alignment="1" min="-2" pref="268" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jDateChooserngaydkthue" alignment="0" pref="268" max="32767" attributes="0"/>
-                                          <Component id="txtMaphong" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                              <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jDateChooserngaydkthue" pref="337" max="32767" attributes="0"/>
+                                  <Component id="jDateChooserngaydukientra" max="32767" attributes="0"/>
+                                  <Component id="txtMaphieutraphong" alignment="0" max="32767" attributes="0"/>
                               </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="21" pref="21" max="-2" attributes="0"/>
+                              <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="ckHoTen" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="txtHotenKH" min="-2" pref="268" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="189" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
                               <Component id="btnLoc" min="-2" pref="103" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                               <Component id="btnView" min="-2" pref="103" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="ckNgayLapHD" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jDateChooserngaylaphd" min="-2" pref="336" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -174,29 +166,31 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="ckMaPhong" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtMaphong" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="ckHoTen" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtHotenKH" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="ckMaPhieuTraPhong" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtMaphieutraphong" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="ckNgayLapHD" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jDateChooserngaylaphd" min="-2" pref="44" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="ckNgay" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                                  <Component id="btnLoc" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
-                                  <Component id="btnView" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
-                              </Group>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jDateChooserngaydkthue" min="-2" pref="44" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jDateChooserngaydukientra" min="-2" pref="44" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="ckNgaythuetra" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel16" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                              <Component id="btnLoc" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
+                              <Component id="btnView" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="62" max="32767" attributes="0"/>
@@ -213,37 +207,32 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLocActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JCheckBox" name="ckMaPhong">
+            <Component class="javax.swing.JCheckBox" name="ckMaPhieuTraPhong">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="16" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="M&#xe3; ph&#xf2;ng:"/>
+                <Property name="text" type="java.lang.String" value="M&#xe3; phi&#x1ebf;u tr&#x1ea3; ph&#xf2;ng:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JCheckBox" name="ckHoTen">
+            <Component class="javax.swing.JCheckBox" name="ckNgayLapHD">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="16" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="H&#x1ecd; t&#xea;n kh&#xe1;ch h&#xe0;ng:"/>
+                <Property name="text" type="java.lang.String" value="Ng&#xe0;y l&#x1ead;p h&#xf3;a &#x111;&#x1a1;n:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JCheckBox" name="ckNgay">
+            <Component class="javax.swing.JCheckBox" name="ckNgaythuetra">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="16" style="1"/>
                 </Property>
               </Properties>
             </Component>
-            <Component class="component.TextField" name="txtMaphong">
+            <Component class="component.TextField" name="txtMaphieutraphong">
               <Properties>
-                <Property name="labelText" type="java.lang.String" value="M&#xe3; ph&#xf2;ng"/>
-              </Properties>
-            </Component>
-            <Component class="component.TextField" name="txtHotenKH">
-              <Properties>
-                <Property name="labelText" type="java.lang.String" value="M&#xe3; phi&#x1ebf;u &#x111;&#x1eb7;t ph&#xf2;ng"/>
+                <Property name="labelText" type="java.lang.String" value="M&#xe3; phi&#x1ebf;u tr&#x1ea3; ph&#xf2;ng"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel16">
@@ -278,6 +267,11 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnViewActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="com.toedter.calendar.JDateChooser" name="jDateChooserngaylaphd">
+              <Events>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jDateChooserngaylaphdPropertyChange"/>
               </Events>
             </Component>
           </SubComponents>
