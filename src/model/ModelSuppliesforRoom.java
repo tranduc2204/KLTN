@@ -40,29 +40,6 @@ public class ModelSuppliesforRoom {
         return list;
     }
     
-//    public ModelRoomv2 findByID(String MaPhong) throws Exception {
-//        String sql = "select MaPhong,TenPhong, TinhTrangPhong.MaTinhtrangphong, TinhTrangPhong, LoaiPhong.MaLoaiPhong, TenLoaiPhong, SoGiuong,Tien from phong "
-//                + "join LOAIPHONG on PHONG.MaLoaiPhong = LOAIPHONG.MaLoaiPhong join TINHTRANGPHONG on TinhTrangPhong.MaTinhTrangPhong = PHONG.MaTinhtrangphong where maphong =?";
-//        conn = cn.getConnection();
-//        PreparedStatement pstmt = conn.prepareStatement(sql);
-//
-//        pstmt.setString(1, MaPhong);
-//        ResultSet rs = pstmt.executeQuery();
-//
-//        if (rs.next()) {
-//            ModelRoomv2 tp = new ModelRoomv2();
-//              tp.setMaPhong(rs.getString("MaPhong"));
-//            tp.setTenPhong(rs.getString("TenPhong"));
-//            tp.setMaTinhTrangPhong(rs.getString("MaTinhTrangPhong"));
-//            tp.setTinhtrangphong(rs.getString("TinhTrangPhong"));
-//            tp.setMaLoaiPhong(rs.getString("MaLoaiPhong"));
-//            tp.setTenLoaiPhong(rs.getString("TenLoaiPhong"));
-//            tp.setTien(rs.getBigDecimal("Tien"));
-//            
-//            return tp;
-//        }
-//        return null;
-//    }
     public boolean insert(ModelSuppliesforRoomv2 p) throws Exception {
         String sql = "insert into CTVatTu (mavattu, maloaiphong,soluong) values (?,?,?)";
 

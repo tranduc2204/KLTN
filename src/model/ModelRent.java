@@ -106,21 +106,17 @@ public class ModelRent {
 
     }
     public boolean update(ModelRentv2 rt) throws Exception {
-        String sql = "update PhieuDatPhong set NgayDatPhong =?,NgayDuKienThue =?, NgayDuKienTra =? , MaPhong=? , MaKH=? , MaNV=? where MaPhieuDatPhong = ? ";
+        String sql = "update PhieuDatPhong set NgayDuKienThue =?, NgayDuKienTra =? , MaPhong=? where MaPhieuDatPhong = ? ";
 
         conn = cn.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
 
-        pstmt.setString(7, rt.getMaPhieuDatPhong());
-        pstmt.setString(1, rt.getNgayDatPhong());
-        pstmt.setString(2, rt.getNgayDuKienThue());
-        pstmt.setString(3, rt.getNgayDuKienTra());
-        pstmt.setString(4, rt.getMaPhong());
-        pstmt.setString(5, rt.getMaKH());
-        pstmt.setString(6, rt.getMaNV());
+        pstmt.setString(4, rt.getMaPhieuDatPhong());
+        pstmt.setString(1, rt.getNgayDuKienThue());
+        pstmt.setString(2, rt.getNgayDuKienTra());
+        pstmt.setString(3, rt.getMaPhong());
 
         return pstmt.executeUpdate() > 0;
-  
     }
     
     public boolean deletecomeroot(ModelRentv2 rt) throws Exception {

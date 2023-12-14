@@ -305,14 +305,14 @@ public class MainHome extends javax.swing.JFrame {
 
             });
         if (quyen.equals("Admin")){
-            menu.initMenuItem();
-            
+//            menu.initMenuItem();//menu anh
+            menu.initMenuItemVietNam();
         }else if (quyen.equals("User")){
-            menu.initMenuItem1();
-            
+//            menu.initMenuItem1();
+            menu.initMenuItem1VietNam();
         }else if (quyen.equals("root")){
-            menu.initMenuItemroot();
-            
+//            menu.initMenuItemroot();
+            menu.initMenuItemrootVietNam();
         }
         
 

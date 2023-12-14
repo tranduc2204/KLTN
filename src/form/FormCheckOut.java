@@ -213,7 +213,7 @@ public class FormCheckOut extends javax.swing.JPanel {
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("Ngày lập HĐ:");
 
-        btnPay.setBackground(new java.awt.Color(255, 102, 102));
+        btnPay.setBackground(new java.awt.Color(255, 99, 76));
         btnPay.setText("Tính tiền");
         btnPay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -482,14 +482,7 @@ public class FormCheckOut extends javax.swing.JPanel {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-        Date selectedDate = jDateChooserngaylaphd.getDate();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDate);
-
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String ngayhd = year + "-" + month + "-" + day;
+        
 
         StringBuilder sb = new StringBuilder();
         if (txtMaphieutraphong.getText().equals("")) {
@@ -498,47 +491,46 @@ public class FormCheckOut extends javax.swing.JPanel {
 
         } else {
             txtMaphieutraphong.setBackground(Color.white);
- 
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        if (JOptionPane.showConfirmDialog(this, "bạn có muốn sửa hóa đơn không??") == JOptionPane.YES_OPTION) {
-            try {
-                ModelCheckOutv2 ci = new ModelCheckOutv2();
-                ci.setMaHoaDonPhong(txtMaphieutraphong.getText());
-                ci.setNgayLapHoaDon(ngayhd);
-
-
-                ModelCheckOut ql1 = new ModelCheckOut();
-                ql1.update(ci);
-
-                JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
-
-
-                loaddulieu1();
-            } catch (Exception e) {
-                //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-                JOptionPane.showMessageDialog(this, "Mã hóa đơn phòng này đã tồn tại, nếu muốn thêm với mã hóa đơn phòng này vui lòng xóa phiếu đặt phòng trong db");
-                e.printStackTrace();
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb);
             }
-        }else {
-            return;
+            if (JOptionPane.showConfirmDialog(this, "bạn có muốn sửa hóa đơn không??") == JOptionPane.YES_OPTION) {
+                try {
+                    Date selectedDate = jDateChooserngaylaphd.getDate();
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(selectedDate);
+
+                    int year = calendar.get(Calendar.YEAR);
+                    int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+                    int day = calendar.get(Calendar.DAY_OF_MONTH);
+                    String ngayhd = year + "-" + month + "-" + day;
+
+                    ModelCheckOutv2 ci = new ModelCheckOutv2();
+                    ci.setMaHoaDonPhong(txtMaphieutraphong.getText());
+                    ci.setNgayLapHoaDon(ngayhd);
+
+
+                    ModelCheckOut ql1 = new ModelCheckOut();
+                    ql1.update(ci);
+
+                    JOptionPane.showMessageDialog(this, "Lưu thành công!!!");
+
+
+                    loaddulieu1();
+                } catch (Exception e) {
+                    //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                    JOptionPane.showMessageDialog(this, "Mã hóa đơn phòng này đã tồn tại, nếu muốn thêm với mã hóa đơn phòng này vui lòng xóa phiếu đặt phòng trong db");
+                    e.printStackTrace();
+                }
+            }else {
+                return;
+            }
         }
+        
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-
-        Date selectedDate = jDateChooserngaylaphd.getDate();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDate);
-
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String ngayhd = year + "-" + month + "-" + day;
-
         StringBuilder sb = new StringBuilder();
         if (txtMaphieutraphong.getText().equals("")) {
             sb.append("Mã phiếu trả phòng không được để trống");
@@ -548,8 +540,19 @@ public class FormCheckOut extends javax.swing.JPanel {
             txtMaphieutraphong.setBackground(Color.white);
             
             String Maphieuthuephong = cmbmaphieudatphong.getSelectedItem().toString();
-
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb);
+            }
             try {
+                Date selectedDate = jDateChooserngaylaphd.getDate();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(selectedDate);
+
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1 để có giá trị tháng thực
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                String ngayhd = year + "-" + month + "-" + day;
+                
                 ModelCheckOutv2 ci = new ModelCheckOutv2();
                 ci.setMaHoaDonPhong(txtMaphieutraphong.getText());
                 ci.setNgayLapHoaDon(ngayhd);
@@ -567,9 +570,7 @@ public class FormCheckOut extends javax.swing.JPanel {
             }
            
         }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
+        
 
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -583,40 +584,41 @@ public class FormCheckOut extends javax.swing.JPanel {
 
         } else {
             txtMaphieutraphong.setBackground(Color.white);
-        }
-        if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb);
-        }
-        if (JOptionPane.showConfirmDialog(this, "bạn có muốn xóa hóa đơn không??") == JOptionPane.YES_OPTION) {
-            try {
-                ModelCheckOutv2 ci = new ModelCheckOutv2();//MaHoaDonPhong
-                ci.setMaHoaDonPhong(txtMaphieutraphong.getText());
-
-                ModelCheckOut ql1 = new ModelCheckOut();
-                ql1.deletecomeroot(ci);
-
-                JOptionPane.showMessageDialog(this, "xóa thành công!!!");
-
-
-                int row = TBcheckout.getSelectedRow();
-                if (row >= 0) {
-                    String maphong = TBcheckout.getValueAt(row, 5).toString();
-
-                    ModelPhongv2 p = new ModelPhongv2();
-                    p.setMaPhong(maphong);
-
-                    ModelPhong ql = new ModelPhong();
-                    ql.updateTT3(p);
-                }
-                loaddulieu1();
-            } catch (Exception e) {
-                //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
-                JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
-                e.printStackTrace();
+            if (sb.length() > 0) {
+                JOptionPane.showMessageDialog(this, sb);
             }
-        }else {
-            return;
+            if (JOptionPane.showConfirmDialog(this, "bạn có muốn xóa hóa đơn không??") == JOptionPane.YES_OPTION) {
+                try {
+                    ModelCheckOutv2 ci = new ModelCheckOutv2();//MaHoaDonPhong
+                    ci.setMaHoaDonPhong(txtMaphieutraphong.getText());
+
+                    ModelCheckOut ql1 = new ModelCheckOut();
+                    ql1.deletecomeroot(ci);
+
+                    JOptionPane.showMessageDialog(this, "xóa thành công!!!");
+
+
+                    int row = TBcheckout.getSelectedRow();
+                    if (row >= 0) {
+                        String maphong = TBcheckout.getValueAt(row, 5).toString();
+
+                        ModelPhongv2 p = new ModelPhongv2();
+                        p.setMaPhong(maphong);
+
+                        ModelPhong ql = new ModelPhong();
+                        ql.updateTT3(p);
+                    }
+                    loaddulieu1();
+                } catch (Exception e) {
+                    //            JOptionPane.showMessageDialog(this, "error " + e.getMessage());
+                    JOptionPane.showMessageDialog(this, "Mã phiếu đặt phòng này đã tồn tại, nếu muốn thêm với mã phiếu đặt phòng này vui lòng xóa phiếu đặt phòng trong db");
+                    e.printStackTrace();
+                }
+            }else {
+                return;
+            }
         }
+        
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
