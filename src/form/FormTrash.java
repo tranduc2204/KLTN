@@ -1547,7 +1547,7 @@ public class FormTrash extends javax.swing.JPanel {
                 // Lặp qua kết quả và thêm vào model
                 while (resultSet.next()) {
                     Object[] rowData = {
-                        resultSet.getObject("MaDV"),
+                        resultSet.getObject("MaDV"), 
                         resultSet.getObject("TenDichVu"),
                         resultSet.getObject("MaNV"),
                         resultSet.getObject("TenNV"),
