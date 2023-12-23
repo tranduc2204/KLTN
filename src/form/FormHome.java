@@ -53,7 +53,7 @@ public class FormHome extends javax.swing.JPanel {
                 sl = rs.getInt("SL");
 
                 Icon icon1 = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PEOPLE, 60, new Color(255, 255, 255, 100), new Color(255, 255, 255, 15));
-                card1.setData(new ModelCard("Customers", sl, 50, icon1));// 5100 là tổng 
+                card1.setData(new ModelCard("Customers", sl, sl, icon1));// 5100 là tổng 
 
             } else {
                 JOptionPane.showConfirmDialog(this, "Đăng nhập thất bai, sai tài khoản hoặc mật khẩu");
@@ -66,9 +66,9 @@ public class FormHome extends javax.swing.JPanel {
         int doanhthu;
         try{
             conn = cn.getConnection();
-            String sql_login = "select sum(Tien) as doanhthu from HoaDonPhong hdp join PhieuThuePhong ptp on hdp.MaPhieuThuePhong = ptp.MaPhieuThuePhong\n" +
-"join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = ptp.MaPhieuDatPhong join PHONG p on p.MaPhong = pdp.MaPhong \n" +
-"join NHANVIEN nv on nv.MaNV = pdp.MaNV join KHACHHANG kh on kh.MaKH = pdp.MaKH \n" +
+            String sql_login = "select sum(DonGia) as doanhthu from HoaDonPhong hdp \n" +
+"join PhieuDatPhong pdp on pdp.MaPhieuDatPhong = hdp.MaPhieuDatPhong join PHONG p on p.MaPhong = pdp.MaPhong \n" +
+"join DonGiaPhong dgp on dgp.MaDonGiaPhong = p.MaDonGiaPhong\n" +
 "where month(NgayLapHoaDon) =  MONTH(GETDATE()) and year(NgayLapHoaDon) = Year(GETDATE())";
             PreparedStatement pst = conn.prepareStatement(sql_login);
             ResultSet rs = pst.executeQuery();
