@@ -53,7 +53,7 @@ public class FormHome extends javax.swing.JPanel {
                 sl = rs.getInt("SL");
 
                 Icon icon1 = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.PEOPLE, 60, new Color(255, 255, 255, 100), new Color(255, 255, 255, 15));
-                card1.setData(new ModelCard("Customers", sl, sl, icon1));// 5100 là tổng 
+                card1.setData(new ModelCard("Khách hàng", sl, 100, icon1));// 5100 là tổng 
 
             } else {
                 JOptionPane.showConfirmDialog(this, "Đăng nhập thất bai, sai tài khoản hoặc mật khẩu");
@@ -72,12 +72,16 @@ public class FormHome extends javax.swing.JPanel {
 "where month(NgayLapHoaDon) =  MONTH(GETDATE()) and year(NgayLapHoaDon) = Year(GETDATE())";
             PreparedStatement pst = conn.prepareStatement(sql_login);
             ResultSet rs = pst.executeQuery();
-            if (rs.next()) {;
+            if (rs.next()) {
+
                 doanhthu = rs.getInt("doanhthu");
-
+                int target = doanhthu;
+                int kq = 30000000;
+                float nopercent =(float)((float) target / (float) kq);
+                float percent =(float) nopercent * 100;
+                int kqq = (int)percent;
                 Icon icon2 = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.MONETIZATION_ON, 60, new Color(255, 255, 255, 100), new Color(255, 255, 255, 15));
-                card2.setData(new ModelCard("Room Income", doanhthu, 60, icon2));//2000 60
-
+                card2.setData(new ModelCard("Doanh thu phòng", doanhthu,kqq , icon2));//2000 60
             } else {
                 JOptionPane.showConfirmDialog(this, "");
 
@@ -89,16 +93,22 @@ public class FormHome extends javax.swing.JPanel {
         int doanhthu_service;
         try{
             conn = cn.getConnection();
-            String sql_login = "select  sum(SL* DonGia) as GiaHD   from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV \n" +
-"join NHANVIEN nv on nv.MaNV = hddv.MaNV join KHACHHANG kh on kh.MaKH = hddv.MaKH \n" +
-"group by month(NgayLapHD), year(NgayLapHD)";
+            String sql_login = "select sum(SL* DonGia) as GiaHD from HoaDonDV hddv join DICHVU dv on hddv.MaDV = dv.MaDV \n" +
+"join DonGiaDV dgdv on dv.MaDonGiaDV = dgdv.MaDonGiaDV\n" +
+"where month(NgayLapHD) =  MONTH(GETDATE()) and year(NgayLapHD) = Year(GETDATE())";
             PreparedStatement pst = conn.prepareStatement(sql_login);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {;
-                doanhthu = rs.getInt("GiaHD");
-
+                doanhthu_service = rs.getInt("GiaHD");
+                
+                int target = doanhthu_service;
+                int kq = 15000000;
+                float nopercent =(float)((float) target / (float) kq);
+                float percent =(float) nopercent * 100;
+                int kqq = (int)percent;
+                
                 Icon icon3 = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SHOPPING_BASKET, 60, new Color(255, 255, 255, 100), new Color(255, 255, 255, 15));
-                card3.setData(new ModelCard("Service Income", doanhthu, 80, icon3)); //3000
+                card3.setData(new ModelCard("Doanh thu dịch vụ", doanhthu_service, kqq, icon3)); //3000
 
             } else {
                 JOptionPane.showConfirmDialog(this, "");
@@ -118,7 +128,7 @@ public class FormHome extends javax.swing.JPanel {
                 sl = rs.getInt("SL");
 
                 Icon icon4 = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.BUSINESS_CENTER, 60, new Color(255, 255, 255, 100), new Color(255, 255, 255, 15));
-                card4.setData(new ModelCard("Staff", sl, 95, icon4)); //550
+                card4.setData(new ModelCard("Nhân viên", sl, 100, icon4)); //550
             } else {
                 JOptionPane.showConfirmDialog(this, "");
 
@@ -176,6 +186,7 @@ public class FormHome extends javax.swing.JPanel {
 
         card1.setBackground(new java.awt.Color(112, 67, 205));
         card1.setColorGradient(new java.awt.Color(255, 59, 108));
+        card1.setPreferredSize(new java.awt.Dimension(235, 119));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 255));
@@ -183,12 +194,15 @@ public class FormHome extends javax.swing.JPanel {
 
         card3.setBackground(new java.awt.Color(112, 0, 255));
         card3.setColorGradient(new java.awt.Color(255, 132, 39));
+        card3.setPreferredSize(new java.awt.Dimension(260, 119));
 
         card4.setBackground(new java.awt.Color(0, 48, 215));
         card4.setColorGradient(new java.awt.Color(255, 177, 16));
+        card4.setPreferredSize(new java.awt.Dimension(235, 119));
 
         card2.setBackground(new java.awt.Color(100, 87, 94));
         card2.setColorGradient(new java.awt.Color(113, 117, 61));
+        card2.setPreferredSize(new java.awt.Dimension(245, 119));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -273,15 +287,16 @@ public class FormHome extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(card1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(card2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(card3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1)))
-                .addGap(18, 18, 18)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(card1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25)
+                        .addComponent(card2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25)
+                        .addComponent(card3, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(25, 25, 25)
                 .addComponent(card4, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
