@@ -46,7 +46,7 @@
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Create Database Backup:">
+            <TitledBorder title="T&#x1ea1;o b&#x1ea3;n sao c&#x1a1; s&#x1edf; d&#x1eef; li&#x1ec7;u:">
               <Font PropertyName="font" name="Tahoma" size="20" style="1"/>
               <Color PropertyName="color" blue="ff" green="ff" red="ff" type="rgb"/>
             </TitledBorder>
@@ -95,7 +95,7 @@
       <SubComponents>
         <Component class="swing.Button" name="btnBackup">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Backup"/>
+            <Property name="text" type="java.lang.String" value="Sao l&#x1b0;u"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackupActionPerformed"/>
@@ -103,7 +103,7 @@
         </Component>
         <Component class="swing.Button" name="btnBrowse">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Browse"/>
+            <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n &#x111;&#x1b0;&#x1edd;ng d&#x1eab;n"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBrowseActionPerformed"/>
@@ -111,7 +111,7 @@
         </Component>
         <Component class="component.TextField" name="txtBackup">
           <Properties>
-            <Property name="labelText" type="java.lang.String" value="Location"/>
+            <Property name="labelText" type="java.lang.String" value="&#x110;&#x1b0;&#x1edd;ng d&#x1eab;n"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -123,7 +123,7 @@
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Restore Database:">
+            <TitledBorder title="Kh&#xf4;i ph&#x1ee5;c d&#x1eef; li&#x1ec7;u:">
               <Font PropertyName="font" name="Tahoma" size="20" style="1"/>
               <Color PropertyName="color" blue="ff" green="ff" red="ff" type="rgb"/>
             </TitledBorder>
@@ -169,7 +169,7 @@
       <SubComponents>
         <Component class="swing.Button" name="btnRestore">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Restore"/>
+            <Property name="text" type="java.lang.String" value="Ph&#x1ee5;c h&#x1ed3;i"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRestoreActionPerformed"/>
@@ -177,7 +177,7 @@
         </Component>
         <Component class="swing.Button" name="btnBrowse_Restore">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Browse"/>
+            <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n &#x111;&#x1b0;&#x1edd;ng d&#x1eab;n"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBrowse_RestoreActionPerformed"/>
@@ -185,7 +185,7 @@
         </Component>
         <Component class="component.TextField" name="txtRestore">
           <Properties>
-            <Property name="labelText" type="java.lang.String" value="Location"/>
+            <Property name="labelText" type="java.lang.String" value="&#x110;&#x1b0;&#x1edd;ng d&#x1eab;n"/>
           </Properties>
         </Component>
       </SubComponents>

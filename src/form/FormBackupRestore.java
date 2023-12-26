@@ -50,24 +50,24 @@ public class FormBackupRestore extends javax.swing.JPanel {
         txtRestore = new component.TextField();
 
         panelBorder1.setBackground(new java.awt.Color(36, 87, 157));
-        panelBorder1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Create Database Backup:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
+        panelBorder1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tạo bản sao cơ sở dữ liệu:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
         panelBorder1.setForeground(new java.awt.Color(255, 255, 255));
 
-        btnBackup.setText("Backup");
+        btnBackup.setText("Sao lưu");
         btnBackup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackupActionPerformed(evt);
             }
         });
 
-        btnBrowse.setText("Browse");
+        btnBrowse.setText("Chọn đường dẫn");
         btnBrowse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBrowseActionPerformed(evt);
             }
         });
 
-        txtBackup.setLabelText("Location");
+        txtBackup.setLabelText("Đường dẫn");
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
@@ -98,24 +98,24 @@ public class FormBackupRestore extends javax.swing.JPanel {
         );
 
         panelBorder3.setBackground(new java.awt.Color(36, 87, 157));
-        panelBorder3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Restore Database:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
+        panelBorder3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Khôi phục dữ liệu:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(255, 255, 255))); // NOI18N
         panelBorder3.setForeground(new java.awt.Color(255, 255, 255));
 
-        btnRestore.setText("Restore");
+        btnRestore.setText("Phục hồi");
         btnRestore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRestoreActionPerformed(evt);
             }
         });
 
-        btnBrowse_Restore.setText("Browse");
+        btnBrowse_Restore.setText("Chọn đường dẫn");
         btnBrowse_Restore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBrowse_RestoreActionPerformed(evt);
             }
         });
 
-        txtRestore.setLabelText("Location");
+        txtRestore.setLabelText("Đường dẫn");
 
         javax.swing.GroupLayout panelBorder3Layout = new javax.swing.GroupLayout(panelBorder3);
         panelBorder3.setLayout(panelBorder3Layout);

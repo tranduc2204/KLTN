@@ -75,7 +75,7 @@ public class FormChangePassv2 extends javax.swing.JFrame {
         setAlwaysOnTop(true);
 
         panelBorder1.setBackground(new java.awt.Color(204, 255, 255));
-        panelBorder1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Change Password", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24))); // NOI18N
+        panelBorder1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Đổi mật khẩu:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24))); // NOI18N
 
         button1.setText("Thoát");
         button1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

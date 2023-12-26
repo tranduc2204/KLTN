@@ -77,7 +77,7 @@ public class FormChangePass extends javax.swing.JFrame {
         jPanel1.setForeground(new java.awt.Color(153, 153, 153));
 
         panelBorder1.setBackground(new java.awt.Color(204, 255, 255));
-        panelBorder1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Change Password", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24))); // NOI18N
+        panelBorder1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Đổi mật khẩu:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24))); // NOI18N
 
         button1.setText("Thoát");
         button1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -153,9 +153,7 @@ public class FormChangePass extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(531, Short.MAX_VALUE)
                 .addComponent(jLabel2))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

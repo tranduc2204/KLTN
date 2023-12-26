@@ -50,7 +50,7 @@
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Change Password">
+            <TitledBorder title="&#x110;&#x1ed5;i m&#x1ead;t kh&#x1ea9;u:">
               <Font PropertyName="font" name="Tahoma" size="24" style="1"/>
             </TitledBorder>
           </Border>
